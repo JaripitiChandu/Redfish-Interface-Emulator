@@ -237,7 +237,7 @@ def create_folder_under_current_directory(folder_name):
 # Start of main program.
 def main(argv=None):
     if argv == None:
-	    argv = sys.argv
+        argv = sys.argv
     # Set the default return value to indicate success.
     status = 0
     # There must be at least one argument that is the program name.

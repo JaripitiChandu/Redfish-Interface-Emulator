@@ -107,7 +107,7 @@ def create_folder_under_current_directory(folder_name):
 # Start of main program.
 def main(argv=None):
     if argv == None:
-	    argv = sys.argv
+        argv = sys.argv
     # Set the default return value to indicate success.
     status = 0
     # There must be at least one argument that is the program name.
@@ -134,7 +134,7 @@ def main(argv=None):
         # If the output file already exists, then prompt the user to overwrite the file.
         if file_exists(program_name):
             print ("File '{0}' already exists. Enter 'y' or 'Y' to overwrite the file. >".format(program_name))
-            c = raw_input()
+            c = input()
             if c != 'y' and c != 'Y':
                 return status
         # Create a 'base_program_name' folder.

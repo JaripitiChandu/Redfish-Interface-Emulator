@@ -11,7 +11,7 @@ Singleton  API:  GET, POST, PATCH, DELETE
 
 import g
 
-import sys, traceback
+import sys, traceback, json
 import logging
 import copy
 from flask import Flask, request, make_response, render_template
@@ -38,6 +38,47 @@ class ChassisAPI(Resource):
     #
     # __init__ stores kwargs in wildcards, which is used to pass
     # values to the get_<resource>_instance() call.
+    demo_schema = {
+        "title": "DemoSchema",
+        "type": "object",
+        "properties": {
+            "AssetTag": {
+                "type": "string"
+            },
+            "ChassisType": {
+                "enum": [
+                    "Rack",
+                    "Blade",
+                    "Enclosure",
+                    "StandAlone",
+                    "RackMount",
+                    "Card",
+                    "Cartridge",
+                    "Row",
+                    "Pod",
+                    "Expansion",
+                    "Sidecar",
+                    "Zone",
+                    "Sled",
+                    "Shelf",
+                    "Drawer",
+                    "Module",
+                    "Component",
+                    "IPBasedDrive",
+                    "RackGroup",
+                    "StorageEnclosure",
+                    "ImmersionTank",
+                    "HeatExchanger",
+                    "PowerStrip",
+                    "Other"
+                ],
+                "type": "string"
+            },
+        },
+        # "required": [""]
+    }
+
+
     def __init__(self, **kwargs):
         logging.info('ChassisAPI init called')
         try:
@@ -87,6 +128,8 @@ class ChassisAPI(Resource):
         return resp
 
     # HTTP PATCH
+    @g.delay_response()
+    @g.validate_json(demo_schema)
     def patch(self, ident):
         logging.info('ChassisAPI PATCH called')
         raw_dict = request.get_json(force=True)

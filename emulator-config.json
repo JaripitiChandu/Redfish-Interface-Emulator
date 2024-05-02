@@ -2,7 +2,8 @@
   "MODE": "Local",
   "HTTPS": "Disable",
   "TRAYS": [],
-  "STATIC": "Enable",
+  "STATIC": "Disable",
   "SPEC": "Redfish",
-  "MOCKUPFOLDERS": ["Redfish"]
+  "MOCKUPFOLDERS": ["Redfish"],
+  "POPULATE": "Emulator"
 }

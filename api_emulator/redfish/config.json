@@ -1,0 +1,7 @@
+{
+    "ChassisAPI": {
+        "patch": {
+            "delay": 5
+        }
+    }
+}

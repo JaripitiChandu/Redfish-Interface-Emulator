@@ -36,6 +36,49 @@ class ThermalAPI(Resource):
     #
     # __init__ stores kwargs in wildcards, which is used to pass
     # values to the get_<resource>_instance() call.
+
+    temp_schema = {
+        "title": "temperature",
+        "type": "object",
+        "properties": {
+            "ReadingCelcius": {
+                "type": "integer",
+                "minimum": 4,
+                "maximum": 50
+            },
+            "UpperThresholdNonCritical": {
+                "type": "integer",
+                "minimum": 4,
+                "maximum": 50
+            },
+            "UpperThresholdCritical": {
+                "type": "integer",
+                "minimum": 4,
+                "maximum": 50
+            },
+            "UpperThresholdFatal": {
+                "type": "integer",
+                "minimum": 4,
+                "maximum": 50
+            },
+            "LowerThresholdNonCritical": {
+                "type": "integer",
+                "minimum": 4,
+                "maximum": 50
+            },
+            "LowerThresholdCritical": {
+                "type": "integer",
+                "minimum": 4,
+                "maximum": 50
+            },
+            "LowerThresholdFatal": {
+                "type": "integer",
+                "minimum": 4,
+                "maximum": 50
+            },
+        },
+    }
+
     def __init__(self, **kwargs):
         logging.info('ThermalAPI init called')
         try:
@@ -58,9 +101,23 @@ class ThermalAPI(Resource):
         return resp
 
     # HTTP PUT
-    def put(self, ident):
-        logging.info('ThermalAPI PUT called')
-        return 'PUT is not a supported command for ThermalAPI', 405
+    @g.delay_response()
+    def put(self,ident):
+        logging.info('CreateThermal put called')
+        try:
+            global wildcards
+            wildcards['ch_id'] = ident
+            logging.info(wildcards)
+            config=get_thermal_instance(wildcards)
+            members[ident]=config
+            resp = config, 200
+        except Exception:
+            traceback.print_exc()
+            resp = INTERNAL_ERROR
+        return resp
+    # def put(self, ident):
+    #     logging.info('ThermalAPI PUT called')
+    #     return 'PUT is not a supported command for ThermalAPI', 405
 
     # HTTP POST
     def post(self, ident):
@@ -68,6 +125,8 @@ class ThermalAPI(Resource):
         return 'POST is not a supported command for ThermalAPI', 405
 
     # HTTP PATCH
+    # @g.delay_response()
+    # @g.validate_json(temp_schema)
     def patch(self, ident):
         logging.info('ThermalAPI PATCH called')
         raw_dict = request.get_json(force=True)
