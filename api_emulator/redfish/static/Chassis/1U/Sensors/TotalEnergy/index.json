@@ -1,5 +1,5 @@
 {
-    "@odata.type": "#Sensor.v1_2_0.Sensor",
+    "@odata.type": "#Sensor.v1_8_1.Sensor",
     "Id": "TotalEnergy",
     "Name": "Total Energy",
     "ReadingType": "EnergykWh",
@@ -10,12 +10,11 @@
     "Reading": 325675,
     "ReadingUnits": "kW.h",
     "PhysicalContext": "Chassis",
-    "Oem": {},
     "Actions": {
         "#Sensor.ResetMetrics": {
             "target": "/redfish/v1/Chassis/1U/Sensors/TotalEnergy/Actions/Sensor.ResetMetrics"
         }
     },
     "@odata.id": "/redfish/v1/Chassis/1U/Sensors/TotalEnergy",
-    "@Redfish.Copyright": "Copyright 2014-2021 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

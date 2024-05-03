@@ -1,5 +1,5 @@
 {
-    "@odata.type": "#Sensor.v1_2_0.Sensor",
+    "@odata.type": "#Sensor.v1_8_1.Sensor",
     "Id": "PS1Out12VCurrent",
     "Name": "Power Supply #1 12V Output Current",
     "ReadingType": "Current",
@@ -28,7 +28,6 @@
             "DwellTime": "PT10M"
         }
     },
-    "Oem": {},
     "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS1Out12VCurrent",
-    "@Redfish.Copyright": "Copyright 2014-2021 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

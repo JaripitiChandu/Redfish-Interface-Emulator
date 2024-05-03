@@ -1,5 +1,5 @@
 {
-    "@odata.type": "#Power.v1_7_0.Power",
+    "@odata.type": "#Power.v1_7_2.Power",
     "Id": "Power",
     "Name": "Power",
     "PowerControl": [
@@ -34,8 +34,7 @@
             "Status": {
                 "State": "Enabled",
                 "Health": "OK"
-            },
-            "Oem": {}
+            }
         }
     ],
     "Voltages": [
@@ -103,7 +102,6 @@
                 "State": "Enabled",
                 "Health": "Warning"
             },
-            "Oem": {},
             "PowerSupplyType": "AC",
             "LineInputVoltageType": "ACWideRange",
             "LineInputVoltage": 120,
@@ -136,7 +134,6 @@
             ]
         }
     ],
-    "Oem": {},
     "@odata.id": "/redfish/v1/Chassis/1U/Power",
-    "@Redfish.Copyright": "Copyright 2014-2021 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

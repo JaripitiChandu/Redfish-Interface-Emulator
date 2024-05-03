@@ -1,11 +1,12 @@
 {
-    "@odata.type": "#ComputerSystem.v1_1_0.ComputerSystem",
+    "@odata.type": "#ComputerSystem.v1_22_0.ComputerSystem",
     "Id": "437XR1138R2",
     "Name": "WebFrontEnd483",
     "SystemType": "Physical",
     "AssetTag": "Chicago-45Z-2381",
     "Manufacturer": "Contoso",
-    "Model": "3500RX",
+    "Model": "3500",
+    "SubModel": "RX",
     "SKU": "8675309",
     "SerialNumber": "437XR1138R2",
     "PartNumber": "224071-J23",
@@ -15,8 +16,11 @@
     "Status": {
         "State": "Enabled",
         "Health": "OK",
-        "HealthRollUp": "OK"
+        "HealthRollup": "OK"
     },
+    "HostingRoles": [
+        "ApplicationServer"
+    ],
     "IndicatorLED": "Off",
     "PowerState": "On",
     "Boot": {
@@ -49,46 +53,47 @@
     ],
     "Oem": {
         "Contoso": {
-            "@odata.type": "http://Contoso.com/Schema#Contoso.ComputerSystem",
+            "@odata.type": "#Contoso.ComputerSystem",
             "ProductionLocation": {
                 "FacilityName": "PacWest Production Facility",
                 "Country": "USA"
             }
         },
         "Chipwise": {
-            "@odata.type": "http://Chipwise.com/Schema#Chipwise.ComputerSystem",
+            "@odata.type": "#Chipwise.ComputerSystem",
             "Style": "Executive"
         }
     },
-    "BiosVersion": "P79 v1.33 (02/28/2015)",
+    "BiosVersion": "P79 v1.45 (12/06/2017)",
     "ProcessorSummary": {
         "Count": 2,
-        "ProcessorFamily": "Multi-Core Intel(R) Xeon(R) processor 7xxx Series",
+        "Model": "Multi-Core Intel(R) Xeon(R) processor 7xxx Series",
+        "LogicalProcessorCount": 16,
+        "CoreCount": 8,
         "Status": {
             "State": "Enabled",
             "Health": "OK",
-            "HealthRollUp": "OK"
+            "HealthRollup": "OK"
         }
     },
     "MemorySummary": {
         "TotalSystemMemoryGiB": 96,
+        "TotalSystemPersistentMemoryGiB": 0,
+        "MemoryMirroring": "None",
         "Status": {
             "State": "Enabled",
             "Health": "OK",
-            "HealthRollUp": "OK"
+            "HealthRollup": "OK"
         }
     },
     "Bios": {
-        "@odata.id": "/redfish/v1/Systems/437XR1138R2/BIOS"
+        "@odata.id": "/redfish/v1/Systems/437XR1138R2/Bios"
     },
     "Processors": {
         "@odata.id": "/redfish/v1/Systems/437XR1138R2/Processors"
     },
     "Memory": {
         "@odata.id": "/redfish/v1/Systems/437XR1138R2/Memory"
-    },
-    "EthernetInterfaces": {
-        "@odata.id": "/redfish/v1/Systems/437XR1138R2/EthernetInterfaces"
     },
     "SimpleStorage": {
         "@odata.id": "/redfish/v1/Systems/437XR1138R2/SimpleStorage"
@@ -128,7 +133,6 @@
             }
         }
     },
-    "@odata.context": "/redfish/v1/$metadata#ComputerSystem.ComputerSystem",
     "@odata.id": "/redfish/v1/Systems/437XR1138R2",
-    "@Redfish.Copyright": "Copyright 2014-2016 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

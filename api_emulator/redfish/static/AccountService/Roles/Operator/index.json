@@ -1,10 +1,7 @@
 {
-    "@odata.context": "/redfish/v1/$metadata#AccountService/Links/Members/Roles/Links/Members/$entity",
-    "@odata.id": "/redfish/v1/AccountService/Roles/Operator",
-    "@odata.type": "#Role.1.0.0.Role",
+    "@odata.type": "#Role.v1_3_1.Role",
     "Id": "Operator",
     "Name": "User Role",
-    "Modified": "2013-09-11T17:03:55+00:00",
     "Description": "Operator User Role",
     "IsPredefined": true,
     "AssignedPrivileges": [
@@ -12,5 +9,7 @@
         "ConfigureSelf",
         "ConfigureComponents"
     ],
-    "OEMPrivileges": [ ]
+    "OemPrivileges": [],
+    "@odata.id": "/redfish/v1/AccountService/Roles/Operator",
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

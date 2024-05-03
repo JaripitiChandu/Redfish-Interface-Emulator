@@ -1,5 +1,5 @@
 {
-    "@odata.type": "#LogService.v1_0_2.LogService",
+    "@odata.type": "#LogService.v1_6_0.LogService",
     "Id": "Log",
     "Name": "System Log Service",
     "MaxNumberOfRecords": 1000,
@@ -11,17 +11,14 @@
         "State": "Enabled",
         "Health": "OK"
     },
-    "Oem": {},
     "Actions": {
         "#LogService.ClearLog": {
-            "target": "/redfish/v1/Managers/BMC/LogServices/Log/Actions/LogService.Reset"
-        },
-        "Oem": {}
+            "target": "/redfish/v1/Managers/BMC/LogServices/Log/Actions/LogService.ClearLog"
+        }
     },
     "Entries": {
         "@odata.id": "/redfish/v1/Managers/BMC/LogServices/Log/Entries"
     },
-    "@odata.context": "/redfish/v1/$metadata#Managers/Members/BMC/LogServices/Members/$entity",
     "@odata.id": "/redfish/v1/Managers/BMC/LogServices/Log",
-    "@Redfish.Copyright": "Copyright 2014-2016 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

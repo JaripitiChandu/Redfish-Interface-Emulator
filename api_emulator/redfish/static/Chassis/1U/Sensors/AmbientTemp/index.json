@@ -1,8 +1,7 @@
 {
-    "@odata.type": "#Sensor.v1_2_0.Sensor",
+    "@odata.type": "#Sensor.v1_8_1.Sensor",
     "Id": "AmbientTemp",
     "Name": "Ambient Temperature",
-    "Oem": {},
     "PhysicalContext": "Room",
     "Status": {
         "State": "Enabled",
@@ -13,5 +12,5 @@
     "ReadingRangeMin": 0,
     "ReadingRangeMax": 75,
     "@odata.id": "/redfish/v1/Chassis/1U/Sensors/AmbientTemp",
-    "@Redfish.Copyright": "Copyright 2014-2021 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

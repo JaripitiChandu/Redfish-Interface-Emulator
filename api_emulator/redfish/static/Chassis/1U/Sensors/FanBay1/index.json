@@ -1,8 +1,7 @@
 {
-    "@odata.type": "#Sensor.v1_2_0.Sensor",
+    "@odata.type": "#Sensor.v1_8_1.Sensor",
     "Id": "FanBay1",
     "Name": "Chassis Fan #1",
-    "Oem": {},
     "PhysicalContext": "Chassis",
     "Reading": 45,
     "ReadingRangeMax": 100,
@@ -22,5 +21,5 @@
         }
     },
     "@odata.id": "/redfish/v1/Chassis/1U/Sensors/FanBay1",
-    "@Redfish.Copyright": "Copyright 2014-2021 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

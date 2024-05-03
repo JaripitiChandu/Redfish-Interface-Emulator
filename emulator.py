@@ -512,8 +512,8 @@ def main():
             print (' * Use HTTP')
             kwargs = {'debug': args.debug, 'port': args.port}
 
-        if not args.debug:
-            kwargs['host'] = '0.0.0.0'
+        # if not args.debug:
+        kwargs['host'] = '0.0.0.0'
 
         print (' * Running in', SPEC, 'mode')
         g.app.run(**kwargs)
