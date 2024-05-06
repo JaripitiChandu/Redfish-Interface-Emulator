@@ -1,0 +1,94 @@
+{
+    "Id": "UCSC-M-V5Q50G_FCH272671H7",
+    "Name": "UCS VIC 15428",
+    "Manufacturer": "Cisco Systems Inc",
+    "SerialNumber": "FCH272671H7",
+    "Model": "UCSC-M-V5Q50G",
+    "PartNumber": "73-102508-05",
+    "Actions": {
+        "#NetworkAdapter.ResetSettingsToDefault": {
+            "target": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/Actions/NetworkAdapter.ResetSettingsToDefault"
+        }
+    },
+    "Controllers": [
+        {
+            "FirmwarePackageVersion": "5.3(3.10)",
+            "Links": {
+                "NetworkPorts": [
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkPorts/Port-1"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkPorts/Port-2"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkPorts/Port-3"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkPorts/Port-4"
+                    }
+                ],
+                "NetworkPorts@odata.count": 4,
+                "NetworkDeviceFunctions": [
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkDeviceFunctions/eth0"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkDeviceFunctions/eth1"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkDeviceFunctions/fc0"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkDeviceFunctions/fc1"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkDeviceFunctions/eth2"
+                    }
+                ],
+                "NetworkDeviceFunctions@odata.count": 5
+            },
+            "ControllerCapabilities": {
+                "NetworkPortCount": 4,
+                "NetworkDeviceFunctionCount": 5
+            },
+            "Location": {
+                "PartLocation": {
+                    "LocationType": "Slot",
+                    "ServiceLabel": "SlotID:MLOM"
+                }
+            }
+        }
+    ],
+    "Oem": {
+        "Cisco": {
+            "@odata.type": "#CiscoUCSExtensions.v1_0_0.CiscoUCSExtensions",
+            "BaseMac": "40:14:82:82:02:74",
+            "VicConfiguration": {
+                "LldpEnabled": true,
+                "NivEnabled": false,
+                "FipEnabled": true,
+                "PhysicalNicModeEnabled": false,
+                "AzureQosEnabled": false,
+                "PortChannelEnabled": true,
+                "ConfigurationPending": false
+            }
+        }
+    },
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7",
+    "@odata.type": "#NetworkAdapter.v1_2_0.NetworkAdapter",
+    "@odata.context": "/redfish/v1/$metadata#NetworkAdapter.NetworkAdapter",
+    "NetworkDeviceFunctions": {
+        "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkDeviceFunctions"
+    },
+    "NetworkPorts": {
+        "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkPorts"
+    },
+    "Assembly": {
+        "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/Assembly"
+    }
+}

@@ -1,0 +1,25 @@
+{
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkDeviceFunctions/eth0"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkDeviceFunctions/eth1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkDeviceFunctions/fc0"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkDeviceFunctions/fc1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkDeviceFunctions/eth2"
+        }
+    ],
+    "Members@odata.count": 5,
+    "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkDeviceFunctions",
+    "@odata.type": "#NetworkDeviceFunctionCollection.NetworkDeviceFunctionCollection",
+    "@odata.context": "/redfish/v1/$metadata#NetworkDeviceFunctionCollection.NetworkDeviceFunctionCollection",
+    "Description": "Collection of NetworkDeviceFunction resource instances for this system",
+    "Name": "NetworkDeviceFunction Collection"
+}

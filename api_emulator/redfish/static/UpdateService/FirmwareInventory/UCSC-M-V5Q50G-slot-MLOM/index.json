@@ -1,0 +1,9 @@
+{
+    "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory/UCSC-M-V5Q50G-slot-MLOM",
+    "@odata.type": "#SoftwareInventory.v1_2_1.SoftwareInventory",
+    "@odata.context": "/redfish/v1/$metadata#SoftwareInventory.SoftwareInventory",
+    "Id": "UCSC-M-V5Q50G-slot-MLOM",
+    "Name": "UCSC-M-V5Q50G-slot-MLOM",
+    "Version": "5.3(3.10)",
+    "Updateable": true
+}

@@ -1,0 +1,217 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID",
+    "@odata.type": "#Storage.v1_8_0.Storage",
+    "@odata.context": "/redfish/v1/$metadata#Storage.Storage",
+    "Description": "Storage Controller",
+    "Drives": [
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/2"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/3"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/4"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/5"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/6"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/7"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/8"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/9"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/10"
+        }
+    ],
+    "Volumes": {
+        "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Volumes"
+    },
+    "Links": {
+        "Oem": {
+            "Cisco": {
+                "PCIeInfo": [
+                    {
+                        "@odata.id": "/redfish/v1/Systems/WZP27430FB7/PCIeDevices/MRAID/PCIeFunctions/0"
+                    }
+                ],
+                "SPDMCertificate": {
+                    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Oem/Cisco/SPDMDevice/Certificates/MRAID_0"
+                }
+            }
+        }
+    },
+    "Id": "MRAID",
+    "Name": "MRAID",
+    "StorageControllers": [
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID",
+            "SupportedControllerProtocols": [
+                "PCIe"
+            ],
+            "SupportedDeviceProtocols": [
+                "SATA",
+                "SAS",
+                "NVMe"
+            ],
+            "MemberId": "MRAID",
+            "Model": "UCSC-RAID-HP",
+            "Name": "Cisco Tri-Mode 24G SAS RAID Controller w/4GB Cache",
+            "FirmwareVersion": "8.4.4.0-00065-00001_1B00",
+            "Manufacturer": "Cisco Systems Inc",
+            "SupportedRAIDTypes": [
+                "RAID0",
+                "RAID1",
+                "RAID5",
+                "RAID6",
+                "RAID10",
+                "RAID50",
+                "RAID60"
+            ],
+            "SerialNumber": "SPD2703282",
+            "CacheSummary": {
+                "PersistentCacheSizeMiB": 3877,
+                "TotalCacheSizeMiB": 4096
+            },
+            "Oem": {
+                "Cisco": {
+                    "StorageControllerBiosVersion": "0x08040707",
+                    "PCIeSlot": "MRAID",
+                    "ChipRevision": "00003",
+                    "StorageInstanceId": 2,
+                    "ControllerInterfaceType": "Sas",
+                    "ControllerStatus": "Optimal",
+                    "StorageControllerDefaultDriveMode": "UnConfiguredGood",
+                    "HasForeignConfig": false,
+                    "ForeignConfigPhysicalDriveCount": 0,
+                    "DefaultStripeSizeKiBytes": 64,
+                    "SupportedStripeSizesKiBytes": [
+                        64
+                    ],
+                    "MaximumVolumesPerController": 240,
+                    "MaximumVolumesPerDriveGroup": 16,
+                    "ControllerType": "Raid",
+                    "FullDiskEncryptionCapable": true,
+                    "ControllerEncryptionEnabled": false,
+                    "EccBucketLeakRate": 1440,
+                    "ConnectedSasExpander": false,
+                    "MemoryCorrectableErrors": 0,
+                    "PinnedCacheState": 0,
+                    "RebuildRatePercent": 30,
+                    "SubOEMId": 0,
+                    "Bbu": {
+                        "BbuDeviceName": "",
+                        "BbuVendor": "LSI",
+                        "BbuManufacturingDate": "2023-04-27",
+                        "BbuModuleVersion": "N/A",
+                        "BbuSerialNumber": 38629,
+                        "BbuType": "TMMC",
+                        "BbuStatus": "Optimal",
+                        "BbuChargingState": "Unknown",
+                        "IsCapacitor": true,
+                        "BbuDesignVoltageInVolts": 10.5,
+                        "BbuVoltageInVolts": 8.959,
+                        "BbuCurrentInAmps": 0,
+                        "BbuTemperatureInCel": 19,
+                        "IsVoltageLow": false,
+                        "IsTemperatureHigh": false,
+                        "IsBatteryPresent": true,
+                        "IsLearnCycleTransparent": true,
+                        "LearnMode": "Auto",
+                        "LearnCycleProgressStatus": "Unknown",
+                        "LearnCycleProgressStartTimeStamp": "0",
+                        "LearnCycleProgressEndTimeStamp": "0",
+                        "NextLearnCycleTimeStamp": "N/A",
+                        "IsLearnCycleRequested": false,
+                        "CapacitanceInPercent": 0,
+                        "DesignCapacityInJoules": 429,
+                        "PackEnergyInJoules": 313,
+                        "RemainingPoolSpaceInPercent": 0
+                    }
+                }
+            },
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK",
+                "HealthRollup": "OK"
+            },
+            "Location": {
+                "PartLocation": {
+                    "LocationType": "Slot",
+                    "ServiceLabel": "MRAID"
+                }
+            }
+        }
+    ],
+    "Actions": {
+        "Oem": {
+            "#Cisco.EncryptionOp": {
+                "target": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Actions/Oem/Cisco.EncryptionOp",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.EncryptionOp",
+                "EnOpName@Redfish.AllowableValues": [
+                    "Enable",
+                    "Disable",
+                    "Migrate",
+                    "Modify",
+                    "Unlock"
+                ],
+                "KeyId@Redfish.AllowableValues": [
+                    "A unique string generated by requester, min is 1 and max is 255"
+                ],
+                "NewEncryptionKey@Redfish.AllowableValues": [
+                    "A unique string generated by requester, min is 1 and max is 32"
+                ],
+                "Remote@Redfish.AllowableValues": [
+                    true,
+                    false
+                ],
+                "EncryptionKey@Redfish.AllowableValues": [
+                    "A unique string generated by requester, min is 1 and max is 32"
+                ],
+                "DriveEncryptionModeRemote@Redfish.AllowableValues": [
+                    true,
+                    false
+                ]
+            },
+            "#Cisco.ClearConfig": {
+                "target": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Actions/Oem/Cisco.ClearConfig",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.ClearConfig"
+            },
+            "#Cisco.DoForeignConfig": {
+                "target": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Actions/Oem/Cisco.DoForeignConfig",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.DoForeignConfig",
+                "ForeignCfgOp@Redfish.AllowableValues": [
+                    "Clear",
+                    "Import"
+                ]
+            },
+            "#Cisco.ResetToFactoryDefaults": {
+                "target": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Actions/Oem/Cisco.ResetToFactoryDefaults",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.ResetToFactoryDefaults"
+            },
+            "#Cisco.UnpinCache": {
+                "target": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Actions/Oem/Cisco.UnpinCache",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.UnpinCache",
+                "DiscardType@Redfish.AllowableValues": [
+                    "all",
+                    "missing"
+                ]
+            },
+            "#Cisco.BbuStartLearnCycle": {
+                "target": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Actions/Oem/Cisco.BbuStartLearnCycle",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.BbuStartLearnCycle"
+            }
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/PCIeDeviceCollection",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "PCIeDeviceCollection",
+    "Id": "PCIeDeviceCollection",
+    "Name": "PCIeDeviceCollection Schema file",
+    "Description": "PCIeDeviceCollection Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/PCIeDeviceCollection.json",
+            "Uri": "/redfish/schemas/PCIeDeviceCollection.json",
+            "Language": "en"
+        }
+    ]
+}

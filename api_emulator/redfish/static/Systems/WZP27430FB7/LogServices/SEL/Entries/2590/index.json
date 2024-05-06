@@ -1,0 +1,16 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/LogServices/SEL/Entries/2590",
+    "@odata.type": "#LogEntry.v1_4_0.LogEntry",
+    "@odata.context": "/redfish/v1/$metadata#LogEntry.LogEntry",
+    "Message": "LED_HLTH_STATUS: Platform sensor, ON event was asserted",
+    "EntryCode": "State Asserted",
+    "EventType": "StatusChange",
+    "Created": "2024-05-03T06:21:30+00:00",
+    "EventTimestamp": "2024-05-03T06:21:30+00:00",
+    "Id": "2590",
+    "EventId": "2590",
+    "EntryType": "SEL",
+    "Name": "Log Entry 2590",
+    "Description": "Log Entry 2590",
+    "Severity": "OK"
+}

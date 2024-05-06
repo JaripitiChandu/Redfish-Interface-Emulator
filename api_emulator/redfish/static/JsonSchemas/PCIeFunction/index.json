@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/PCIeFunction",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "PCIeFunction",
+    "Id": "PCIeFunction",
+    "Name": "PCIeFunction Schema file",
+    "Description": "PCIeFunction Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/PCIeFunction.json",
+            "Uri": "/redfish/schemas/PCIeFunction.json",
+            "Language": "en"
+        }
+    ]
+}

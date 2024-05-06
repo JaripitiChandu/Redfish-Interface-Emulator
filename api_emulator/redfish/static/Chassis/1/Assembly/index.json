@@ -1,0 +1,30 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/Assembly",
+    "@odata.type": "#Assembly.v1_2_3.Assembly",
+    "@odata.context": "/redfish/v1/$metadata#Assembly.Assembly",
+    "Id": "Assembly",
+    "Name": "Assembly",
+    "Description": "Assembly",
+    "Assemblies": [
+        {
+            "PhysicalContext": "Chassis",
+            "MemberId": "0",
+            "@odata.id": "/redfish/v1/Chassis/1/Assembly#/Assemblies/0",
+            "Producer": "Cisco Systems Inc",
+            "Model": "UCSC-C220-M7S",
+            "Version": "V02",
+            "PartNumber": "74-127173-02",
+            "SerialNumber": "WZP27430FB7"
+        },
+        {
+            "PhysicalContext": "SystemBoard",
+            "MemberId": "1",
+            "@odata.id": "/redfish/v1/Chassis/1/Assembly#/Assemblies/1",
+            "Producer": "Cisco Systems Inc",
+            "Model": "UCSC-C220-M7S",
+            "Version": "V02",
+            "PartNumber": "74-127171-02",
+            "SerialNumber": "WZP2733Z1E2"
+        }
+    ]
+}

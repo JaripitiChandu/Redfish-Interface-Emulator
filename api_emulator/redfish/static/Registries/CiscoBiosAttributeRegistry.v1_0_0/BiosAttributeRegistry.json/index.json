@@ -1,0 +1,4004 @@
+{
+    "Id": "BiosAttributeRegistry",
+    "Language": "en",
+    "@odata.type": "#AttributeRegistry.v1_3_1.AttributeRegistry",
+    "Name": "BIOS Attribute Registry",
+    "@odata.id": "/redfish/v1/Registries/CiscoBiosAttributeRegistry.v1_0_0/BiosAttributeRegistry",
+    "OwningEntity": "Cisco Systems Inc.",
+    "@odata.context": "/redfish/v1/$metadata#Registries/Members/$entity/BiosAttributeRegistry",
+    "RegistryVersion": "1.0.0",
+    "SupportedSystems": [
+        {
+            "FirmwareVersion": "4.3(4.230033)",
+            "ProductName": "UCS C220 M7S",
+            "SystemId": "WZP27430FB7"
+        }
+    ],
+    "RegistryEntries": {
+        "Attributes": [
+            {
+                "AttributeName": "ErrorCheckScrub",
+                "DefaultValue": "Enabled with Result Collection",
+                "DisplayName": "Error Check Scrub",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled without Result Collection",
+                        "ValueName": "Enabled without Result Collection"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled with Result Collection",
+                        "ValueName": "Enabled with Result Collection"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "SelectMemoryRAS",
+                "DefaultValue": "ADDDC Sparing",
+                "DisplayName": "Select Memory RAS Configuration",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Mirror Mode 1LM",
+                        "ValueName": "Mirror Mode 1LM"
+                    },
+                    {
+                        "ValueDisplayName": "ADDDC Sparing",
+                        "ValueName": "ADDDC Sparing"
+                    },
+                    {
+                        "ValueDisplayName": "Partial Mirror mode 1LM",
+                        "ValueName": "Partial Mirror mode 1LM"
+                    },
+                    {
+                        "ValueDisplayName": "Maximum Performance",
+                        "ValueName": "Maximum Performance"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "OptimizedPowerMode",
+                "DefaultValue": "Disabled",
+                "DisplayName": "Optimized Power Mode",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "X2ApicOptOut",
+                "DefaultValue": "Disabled",
+                "DisplayName": "X2APIC Opt-Out Flag",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "SelectPprType",
+                "DefaultValue": "Hard PPR",
+                "DisplayName": "Select PPR Type",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Hard PPR",
+                        "ValueName": "Hard PPR"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PrmrrSize",
+                "DefaultValue": "256M",
+                "DisplayName": "PRMRR Size",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Invalid Config.",
+                        "ValueName": "Invalid Config."
+                    },
+                    {
+                        "ValueDisplayName": "128M",
+                        "ValueName": "128M"
+                    },
+                    {
+                        "ValueDisplayName": "256M",
+                        "ValueName": "256M"
+                    },
+                    {
+                        "ValueDisplayName": "512M",
+                        "ValueName": "512M"
+                    },
+                    {
+                        "ValueDisplayName": "1G",
+                        "ValueName": "1G"
+                    },
+                    {
+                        "ValueDisplayName": "2G",
+                        "ValueName": "2G"
+                    },
+                    {
+                        "ValueDisplayName": "4G",
+                        "ValueName": "4G"
+                    },
+                    {
+                        "ValueDisplayName": "8G",
+                        "ValueName": "8G"
+                    },
+                    {
+                        "ValueDisplayName": "16G",
+                        "ValueName": "16G"
+                    },
+                    {
+                        "ValueDisplayName": "32G",
+                        "ValueName": "32G"
+                    },
+                    {
+                        "ValueDisplayName": "64G",
+                        "ValueName": "64G"
+                    },
+                    {
+                        "ValueDisplayName": "128G",
+                        "ValueName": "128G"
+                    },
+                    {
+                        "ValueDisplayName": "256G",
+                        "ValueName": "256G"
+                    },
+                    {
+                        "ValueDisplayName": "512G",
+                        "ValueName": "512G"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PcieSlotMLOMLinkSpeed",
+                "DefaultValue": "Auto",
+                "DisplayName": "MLOM Link Speed",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Auto",
+                        "ValueName": "Auto"
+                    },
+                    {
+                        "ValueDisplayName": "GEN1",
+                        "ValueName": "GEN1"
+                    },
+                    {
+                        "ValueDisplayName": "GEN2",
+                        "ValueName": "GEN2"
+                    },
+                    {
+                        "ValueDisplayName": "GEN3",
+                        "ValueName": "GEN3"
+                    },
+                    {
+                        "ValueDisplayName": "GEN4",
+                        "ValueName": "GEN4"
+                    },
+                    {
+                        "ValueDisplayName": "GEN5",
+                        "ValueName": "GEN5"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PartialCacheLineSparing",
+                "DefaultValue": "Disabled",
+                "DisplayName": "Partial Cache Line Sparing",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "MemoryMappedIOAbove4GB",
+                "DefaultValue": "Enabled",
+                "DisplayName": "Above 4G Decoding",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "HardwarePrefetch",
+                "DefaultValue": "Enabled",
+                "DisplayName": "Hardware Prefetcher",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "AdjacentCacheLinePrefetch",
+                "DefaultValue": "Enabled",
+                "DisplayName": "Adjacent Cache Line Prefetcher",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "DcuStreamerPrefetch",
+                "DefaultValue": "Enabled",
+                "DisplayName": "DCU Streamer Prefetch",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "DcuIpPrefetch",
+                "DefaultValue": "Enabled",
+                "DisplayName": "DCU IP Prefetcher",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "ProcessorC1E",
+                "DefaultValue": "Disabled",
+                "DisplayName": "Processor C1E",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "ProcessorC6Report",
+                "DefaultValue": "Enabled",
+                "DisplayName": "Processor C6 Report",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "IntelTurboBoostTech",
+                "DefaultValue": "Enabled",
+                "DisplayName": "Turbo Mode",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PsdCoordType",
+                "DefaultValue": "HW ALL",
+                "DisplayName": "EIST PSD Function",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "HW ALL",
+                        "ValueName": "HW ALL"
+                    },
+                    {
+                        "ValueDisplayName": "SW ALL",
+                        "ValueName": "SW ALL"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "BootPerformanceMode",
+                "DefaultValue": "Max Performance",
+                "DisplayName": "Boot Performance Mode",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Max Performance",
+                        "ValueName": "Max Performance"
+                    },
+                    {
+                        "ValueDisplayName": "Max Efficient",
+                        "ValueName": "Max Efficient"
+                    },
+                    {
+                        "ValueDisplayName": "Set by Intel NM",
+                        "ValueName": "Set by Intel NM"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PcieSlotMLOMOptionROM",
+                "DefaultValue": "Enabled",
+                "DisplayName": "MLOM OptionROM",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "UFSDisable",
+                "DefaultValue": "Enabled",
+                "DisplayName": "Uncore Frequency Scaling",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "EnhancedIntelSpeedStep",
+                "DefaultValue": "Enabled",
+                "DisplayName": "SpeedStep (Pstates)",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "ConfigTDPLevel",
+                "DefaultValue": "Normal",
+                "DisplayName": "Configurable TDP Level",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Normal",
+                        "ValueName": "Normal"
+                    },
+                    {
+                        "ValueDisplayName": "Level 1",
+                        "ValueName": "Level 1"
+                    },
+                    {
+                        "ValueDisplayName": "Level 2",
+                        "ValueName": "Level 2"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PcieSlot3LinkSpeed",
+                "DefaultValue": "Auto",
+                "DisplayName": "PCIe Slot 3 Link Speed",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Auto",
+                        "ValueName": "Auto"
+                    },
+                    {
+                        "ValueDisplayName": "GEN1",
+                        "ValueName": "GEN1"
+                    },
+                    {
+                        "ValueDisplayName": "GEN2",
+                        "ValueName": "GEN2"
+                    },
+                    {
+                        "ValueDisplayName": "GEN3",
+                        "ValueName": "GEN3"
+                    },
+                    {
+                        "ValueDisplayName": "GEN4",
+                        "ValueName": "GEN4"
+                    },
+                    {
+                        "ValueDisplayName": "GEN5",
+                        "ValueName": "GEN5"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PcieSlot3OptionROM",
+                "DefaultValue": "Enabled",
+                "DisplayName": "PCIe Slot 3 OptionROM",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "IntelHyperThread",
+                "DefaultValue": "Enabled",
+                "DisplayName": "Hyper-Threading [ALL]",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PcieSlotMRAIDLinkSpeed",
+                "DefaultValue": "Auto",
+                "DisplayName": "MRAID Link Speed",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Auto",
+                        "ValueName": "Auto"
+                    },
+                    {
+                        "ValueDisplayName": "GEN1",
+                        "ValueName": "GEN1"
+                    },
+                    {
+                        "ValueDisplayName": "GEN2",
+                        "ValueName": "GEN2"
+                    },
+                    {
+                        "ValueDisplayName": "GEN3",
+                        "ValueName": "GEN3"
+                    },
+                    {
+                        "ValueDisplayName": "GEN4",
+                        "ValueName": "GEN4"
+                    },
+                    {
+                        "ValueDisplayName": "GEN5",
+                        "ValueName": "GEN5"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "CPUPerformance",
+                "DefaultValue": "Custom",
+                "DisplayName": "CPU Performance",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enterprise",
+                        "ValueName": "Enterprise"
+                    },
+                    {
+                        "ValueDisplayName": "High Throughput",
+                        "ValueName": "High Throughput"
+                    },
+                    {
+                        "ValueDisplayName": "HPC",
+                        "ValueName": "HPC"
+                    },
+                    {
+                        "ValueDisplayName": "Custom",
+                        "ValueName": "Custom"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PcieSlotMRAIDOptionROM",
+                "DefaultValue": "Enabled",
+                "DisplayName": "MRAID OptionROM",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PcieSlotFrontNvme1LinkSpeed",
+                "DefaultValue": "Auto",
+                "DisplayName": "Front NVME 1 Link Speed",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Auto",
+                        "ValueName": "Auto"
+                    },
+                    {
+                        "ValueDisplayName": "GEN1",
+                        "ValueName": "GEN1"
+                    },
+                    {
+                        "ValueDisplayName": "GEN2",
+                        "ValueName": "GEN2"
+                    },
+                    {
+                        "ValueDisplayName": "GEN3",
+                        "ValueName": "GEN3"
+                    },
+                    {
+                        "ValueDisplayName": "GEN4",
+                        "ValueName": "GEN4"
+                    },
+                    {
+                        "ValueDisplayName": "GEN5",
+                        "ValueName": "GEN5"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PcieSlotFrontNvme1OptionROM",
+                "DefaultValue": "Enabled",
+                "DisplayName": "Front NVME-1 OptionRom",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "cdnEnable",
+                "DefaultValue": "Enabled",
+                "DisplayName": "CDN Control",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PcieSlotFrontNvme2LinkSpeed",
+                "DefaultValue": "Auto",
+                "DisplayName": "Front NVME 2 Link Speed",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Auto",
+                        "ValueName": "Auto"
+                    },
+                    {
+                        "ValueDisplayName": "GEN1",
+                        "ValueName": "GEN1"
+                    },
+                    {
+                        "ValueDisplayName": "GEN2",
+                        "ValueName": "GEN2"
+                    },
+                    {
+                        "ValueDisplayName": "GEN3",
+                        "ValueName": "GEN3"
+                    },
+                    {
+                        "ValueDisplayName": "GEN4",
+                        "ValueName": "GEN4"
+                    },
+                    {
+                        "ValueDisplayName": "GEN5",
+                        "ValueName": "GEN5"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PcieSlotsCdnEnable",
+                "DefaultValue": "Disabled",
+                "DisplayName": "PCIe Slots CDN Control",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PcieSlotFrontNvme2OptionROM",
+                "DefaultValue": "Enabled",
+                "DisplayName": "Front NVME-2 OptionRom",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "ProcessorCMCI",
+                "DefaultValue": "Enabled",
+                "DisplayName": "Processor CMCI",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PcieSlotFrontNvme3LinkSpeed",
+                "DefaultValue": "Auto",
+                "DisplayName": "Front NVME 3 Link Speed",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Auto",
+                        "ValueName": "Auto"
+                    },
+                    {
+                        "ValueDisplayName": "GEN1",
+                        "ValueName": "GEN1"
+                    },
+                    {
+                        "ValueDisplayName": "GEN2",
+                        "ValueName": "GEN2"
+                    },
+                    {
+                        "ValueDisplayName": "GEN3",
+                        "ValueName": "GEN3"
+                    },
+                    {
+                        "ValueDisplayName": "GEN4",
+                        "ValueName": "GEN4"
+                    },
+                    {
+                        "ValueDisplayName": "GEN5",
+                        "ValueName": "GEN5"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "CiscoAdaptiveMemTraining",
+                "DefaultValue": "Enabled",
+                "DisplayName": "Adaptive Memory Training",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "CiscoOpromLaunchOptimization",
+                "DefaultValue": "Enabled",
+                "DisplayName": "OptionROM Launch Optimization",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "CiscoDebugLevel",
+                "DefaultValue": "Minimum",
+                "DisplayName": "BIOS Techlog Level",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Maximum",
+                        "ValueName": "Maximum"
+                    },
+                    {
+                        "ValueDisplayName": "Normal",
+                        "ValueName": "Normal"
+                    },
+                    {
+                        "ValueDisplayName": "Minimum",
+                        "ValueName": "Minimum"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "VMDEnable",
+                "DefaultValue": "Disabled",
+                "DisplayName": "VMD Enable",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PCIeRASSupport",
+                "DefaultValue": "Enabled",
+                "DisplayName": "PCIe RAS Support",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PowerOnPassword",
+                "DefaultValue": "Disabled",
+                "DisplayName": "Power ON Password",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "VgaPriority",
+                "DefaultValue": "Onboard",
+                "DisplayName": "VGA Priority",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Onboard",
+                        "ValueName": "Onboard"
+                    },
+                    {
+                        "ValueDisplayName": "Offboard",
+                        "ValueName": "Offboard"
+                    },
+                    {
+                        "ValueDisplayName": "Onboard VGA Disabled",
+                        "ValueName": "Onboard VGA Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "CoreMultiProcessing",
+                "DefaultValue": "All",
+                "DisplayName": "Cores Enabled",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "All",
+                        "ValueName": "All"
+                    },
+                    {
+                        "ValueDisplayName": "1",
+                        "ValueName": "1"
+                    },
+                    {
+                        "ValueDisplayName": "2",
+                        "ValueName": "2"
+                    },
+                    {
+                        "ValueDisplayName": "3",
+                        "ValueName": "3"
+                    },
+                    {
+                        "ValueDisplayName": "4",
+                        "ValueName": "4"
+                    },
+                    {
+                        "ValueDisplayName": "5",
+                        "ValueName": "5"
+                    },
+                    {
+                        "ValueDisplayName": "6",
+                        "ValueName": "6"
+                    },
+                    {
+                        "ValueDisplayName": "7",
+                        "ValueName": "7"
+                    },
+                    {
+                        "ValueDisplayName": "8",
+                        "ValueName": "8"
+                    },
+                    {
+                        "ValueDisplayName": "9",
+                        "ValueName": "9"
+                    },
+                    {
+                        "ValueDisplayName": "10",
+                        "ValueName": "10"
+                    },
+                    {
+                        "ValueDisplayName": "11",
+                        "ValueName": "11"
+                    },
+                    {
+                        "ValueDisplayName": "12",
+                        "ValueName": "12"
+                    },
+                    {
+                        "ValueDisplayName": "13",
+                        "ValueName": "13"
+                    },
+                    {
+                        "ValueDisplayName": "14",
+                        "ValueName": "14"
+                    },
+                    {
+                        "ValueDisplayName": "15",
+                        "ValueName": "15"
+                    },
+                    {
+                        "ValueDisplayName": "16",
+                        "ValueName": "16"
+                    },
+                    {
+                        "ValueDisplayName": "17",
+                        "ValueName": "17"
+                    },
+                    {
+                        "ValueDisplayName": "18",
+                        "ValueName": "18"
+                    },
+                    {
+                        "ValueDisplayName": "19",
+                        "ValueName": "19"
+                    },
+                    {
+                        "ValueDisplayName": "20",
+                        "ValueName": "20"
+                    },
+                    {
+                        "ValueDisplayName": "21",
+                        "ValueName": "21"
+                    },
+                    {
+                        "ValueDisplayName": "22",
+                        "ValueName": "22"
+                    },
+                    {
+                        "ValueDisplayName": "23",
+                        "ValueName": "23"
+                    },
+                    {
+                        "ValueDisplayName": "24",
+                        "ValueName": "24"
+                    },
+                    {
+                        "ValueDisplayName": "25",
+                        "ValueName": "25"
+                    },
+                    {
+                        "ValueDisplayName": "26",
+                        "ValueName": "26"
+                    },
+                    {
+                        "ValueDisplayName": "27",
+                        "ValueName": "27"
+                    },
+                    {
+                        "ValueDisplayName": "28",
+                        "ValueName": "28"
+                    },
+                    {
+                        "ValueDisplayName": "29",
+                        "ValueName": "29"
+                    },
+                    {
+                        "ValueDisplayName": "30",
+                        "ValueName": "30"
+                    },
+                    {
+                        "ValueDisplayName": "31",
+                        "ValueName": "31"
+                    },
+                    {
+                        "ValueDisplayName": "32",
+                        "ValueName": "32"
+                    },
+                    {
+                        "ValueDisplayName": "33",
+                        "ValueName": "33"
+                    },
+                    {
+                        "ValueDisplayName": "34",
+                        "ValueName": "34"
+                    },
+                    {
+                        "ValueDisplayName": "35",
+                        "ValueName": "35"
+                    },
+                    {
+                        "ValueDisplayName": "36",
+                        "ValueName": "36"
+                    },
+                    {
+                        "ValueDisplayName": "37",
+                        "ValueName": "37"
+                    },
+                    {
+                        "ValueDisplayName": "38",
+                        "ValueName": "38"
+                    },
+                    {
+                        "ValueDisplayName": "39",
+                        "ValueName": "39"
+                    },
+                    {
+                        "ValueDisplayName": "40",
+                        "ValueName": "40"
+                    },
+                    {
+                        "ValueDisplayName": "41",
+                        "ValueName": "41"
+                    },
+                    {
+                        "ValueDisplayName": "42",
+                        "ValueName": "42"
+                    },
+                    {
+                        "ValueDisplayName": "43",
+                        "ValueName": "43"
+                    },
+                    {
+                        "ValueDisplayName": "44",
+                        "ValueName": "44"
+                    },
+                    {
+                        "ValueDisplayName": "45",
+                        "ValueName": "45"
+                    },
+                    {
+                        "ValueDisplayName": "46",
+                        "ValueName": "46"
+                    },
+                    {
+                        "ValueDisplayName": "47",
+                        "ValueName": "47"
+                    },
+                    {
+                        "ValueDisplayName": "48",
+                        "ValueName": "48"
+                    },
+                    {
+                        "ValueDisplayName": "49",
+                        "ValueName": "49"
+                    },
+                    {
+                        "ValueDisplayName": "50",
+                        "ValueName": "50"
+                    },
+                    {
+                        "ValueDisplayName": "51",
+                        "ValueName": "51"
+                    },
+                    {
+                        "ValueDisplayName": "52",
+                        "ValueName": "52"
+                    },
+                    {
+                        "ValueDisplayName": "53",
+                        "ValueName": "53"
+                    },
+                    {
+                        "ValueDisplayName": "54",
+                        "ValueName": "54"
+                    },
+                    {
+                        "ValueDisplayName": "55",
+                        "ValueName": "55"
+                    },
+                    {
+                        "ValueDisplayName": "56",
+                        "ValueName": "56"
+                    },
+                    {
+                        "ValueDisplayName": "57",
+                        "ValueName": "57"
+                    },
+                    {
+                        "ValueDisplayName": "58",
+                        "ValueName": "58"
+                    },
+                    {
+                        "ValueDisplayName": "59",
+                        "ValueName": "59"
+                    },
+                    {
+                        "ValueDisplayName": "60",
+                        "ValueName": "60"
+                    },
+                    {
+                        "ValueDisplayName": "61",
+                        "ValueName": "61"
+                    },
+                    {
+                        "ValueDisplayName": "62",
+                        "ValueName": "62"
+                    },
+                    {
+                        "ValueDisplayName": "63",
+                        "ValueName": "63"
+                    },
+                    {
+                        "ValueDisplayName": "64",
+                        "ValueName": "64"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "EnableMktme",
+                "DefaultValue": "Disabled",
+                "DisplayName": "Multikey Total Memory Encryption (MK-TME)",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "EnableSgx",
+                "DefaultValue": "Disabled",
+                "DisplayName": "SW Guard Extensions (SGX)",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "SgxFactoryReset",
+                "DefaultValue": "Disabled",
+                "DisplayName": "SGX Factory Reset",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "SgxPackageInfoInBandAccess",
+                "DefaultValue": "Disabled",
+                "DisplayName": "SGX Pkg info In-Band Access",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "SgxQoS",
+                "DefaultValue": "Enabled",
+                "DisplayName": "SGX QoS",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "EpochUpdate",
+                "DefaultValue": "Manual User Defined Owner EPOCHs",
+                "DisplayName": "Select Owner EPOCH input type",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "SGX Owner EPOCH activated",
+                        "ValueName": "SGX Owner EPOCH activated"
+                    },
+                    {
+                        "ValueDisplayName": "Change to New Random Owner EPOCHs",
+                        "ValueName": "Change to New Random Owner EPOCHs"
+                    },
+                    {
+                        "ValueDisplayName": "Manual User Defined Owner EPOCHs",
+                        "ValueName": "Manual User Defined Owner EPOCHs"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "SgxLeWr",
+                "DefaultValue": "Enabled",
+                "DisplayName": "SGX Write Enable",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "SgxAutoRegistrationAgent",
+                "DefaultValue": "Disabled",
+                "DisplayName": "SGX Auto MP Registration Agent",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "SgxEpoch0",
+                "DefaultValue": "0",
+                "DisplayName": "SProcessor Epoch 0",
+                "Hidden": false,
+                "WriteOnly": false,
+                "Type": "String",
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "ReadOnly": false,
+                "Value": [],
+                "ValueExpression": "^[0-9a-fA-F]{1,16}$"
+            },
+            {
+                "AttributeName": "KTIPrefetch",
+                "DefaultValue": "Auto",
+                "DisplayName": "UPI Prefetch",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Auto",
+                        "ValueName": "Auto"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "XPTPrefetch",
+                "DefaultValue": "Auto",
+                "DisplayName": "XPT Prefetch",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Auto",
+                        "ValueName": "Auto"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PwrPerfTuning",
+                "DefaultValue": "OS",
+                "DisplayName": "Power Performance Tuning",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "OS",
+                        "ValueName": "OS"
+                    },
+                    {
+                        "ValueDisplayName": "BIOS",
+                        "ValueName": "BIOS"
+                    },
+                    {
+                        "ValueDisplayName": "PECI",
+                        "ValueName": "PECI"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "CpuEngPerfBias",
+                "DefaultValue": "Balanced Performance",
+                "DisplayName": "Energy/Performance Bias Config",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Performance",
+                        "ValueName": "Performance"
+                    },
+                    {
+                        "ValueDisplayName": "Balanced Performance",
+                        "ValueName": "Balanced Performance"
+                    },
+                    {
+                        "ValueDisplayName": "Balanced Power",
+                        "ValueName": "Balanced Power"
+                    },
+                    {
+                        "ValueDisplayName": "Power",
+                        "ValueName": "Power"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PackageCstateLimit",
+                "DefaultValue": "C0 C1 State",
+                "DisplayName": "Package C State",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "No Limit",
+                        "ValueName": "No Limit"
+                    },
+                    {
+                        "ValueDisplayName": "Auto",
+                        "ValueName": "Auto"
+                    },
+                    {
+                        "ValueDisplayName": "C0 C1 State",
+                        "ValueName": "C0 C1 State"
+                    },
+                    {
+                        "ValueDisplayName": "C2",
+                        "ValueName": "C2"
+                    },
+                    {
+                        "ValueDisplayName": "C6 Non Retention",
+                        "ValueName": "C6 Non Retention"
+                    },
+                    {
+                        "ValueDisplayName": "C6 Retention",
+                        "ValueName": "C6 Retention"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "UsbPortRear",
+                "DefaultValue": "Enabled",
+                "DisplayName": "USB Port Rear",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "LLCPrefetch",
+                "DefaultValue": "Enabled",
+                "DisplayName": "LLC Prefetch",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "WorkLdConfig",
+                "DefaultValue": "IO Sensitive",
+                "DisplayName": "Workload Configuration",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Balanced",
+                        "ValueName": "Balanced"
+                    },
+                    {
+                        "ValueDisplayName": "IO Sensitive",
+                        "ValueName": "IO Sensitive"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "CpuHWPM",
+                "DefaultValue": "HWPM Native Mode",
+                "DisplayName": "Hardware P-States",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "HWPM Native Mode",
+                        "ValueName": "HWPM Native Mode"
+                    },
+                    {
+                        "ValueDisplayName": "HWPM OOB Mode",
+                        "ValueName": "HWPM OOB Mode"
+                    },
+                    {
+                        "ValueDisplayName": "Native Mode with no Legacy",
+                        "ValueName": "Native Mode with no Legacy"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "SNC",
+                "DefaultValue": "Disabled",
+                "DisplayName": "Sub NUMA Clustering",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Auto",
+                        "ValueName": "Auto"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "SNC2",
+                        "ValueName": "SNC2"
+                    },
+                    {
+                        "ValueDisplayName": "SNC4",
+                        "ValueName": "SNC4"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "IPV6PXE",
+                "DefaultValue": "Enabled",
+                "DisplayName": "IPV6 PXE Support",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "EnergyEfficientTurbo",
+                "DefaultValue": "Disabled",
+                "DisplayName": "Energy Efficient Turbo",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "AutoCCState",
+                "DefaultValue": "Disabled",
+                "DisplayName": "Autonomous Core C-state",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "EPPProfile",
+                "DefaultValue": "Balanced Performance",
+                "DisplayName": "Processor EPP Profile",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Performance",
+                        "ValueName": "Performance"
+                    },
+                    {
+                        "ValueDisplayName": "Balanced Performance",
+                        "ValueName": "Balanced Performance"
+                    },
+                    {
+                        "ValueDisplayName": "Balanced Power",
+                        "ValueName": "Balanced Power"
+                    },
+                    {
+                        "ValueDisplayName": "Power",
+                        "ValueName": "Power"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PatrolScrub",
+                "DefaultValue": "Enable at End of POST",
+                "DisplayName": "Patrol Scrub",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enable at End of POST",
+                        "ValueName": "Enable at End of POST"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "IntelSpeedSelect",
+                "DefaultValue": "Auto",
+                "DisplayName": "Intel Speed Select",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Auto",
+                        "ValueName": "Auto"
+                    },
+                    {
+                        "ValueDisplayName": "Base",
+                        "ValueName": "Base"
+                    },
+                    {
+                        "ValueDisplayName": "Config 3",
+                        "ValueName": "Config 3"
+                    },
+                    {
+                        "ValueDisplayName": "Config 4",
+                        "ValueName": "Config 4"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "IntelDynamicSpeedSelect",
+                "DefaultValue": "Disabled",
+                "DisplayName": "Intel Dynamic Speed Select",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "BmeDmaMitigation",
+                "DefaultValue": "Disabled",
+                "DisplayName": "BME DMA Mitigation",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PcieSlotFrontNvme3OptionROM",
+                "DefaultValue": "Enabled",
+                "DisplayName": "Front NVME-3 OptionRom",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "DCPMMFirmwareDowngrade",
+                "DefaultValue": "Disabled",
+                "DisplayName": "DCPMM Firmware Downgrade",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PcieSlotFrontNvme4LinkSpeed",
+                "DefaultValue": "Auto",
+                "DisplayName": "Front NVME 4 Link Speed",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Auto",
+                        "ValueName": "Auto"
+                    },
+                    {
+                        "ValueDisplayName": "GEN1",
+                        "ValueName": "GEN1"
+                    },
+                    {
+                        "ValueDisplayName": "GEN2",
+                        "ValueName": "GEN2"
+                    },
+                    {
+                        "ValueDisplayName": "GEN3",
+                        "ValueName": "GEN3"
+                    },
+                    {
+                        "ValueDisplayName": "GEN4",
+                        "ValueName": "GEN4"
+                    },
+                    {
+                        "ValueDisplayName": "GEN5",
+                        "ValueName": "GEN5"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PartialMirrorModeConfig",
+                "DefaultValue": "Disabled",
+                "DisplayName": "Partial Memory Mirror Mode",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Percentage",
+                        "ValueName": "Percentage"
+                    },
+                    {
+                        "ValueDisplayName": "Value in GB",
+                        "ValueName": "Value in GB"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PcieSlotFrontNvme4OptionROM",
+                "DefaultValue": "Enabled",
+                "DisplayName": "Front NVME-4 OptionRom",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PcieSlotMSTORRAIDOptionROM",
+                "DefaultValue": "Enabled",
+                "DisplayName": "PCIe Slot MSTOR RAID OptionROM",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PartialMirrorPercent",
+                "DefaultValue": "0.00",
+                "LowerBound": 0,
+                "DisplayName": "Partial Mirror percentage",
+                "UpperBound": 50,
+                "Value": [],
+                "WriteOnly": false,
+                "Type": "Integer",
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "ReadOnly": false,
+                "Hidden": false
+            },
+            {
+                "AttributeName": "SgxEpoch1",
+                "DefaultValue": "0",
+                "DisplayName": "SProcessor Epoch 1",
+                "Hidden": false,
+                "WriteOnly": false,
+                "Type": "String",
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "ReadOnly": false,
+                "Value": [],
+                "ValueExpression": "^[0-9a-fA-F]{1,16}$"
+            },
+            {
+                "AttributeName": "SgxLePubKeyHash0",
+                "DefaultValue": "0",
+                "DisplayName": "SGX PUBKEY HASH0",
+                "Hidden": false,
+                "WriteOnly": false,
+                "Type": "String",
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "ReadOnly": false,
+                "Value": [],
+                "ValueExpression": "^[0-9a-fA-F]{1,16}$"
+            },
+            {
+                "AttributeName": "SgxLePubKeyHash1",
+                "DefaultValue": "0",
+                "DisplayName": "SGX PUBKEY HASH1",
+                "Hidden": false,
+                "WriteOnly": false,
+                "Type": "String",
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "ReadOnly": false,
+                "Value": [],
+                "ValueExpression": "^[0-9a-fA-F]{1,16}$"
+            },
+            {
+                "AttributeName": "OSBootWatchdogTimerPolicy",
+                "DefaultValue": "Power Off",
+                "DisplayName": "OS Watchdog Timer Policy",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Power Off",
+                        "ValueName": "Power Off"
+                    },
+                    {
+                        "ValueDisplayName": "Reset",
+                        "ValueName": "Reset"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PartialMirrorValue1",
+                "DefaultValue": "0",
+                "LowerBound": 0,
+                "DisplayName": "Partial Mirror1 Size in GB",
+                "UpperBound": 65535,
+                "Value": [],
+                "WriteOnly": false,
+                "Type": "Integer",
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "ReadOnly": false,
+                "Hidden": false
+            },
+            {
+                "AttributeName": "SgxLePubKeyHash2",
+                "DefaultValue": "0",
+                "DisplayName": "SGX PUBKEY HASH2",
+                "Hidden": false,
+                "WriteOnly": false,
+                "Type": "String",
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "ReadOnly": false,
+                "Value": [],
+                "ValueExpression": "^[0-9a-fA-F]{1,16}$"
+            },
+            {
+                "AttributeName": "SgxLePubKeyHash3",
+                "DefaultValue": "0",
+                "DisplayName": "SGX PUBKEY HASH3",
+                "Hidden": false,
+                "WriteOnly": false,
+                "Type": "String",
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "ReadOnly": false,
+                "Value": [],
+                "ValueExpression": "^[0-9a-fA-F]{1,16}$"
+            },
+            {
+                "AttributeName": "PartialMirrorValue3",
+                "DefaultValue": "0",
+                "LowerBound": 0,
+                "DisplayName": "Partial Mirror3 Size in GB",
+                "UpperBound": 65535,
+                "Value": [],
+                "WriteOnly": false,
+                "Type": "Integer",
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "ReadOnly": false,
+                "Hidden": false
+            },
+            {
+                "AttributeName": "MemoryRefreshRate",
+                "DefaultValue": "1x Refresh",
+                "DisplayName": "Memory Refresh Rate",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "1x Refresh",
+                        "ValueName": "1x Refresh"
+                    },
+                    {
+                        "ValueDisplayName": "2x Refresh",
+                        "ValueName": "2x Refresh"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PartialMirrorValue4",
+                "DefaultValue": "0",
+                "LowerBound": 0,
+                "DisplayName": "Partial Mirror4 Size in GB",
+                "UpperBound": 65535,
+                "Value": [],
+                "WriteOnly": false,
+                "Type": "Integer",
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "ReadOnly": false,
+                "Hidden": false
+            },
+            {
+                "AttributeName": "MemorySizeLimit",
+                "DefaultValue": "0",
+                "LowerBound": 0,
+                "DisplayName": "Memory Size Limit in GB",
+                "UpperBound": 65535,
+                "Value": [],
+                "WriteOnly": false,
+                "Type": "Integer",
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "ReadOnly": false,
+                "Hidden": false
+            },
+            {
+                "AttributeName": "PanicHighWatermark",
+                "DefaultValue": "Low",
+                "DisplayName": "Panic and High Watermark",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "High",
+                        "ValueName": "High"
+                    },
+                    {
+                        "ValueDisplayName": "Low",
+                        "ValueName": "Low"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "CRQos",
+                "DefaultValue": "Disabled",
+                "DisplayName": "CR QoS",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Profile 1",
+                        "ValueName": "Profile 1"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "OSBootWatchdogTimer",
+                "DefaultValue": "Disabled",
+                "DisplayName": "OS Watchdog Timer",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "NvmdimmPerformConfig",
+                "DefaultValue": "BW Optimized",
+                "DisplayName": "NVM Performance Setting",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "BW Optimized",
+                        "ValueName": "BW Optimized"
+                    },
+                    {
+                        "ValueDisplayName": "Balanced Profile",
+                        "ValueName": "Balanced Profile"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "FlowCtrl",
+                "DefaultValue": "None",
+                "DisplayName": "Flow Control",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "None",
+                        "ValueName": "None"
+                    },
+                    {
+                        "ValueDisplayName": "RTS-CTS",
+                        "ValueName": "RTS-CTS"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "AdvancedMemTest",
+                "DefaultValue": "Auto",
+                "DisplayName": "Enhanced Memory Test",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Auto",
+                        "ValueName": "Auto"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "CrfastgoConfig",
+                "DefaultValue": "Auto",
+                "DisplayName": "CR FastGo Config",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enable optimization",
+                        "ValueName": "Enable optimization"
+                    },
+                    {
+                        "ValueDisplayName": "Disable optimization",
+                        "ValueName": "Disable optimization"
+                    },
+                    {
+                        "ValueDisplayName": "Auto",
+                        "ValueName": "Auto"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "IPV4HTTP",
+                "DefaultValue": "Enabled",
+                "DisplayName": "IPv4 HTTP Support",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "BaudRate",
+                "DefaultValue": "115.2k",
+                "DisplayName": "Baud rate",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "9.6k",
+                        "ValueName": "9.6k"
+                    },
+                    {
+                        "ValueDisplayName": "19.2k",
+                        "ValueName": "19.2k"
+                    },
+                    {
+                        "ValueDisplayName": "38.4k",
+                        "ValueName": "38.4k"
+                    },
+                    {
+                        "ValueDisplayName": "57.6k",
+                        "ValueName": "57.6k"
+                    },
+                    {
+                        "ValueDisplayName": "115.2k",
+                        "ValueName": "115.2k"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "IPV6HTTP",
+                "DefaultValue": "Enabled",
+                "DisplayName": "IPv6 HTTP Support",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "SnoopyModeForAD",
+                "DefaultValue": "Disabled",
+                "DisplayName": "Snoopy mode for AD",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "UmaBasedClustering",
+                "DefaultValue": "Quadrant(4-clusters)",
+                "DisplayName": "UMA",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Quadrant(4-clusters)",
+                        "ValueName": "Quadrant(4-clusters)"
+                    },
+                    {
+                        "ValueDisplayName": "Hemisphere(2-clusters)",
+                        "ValueName": "Hemisphere(2-clusters)"
+                    },
+                    {
+                        "ValueDisplayName": "Disable(All2All)",
+                        "ValueName": "Disable(All2All)"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "SnoopyModeFor2LM",
+                "DefaultValue": "Disabled",
+                "DisplayName": "Snoopy mode for 2LM",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "NetworkStack",
+                "DefaultValue": "Enabled",
+                "DisplayName": "Network Stack",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PchPciePllSsc",
+                "DefaultValue": "255",
+                "LowerBound": 0,
+                "DisplayName": "PCIe PLL SSC Percent",
+                "UpperBound": 255,
+                "Value": [],
+                "WriteOnly": false,
+                "Type": "Integer",
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "ReadOnly": false,
+                "Hidden": false
+            },
+            {
+                "AttributeName": "VolMemoryMode",
+                "DefaultValue": "1LM",
+                "DisplayName": "Volatile Memory Mode",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "2LM",
+                        "ValueName": "2LM"
+                    },
+                    {
+                        "ValueDisplayName": "1LM",
+                        "ValueName": "1LM"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "TerminalType",
+                "DefaultValue": "VT100",
+                "DisplayName": "Terminal type",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "PC-ANSI",
+                        "ValueName": "PC-ANSI"
+                    },
+                    {
+                        "ValueDisplayName": "VT100",
+                        "ValueName": "VT100"
+                    },
+                    {
+                        "ValueDisplayName": "VT100-PLUS",
+                        "ValueName": "VT100-PLUS"
+                    },
+                    {
+                        "ValueDisplayName": "VT-UTF8",
+                        "ValueName": "VT-UTF8"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "EadrSupport",
+                "DefaultValue": "Disabled",
+                "DisplayName": "eADR Support",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Auto",
+                        "ValueName": "Auto"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "EnableTdx",
+                "DefaultValue": "Disabled",
+                "DisplayName": "Trust Domain Extension (TDX)",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "DmaCtrlOptIn",
+                "DefaultValue": "Disabled",
+                "DisplayName": "DMA Control Opt-In Flag",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "MemoryBandwidthBoost",
+                "DefaultValue": "Enabled",
+                "DisplayName": "Memory Bandwidth Boost",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "EnableRMT",
+                "DefaultValue": "Disabled",
+                "DisplayName": "Rank Margin Tool",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "VirtualNuma",
+                "DefaultValue": "Disabled",
+                "DisplayName": "Virtual Numa",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "IPV4PXE",
+                "DefaultValue": "Enabled",
+                "DisplayName": "IPv4 PXE Support",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "XPTRemotePrefetch",
+                "DefaultValue": "Auto",
+                "DisplayName": "XPT Remote Prefetch",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Auto",
+                        "ValueName": "Auto"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "EdpcEn",
+                "DefaultValue": "On Fatal and Non-Fatal Errors",
+                "DisplayName": "IIO eDPC Support",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "On Fatal Error",
+                        "ValueName": "On Fatal Error"
+                    },
+                    {
+                        "ValueDisplayName": "On Fatal and Non-Fatal Errors",
+                        "ValueName": "On Fatal and Non-Fatal Errors"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "LLCAlloc",
+                "DefaultValue": "Enabled",
+                "DisplayName": "LLC Dead Line",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Auto",
+                        "ValueName": "Auto"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "TpmSupport",
+                "DefaultValue": "Enabled",
+                "DisplayName": "Security Device Support",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "CpuPerfEnhancement",
+                "DefaultValue": "Disabled",
+                "DisplayName": "Enhanced CPU Performance",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Auto",
+                        "ValueName": "Auto"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "EnableTme",
+                "DefaultValue": "Disabled",
+                "DisplayName": "Total Memory Encryption (TME)",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "TPMControl",
+                "DefaultValue": "Enabled",
+                "DisplayName": "Trusted Platform Module State",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "AdaptiveRefreshMgmtLevel",
+                "DefaultValue": "Default",
+                "DisplayName": "Adaptive Refresh Management Level",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Default",
+                        "ValueName": "Default"
+                    },
+                    {
+                        "ValueDisplayName": "Level A",
+                        "ValueName": "Level A"
+                    },
+                    {
+                        "ValueDisplayName": "Level B",
+                        "ValueName": "Level B"
+                    },
+                    {
+                        "ValueDisplayName": "Level C",
+                        "ValueName": "Level C"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "SHA1PCRBank",
+                "DefaultValue": "Enabled",
+                "DisplayName": "SHA-1 PCR Bank",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "CpuPaLimit",
+                "DefaultValue": "Enabled",
+                "DisplayName": "LIMIT CPU PA to 46 Bits",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "SHA256PCRBank",
+                "DefaultValue": "Enabled",
+                "DisplayName": "SHA256 PCR Bank",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "UPILinkEnablement",
+                "DefaultValue": "Auto",
+                "DisplayName": "UPI Link Enablement",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Auto",
+                        "ValueName": "Auto"
+                    },
+                    {
+                        "ValueDisplayName": "1",
+                        "ValueName": "1"
+                    },
+                    {
+                        "ValueDisplayName": "2",
+                        "ValueName": "2"
+                    },
+                    {
+                        "ValueDisplayName": "3",
+                        "ValueName": "3"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "TPMPendingOperation",
+                "DefaultValue": "None",
+                "DisplayName": "TPM Pending Operation",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "None",
+                        "ValueName": "None"
+                    },
+                    {
+                        "ValueDisplayName": "TpmClear",
+                        "ValueName": "TpmClear"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "UPIPowerManagement",
+                "DefaultValue": "Disabled",
+                "DisplayName": "UPI Power Manangement",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "QpiLinkSpeed",
+                "DefaultValue": "Auto",
+                "DisplayName": "UPI Link Speed",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "12.8GT/s",
+                        "ValueName": "12.8GT/s"
+                    },
+                    {
+                        "ValueDisplayName": "14.4GT/s",
+                        "ValueName": "14.4GT/s"
+                    },
+                    {
+                        "ValueDisplayName": "16.0GT/s",
+                        "ValueName": "16.0GT/s"
+                    },
+                    {
+                        "ValueDisplayName": "20.0GT/s",
+                        "ValueName": "20.0GT/s"
+                    },
+                    {
+                        "ValueDisplayName": "Auto",
+                        "ValueName": "Auto"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "TpmPpiRequired",
+                "DefaultValue": "Disabled",
+                "DisplayName": "TPM Minimal Physical Presence",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "C1AutoDemotion",
+                "DefaultValue": "Enabled",
+                "DisplayName": "C1 Auto Demotion",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "IntelVT",
+                "DefaultValue": "Enabled",
+                "DisplayName": "Intel Virtualization Technology",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "C1AutoUnDemotion",
+                "DefaultValue": "Enabled",
+                "DisplayName": "C1 Auto UnDemotion",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "MemoryThermalThrottling",
+                "DefaultValue": "CLTT with PECI",
+                "DisplayName": "Memory Thermal Throttling Mode",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    },
+                    {
+                        "ValueDisplayName": "CLTT with PECI",
+                        "ValueName": "CLTT with PECI"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "IntelVTD",
+                "DefaultValue": "Enabled",
+                "DisplayName": "Intel VT for directed IO",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "OSBootWatchdogTimerTimeout",
+                "DefaultValue": "10 minutes",
+                "DisplayName": "OS Watchdog Timer Timeout",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "5 minutes",
+                        "ValueName": "5 minutes"
+                    },
+                    {
+                        "ValueDisplayName": "10 minutes",
+                        "ValueName": "10 minutes"
+                    },
+                    {
+                        "ValueDisplayName": "15 minutes",
+                        "ValueName": "15 minutes"
+                    },
+                    {
+                        "ValueDisplayName": "20 minutes",
+                        "ValueName": "20 minutes"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "TXTSupport",
+                "DefaultValue": "Disabled",
+                "DisplayName": "Intel Trusted Execution Technology Support",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "PartialMirrorValue2",
+                "DefaultValue": "0",
+                "LowerBound": 0,
+                "DisplayName": "Partial Mirror2 Size in GB",
+                "UpperBound": 65535,
+                "Value": [],
+                "WriteOnly": false,
+                "Type": "Integer",
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "ReadOnly": false,
+                "Hidden": false
+            },
+            {
+                "AttributeName": "ConsoleRedir",
+                "DefaultValue": "Disabled",
+                "DisplayName": "Console redirection",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "COM 0",
+                        "ValueName": "COM 0"
+                    },
+                    {
+                        "ValueDisplayName": "COM 1",
+                        "ValueName": "COM 1"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "LocalX2Apic",
+                "DefaultValue": "Enabled",
+                "DisplayName": "Extended APIC",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "EnableClockSpreadSpec",
+                "DefaultValue": "Off",
+                "DisplayName": "External SSC Enable",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Off",
+                        "ValueName": "Off"
+                    },
+                    {
+                        "ValueDisplayName": "0P3_Percent",
+                        "ValueName": "0P3_Percent"
+                    },
+                    {
+                        "ValueDisplayName": "0P5_Percent",
+                        "ValueName": "0P5_Percent"
+                    },
+                    {
+                        "ValueDisplayName": "Hardware",
+                        "ValueName": "Hardware"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "CoherencySupport",
+                "DefaultValue": "Disabled",
+                "DisplayName": "Intel VTD Coherency Support",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "FRB_2",
+                "DefaultValue": "Enabled",
+                "DisplayName": "FRB 2 Timer",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            },
+            {
+                "AttributeName": "NUMAOptimize",
+                "DefaultValue": "Enabled",
+                "DisplayName": "NUMA",
+                "Hidden": false,
+                "WriteOnly": false,
+                "ReadOnly": false,
+                "MaxLength": 64,
+                "MinLength": 1,
+                "Immutable": false,
+                "IsSystemUniqueProperty": true,
+                "ResetRequired": true,
+                "Type": "Enumeration",
+                "Value": [
+                    {
+                        "ValueDisplayName": "Enabled",
+                        "ValueName": "Enabled"
+                    },
+                    {
+                        "ValueDisplayName": "Disabled",
+                        "ValueName": "Disabled"
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/PortCollection",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "PortCollection",
+    "Id": "PortCollection",
+    "Name": "PortCollection Schema file",
+    "Description": "PortCollection Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/PortCollection.json",
+            "Uri": "/redfish/schemas/PortCollection.json",
+            "Language": "en"
+        }
+    ]
+}

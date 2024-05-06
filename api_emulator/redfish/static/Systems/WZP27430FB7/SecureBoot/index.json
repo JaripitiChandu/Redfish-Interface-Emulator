@@ -1,0 +1,10 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/SecureBoot",
+    "@odata.type": "#SecureBoot.v1_0_4.SecureBoot",
+    "@odata.context": "/redfish/v1/$metadata#SecureBoot.SecureBoot",
+    "SecureBootCurrentBoot": "Enabled",
+    "Description": "UEFI SecureBoot configuration of this system",
+    "SecureBootEnable": true,
+    "Id": "SecureBoot",
+    "Name": "SecureBoot"
+}

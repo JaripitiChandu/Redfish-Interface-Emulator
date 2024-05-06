@@ -1,0 +1,13 @@
+{
+    "@odata.id": "/redfish/v1/Managers/CIMC/EthernetInterfaces",
+    "@odata.type": "#EthernetInterfaceCollection.EthernetInterfaceCollection",
+    "@odata.context": "/redfish/v1/$metadata#EthernetInterfaceCollection.EthernetInterfaceCollection",
+    "Name": "Ethernet Interfaces Collection",
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Managers/CIMC/EthernetInterfaces/NICs"
+        }
+    ],
+    "Members@odata.count": 1,
+    "Description": "Collection of EthernetInterfaces for this Manager"
+}

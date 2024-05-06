@@ -1,0 +1,30 @@
+{
+    "@odata.id": "/redfish/v1/Managers/CIMC/Oem/Cisco/SPDMTrustStore/Certificates/2",
+    "@odata.type": "#Certificate.v1_3_0.Certificate",
+    "@odata.context": "/redfish/v1/$metadata#Certificate.Certificate",
+    "Name": "Certificate",
+    "Description": "The Certificate resource describes a certificate used to prove the identify of a component, account, or service.",
+    "Id": "2",
+    "Subject": {
+        "Organization": "Microchip Technology Inc",
+        "OrganizationalUnit": "DCS",
+        "CommonName": "Crypto Authentication Signer CA DCS"
+    },
+    "Issuer": {
+        "Organization": "Microchip Technology Inc",
+        "OrganizationalUnit": "DCS",
+        "CommonName": "Crypto Authentication Signer CA DCS"
+    },
+    "CertificateString": "-----BEGIN CERTIFICATE-----\nMIICSjCCAdCgAwIBAgIIFmTf6z2NMpQwCgYIKoZIzj0EAwMwXzEhMB8GA1UEChMY\nTWljcm9jaGlwIFRlY2hub2xvZ3kgSW5jMQwwCgYDVQQLEwNEQ1MxLDAqBgNVBAMT\nI0NyeXB0byBBdXRoZW50aWNhdGlvbiBTaWduZXIgQ0EgRENTMCAXDTIxMDIxODE1\nMDYwN1oYDzk5OTkxMjMxMjM1OTU5WjBfMSEwHwYDVQQKExhNaWNyb2NoaXAgVGVj\naG5vbG9neSBJbmMxDDAKBgNVBAsTA0RDUzEsMCoGA1UEAxMjQ3J5cHRvIEF1dGhl\nbnRpY2F0aW9uIFNpZ25lciBDQSBEQ1MwdjAQBgcqhkjOPQIBBgUrgQQAIgNiAAR6\nrumy8NPKxMjiBStEhct+O1EqhiR1xkelZspP0GaK5i6qLWeWOmcKdcSOpK/afnuN\nVhw635v7kEepQZ4J6jpBTzNfOM/OpsbNMt0jKzoUVnAJ1YtrtPL5jz4i/h2J+pCj\nVzBVMA4GA1UdDwEB/wQEAwIBhjATBgNVHSUEDDAKBggrBgEFBQcDAjAPBgNVHRMB\nAf8EBTADAQH/MB0GA1UdDgQWBBS9rqKy/mMmgT6lK/ymquSwoG3BezAKBggqhkjO\nPQQDAwNoADBlAjEAiBxTgyZKbXvEAJi0LiA9Z+sz2Da5Au06WRUDvcWU6BcIlUJs\nONLmSIE7pnXXeLIQAjAJ2p+mSynyHcg8m4GoG46mW3O3a6Db9k25q8n1Su8w/Vod\nByJdRmv9QzHx99SmlI0=\n-----END CERTIFICATE-----\n",
+    "CertificateType": "PEM",
+    "Oem": {
+        "Cisco": {
+            "CertificateSerialNumber": "16:64:DF:EB:3D:8D:32:94"
+        }
+    },
+    "ValidNotBefore": "2021-02-18T15:06:07Z",
+    "ValidNotAfter": "9999-12-31T23:59:59Z",
+    "KeyUsage": [
+        "ServerAuthentication"
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/LogServices/SEL/Entries/2571",
+    "@odata.type": "#LogEntry.v1_4_0.LogEntry",
+    "@odata.context": "/redfish/v1/$metadata#LogEntry.LogEntry",
+    "Message": "FRU_MRAID1 SAS_HBA_PRSNT: Presence sensor for FRU_MRAID1, Device Inserted / Device Present was asserted",
+    "EntryCode": "Device Inserted / Device Present",
+    "EventType": "ResourceAdded",
+    "Created": "2024-05-03T06:21:22+00:00",
+    "EventTimestamp": "2024-05-03T06:21:22+00:00",
+    "Id": "2571",
+    "EventId": "2571",
+    "EntryType": "SEL",
+    "Name": "Log Entry 2571",
+    "Description": "Log Entry 2571",
+    "Severity": "OK"
+}

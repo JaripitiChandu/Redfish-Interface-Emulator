@@ -1,0 +1,45 @@
+{
+    "@odata.id": "/redfish/v1/CertificateService/CertificateLocations",
+    "@odata.type": "#CertificateLocations.v1_0_1.CertificateLocations",
+    "@odata.context": "/redfish/v1/$metadata#CertificateLocations.CertificateLocations",
+    "Id": "CertificateLocation",
+    "Name": "Certificate Location",
+    "Description": "Certificate Locations",
+    "Links": {
+        "Certificates": [
+            {
+                "@odata.id": "/redfish/v1/Managers/CIMC/NetworkProtocol/HTTPS/Certificates/1"
+            },
+            {
+                "@odata.id": "/redfish/v1/AccountService/LDAP/Certificates/1"
+            },
+            {
+                "@odata.id": "/redfish/v1/Managers/CIMC/Oem/Cisco/CiscoKMIPClient/Certificates/KMIPClient"
+            },
+            {
+                "@odata.id": "/redfish/v1/Managers/CIMC/Oem/Cisco/CiscoKMIPClient/Certificates/KMIPServer"
+            },
+            {
+                "@odata.id": "/redfish/v1/Managers/CIMC/Oem/Cisco/SPDMTrustStore/Certificates/1"
+            },
+            {
+                "@odata.id": "/redfish/v1/Managers/CIMC/Oem/Cisco/SPDMTrustStore/Certificates/2"
+            },
+            {
+                "@odata.id": "/redfish/v1/Managers/CIMC/Oem/Cisco/SPDMTrustStore/Certificates/3"
+            },
+            {
+                "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Oem/Cisco/SPDMDevice/Certificates/MRAID_0"
+            },
+            {
+                "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Oem/Cisco/SPDMDevice/Certificates/MRAID_1"
+            },
+            {
+                "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Oem/Cisco/SPDMDevice/Certificates/MRAID_2"
+            },
+            {
+                "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Oem/Cisco/SPDMDevice/Certificates/MRAID_3"
+            }
+        ]
+    }
+}

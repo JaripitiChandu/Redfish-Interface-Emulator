@@ -1,0 +1,96 @@
+{
+    "Id": "fc1",
+    "Name": "fc1",
+    "NetDevFuncType": "FibreChannelOverEthernet",
+    "NetDevFuncCapabilities": [
+        "FibreChannelOverEthernet"
+    ],
+    "Ethernet": {
+        "MACAddress": "40:14:82:82:02:83",
+        "VLAN": {
+            "VLANEnable": false
+        }
+    },
+    "FibreChannel": {
+        "WWNN": "10:00:40:14:82:82:02:83",
+        "WWPN": "20:00:40:14:82:82:02:83",
+        "WWNSource": "ConfiguredLocally"
+    },
+    "BootMode": "Disabled",
+    "AssignablePhysicalPorts": [
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkPorts/Port-1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkPorts/Port-3"
+        }
+    ],
+    "AssignablePhysicalPorts@odata.count": 2,
+    "Links": {
+        "PhysicalPortAssignment": {
+            "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkPorts/Port-3"
+        }
+    },
+    "Oem": {
+        "Cisco": {
+            "@odata.type": "#CiscoUCSExtensions.v1_0_0.CiscoUCSExtensions",
+            "VnicConfiguration": {
+                "UplinkPort": 1,
+                "PCIOrder": "0.4",
+                "InterruptMode": "Any",
+                "ClassOfService": 3,
+                "PciLinkNumber": 1,
+                "Vif": {
+                    "VifId": 0,
+                    "VifCookie": 0
+                },
+                "VHBAConfiguration": {
+                    "FcWorkQueueRingSize": 64,
+                    "FcRecvQueueRingSize": 64,
+                    "MaxDataFieldSize": 2112,
+                    "PersistentLunBindEnabled": false,
+                    "VHBAType": [
+                        "FcInitiator"
+                    ],
+                    "CdbWorkQueue": {
+                        "Count": 1,
+                        "RingSize": 512
+                    },
+                    "PortFLogi": {
+                        "RetryCount": -1,
+                        "Timeout": 2000
+                    },
+                    "PortPLogi": {
+                        "RetryCount": 8,
+                        "Timeout": 2000
+                    },
+                    "ErrorRecoveryProfile": {
+                        "FcpErrorRecoveryEnabled": false,
+                        "LinkDownTimeout": 30000,
+                        "PortDownTimeout": 10000,
+                        "IoTimeoutRetry": 5,
+                        "PortDownIoRetryCount": 8,
+                        "ErrorDetectTimeout": 2000,
+                        "ResourceAllocationTimeout": 10000
+                    },
+                    "FcPortProfile": {
+                        "IoThrottleCount": 512,
+                        "LunsPerTarget": 256,
+                        "LunQueueDepth": 20
+                    },
+                    "BootTable": []
+                }
+            }
+        }
+    },
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkDeviceFunctions/fc1",
+    "@odata.type": "#NetworkDeviceFunction.v1_9_0.NetworkDeviceFunction",
+    "@odata.context": "/redfish/v1/$metadata#NetworkDeviceFunction.NetworkDeviceFunction",
+    "Metrics": {
+        "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkDeviceFunctions/fc1/Metrics"
+    }
+}

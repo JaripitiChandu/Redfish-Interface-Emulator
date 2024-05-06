@@ -1,0 +1,22 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/Sensors/PSU2_POUT",
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "@odata.context": "/redfish/v1/$metadata#Sensor.Sensor",
+    "Description": "Sensor Inventory",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "Reading": 0,
+    "Id": "10",
+    "Thresholds": {
+        "UpperFatal": {
+            "Reading": 4080
+        },
+        "UpperCritical": {
+            "Reading": 3776
+        }
+    },
+    "Name": "PSU2_POUT",
+    "ReadingType": "Power"
+}

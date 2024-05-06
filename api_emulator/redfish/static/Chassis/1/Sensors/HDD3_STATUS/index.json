@@ -1,0 +1,8 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/Sensors/HDD3_STATUS",
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "@odata.context": "/redfish/v1/$metadata#Sensor.Sensor",
+    "Description": "Sensor Inventory",
+    "Name": "HDD3_STATUS",
+    "Id": "HDD3_STATUS"
+}

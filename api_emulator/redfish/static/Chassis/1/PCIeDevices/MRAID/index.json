@@ -1,0 +1,25 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/PCIeDevices/MRAID",
+    "@odata.type": "#PCIeDevice.v1_4_0.PCIeDevice",
+    "@odata.context": "/redfish/v1/$metadata#PCIeDevice.PCIeDevice",
+    "PCIeFunctions": {
+        "@odata.id": "/redfish/v1/Chassis/1/PCIeDevices/MRAID/PCIeFunctions"
+    },
+    "Links": {
+        "Chassis": [
+            {
+                "@odata.id": "/redfish/v1/Chassis/1"
+            }
+        ],
+        "PCIeFunctions": [
+            {
+                "@odata.id": "/redfish/v1/Chassis/1/PCIeDevices/MRAID/PCIeFunctions/0"
+            }
+        ],
+        "PCIeFunctions@odata.count": 1
+    },
+    "Description": "This gives information of PCIeDevices on the system",
+    "Id": "MRAID",
+    "Name": "Cisco Tri-Mode 24G SAS RAID Controller w/4GB Cache",
+    "FirmwareVersion": "N/A"
+}

@@ -1,0 +1,16 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/LogServices/SEL/Entries/2567",
+    "@odata.type": "#LogEntry.v1_4_0.LogEntry",
+    "@odata.context": "/redfish/v1/$metadata#LogEntry.LogEntry",
+    "Message": "RISER2_PRESENT: Presence sensor, Device Removed / Device Absent was asserted",
+    "EntryCode": "Device Removed / Device Absent",
+    "EventType": "ResourceRemoved",
+    "Created": "2024-05-03T06:21:22+00:00",
+    "EventTimestamp": "2024-05-03T06:21:22+00:00",
+    "Id": "2567",
+    "EventId": "2567",
+    "EntryType": "SEL",
+    "Name": "Log Entry 2567",
+    "Description": "Log Entry 2567",
+    "Severity": "OK"
+}

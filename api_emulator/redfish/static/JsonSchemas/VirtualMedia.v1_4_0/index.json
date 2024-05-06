@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/VirtualMedia.v1_4_0",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "VirtualMedia.v1_4_0",
+    "Id": "VirtualMedia.v1_4_0",
+    "Name": "VirtualMedia.v1_4_0 Schema file",
+    "Description": "VirtualMedia.v1_4_0 Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/VirtualMedia.v1_4_0.json",
+            "Uri": "/redfish/schemas/VirtualMedia.v1_4_0.json",
+            "Language": "en"
+        }
+    ]
+}

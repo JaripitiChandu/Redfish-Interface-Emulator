@@ -1,0 +1,13 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/NetworkInterfaces",
+    "@odata.type": "#NetworkInterfaceCollection.NetworkInterfaceCollection",
+    "@odata.context": "/redfish/v1/$metadata#NetworkInterfaceCollection.NetworkInterfaceCollection",
+    "Description": "Collection of NetworkInterface resource instances for this system",
+    "Name": "NetworkInterface Collection",
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/NetworkInterfaces/UCSC-M-V5Q50G_FCH272671H7"
+        }
+    ],
+    "Members@odata.count": 1
+}

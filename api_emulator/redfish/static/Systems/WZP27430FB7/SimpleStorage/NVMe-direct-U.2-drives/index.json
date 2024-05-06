@@ -1,0 +1,8 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/SimpleStorage/NVMe-direct-U.2-drives",
+    "@odata.type": "#SimpleStorage.v1_2_1.SimpleStorage",
+    "@odata.context": "/redfish/v1/$metadata#SimpleStorage.SimpleStorage",
+    "Description": "Simple Storage Controller",
+    "Id": "NVMe-direct-U.2-drives",
+    "Name": "NVMe-direct-U.2-drives"
+}

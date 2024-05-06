@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/LogServices",
+    "@odata.type": "#LogServiceCollection.LogServiceCollection",
+    "@odata.context": "/redfish/v1/$metadata#LogServiceCollection.LogServiceCollection",
+    "Description": "Collection of Log Services for this Manager",
+    "Name": "Log Service Collection",
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/LogServices/SEL"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/LogServices/CIMC"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/LogServices/Fault"
+        }
+    ],
+    "Members@odata.count": 3
+}

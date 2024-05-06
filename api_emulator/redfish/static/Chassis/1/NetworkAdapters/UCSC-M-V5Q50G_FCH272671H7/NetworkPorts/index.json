@@ -1,0 +1,22 @@
+{
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkPorts/Port-1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkPorts/Port-2"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkPorts/Port-3"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkPorts/Port-4"
+        }
+    ],
+    "Members@odata.count": 4,
+    "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkPorts",
+    "@odata.type": "#NetworkPortCollection.NetworkPortCollection",
+    "@odata.context": "/redfish/v1/$metadata#NetworkPortCollection.NetworkPortCollection",
+    "Description": "Collection of NetworkPort resource instances for this system",
+    "Name": "NetworkPort Collection"
+}

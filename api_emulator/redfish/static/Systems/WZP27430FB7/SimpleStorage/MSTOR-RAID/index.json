@@ -1,0 +1,8 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/SimpleStorage/MSTOR-RAID",
+    "@odata.type": "#SimpleStorage.v1_2_1.SimpleStorage",
+    "@odata.context": "/redfish/v1/$metadata#SimpleStorage.SimpleStorage",
+    "Description": "Simple Storage Controller",
+    "Id": "MSTOR-RAID",
+    "Name": "Cisco Boot optimized M.2 Raid controller"
+}

@@ -1,0 +1,22 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/Sensors/PSU1_PIN",
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "@odata.context": "/redfish/v1/$metadata#Sensor.Sensor",
+    "Description": "Sensor Inventory",
+    "Reading": 320,
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "ReadingType": "Power",
+    "Id": "10",
+    "Thresholds": {
+        "UpperFatal": {
+            "Reading": 2784
+        },
+        "UpperCritical": {
+            "Reading": 2528
+        }
+    },
+    "Name": "PSU1_PIN"
+}

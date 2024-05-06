@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/VolumeCollection",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "VolumeCollection",
+    "Id": "VolumeCollection",
+    "Name": "VolumeCollection Schema file",
+    "Description": "VolumeCollection Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/VolumeCollection.json",
+            "Uri": "/redfish/schemas/VolumeCollection.json",
+            "Language": "en"
+        }
+    ]
+}

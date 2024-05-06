@@ -1,0 +1,25 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/PCIeDevices/MSTOR-RAID",
+    "@odata.type": "#PCIeDevice.v1_4_0.PCIeDevice",
+    "@odata.context": "/redfish/v1/$metadata#PCIeDevice.PCIeDevice",
+    "PCIeFunctions": {
+        "@odata.id": "/redfish/v1/Chassis/1/PCIeDevices/MSTOR-RAID/PCIeFunctions"
+    },
+    "Links": {
+        "Chassis": [
+            {
+                "@odata.id": "/redfish/v1/Chassis/1"
+            }
+        ],
+        "PCIeFunctions": [
+            {
+                "@odata.id": "/redfish/v1/Chassis/1/PCIeDevices/MSTOR-RAID/PCIeFunctions/0"
+            }
+        ],
+        "PCIeFunctions@odata.count": 1
+    },
+    "Description": "This gives information of PCIeDevices on the system",
+    "Id": "MSTOR-RAID",
+    "Name": "Cisco Boot optimized M.2 Raid controller",
+    "FirmwareVersion": "2.3.17.1014"
+}

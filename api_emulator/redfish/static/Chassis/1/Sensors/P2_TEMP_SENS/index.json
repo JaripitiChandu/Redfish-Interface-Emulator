@@ -1,0 +1,22 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/Sensors/P2_TEMP_SENS",
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "@odata.context": "/redfish/v1/$metadata#Sensor.Sensor",
+    "Description": "Sensor Inventory",
+    "Status": {
+        "Health": "OK",
+        "State": "Enabled"
+    },
+    "Name": "P2_TEMP_SENS",
+    "Reading": 54.5,
+    "Thresholds": {
+        "UpperCritical": {
+            "Reading": 91
+        },
+        "UpperFatal": {
+            "Reading": 92
+        }
+    },
+    "ReadingType": "Temperature",
+    "Id": "3"
+}

@@ -1,0 +1,14 @@
+{
+    "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory/HDD-model-MTFDDAV240TDS-serial-MSY27230682",
+    "@odata.type": "#SoftwareInventory.v1_2_1.SoftwareInventory",
+    "@odata.context": "/redfish/v1/$metadata#SoftwareInventory.SoftwareInventory",
+    "Id": "HDD-model-MTFDDAV240TDS-serial-MSY27230682",
+    "Name": "HDD-model-MTFDDAV240TDS-serial-MSY27230682",
+    "Version": "D3MC000",
+    "Updateable": true,
+    "RelatedItem": [
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MSTOR-RAID/Drives/253"
+        }
+    ]
+}

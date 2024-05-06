@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/EventService.v1_5_0",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "EventService.v1_5_0",
+    "Id": "EventService.v1_5_0",
+    "Name": "EventService.v1_5_0 Schema file",
+    "Description": "EventService.v1_5_0 Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/EventService.v1_5_0.json",
+            "Uri": "/redfish/schemas/EventService.v1_5_0.json",
+            "Language": "en"
+        }
+    ]
+}

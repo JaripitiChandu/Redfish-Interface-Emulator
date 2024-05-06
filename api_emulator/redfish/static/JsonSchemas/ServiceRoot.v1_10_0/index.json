@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/ServiceRoot.v1_10_0",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "ServiceRoot.v1_10_0",
+    "Id": "ServiceRoot.v1_10_0",
+    "Name": "ServiceRoot.v1_10_0 Schema file",
+    "Description": "ServiceRoot.v1_10_0 Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/ServiceRoot.v1_10_0.json",
+            "Uri": "/redfish/schemas/ServiceRoot.v1_10_0.json",
+            "Language": "en"
+        }
+    ]
+}

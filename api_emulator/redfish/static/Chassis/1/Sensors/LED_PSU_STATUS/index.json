@@ -1,0 +1,12 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/Sensors/LED_PSU_STATUS",
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "@odata.context": "/redfish/v1/$metadata#Sensor.Sensor",
+    "Description": "Sensor Inventory",
+    "Status": {
+        "Health": "Warning",
+        "State": "Enabled"
+    },
+    "Name": "LED_PSU_STATUS",
+    "Id": "1"
+}

@@ -1,0 +1,89 @@
+{
+    "@odata.id": "/redfish/v1/Managers/CIMC/NetworkProtocol",
+    "@odata.type": "#ManagerNetworkProtocol.v1_5_0.ManagerNetworkProtocol",
+    "@odata.context": "/redfish/v1/$metadata#ManagerNetworkProtocol.ManagerNetworkProtocol",
+    "Id": "ManagerNetworkProtocol",
+    "Name": "Manager Network Protocol",
+    "Description": "Manager Network Service",
+    "VirtualMedia": {
+        "Port": 2068,
+        "ProtocolEnabled": true
+    },
+    "HostName": "C220-WZP27430FB7",
+    "HTTP": {
+        "Port": 80,
+        "ProtocolEnabled": false
+    },
+    "KVMIP": {
+        "Port": 2068,
+        "ProtocolEnabled": true
+    },
+    "DHCP": {
+        "ProtocolEnabled": false,
+        "Port": null
+    },
+    "HTTPS": {
+        "Port": 443,
+        "Certificates": {
+            "@odata.id": "/redfish/v1/Managers/CIMC/NetworkProtocol/HTTPS/Certificates"
+        },
+        "ProtocolEnabled": true
+    },
+    "NTP": {
+        "Port": 123,
+        "NTPServers": [
+            "ntp.esl.cisco.com"
+        ],
+        "ProtocolEnabled": true
+    },
+    "DHCPv6": {
+        "ProtocolEnabled": true,
+        "Port": null
+    },
+    "Oem": {
+        "Cisco": {
+            "KVMVendor": {
+                "Vendor": "Cisco"
+            },
+            "SSHTimeout": 1800,
+            "IPMIOverLan": {
+                "ChannelSecurityKey": "0000000000000000000000000000000000000000",
+                "PrivilegeLevelLimit": "admin"
+            },
+            "KVMConfiguration": {
+                "MaxConcurrentSessions": 4,
+                "LocalServerVideo": "Enabled"
+            }
+        }
+    },
+    "SSH": {
+        "Port": 22,
+        "ProtocolEnabled": true
+    },
+    "SNMP": {
+        "EnableSNMPv2c": false,
+        "EnableSNMPv3": false,
+        "CommunityStrings": [
+            {
+                "CommunityString": "",
+                "AccessMode": null
+            }
+        ],
+        "HideCommunityStrings": false,
+        "Port": 161,
+        "EnableSNMPv1": false,
+        "ProtocolEnabled": false
+    },
+    "IPMI": {
+        "Port": 623,
+        "ProtocolEnabled": false
+    },
+    "Actions": {
+        "Oem": {
+            "#CiscoUCSExtensions.ResetKVM": {
+                "target": "/redfish/v1/Managers/CIMC/NetworkProtocol/Actions/Oem/CiscoUCSExtensions.ResetKVM",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.ResetKVM"
+            }
+        }
+    }
+}

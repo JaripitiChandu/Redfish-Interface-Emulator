@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/PCIeDevices",
+    "@odata.type": "#PCIeDeviceCollection.PCIeDeviceCollection",
+    "@odata.context": "/redfish/v1/$metadata#PCIeDeviceCollection.PCIeDeviceCollection",
+    "Description": "Collection of PCIeDevice resource instances for this system",
+    "Name": "PCIeDevice Collection",
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/PCIeDevices/MRAID"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/PCIeDevices/MLOM"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/PCIeDevices/MSTOR-RAID"
+        }
+    ],
+    "Members@odata.count": 3
+}

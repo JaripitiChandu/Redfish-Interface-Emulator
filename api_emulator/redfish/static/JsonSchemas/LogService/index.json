@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/LogService",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "LogService",
+    "Id": "LogService",
+    "Name": "LogService Schema file",
+    "Description": "LogService Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/LogService.json",
+            "Uri": "/redfish/schemas/LogService.json",
+            "Language": "en"
+        }
+    ]
+}

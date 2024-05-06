@@ -1,0 +1,72 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MSTOR-RAID/Volumes/0",
+    "@odata.type": "#Volume.v1_5_0.Volume",
+    "@odata.context": "/redfish/v1/$metadata#Volume.Volume",
+    "Description": "Volume",
+    "Links": {
+        "Drives": [
+            {
+                "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MSTOR-RAID/Drives/253"
+            },
+            {
+                "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MSTOR-RAID/Drives/254"
+            }
+        ],
+        "Drives@odata.count": 2,
+        "Oem": {
+            "Cisco": {
+                "Spans": [
+                    {
+                        "DrivesList": [
+                            {
+                                "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MSTOR-RAID/Drives/253"
+                            },
+                            {
+                                "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MSTOR-RAID/Drives/254"
+                            }
+                        ],
+                        "DrivesList@odata.count": 2,
+                        "SpanId": 0
+                    }
+                ],
+                "Spans@odata.count": 1
+            }
+        },
+        "DedicatedSpareDrives": [],
+        "DedicatedSpareDrives@odata.count": 0,
+        "SpareResourceSets": [],
+        "SpareResourceSets@odata.count": 0
+    },
+    "Id": "0",
+    "Name": "RAID_253254",
+    "Encrypted": false,
+    "CapacityBytes": 239989686272,
+    "BlockSizeBytes": 512,
+    "OptimumIOSizeBytes": 32768,
+    "Identifiers": [
+        {
+            "DurableNameFormat": "UUID",
+            "DurableName": "0000000000000000813fa34410000001"
+        }
+    ],
+    "Status": {
+        "Health": "OK",
+        "State": "Enabled"
+    },
+    "Actions": {},
+    "RAIDType": "RAID1",
+    "Oem": {
+        "Cisco": {
+            "VolumeAccessPolicy": "ReadWrite",
+            "RequestedWriteCachePolicy": "WriteThrough",
+            "ConfiguredWriteCachePolicy": "WriteThrough",
+            "VolumeDriveCachePolicy": "NoChange",
+            "VolumeReadAheadPolicy": "NoReadAhead",
+            "VolumeIoPolicy": "DirectIo",
+            "VolumeState": "Optimal",
+            "AvailableSizeMiBytes": 0,
+            "Bootable": true,
+            "FullDiskEncryptionCapable": false
+        }
+    }
+}

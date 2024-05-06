@@ -1,0 +1,16 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/LogServices/SEL/Entries/2572",
+    "@odata.type": "#LogEntry.v1_4_0.LogEntry",
+    "@odata.context": "/redfish/v1/$metadata#LogEntry.LogEntry",
+    "Message": "HDD1_STATUS: Drive Slot sensor, Drive Presence was asserted",
+    "EntryCode": "State Asserted",
+    "EventType": "StatusChange",
+    "Created": "2024-05-03T06:21:22+00:00",
+    "EventTimestamp": "2024-05-03T06:21:22+00:00",
+    "Id": "2572",
+    "EventId": "2572",
+    "EntryType": "SEL",
+    "Name": "Log Entry 2572",
+    "Description": "Log Entry 2572",
+    "Severity": "OK"
+}

@@ -1,0 +1,9 @@
+{
+    "@odata.id": "/redfish/v1/Managers/CIMC/Oem/CiscoInternalStorage/FlexMMC/CiscoPartition/UserFiles/CiscoFile",
+    "@odata.type": "#CiscoFileCollection.CiscoFileCollection",
+    "@odata.context": "/redfish/v1/$metadata#CiscoFileCollection.CiscoFileCollection",
+    "Description": "Collection of Cisco Internal Storge Partition resources",
+    "Name": "Cisco Internal Storage Partition Collections",
+    "Members": [],
+    "Members@odata.count": 0
+}

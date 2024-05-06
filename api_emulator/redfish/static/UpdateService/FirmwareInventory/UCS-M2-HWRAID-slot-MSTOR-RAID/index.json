@@ -1,0 +1,14 @@
+{
+    "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory/UCS-M2-HWRAID-slot-MSTOR-RAID",
+    "@odata.type": "#SoftwareInventory.v1_2_1.SoftwareInventory",
+    "@odata.context": "/redfish/v1/$metadata#SoftwareInventory.SoftwareInventory",
+    "Id": "UCS-M2-HWRAID-slot-MSTOR-RAID",
+    "Name": "UCS-M2-HWRAID-slot-MSTOR-RAID",
+    "Version": "2.3.17.1014",
+    "Updateable": true,
+    "RelatedItem": [
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MSTOR-RAID"
+        }
+    ]
+}

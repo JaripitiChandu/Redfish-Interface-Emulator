@@ -1,0 +1,9 @@
+{
+    "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory/UCSC-PT5161L-RETIMER-03-03",
+    "@odata.type": "#SoftwareInventory.v1_2_1.SoftwareInventory",
+    "@odata.context": "/redfish/v1/$metadata#SoftwareInventory.SoftwareInventory",
+    "Id": "UCSC-PT5161L-RETIMER-03-03",
+    "Name": "UCSC-PT5161L-RETIMER-03-03",
+    "Version": "1.27.42",
+    "Updateable": true
+}

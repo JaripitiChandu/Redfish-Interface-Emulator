@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/MessageRegistryFile",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "MessageRegistryFile",
+    "Id": "MessageRegistryFile",
+    "Name": "MessageRegistryFile Schema file",
+    "Description": "MessageRegistryFile Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/MessageRegistryFile.json",
+            "Uri": "/redfish/schemas/MessageRegistryFile.json",
+            "Language": "en"
+        }
+    ]
+}

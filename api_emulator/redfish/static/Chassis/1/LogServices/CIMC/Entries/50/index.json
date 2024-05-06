@@ -1,0 +1,15 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/LogServices/CIMC/Entries/50",
+    "@odata.type": "#LogEntry.v1_4_0.LogEntry",
+    "@odata.context": "/redfish/v1/$metadata#LogEntry.LogEntry",
+    "Id": "50",
+    "EventId": "50",
+    "EntryType": "Oem",
+    "Name": "Log Entry 50",
+    "Description": "Log Entry 50",
+    "Message": "User 'admin' successfully authenticated for 'redfish' service",
+    "EventType": "Alert",
+    "Created": "2024-05-03T07:09:13Z",
+    "EventTimestamp": "2024-05-03T07:09:13Z",
+    "Severity": "OK"
+}

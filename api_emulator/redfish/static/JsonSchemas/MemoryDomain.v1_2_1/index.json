@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/MemoryDomain.v1_2_1",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "MemoryDomain.v1_2_1",
+    "Id": "MemoryDomain.v1_2_1",
+    "Name": "MemoryDomain.v1_2_1 Schema file",
+    "Description": "MemoryDomain.v1_2_1 Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/MemoryDomain.v1_2_1.json",
+            "Uri": "/redfish/schemas/MemoryDomain.v1_2_1.json",
+            "Language": "en"
+        }
+    ]
+}

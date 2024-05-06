@@ -1,0 +1,22 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/Sensors/PSU2_IOUT",
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "@odata.context": "/redfish/v1/$metadata#Sensor.Sensor",
+    "Description": "Sensor Inventory",
+    "Reading": 0,
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "ReadingType": "Current",
+    "Id": "10",
+    "Thresholds": {
+        "UpperFatal": {
+            "Reading": 128
+        },
+        "UpperCritical": {
+            "Reading": 125
+        }
+    },
+    "Name": "PSU2_IOUT"
+}

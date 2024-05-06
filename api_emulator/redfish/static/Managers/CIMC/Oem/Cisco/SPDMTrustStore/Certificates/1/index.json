@@ -1,0 +1,34 @@
+{
+    "@odata.id": "/redfish/v1/Managers/CIMC/Oem/Cisco/SPDMTrustStore/Certificates/1",
+    "@odata.type": "#Certificate.v1_3_0.Certificate",
+    "@odata.context": "/redfish/v1/$metadata#Certificate.Certificate",
+    "Name": "Certificate",
+    "Description": "The Certificate resource describes a certificate used to prove the identify of a component, account, or service.",
+    "Id": "1",
+    "Subject": {
+        "Country": "US",
+        "State": "San Jose",
+        "Organization": "Broadcom",
+        "OrganizationalUnit": "DCSG",
+        "CommonName": "Broadcom DCSG Root CA"
+    },
+    "Issuer": {
+        "Country": "US",
+        "State": "San Jose",
+        "Organization": "Broadcom",
+        "OrganizationalUnit": "DCSG",
+        "CommonName": "Broadcom DCSG Root CA"
+    },
+    "CertificateString": "-----BEGIN CERTIFICATE-----\nMIICtzCCAhigAwIBAgIUCmKkHbYDDZQ2ABzOezc+k5CcJDYwCgYIKoZIzj0EAwQw\nYjELMAkGA1UEBhMCVVMxETAPBgNVBAgMCFNhbiBKb3NlMREwDwYDVQQKDAhCcm9h\nZGNvbTENMAsGA1UECwwERENTRzEeMBwGA1UEAwwVQnJvYWRjb20gRENTRyBSb290\nIENBMCAXDTcwMDEwMTAwMDAwMFoYDzk5OTkxMjMxMjM1OTU5WjBiMQswCQYDVQQG\nEwJVUzERMA8GA1UECAwIU2FuIEpvc2UxETAPBgNVBAoMCEJyb2FkY29tMQ0wCwYD\nVQQLDAREQ1NHMR4wHAYDVQQDDBVCcm9hZGNvbSBEQ1NHIFJvb3QgQ0EwgZswEAYH\nKoZIzj0CAQYFK4EEACMDgYYABAHhplwiKX3GSoHKGqfdJKYiTxJoA6zA66KPdQbj\nnwhDG1IkKq9j0XG08yqC6tzKZp5RUCyVe2MQp0c+aKIRX3JF9QAQRgCSHTXqpHJy\nJpAGF8l/+GHN/juZdP8Sj9TeLXOwaZ5K3QKsoAZRHGt71cZRFWYmreBd45yLPRZj\nD+kFF0S9kqNnMGUwHQYDVR0OBBYEFMyPJqpPTyy6/0GW9Y5P1xCus50EMB8GA1Ud\nIwQYMBaAFMyPJqpPTyy6/0GW9Y5P1xCus50EMBMGA1UdEwEB/wQJMAcBAf8CAgPo\nMA4GA1UdDwEB/wQEAwIBhjAKBggqhkjOPQQDBAOBjAAwgYgCQgExPYz3die70Ma2\nBykDJi0vtE4MFc8ioU0rUQe8jp0ngO1WJuTvSZQfQfmcGJoXLbpAapTnX5sH8ZxJ\npa4swyjMqgJCAfLaUxMbesjwX+hH1odYVnBlfXS6PQ5jVqUhKKgi018FCMbsskaS\n/7qCoE5gCIt36h8zZPSgq5Qy2kFiil4MSNLt\n-----END CERTIFICATE-----\n",
+    "CertificateType": "PEM",
+    "Oem": {
+        "Cisco": {
+            "CertificateSerialNumber": "0A:62:A4:1D:B6:03:0D:94:36:00:1C:CE:7B:37:3E:93:90:9C:24:36"
+        }
+    },
+    "ValidNotBefore": "1970-01-01T00:00:00Z",
+    "ValidNotAfter": "9999-12-31T23:59:59Z",
+    "KeyUsage": [
+        "ServerAuthentication"
+    ]
+}

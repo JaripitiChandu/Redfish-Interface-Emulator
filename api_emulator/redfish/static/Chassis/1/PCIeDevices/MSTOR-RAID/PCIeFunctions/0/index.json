@@ -1,0 +1,36 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/PCIeDevices/MSTOR-RAID/PCIeFunctions/0",
+    "@odata.type": "#PCIeFunction.v1_2_3.PCIeFunction",
+    "@odata.context": "/redfish/v1/$metadata#PCIeFunction.PCIeFunction",
+    "Links": {
+        "PCIeDevice": {
+            "@odata.id": "/redfish/v1/Chassis/1/PCIeDevices/MSTOR-RAID"
+        },
+        "EthernetInterfaces": [],
+        "EthernetInterfaces@odata.count": 0,
+        "StorageControllers": [
+            {
+                "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MSTOR-RAID"
+            }
+        ],
+        "Drives": [
+            {
+                "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MSTOR-RAID/Drives/253"
+            },
+            {
+                "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MSTOR-RAID/Drives/254"
+            }
+        ],
+        "StorageControllers@odata.count": 1,
+        "Drives@odata.count": 2,
+        "NetworkDeviceFunctions": [],
+        "NetworkDeviceFunctions@odata.count": 0
+    },
+    "SubsystemId": "0x0251",
+    "SubsystemVendorId": "0x1137",
+    "Description": "This gives information of PCIeFunctions on the system",
+    "Name": "Cisco Boot optimized M.2 Raid controller",
+    "DeviceId": "0x9230",
+    "VendorId": "0x1b4b",
+    "Id": "0"
+}

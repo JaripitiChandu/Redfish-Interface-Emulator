@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/MemoryCollection",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "MemoryCollection",
+    "Id": "MemoryCollection",
+    "Name": "MemoryCollection Schema file",
+    "Description": "MemoryCollection Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/MemoryCollection.json",
+            "Uri": "/redfish/schemas/MemoryCollection.json",
+            "Language": "en"
+        }
+    ]
+}

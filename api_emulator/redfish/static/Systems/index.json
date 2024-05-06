@@ -1,12 +1,13 @@
 {
+    "@odata.id": "/redfish/v1/Systems",
     "@odata.type": "#ComputerSystemCollection.ComputerSystemCollection",
+    "@odata.context": "/redfish/v1/$metadata#ComputerSystemCollection.ComputerSystemCollection",
+    "Description": "Collection of Computer Systems",
     "Name": "Computer System Collection",
-    "Members@odata.count": 1,
     "Members": [
         {
-            "@odata.id": "/redfish/v1/Systems/437XR1138R2"
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7"
         }
     ],
-    "@odata.id": "/redfish/v1/Systems",
-    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "Members@odata.count": 1
 }

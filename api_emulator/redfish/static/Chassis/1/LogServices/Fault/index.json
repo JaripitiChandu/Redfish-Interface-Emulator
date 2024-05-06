@@ -1,0 +1,22 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/LogServices/Fault",
+    "@odata.type": "#LogService.v1_2_0.LogService",
+    "@odata.context": "/redfish/v1/$metadata#LogService.LogService",
+    "Entries": {
+        "@odata.id": "/redfish/v1/Chassis/1/LogServices/Fault/Entries"
+    },
+    "ServiceEnabled": true,
+    "OverWritePolicy": "WrapsWhenFull",
+    "Id": "Fault",
+    "Name": "Fault Log Service",
+    "LogEntryType": "OEM",
+    "Description": "Fault Log Service",
+    "DateTimeLocalOffset": "+00:00",
+    "DateTime": "2024-05-03T07:10:10+00:00",
+    "MaxNumberOfRecords": 1024,
+    "Actions": {
+        "#LogService.ClearLog": {
+            "target": "/redfish/v1/Chassis/1/LogServices/Fault/Actions/LogService.ClearLog"
+        }
+    }
+}

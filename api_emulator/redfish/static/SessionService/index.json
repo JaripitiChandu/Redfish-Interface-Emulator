@@ -1,17 +1,18 @@
 {
-    "@odata.type": "#SessionService.v1_1_8.SessionService",
+    "@odata.id": "/redfish/v1/SessionService",
+    "@odata.type": "#SessionService.v1_1_7.SessionService",
+    "@odata.context": "/redfish/v1/$metadata#SessionService.SessionService",
     "Id": "SessionService",
     "Name": "Session Service",
     "Description": "Session Service",
-    "Status": {
-        "State": "Enabled",
-        "Health": "OK"
-    },
-    "ServiceEnabled": true,
-    "SessionTimeout": 30,
     "Sessions": {
         "@odata.id": "/redfish/v1/SessionService/Sessions"
     },
-    "@odata.id": "/redfish/v1/SessionService",
-    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "ServiceEnabled": true,
+    "SessionTimeout": 1800,
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK",
+        "HealthRollup": "OK"
+    }
 }

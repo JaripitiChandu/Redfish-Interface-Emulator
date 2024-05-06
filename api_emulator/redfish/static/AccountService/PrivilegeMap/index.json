@@ -1,0 +1,283 @@
+{
+    "@odata.id": "/redfish/v1/AccountService/PrivilegeMap",
+    "@odata.type": "#PrivilegeRegistry.v1_1_2.PrivilegeRegistry",
+    "@odata.context": "/redfish/v1/$metadata#PrivilegeRegistry.PrivilegeRegistry",
+    "Id": "PrivilegeMap",
+    "Name": "Privilege Registry",
+    "Description": "This resource represents the operation to privilege mappings",
+    "PrivilegesUsed": [
+        "Login",
+        "ConfigureManager",
+        "ConfigureUsers",
+        "ConfigureSelf",
+        "ConfigureComponents"
+    ],
+    "OEMPrivilegesUsed": [
+        "OemClearLog",
+        "OemPowerControl",
+        "OemAccessVirtualMedia"
+    ],
+    "Mappings": [
+        {
+            "Entity": "Manager",
+            "OperationMap": {
+                "GET": [
+                    {
+                        "Privilege": [
+                            "Login",
+                            "ConfigureManager",
+                            "ConfigureUsers",
+                            "ConfigureSelf",
+                            "ConfigureComponents",
+                            "OemClearLog",
+                            "OemPowerControl",
+                            "OemAccessVirtualMedia"
+                        ]
+                    }
+                ],
+                "POST": [
+                    {
+                        "Privilege": [
+                            "ConfigureManager",
+                            "ConfigureUsers",
+                            "ConfigureSelf",
+                            "ConfigureComponents"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "Entity": "Chassis",
+            "OperationMap": {
+                "GET": [
+                    {
+                        "Privilege": [
+                            "Login",
+                            "ConfigureManager",
+                            "ConfigureUsers",
+                            "ConfigureSelf",
+                            "ConfigureComponents",
+                            "OemClearLog",
+                            "OemPowerControl",
+                            "OemAccessVirtualMedia"
+                        ]
+                    }
+                ],
+                "POST": [
+                    {
+                        "Privilege": [
+                            "ConfigureManager",
+                            "ConfigureUsers",
+                            "ConfigureSelf",
+                            "ConfigureComponents"
+                        ]
+                    }
+                ],
+                "PATCH": [
+                    {
+                        "Privilege": [
+                            "ConfigureManager",
+                            "ConfigureUsers",
+                            "ConfigureSelf",
+                            "ConfigureComponents"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "Entity": "Systems",
+            "OperationMap": {
+                "GET": [
+                    {
+                        "Privilege": [
+                            "Login",
+                            "ConfigureManager",
+                            "ConfigureUsers",
+                            "ConfigureSelf",
+                            "ConfigureComponents",
+                            "OemClearLog",
+                            "OemPowerControl",
+                            "OemAccessVirtualMedia"
+                        ]
+                    }
+                ],
+                "POST": [
+                    {
+                        "Privilege": [
+                            "ConfigureManager",
+                            "ConfigureUsers",
+                            "ConfigureSelf",
+                            "ConfigureComponents"
+                        ]
+                    }
+                ],
+                "PATCH": [
+                    {
+                        "Privilege": [
+                            "ConfigureManager",
+                            "ConfigureUsers",
+                            "ConfigureSelf",
+                            "ConfigureComponents"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "Entity": "JSONSchemas",
+            "OperationMap": {
+                "GET": [
+                    {
+                        "Privilege": [
+                            "Login",
+                            "ConfigureManager",
+                            "ConfigureUsers",
+                            "ConfigureSelf",
+                            "ConfigureComponents",
+                            "OemClearLog",
+                            "OemPowerControl",
+                            "OemAccessVirtualMedia"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "Entity": "EventService",
+            "OperationMap": {
+                "GET": [
+                    {
+                        "Privilege": [
+                            "Login",
+                            "ConfigureManager",
+                            "ConfigureUsers",
+                            "ConfigureSelf",
+                            "ConfigureComponents",
+                            "OemClearLog",
+                            "OemPowerControl",
+                            "OemAccessVirtualMedia"
+                        ]
+                    }
+                ],
+                "POST": [
+                    {
+                        "Privilege": [
+                            "ConfigureManager",
+                            "ConfigureUsers",
+                            "ConfigureSelf",
+                            "ConfigureComponents"
+                        ]
+                    }
+                ],
+                "PATCH": [
+                    {
+                        "Privilege": [
+                            "ConfigureManager",
+                            "ConfigureUsers",
+                            "ConfigureSelf",
+                            "ConfigureComponents"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "Entity": "UpdateService",
+            "OperationMap": {
+                "GET": [
+                    {
+                        "Privilege": [
+                            "Login",
+                            "ConfigureManager",
+                            "ConfigureUsers",
+                            "ConfigureSelf",
+                            "ConfigureComponents",
+                            "OemClearLog",
+                            "OemPowerControl",
+                            "OemAccessVirtualMedia"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "Entity": "SessionService",
+            "OperationMap": {
+                "GET": [
+                    {
+                        "Privilege": [
+                            "Login",
+                            "ConfigureManager",
+                            "ConfigureUsers",
+                            "ConfigureSelf",
+                            "ConfigureComponents",
+                            "OemClearLog",
+                            "OemPowerControl",
+                            "OemAccessVirtualMedia"
+                        ]
+                    }
+                ],
+                "POST": [
+                    {
+                        "Privilege": [
+                            "ConfigureManager",
+                            "ConfigureUsers",
+                            "ConfigureSelf",
+                            "ConfigureComponents"
+                        ]
+                    }
+                ],
+                "DELETE": [
+                    {
+                        "Privilege": [
+                            "ConfigureManager",
+                            "ConfigureUsers",
+                            "ConfigureSelf",
+                            "ConfigureComponents"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "Entity": "TaskService",
+            "OperationMap": {
+                "GET": [
+                    {
+                        "Privilege": [
+                            "Login",
+                            "ConfigureManager",
+                            "ConfigureUsers",
+                            "ConfigureSelf",
+                            "ConfigureComponents",
+                            "OemClearLog",
+                            "OemPowerControl",
+                            "OemAccessVirtualMedia"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "Entity": "AccountService",
+            "OperationMap": {
+                "GET": [
+                    {
+                        "Privilege": [
+                            "Login",
+                            "ConfigureManager",
+                            "ConfigureUsers",
+                            "ConfigureSelf",
+                            "ConfigureComponents",
+                            "OemClearLog",
+                            "OemPowerControl",
+                            "OemAccessVirtualMedia"
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}

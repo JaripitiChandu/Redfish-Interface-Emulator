@@ -1,0 +1,263 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7",
+    "@odata.type": "#ComputerSystem.v1_15_0.ComputerSystem",
+    "@odata.context": "/redfish/v1/$metadata#ComputerSystem.ComputerSystem",
+    "Description": "Represents general resources for the overall system",
+    "Processors": {
+        "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Processors"
+    },
+    "SimpleStorage": {
+        "@odata.id": "/redfish/v1/Systems/WZP27430FB7/SimpleStorage"
+    },
+    "Storage": {
+        "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage"
+    },
+    "Memory": {
+        "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Memory"
+    },
+    "MemoryDomains": {
+        "@odata.id": "/redfish/v1/Systems/WZP27430FB7/MemoryDomains"
+    },
+    "NetworkInterfaces": {
+        "@odata.id": "/redfish/v1/Systems/WZP27430FB7/NetworkInterfaces"
+    },
+    "Bios": {
+        "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Bios"
+    },
+    "SecureBoot": {
+        "@odata.id": "/redfish/v1/Systems/WZP27430FB7/SecureBoot"
+    },
+    "LogServices": {
+        "@odata.id": "/redfish/v1/Systems/WZP27430FB7/LogServices"
+    },
+    "EthernetInterfaces": {
+        "@odata.id": "/redfish/v1/Systems/WZP27430FB7/EthernetInterfaces"
+    },
+    "Links": {
+        "Chassis": [
+            {
+                "@odata.id": "/redfish/v1/Chassis/1"
+            }
+        ],
+        "CooledBy": [
+            {
+                "@odata.id": "/redfish/v1/Chassis/1/Thermal"
+            }
+        ],
+        "ManagedBy": [
+            {
+                "@odata.id": "/redfish/v1/Managers/CIMC"
+            }
+        ],
+        "PoweredBy": [
+            {
+                "@odata.id": "/redfish/v1/Chassis/1/Power"
+            }
+        ],
+        "Oem": {
+            "Cisco": {
+                "SPDMDeviceCertificates": {
+                    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Oem/Cisco/SPDMDevice/Certificates"
+                },
+                "SPDMTrustStoreCertificateCollection": {
+                    "@odata.id": "/redfish/v1/Managers/CIMC/Oem/Cisco/SPDMTrustStore/Certificates"
+                }
+            }
+        }
+    },
+    "MemorySummary": {
+        "Status": {
+            "Health": "OK",
+            "HealthRollup": "OK"
+        },
+        "TotalSystemMemoryGiB": 256
+    },
+    "ProcessorSummary": {
+        "Count": 2,
+        "Model": "INTEL(R) XEON(R) GOLD 6554S",
+        "CoreCount": 72
+    },
+    "AssetTag": "tag03",
+    "Manufacturer": "Cisco Systems Inc",
+    "PCIeFunctions@odata.count": 3,
+    "SerialNumber": "WZP27430FB7",
+    "HostWatchdogTimer": {
+        "Status": {
+            "State": "Disabled"
+        },
+        "FunctionEnabled": false,
+        "TimeoutAction": "PowerDown",
+        "WarningAction": "None"
+    },
+    "PowerState": "On",
+    "Oem": {
+        "Cisco": {
+            "SystemEffectiveSpeed": 5200,
+            "DimmBlocklistingEnabled": true,
+            "SystemEffectiveMemory": 256,
+            "DimmBlacklistingEnabled@Message.ExtendedInfo": [
+                {
+                    "MessageId": "CiscoUCS.1.0.PropertyWillBeDeprecated",
+                    "Resolution": "Use property DimmBlocklistingEnabled",
+                    "Message": "The property DimmBlacklistingEnabled will be deprecated from next release onwards",
+                    "Severity": "Warning"
+                }
+            ],
+            "DimmBlacklistingEnabled": true,
+            "SystemMemorySummary": {
+                "MemoryConfiguration": "MaximumPerformance",
+                "FailedMemoryMiB": 0,
+                "TotalSystemMemoryGiB": 256,
+                "RASMemoryConfiguration": "MaximumPerformance",
+                "FailedDIMMCount": "0",
+                "IgnoredDIMMCount": "0",
+                "EffectiveMemoryGiB": 256,
+                "IgnoredMemoryMiB": 0,
+                "EffectiveSpeedMHz": 5200,
+                "RedundantMemoryMiB": 0
+            },
+            "SystemEffectiveMemory@Message.ExtendedInfo": [
+                {
+                    "@odata.type": "#Message.v1_1_1.Message",
+                    "MessageId": "CiscoUCS.1.7.0.PropertyWillBeDeprecated",
+                    "Message": "The property 'SystemEffectiveMemory' will be deprecated from next release onwards",
+                    "MessageArgs": [
+                        "SystemEffectiveMemory"
+                    ],
+                    "Severity": "Warning",
+                    "MessageSeverity": "Warning"
+                }
+            ],
+            "SystemEffectiveSpeed@Message.ExtendedInfo": [
+                {
+                    "@odata.type": "#Message.v1_1_1.Message",
+                    "MessageId": "CiscoUCS.1.7.0.PropertyWillBeDeprecated",
+                    "Message": "The property 'SystemEffectiveSpeed' will be deprecated from next release onwards",
+                    "MessageArgs": [
+                        "SystemEffectiveSpeed"
+                    ],
+                    "Severity": "Warning",
+                    "MessageSeverity": "Warning"
+                }
+            ],
+            "PostCompletionStatus": true,
+            "FrontPanelButtonsLocked": false,
+            "MCTP": {
+                "FaultAlertSetting": "Partial",
+                "SPDMHandShakeStatus": "Completed"
+            }
+        }
+    },
+    "PCIeFunctions": [
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/PCIeDevices/MLOM/PCIeFunctions/0"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/PCIeDevices/MRAID/PCIeFunctions/0"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/PCIeDevices/MSTOR-RAID/PCIeFunctions/0"
+        }
+    ],
+    "PCIeDevices": [
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/PCIeDevices/MLOM"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/PCIeDevices/MRAID"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/PCIeDevices/MSTOR-RAID"
+        }
+    ],
+    "PCIeDevices@odata.count": 3,
+    "Id": "WZP27430FB7",
+    "PowerRestorePolicy": "AlwaysOff",
+    "Name": "UCS C220 M7S",
+    "SystemType": "Physical",
+    "Model": "UCSC-C220-M7S",
+    "IndicatorLED": "Off",
+    "LocationIndicatorActive": false,
+    "BiosVersion": "C220M7.4.3.200.27.0811230352",
+    "HostName": "C220-WZP27430FB7",
+    "Boot": {
+        "BootSourceOverrideEnabled": "Disabled",
+        "BootSourceOverrideTarget@Redfish.AllowableValues": [
+            "None",
+            "Pxe",
+            "Floppy",
+            "Cd",
+            "Hdd",
+            "BiosSetup",
+            "Diags"
+        ],
+        "BootSourceOverrideEnabled@Redfish.AllowableValues": [
+            "Once",
+            "Continuous",
+            "Disabled"
+        ],
+        "BootSourceOverrideTarget": "None",
+        "Certificates": {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Boot/Certificates"
+        }
+    },
+    "TrustedModules": [
+        {
+            "FirmwareVersion": "7.85.459.0",
+            "Status": {
+                "State": "Enabled"
+            },
+            "Oem": {
+                "Cisco": {
+                    "TPM": {
+                        "Manufacturer": "Cisco Systems Inc",
+                        "Model": "UCSX-TPM-002C",
+                        "OwnershipStatus": "Owned",
+                        "Revision": 1,
+                        "SerialNumber": "FCH272476VE"
+                    }
+                }
+            },
+            "InterfaceType": "TPM2_0"
+        }
+    ],
+    "UUID": "E2610C70-E5F1-4A28-AF94-3DF411B0888C",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK",
+        "HealthRollup": "Critical",
+        "HealthRollup@Message.ExtendedInfo": [
+            {
+                "@odata.type": "#Message.v1_1_1.Message",
+                "MessageId": "CiscoUcsOverallHealthStatus.1.0.0.Inoperable",
+                "Message": "PCH Secure Fuse Verification Failed",
+                "MessageArgs": [
+                    "PCH Secure Fuse Verification Failed"
+                ],
+                "Severity": "Critical",
+                "MessageSeverity": "Critical",
+                "Resolution": "Please contact CISCO technical support."
+            }
+        ]
+    },
+    "Actions": {
+        "#ComputerSystem.Reset": {
+            "target": "/redfish/v1/Systems/WZP27430FB7/Actions/ComputerSystem.Reset",
+            "ResetType@Redfish.AllowableValues": [
+                "On",
+                "ForceOff",
+                "GracefulShutdown",
+                "GracefulRestart",
+                "ForceRestart",
+                "Nmi",
+                "PowerCycle"
+            ]
+        },
+        "Oem": {
+            "#CiscoUCSExtensions.ResetBIOSCMOS": {
+                "target": "/redfish/v1/Systems/WZP27430FB7/Actions/Oem/ComputerSystem.ResetBIOSCMOS",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.ResetBIOSCMOS"
+            }
+        }
+    }
+}

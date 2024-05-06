@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/Task.v1_5_0",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "Task.v1_5_0",
+    "Id": "Task.v1_5_0",
+    "Name": "Task.v1_5_0 Schema file",
+    "Description": "Task.v1_5_0 Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/Task.v1_5_0.json",
+            "Uri": "/redfish/schemas/Task.v1_5_0.json",
+            "Language": "en"
+        }
+    ]
+}

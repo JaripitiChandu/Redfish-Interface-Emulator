@@ -1,0 +1,175 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/Power",
+    "@odata.type": "#Power.v1_5_1.Power",
+    "@odata.context": "/redfish/v1/$metadata#Power.Power",
+    "Id": "Power",
+    "Description": "Power",
+    "Voltages": [
+        {
+            "PhysicalContext": "PowerSupply",
+            "UpperThresholdFatal": 15,
+            "Name": "PSU1_VOUT",
+            "@odata.id": "/redfish/v1/Chassis/1/Power#/Voltages/0",
+            "ReadingVolts": 12,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "SensorNumber": 46,
+            "UpperThresholdCritical": 14,
+            "MemberId": "0"
+        },
+        {
+            "PhysicalContext": "PowerSupply",
+            "UpperThresholdFatal": 15,
+            "Name": "PSU2_VOUT",
+            "@odata.id": "/redfish/v1/Chassis/1/Power#/Voltages/1",
+            "ReadingVolts": 0,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "SensorNumber": 50,
+            "UpperThresholdCritical": 14,
+            "MemberId": "1"
+        },
+        {
+            "LowerThresholdCritical": 10.788,
+            "MemberId": "2",
+            "Name": "P12V",
+            "@odata.id": "/redfish/v1/Chassis/1/Power#/Voltages/2",
+            "SensorNumber": 200,
+            "LowerThresholdFatal": 10.15,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "PowerSupply",
+            "UpperThresholdFatal": 13.804,
+            "UpperThresholdCritical": 13.166,
+            "ReadingVolts": 11.89
+        },
+        {
+            "LowerThresholdCritical": 2.543,
+            "MemberId": "3",
+            "Name": "P3V_BAT_SCALED",
+            "@odata.id": "/redfish/v1/Chassis/1/Power#/Voltages/3",
+            "SensorNumber": 201,
+            "LowerThresholdFatal": 2.246,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "PowerSupply",
+            "UpperThresholdFatal": 3.76,
+            "UpperThresholdCritical": 3.588,
+            "ReadingVolts": 3.073
+        }
+    ],
+    "PowerSupplies": [
+        {
+            "SerialNumber": "DTM272901EM",
+            "LineInputVoltage": 225,
+            "PartNumber": "341-0770-01",
+            "MemberId": "0",
+            "Name": "PSU1",
+            "SparePartNumber": "341-0770-01",
+            "@odata.id": "/redfish/v1/Chassis/1/Power#/PowerSupplies/0",
+            "InputRanges": [
+                {
+                    "OutputWattage": 1200,
+                    "MinimumVoltage": 90,
+                    "MaximumVoltage": 140,
+                    "MinimumFrequencyHz": 47,
+                    "MaximumFrequencyHz": 63
+                },
+                {
+                    "OutputWattage": 2300,
+                    "MinimumVoltage": 180,
+                    "MaximumVoltage": 264,
+                    "MinimumFrequencyHz": 47,
+                    "MaximumFrequencyHz": 63
+                }
+            ],
+            "Manufacturer": "Cisco Systems Inc",
+            "LastPowerOutputWatts": 312,
+            "PowerInputWatts": 339,
+            "PowerSupplyType": "AC",
+            "PowerOutputWatts": 312,
+            "FirmwareVersion": "11912198",
+            "Model": "ECD15020051",
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            }
+        },
+        {
+            "SerialNumber": "DTM272901HA",
+            "LineInputVoltage": 0,
+            "PartNumber": "341-0770-01",
+            "MemberId": "1",
+            "Name": "PSU2",
+            "SparePartNumber": "341-0770-01",
+            "@odata.id": "/redfish/v1/Chassis/1/Power#/PowerSupplies/1",
+            "InputRanges": [
+                {
+                    "OutputWattage": 1200,
+                    "MinimumVoltage": 90,
+                    "MaximumVoltage": 140,
+                    "MinimumFrequencyHz": 47,
+                    "MaximumFrequencyHz": 63
+                },
+                {
+                    "OutputWattage": 2300,
+                    "MinimumVoltage": 180,
+                    "MaximumVoltage": 264,
+                    "MinimumFrequencyHz": 47,
+                    "MaximumFrequencyHz": 63
+                }
+            ],
+            "Manufacturer": "Cisco Systems Inc",
+            "LastPowerOutputWatts": 0,
+            "PowerInputWatts": 0,
+            "PowerSupplyType": "AC",
+            "PowerOutputWatts": 0,
+            "FirmwareVersion": "11912198",
+            "Model": "ECD15020051",
+            "Status": {
+                "State": "Disabled",
+                "Health": "Warning",
+                "Health@Message.ExtendedInfo": [
+                    {
+                        "@odata.type": "#Message.v1_1_1.Message",
+                        "MessageId": "CiscoUcsSensorFaults.1.1.0.DiscreteFailure",
+                        "RelatedProperties": [],
+                        "Message": "DISCRETE Sensor:Power Supply Lost failure asserted. Sensor name: PSU2_STATUS",
+                        "MessageArgs": [
+                            "DISCRETE",
+                            "Power Supply Lost",
+                            "PSU2_STATUS"
+                        ],
+                        "Severity": "Critical",
+                        "Resolution": "Please contact CISCO technical support."
+                    }
+                ]
+            }
+        }
+    ],
+    "Name": "Power",
+    "PowerControl": [
+        {
+            "PowerConsumedWatts": 320,
+            "PhysicalContext": "PowerSupply",
+            "PowerMetrics": {
+                "MinConsumedWatts": 0,
+                "MaxConsumedWatts": 0,
+                "AverageConsumedWatts": 0
+            },
+            "MemberId": "0",
+            "PowerLimit": {
+                "LimitException": "NoAction"
+            },
+            "@odata.id": "/redfish/v1/Chassis/1/Power#/PowerControl/0"
+        }
+    ]
+}

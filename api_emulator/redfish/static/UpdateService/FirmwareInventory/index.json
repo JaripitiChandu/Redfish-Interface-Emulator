@@ -1,0 +1,34 @@
+{
+    "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory",
+    "@odata.type": "#SoftwareInventoryCollection.SoftwareInventoryCollection",
+    "@odata.context": "/redfish/v1/$metadata#SoftwareInventoryCollection.SoftwareInventoryCollection",
+    "Description": "Inventory of Firmware components",
+    "Name": "Firmware Inventory",
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory/BIOS"
+        },
+        {
+            "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory/CIMC"
+        },
+        {
+            "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory/Board_Controller"
+        },
+        {
+            "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory/UCSC-M-V5Q50G-slot-MLOM"
+        },
+        {
+            "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory/UCS-M2-HWRAID-slot-MSTOR-RAID"
+        },
+        {
+            "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory/HDD-model-MTFDDAV240TDS-serial-MSY27230682"
+        },
+        {
+            "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory/HDD-model-MTFDDAV240TDS-serial-MSY27230681"
+        },
+        {
+            "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory/UCSC-PT5161L-RETIMER-03-03"
+        }
+    ],
+    "Members@odata.count": 8
+}

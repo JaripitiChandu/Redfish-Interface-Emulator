@@ -1,0 +1,226 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/Sensors",
+    "@odata.type": "#SensorCollection.SensorCollection",
+    "@odata.context": "/redfish/v1/$metadata#SensorCollection.SensorCollection",
+    "Description": "The collection of Sensor resource instances.",
+    "Name": "The collection of Sensor resource instances.",
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/LED_FPID"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/MOD2_FAN1_SPEED"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/P12V"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/MOD2_FAN2_SPEED"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/MOD3_FAN1_SPEED"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/LED_PSU_STATUS"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/HDD1_STATUS"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/LED_FAN_STATUS"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/HDD2_STATUS"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/MOD4_FAN1_SPEED"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/HDD3_STATUS"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/MOD4_FAN2_SPEED"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/LED_FAN2_FAULT"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/MOD5_FAN1_SPEED"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/HDD7_STATUS"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/HDD8_STATUS"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/MOD5_FAN2_SPEED"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/MOD6_FAN1_SPEED"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/MOD6_FAN2_SPEED"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/MOD7_FAN1_SPEED"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/MOD7_FAN2_SPEED"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/MOD8_FAN1_SPEED"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/MOD8_FAN2_SPEED"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/MLOM_FAN_SPEED"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/TEMP_SENS_FRONT"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/DDR5_P1_A1_TMP"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/LED_FAN5_FAULT"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/LED_FAN6_FAULT"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/LED_FAN7_FAULT"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/DDR5_P1_C1_TMP"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/DDR5_P1_E1_TMP"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/PSU1_POUT"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/DDR5_P1_G1_TMP"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/POWER_USAGE"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/DDR5_P2_A1_TMP"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/LED_FAN4_FAULT"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/DDR5_P2_C1_TMP"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/DDR5_P2_E1_TMP"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/PSU2_POUT"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/DDR5_P2_G1_TMP"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/P1_TEMP_SENS"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/P2_TEMP_SENS"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/HDD10_STATUS"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/HDD9_STATUS"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/HDD6_STATUS"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/PSU1_TEMP"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/PSU1_PIN"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/HDD5_STATUS"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/PSU2_IOUT"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/HDD4_STATUS"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/MLOM_DIE_TEMP"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/PSU2_PIN"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/P3V_BAT_SCALED"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/MOD1_FAN2_SPEED"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/PSU1_IOUT"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/MLOM_TEMP"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/OVERALL_DIMM_STATUS"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/LED_TEMP_STATUS"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/MOD1_FAN1_SPEED"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/RISER3_INLET_TMP"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/PSU2_TEMP"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/RISER2_INLET_TMP"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/RISER1_INLET_TMP"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/PSU1_VOUT"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/DDR5_TSPD_TEMP"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/DDR5_TPMIC_TEMP"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/LED_HLTH_STATUS"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/LED_FAN1_FAULT"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/LED_FAN3_FAULT"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/PSU2_VOUT"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/MOD3_FAN2_SPEED"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/Sensors/LED_FAN8_FAULT"
+        }
+    ],
+    "Members@odata.count": 72
+}

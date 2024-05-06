@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/VirtualMediaCollection",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "VirtualMediaCollection",
+    "Id": "VirtualMediaCollection",
+    "Name": "VirtualMediaCollection Schema file",
+    "Description": "VirtualMediaCollection Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/VirtualMediaCollection.json",
+            "Uri": "/redfish/schemas/VirtualMediaCollection.json",
+            "Language": "en"
+        }
+    ]
+}

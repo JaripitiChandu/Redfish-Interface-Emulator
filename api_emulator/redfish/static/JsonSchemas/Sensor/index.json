@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/Sensor",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "Sensor",
+    "Id": "Sensor",
+    "Name": "Sensor Schema file",
+    "Description": "Sensor Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/Sensor.json",
+            "Uri": "/redfish/schemas/Sensor.json",
+            "Language": "en"
+        }
+    ]
+}

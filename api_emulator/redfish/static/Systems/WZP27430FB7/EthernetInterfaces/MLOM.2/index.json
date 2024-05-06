@@ -1,0 +1,15 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/EthernetInterfaces/MLOM.2",
+    "@odata.type": "#EthernetInterface.v1_4_1.EthernetInterface",
+    "@odata.context": "/redfish/v1/$metadata#EthernetInterface.EthernetInterface",
+    "Links": {
+        "Chassis": {
+            "@odata.id": "/redfish/v1/Chassis/1"
+        }
+    },
+    "PermanentMACAddress": "40:14:82:82:02:79",
+    "MACAddress": "40:14:82:82:02:79",
+    "Id": "MLOM.2",
+    "Name": "Ethernet Interface",
+    "Description": "Network Interface"
+}

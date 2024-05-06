@@ -1,0 +1,22 @@
+{
+    "Id": "fc1",
+    "Name": "fc1",
+    "Description": "Shows traffic statistics related to a VNIC.",
+    "RXBytes": 0,
+    "RXFrames": 0,
+    "RXMulticastFrames": 0,
+    "RXUnicastFrames": 0,
+    "TXBytes": 0,
+    "TXFrames": 0,
+    "TXMulticastFrames": 0,
+    "TXUnicastFrames": 0,
+    "Oem": {
+        "Cisco": {
+            "@odata.type": "#CiscoUCSExtensions.v1_0_0.CiscoUCSExtensions",
+            "NetworkDeviceFunctionAdditionalMetrics": {}
+        }
+    },
+    "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkDeviceFunctions/fc1/Metrics",
+    "@odata.type": "#NetworkDeviceFunctionMetrics.v1_1_0.NetworkDeviceFunctionMetrics",
+    "@odata.context": "/redfish/v1/$metadata#NetworkDeviceFunctionMetrics.NetworkDeviceFunctionMetrics"
+}

@@ -1,0 +1,38 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Oem/Cisco/SPDMDevice/Certificates/MRAID_1",
+    "@odata.type": "#Certificate.v1_3_0.Certificate",
+    "@odata.context": "/redfish/v1/$metadata#Certificate.Certificate",
+    "Name": "Certificate",
+    "Description": "The Certificate resource describes a certificate used to prove the identify of a component, account, or service.",
+    "Id": "MRAID_1",
+    "CertificateType": "PEM",
+    "Subject": {
+        "Country": "US",
+        "City": "San Jose",
+        "State": "California",
+        "Organization": "Broadcom",
+        "OrganizationalUnit": "DCSG",
+        "CommonName": "Cisco SAS41XX and SAS40XX Products-DCSG01411179"
+    },
+    "Issuer": {
+        "Country": "US",
+        "City": "San Jose",
+        "State": "California",
+        "Organization": "Broadcom Inc.",
+        "OrganizationalUnit": "DCSG",
+        "CommonName": "Broadcom SAS41XX and SAS40XX CA-DCSG00952411"
+    },
+    "Oem": {
+        "Cisco": {
+            "CertificateSerialNumber": "4C:20:0D:F4:EC:A5:A3:7D:06:4F:1F:C1:CE:33:B7:17:A5:B9:B3:C1",
+            "IssuerCertificate": {
+                "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Oem/Cisco/SPDMDevice/Certificates/MRAID_2"
+            }
+        }
+    },
+    "ValidNotBefore": "1970-01-01T00:00:00Z",
+    "ValidNotAfter": "9999-12-31T23:59:59Z",
+    "KeyUsage": [
+        "ServerAuthentication"
+    ]
+}

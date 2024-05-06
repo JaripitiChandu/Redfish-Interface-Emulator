@@ -1,25 +1,114 @@
 {
-    "@odata.type": "#AccountService.v1_15_0.AccountService",
-    "Id": "AccountService",
-    "Name": "Account Service",
-    "Description": "Account Service",
-    "Status": {
-        "State": "Enabled",
-        "Health": "OK"
-    },
-    "ServiceEnabled": true,
-    "AuthFailureLoggingThreshold": 3,
-    "MinPasswordLength": 8,
-    "AccountLockoutThreshold": 5,
-    "AccountLockoutDuration": 30,
-    "AccountLockoutCounterResetAfter": 30,
-    "AccountLockoutCounterResetEnabled": true,
-    "Accounts": {
-        "@odata.id": "/redfish/v1/AccountService/Accounts"
-    },
+    "@odata.id": "/redfish/v1/AccountService",
+    "@odata.type": "#AccountService.v1_9_0.AccountService",
+    "@odata.context": "/redfish/v1/$metadata#AccountService.AccountService",
     "Roles": {
         "@odata.id": "/redfish/v1/AccountService/Roles"
     },
-    "@odata.id": "/redfish/v1/AccountService",
-    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "PrivilegeMap": {
+        "@odata.id": "/redfish/v1/AccountService/PrivilegeMap"
+    },
+    "Accounts": {
+        "@odata.id": "/redfish/v1/AccountService/Accounts"
+    },
+    "Description": "Account Service",
+    "MaxPasswordLength": 20,
+    "MinPasswordLength": 8,
+    "AccountLockoutThreshold": 0,
+    "AccountLockoutDuration": 0,
+    "Oem": {
+        "Cisco": {
+            "LDAPSettings": {
+                "BindingDistinguishedName": "NONE",
+                "BindingMethod": "Anonymous",
+                "SearchFilterAttribute": "NONE",
+                "SearchNestedGroupDepth": 128,
+                "ServerTimeout": 0,
+                "BindingPassword": null
+            },
+            "PasswordHistory": 0,
+            "PasswordExpiry": {
+                "ExpiryDuration": 0,
+                "NotificationPeriod": 0,
+                "GracePeriod": 0,
+                "Enabled": false
+            },
+            "LDAPDNSsettings": {
+                "DomainToSearch": "NONE",
+                "ForestToSearch": "NONE",
+                "DNSQueryEnable": false,
+                "SourceMethod": "Extracted"
+            },
+            "@odata.type": "#CiscoUCSExtensions.v1_0_0.CiscoUCSExtensions",
+            "AccountsCapabilities": [
+                {
+                    "AccountType": "Redfish",
+                    "PasswordObfuscationCapabilities": [
+                        "OriginalClear"
+                    ]
+                },
+                {
+                    "AccountType": "SNMP",
+                    "PasswordObfuscationCapabilities": [
+                        "OriginalClear"
+                    ]
+                },
+                {
+                    "AccountType": "IPMI",
+                    "PasswordObfuscationCapabilities": [
+                        "OriginalClear"
+                    ]
+                }
+            ],
+            "StrongPasswordPolicyEnabled": true
+        }
+    },
+    "AccountLockoutCounterResetEnabled": true,
+    "TACACSplus": {
+        "ServiceAddresses": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        ],
+        "AccountProviderType": "TACACSplus",
+        "Authentication": {
+            "AuthenticationType": "UsernameAndPassword"
+        },
+        "Priority": 2,
+        "ServiceEnabled": false
+    },
+    "LDAP": {
+        "Priority": 0,
+        "ServiceAddresses": [],
+        "AccountProviderType": "LDAPService",
+        "LDAPService": {
+            "SearchSettings": {
+                "UsernameAttribute": "CiscoAvPair",
+                "GroupsAttribute": "memberOf",
+                "BaseDistinguishedNames": []
+            },
+            "Oem": {
+                "Cisco": {
+                    "LDAPGroupAuthorizationEnabled": false
+                }
+            }
+        },
+        "Authentication": {
+            "AuthenticationType": "UsernameAndPassword"
+        },
+        "RemoteRoleMapping": [],
+        "Certificates": {
+            "@odata.id": "/redfish/v1/AccountService/LDAP/Certificates"
+        },
+        "ServiceEnabled": false
+    },
+    "AuthFailureLoggingThreshold": 0,
+    "LocalAccountAuth": "Fallback",
+    "AccountLockoutCounterResetAfter": 0,
+    "Id": "AccountService",
+    "Name": "Account Service",
+    "ServiceEnabled": true
 }

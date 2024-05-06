@@ -5,6 +5,7 @@
 # Resource Dictionary
 
 # Variable to store resource dictionary
+from pprint import pprint
 import logging
 
 resdict = {}
@@ -30,9 +31,5 @@ class ResourceDictionary(object):
         del resdict[path]
 
     def print_dictionary(self):
-        for x in resdict:
-            print('Key: ')
-            print(x)
-            print('Value: ')
-            print(resdict[x])
+        pprint(resdict)
 

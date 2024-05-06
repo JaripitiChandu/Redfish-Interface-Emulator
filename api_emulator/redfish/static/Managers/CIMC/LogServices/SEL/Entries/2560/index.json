@@ -1,0 +1,16 @@
+{
+    "@odata.id": "/redfish/v1/Managers/CIMC/LogServices/SEL/Entries/2560",
+    "@odata.type": "#LogEntry.v1_4_0.LogEntry",
+    "@odata.context": "/redfish/v1/$metadata#LogEntry.LogEntry",
+    "Message": "System Software event: System Event sensor, Timestamp Clock Synch (first of pair) was asserted",
+    "EntryCode": "State Asserted",
+    "EventType": "StatusChange",
+    "Created": "2024-05-03T04:09:15+00:00",
+    "EventTimestamp": "2024-05-03T04:09:15+00:00",
+    "Id": "2560",
+    "EventId": "2560",
+    "EntryType": "SEL",
+    "Name": "Log Entry 2560",
+    "Description": "Log Entry 2560",
+    "Severity": "OK"
+}

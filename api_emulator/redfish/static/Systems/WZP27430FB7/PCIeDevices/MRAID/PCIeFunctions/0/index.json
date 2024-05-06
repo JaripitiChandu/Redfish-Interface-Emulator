@@ -1,0 +1,60 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/PCIeDevices/MRAID/PCIeFunctions/0",
+    "@odata.type": "#PCIeFunction.v1_2_3.PCIeFunction",
+    "@odata.context": "/redfish/v1/$metadata#PCIeFunction.PCIeFunction",
+    "Links": {
+        "PCIeDevice": {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/PCIeDevices/MRAID"
+        },
+        "EthernetInterfaces": [],
+        "EthernetInterfaces@odata.count": 0,
+        "StorageControllers": [
+            {
+                "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID"
+            }
+        ],
+        "Drives": [
+            {
+                "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/1"
+            },
+            {
+                "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/2"
+            },
+            {
+                "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/3"
+            },
+            {
+                "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/4"
+            },
+            {
+                "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/5"
+            },
+            {
+                "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/6"
+            },
+            {
+                "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/7"
+            },
+            {
+                "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/8"
+            },
+            {
+                "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/9"
+            },
+            {
+                "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/10"
+            }
+        ],
+        "StorageControllers@odata.count": 1,
+        "Drives@odata.count": 10,
+        "NetworkDeviceFunctions": [],
+        "NetworkDeviceFunctions@odata.count": 0
+    },
+    "SubsystemId": "0x02eb",
+    "SubsystemVendorId": "0x1137",
+    "Description": "This gives information of PCIeFunctions on the system",
+    "Name": "Cisco Tri-Mode 24G SAS RAID Controller w/4GB Cache",
+    "DeviceId": "0x00a5",
+    "VendorId": "0x1000",
+    "Id": "0"
+}

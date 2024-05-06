@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/Memory",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "Memory",
+    "Id": "Memory",
+    "Name": "Memory Schema file",
+    "Description": "Memory Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/Memory.json",
+            "Uri": "/redfish/schemas/Memory.json",
+            "Language": "en"
+        }
+    ]
+}

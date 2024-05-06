@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/SecureBoot.v1_0_4",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "SecureBoot.v1_0_4",
+    "Id": "SecureBoot.v1_0_4",
+    "Name": "SecureBoot.v1_0_4 Schema file",
+    "Description": "SecureBoot.v1_0_4 Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/SecureBoot.v1_0_4.json",
+            "Uri": "/redfish/schemas/SecureBoot.v1_0_4.json",
+            "Language": "en"
+        }
+    ]
+}

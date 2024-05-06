@@ -1,0 +1,32 @@
+{
+    "@odata.id": "/redfish/v1/Managers/CIMC/NetworkProtocol/HTTPS/Certificates/1",
+    "@odata.type": "#Certificate.v1_3_0.Certificate",
+    "@odata.context": "/redfish/v1/$metadata#Certificate.Certificate",
+    "Name": "Certificate",
+    "Description": "The Certificate resource describes a certificate used to prove the identify of a component, account, or service.",
+    "Id": "1",
+    "SerialNumber": "67:1D:7F:04:11:7A:EC:16:CE:81:5B:B7:C9:8A:6A:29:68:F7:8A:D7",
+    "Subject": {
+        "Country": "US",
+        "City": "San Jose",
+        "State": "California",
+        "Organization": "Cisco Self Signed",
+        "OrganizationalUnit": "PID:UCSC-C220-M7S SERIAL:WZP2733Z1E2",
+        "CommonName": "C-series CIMC"
+    },
+    "Issuer": {
+        "Country": "US",
+        "City": "San Jose",
+        "State": "California",
+        "Organization": "Cisco Self Signed",
+        "OrganizationalUnit": "PID:UCSC-C220-M7S SERIAL:WZP2733Z1E2",
+        "CommonName": "C-series CIMC"
+    },
+    "ValidNotBefore": "2026-06-17T09:26:03Z",
+    "ValidNotAfter": "2024-03-14T09:26:03Z",
+    "CertificateType": "PEM",
+    "CertificateString": "-----BEGIN CERTIFICATE-----\nMIIEFTCCAv2gAwIBAgIUZx1/BBF67BbOgVu3yYpqKWj3itcwDQYJKoZIhvcNAQEN\nBQAwgZgxCzAJBgNVBAYTAlVTMRMwEQYDVQQIDApDYWxpZm9ybmlhMREwDwYDVQQH\nDAhTYW4gSm9zZTEWMBQGA1UEAwwNQy1zZXJpZXMgQ0lNQzEaMBgGA1UECgwRQ2lz\nY28gU2VsZiBTaWduZWQxLTArBgNVBAsMJFBJRDpVQ1NDLUMyMjAtTTdTIFNFUklB\nTDpXWlAyNzMzWjFFMjAeFw0yNDAzMTQwOTI2MDNaFw0yNjA2MTcwOTI2MDNaMIGY\nMQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5pYTERMA8GA1UEBwwIU2Fu\nIEpvc2UxFjAUBgNVBAMMDUMtc2VyaWVzIENJTUMxGjAYBgNVBAoMEUNpc2NvIFNl\nbGYgU2lnbmVkMS0wKwYDVQQLDCRQSUQ6VUNTQy1DMjIwLU03UyBTRVJJQUw6V1pQ\nMjczM1oxRTIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCxCsRW694I\ncyZswMTPM3NubL+oxhKJqxtYcwLHC7RI+KOYivAeDXQoFWwglfQnX6svD8dqfZMK\n2m0Rh1DSHOOzMk1RX0Fu0RzufTasjAJJkmQeKdmH5PldKBhBTr5FnU7jfwY12gTA\nryjNz7QSgqVBnqzlItFgtKHMMo65jCBb/j5685qwRw2Gtf8F0XVCr2hEwZ5Op2vz\n1bGoN/i62iWiMNPC/0OtHcPMe30fAOQlCnx86wQVtocfIOGU1LXUj3F3dHhbZZOy\nBF7fTt9TiXt5zl37AHJb+Qa/Yy/VFnZ5TqcPzaG8qws1M6LgHo2XPdAvPHa9RF2P\nR+GybQk74nbBAgMBAAGjVTBTMB0GA1UdDgQWBBR6QvdODk7d3Fx3wbJQ/Z4XSzk4\nTDAfBgNVHSMEGDAWgBR6QvdODk7d3Fx3wbJQ/Z4XSzk4TDARBglghkgBhvhCAQEE\nBAMCBkAwDQYJKoZIhvcNAQENBQADggEBAJmZEg0STHWNQXVXsUD/zA1FT0rlWKxL\nrwefi3VXRzxTJ+Tk+QIsFZ4xh7tUlTIedLDaz5v2CwvJ2Dwfm6NVElaXIcV8fm0X\nbKQwdiE66qQ1Z/lL1LspryGElESEm6zWF6VYWYKgA1vNInZ9PKnW7nIsLNIrAytU\n6lf1o4qT7CVe8w0QQIO5MZ2ZEMra5l3Baa9DWrf5wD3Pp7dCPaGxfqWhBUfaONxQ\noLgYCtuPDnMBOKUoxfOECCWnD6gVlBYQEg/quIGZoNBi++lnWIqVC9RAGFG3BP1L\n2GukGK+//sWEF1HK9ELfD08fKP7R/6y6Qj1IVjABseuH8mvkZy8D/6w=\n-----END CERTIFICATE-----\n",
+    "KeyUsage": [
+        "ServerAuthentication"
+    ]
+}

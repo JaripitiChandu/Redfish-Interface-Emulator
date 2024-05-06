@@ -1,22 +1,34 @@
 {
-    "@odata.type": "#ManagerAccount.v1_12_0.ManagerAccount",
-    "Id": "1",
+    "@odata.type": "#ManagerAccount.v1_7_0.ManagerAccount",
+    "@odata.context": "/redfish/v1/$metadata#ManagerAccount.ManagerAccount",
     "Name": "User Account",
     "Description": "User Account",
-    "Enabled": true,
-    "Password": null,
-    "PasswordChangeRequired": false,
-    "AccountTypes": [
-        "Redfish"
-    ],
-    "UserName": "Administrator",
-    "RoleId": "Administrator",
-    "Locked": false,
     "Links": {
         "Role": {
-            "@odata.id": "/redfish/v1/AccountService/Roles/Administrator"
+            "@odata.id": "/redfish/v1/AccountService/Roles/admin"
         }
     },
+    "AccountTypes": [
+        "Redfish",
+        null,
+        null
+    ],
+    "Id": "1",
+    "UserName": "admin",
+    "Enabled": 1,
+    "RoleId": "admin",
+    "RedfishRoleId": "Admin",
+    "AccountLockoutAttempt": 0,
+    "AccountLockoutStartSec": 0,
+    "UIAccountTypes": "CIMC",
     "@odata.id": "/redfish/v1/AccountService/Accounts/1",
-    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "PasswordChangeRequired": false,
+    "Oem": {
+        "Cisco": {
+            "@odata.type": "#CiscoUCSExtensions.v1_0_0.CiscoUCSExtensions",
+            "IPMI": null
+        }
+    },
+    "Password": null,
+    "SNMP": null
 }

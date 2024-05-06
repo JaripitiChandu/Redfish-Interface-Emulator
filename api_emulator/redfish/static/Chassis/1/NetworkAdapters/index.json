@@ -1,0 +1,13 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters",
+    "@odata.type": "#NetworkAdapterCollection.NetworkAdapterCollection",
+    "@odata.context": "/redfish/v1/$metadata#NetworkAdapterCollection.NetworkAdapterCollection",
+    "Description": "Collection of NetworkAdapter resource instances for this system",
+    "Name": "NetworkAdapter Collection",
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7"
+        }
+    ],
+    "Members@odata.count": 1
+}

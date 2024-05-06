@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/ChassisCollection",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "ChassisCollection",
+    "Id": "ChassisCollection",
+    "Name": "ChassisCollection Schema file",
+    "Description": "ChassisCollection Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/ChassisCollection.json",
+            "Uri": "/redfish/schemas/ChassisCollection.json",
+            "Language": "en"
+        }
+    ]
+}

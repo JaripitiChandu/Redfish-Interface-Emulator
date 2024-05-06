@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/SimpleStorage",
+    "@odata.type": "#SimpleStorageCollection.SimpleStorageCollection",
+    "@odata.context": "/redfish/v1/$metadata#SimpleStorageCollection.SimpleStorageCollection",
+    "Description": "Collection of storage controllers for this system",
+    "Name": "Simple Storage Collection",
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/SimpleStorage/MRAID"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/SimpleStorage/MSTOR-RAID"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/SimpleStorage/NVMe-direct-U.2-drives"
+        }
+    ],
+    "Members@odata.count": 3
+}

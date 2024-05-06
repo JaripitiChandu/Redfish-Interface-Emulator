@@ -1,0 +1,22 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/Sensors/RISER2_INLET_TMP",
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "@odata.context": "/redfish/v1/$metadata#Sensor.Sensor",
+    "Description": "Sensor Inventory",
+    "ReadingType": "Temperature",
+    "Status": {
+        "Health": "OK",
+        "State": "Enabled"
+    },
+    "Thresholds": {
+        "UpperCritical": {
+            "Reading": 70
+        },
+        "UpperFatal": {
+            "Reading": 80
+        }
+    },
+    "Id": "7",
+    "Reading": 46,
+    "Name": "RISER2_INLET_TMP"
+}

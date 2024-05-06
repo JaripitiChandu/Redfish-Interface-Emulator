@@ -1,0 +1,16 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/LogServices/SEL/Entries/2575",
+    "@odata.type": "#LogEntry.v1_4_0.LogEntry",
+    "@odata.context": "/redfish/v1/$metadata#LogEntry.LogEntry",
+    "Message": "PS_RDNDNT_MODE: PS Redundancy sensor, Non-redundant was asserted",
+    "EntryCode": "Non-redundant:Insufficient Resources",
+    "EventType": "Alert",
+    "Created": "2024-05-03T06:21:22+00:00",
+    "EventTimestamp": "2024-05-03T06:21:22+00:00",
+    "Id": "2575",
+    "EventId": "2575",
+    "EntryType": "SEL",
+    "Name": "Log Entry 2575",
+    "Description": "Log Entry 2575",
+    "Severity": "Critical"
+}

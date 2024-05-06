@@ -1,0 +1,22 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/Sensors/POWER_USAGE",
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "@odata.context": "/redfish/v1/$metadata#Sensor.Sensor",
+    "Description": "Sensor Inventory",
+    "Name": "POWER_USAGE",
+    "ReadingType": "Power",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "Thresholds": {
+        "UpperFatal": {
+            "Reading": 2784
+        },
+        "UpperCritical": {
+            "Reading": 2528
+        }
+    },
+    "Id": "7",
+    "Reading": 352
+}

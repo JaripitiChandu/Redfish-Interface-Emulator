@@ -1,0 +1,35 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Processors/CPU1",
+    "@odata.type": "#Processor.v1_12_0.Processor",
+    "@odata.context": "/redfish/v1/$metadata#Processor.Processor",
+    "Model": "INTEL(R) XEON(R) GOLD 6554S",
+    "Manufacturer": "Intel(R) Corporation",
+    "Name": "CPU1",
+    "Description": "Intel(R) Xeon(R) Gold 2S 6554S CPU @ 2.2GHz 270W 36C 180MB Cache DDR5 5200MT/s",
+    "ProcessorType": "CPU",
+    "ProcessorArchitecture": "x86",
+    "MaxSpeedMHz": 4000,
+    "OperatingSpeedMHz": 2200,
+    "TotalCores": 36,
+    "TotalEnabledCores": 36,
+    "TotalThreads": 72,
+    "InstructionSet": "x86-64",
+    "Oem": {
+        "Cisco": {
+            "PID": "UCS-CPU-I6554S"
+        }
+    },
+    "Id": "1",
+    "Socket": "CPU1",
+    "ProcessorId": {
+        "Step": "2",
+        "EffectiveFamily": "6",
+        "VendorId": "Intel(R) Corporation",
+        "EffectiveModel": "207"
+    },
+    "PartNumber": "15-110553-01",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    }
+}

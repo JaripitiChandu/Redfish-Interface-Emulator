@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/AccountService",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "AccountService",
+    "Id": "AccountService",
+    "Name": "AccountService Schema file",
+    "Description": "AccountService Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/AccountService.json",
+            "Uri": "/redfish/schemas/AccountService.json",
+            "Language": "en"
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/EthernetInterfaces",
+    "@odata.type": "#EthernetInterfaceCollection.EthernetInterfaceCollection",
+    "@odata.context": "/redfish/v1/$metadata#EthernetInterfaceCollection.EthernetInterfaceCollection",
+    "Name": "Ethernet Interfaces Collection",
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/EthernetInterfaces/MLOM.3"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/EthernetInterfaces/MLOM.0"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/EthernetInterfaces/MLOM.1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/EthernetInterfaces/MLOM.2"
+        }
+    ],
+    "Members@odata.count": 4,
+    "Description": "Collection of EthernetInterfaces for this System"
+}

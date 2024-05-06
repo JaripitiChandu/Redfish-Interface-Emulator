@@ -1,0 +1,16 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/LogServices/SEL/Entries/2564",
+    "@odata.type": "#LogEntry.v1_4_0.LogEntry",
+    "@odata.context": "/redfish/v1/$metadata#LogEntry.LogEntry",
+    "Message": "LED_FPID: Platform sensor, FAST BLINK event was asserted",
+    "EntryCode": "State Asserted",
+    "EventType": "StatusChange",
+    "Created": "2024-05-03T05:45:47+00:00",
+    "EventTimestamp": "2024-05-03T05:45:47+00:00",
+    "Id": "2564",
+    "EventId": "2564",
+    "EntryType": "SEL",
+    "Name": "Log Entry 2564",
+    "Description": "Log Entry 2564",
+    "Severity": "OK"
+}

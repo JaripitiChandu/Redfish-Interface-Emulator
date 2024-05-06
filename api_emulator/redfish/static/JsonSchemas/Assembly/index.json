@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/Assembly",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "Assembly",
+    "Id": "Assembly",
+    "Name": "Assembly Schema file",
+    "Description": "Assembly Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/Assembly.json",
+            "Uri": "/redfish/schemas/Assembly.json",
+            "Language": "en"
+        }
+    ]
+}

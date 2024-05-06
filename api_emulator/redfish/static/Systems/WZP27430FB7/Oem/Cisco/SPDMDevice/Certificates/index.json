@@ -1,0 +1,13 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Oem/Cisco/SPDMDevice/Certificates",
+    "@odata.type": "#CertificateCollection.CertificateCollection",
+    "@odata.context": "/redfish/v1/$metadata#CertificateCollection.CertificateCollection",
+    "Description": "A Collection of Certificate resource instances.",
+    "Name": "Certificate Collection",
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Oem/Cisco/SPDMDevice/Certificates/MRAID_0"
+        }
+    ],
+    "Members@odata.count": 1
+}

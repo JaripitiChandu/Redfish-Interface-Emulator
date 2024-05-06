@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/Power.v1_5_1",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "Power.v1_5_1",
+    "Id": "Power.v1_5_1",
+    "Name": "Power.v1_5_1 Schema file",
+    "Description": "Power.v1_5_1 Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/Power.v1_5_1.json",
+            "Uri": "/redfish/schemas/Power.v1_5_1.json",
+            "Language": "en"
+        }
+    ]
+}

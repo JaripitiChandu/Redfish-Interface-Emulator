@@ -1,0 +1,22 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/Sensors/DDR5_P2_C1_TMP",
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "@odata.context": "/redfish/v1/$metadata#Sensor.Sensor",
+    "Description": "Sensor Inventory",
+    "Id": "8",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "Name": "DDR5_P2_C1_TMP",
+    "Reading": 39,
+    "Thresholds": {
+        "UpperFatal": {
+            "Reading": 90
+        },
+        "UpperCritical": {
+            "Reading": 85
+        }
+    },
+    "ReadingType": "Temperature"
+}

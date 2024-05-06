@@ -1,0 +1,12 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/Sensors/LED_FPID",
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "@odata.context": "/redfish/v1/$metadata#Sensor.Sensor",
+    "Description": "Sensor Inventory",
+    "Id": "13",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "Name": "LED_FPID"
+}

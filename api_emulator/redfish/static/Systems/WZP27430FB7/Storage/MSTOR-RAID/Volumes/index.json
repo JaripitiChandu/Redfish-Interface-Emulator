@@ -1,0 +1,13 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MSTOR-RAID/Volumes",
+    "@odata.type": "#VolumeCollection.VolumeCollection",
+    "@odata.context": "/redfish/v1/$metadata#VolumeCollection.VolumeCollection",
+    "Description": "Collection of Volumes for this system",
+    "Name": "Volume Collection",
+    "Members@odata.count": 1,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MSTOR-RAID/Volumes/0"
+        }
+    ]
+}

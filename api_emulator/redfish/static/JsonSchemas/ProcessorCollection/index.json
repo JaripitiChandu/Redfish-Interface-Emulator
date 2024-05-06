@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/ProcessorCollection",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "ProcessorCollection",
+    "Id": "ProcessorCollection",
+    "Name": "ProcessorCollection Schema file",
+    "Description": "ProcessorCollection Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/ProcessorCollection.json",
+            "Uri": "/redfish/schemas/ProcessorCollection.json",
+            "Language": "en"
+        }
+    ]
+}

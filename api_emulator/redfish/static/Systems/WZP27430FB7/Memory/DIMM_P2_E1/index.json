@@ -1,0 +1,46 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Memory/DIMM_P2_E1",
+    "@odata.type": "#Memory.v1_12_0.Memory",
+    "@odata.context": "/redfish/v1/$metadata#Memory.Memory",
+    "Description": "Computer Memory",
+    "Links": {
+        "Chassis": {
+            "@odata.id": "/redfish/v1/Chassis/1"
+        }
+    },
+    "Manufacturer": "0xAD00",
+    "DeviceLocator": "DIMM_P2_E1",
+    "Name": "DIMM_P2_E1",
+    "MemoryDeviceType": "DDR5",
+    "SecurityCapabilities": {
+        "PassphraseCapable": false
+    },
+    "CapacityMiB": 32768,
+    "DataWidthBits": 64,
+    "OperatingSpeedMhz": 5600,
+    "Oem": {
+        "Cisco": {
+            "PID": "UCS-MRX32G1RE3",
+            "MemoryTypeDetail": "Synchronous,Registered (Buffered)"
+        }
+    },
+    "OperatingMemoryModes": [
+        "Volatile"
+    ],
+    "MemoryMedia": [
+        "DRAM"
+    ],
+    "SerialNumber": "80AD0123137673A558",
+    "PartNumber": "HMCG84AGBRA190N",
+    "MemoryLocation": {
+        "Slot": 0,
+        "Socket": 1,
+        "Channel": 4
+    },
+    "Id": "25",
+    "MemoryType": "DRAM",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    }
+}

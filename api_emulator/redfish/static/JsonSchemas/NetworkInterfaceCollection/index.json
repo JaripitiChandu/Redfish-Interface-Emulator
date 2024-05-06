@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/NetworkInterfaceCollection",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "NetworkInterfaceCollection",
+    "Id": "NetworkInterfaceCollection",
+    "Name": "NetworkInterfaceCollection Schema file",
+    "Description": "NetworkInterfaceCollection Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/NetworkInterfaceCollection.json",
+            "Uri": "/redfish/schemas/NetworkInterfaceCollection.json",
+            "Language": "en"
+        }
+    ]
+}

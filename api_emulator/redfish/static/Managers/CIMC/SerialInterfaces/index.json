@@ -1,0 +1,13 @@
+{
+    "@odata.id": "/redfish/v1/Managers/CIMC/SerialInterfaces",
+    "@odata.type": "#SerialInterfaceCollection.SerialInterfaceCollection",
+    "@odata.context": "/redfish/v1/$metadata#SerialInterfaceCollection.SerialInterfaceCollection",
+    "Description": "Collection of Serial Interfaces for this System",
+    "Name": "Serial Interface Collection",
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Managers/CIMC/SerialInterfaces/TTY0"
+        }
+    ],
+    "Members@odata.count": 1
+}

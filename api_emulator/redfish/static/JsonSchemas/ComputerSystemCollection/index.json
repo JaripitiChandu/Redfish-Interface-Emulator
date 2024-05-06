@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/ComputerSystemCollection",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "ComputerSystemCollection",
+    "Id": "ComputerSystemCollection",
+    "Name": "ComputerSystemCollection Schema file",
+    "Description": "ComputerSystemCollection Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/ComputerSystemCollection.json",
+            "Uri": "/redfish/schemas/ComputerSystemCollection.json",
+            "Language": "en"
+        }
+    ]
+}

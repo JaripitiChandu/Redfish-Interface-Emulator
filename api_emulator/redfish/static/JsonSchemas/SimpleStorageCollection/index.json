@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/SimpleStorageCollection",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "SimpleStorageCollection",
+    "Id": "SimpleStorageCollection",
+    "Name": "SimpleStorageCollection Schema file",
+    "Description": "SimpleStorageCollection Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/SimpleStorageCollection.json",
+            "Uri": "/redfish/schemas/SimpleStorageCollection.json",
+            "Language": "en"
+        }
+    ]
+}

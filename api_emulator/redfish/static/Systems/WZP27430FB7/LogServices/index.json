@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/LogServices",
+    "@odata.type": "#LogServiceCollection.LogServiceCollection",
+    "@odata.context": "/redfish/v1/$metadata#LogServiceCollection.LogServiceCollection",
+    "Description": "Collection of Log Services for this Manager",
+    "Name": "Log Service Collection",
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/LogServices/SEL"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/LogServices/CIMC"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/LogServices/Fault"
+        }
+    ],
+    "Members@odata.count": 3
+}

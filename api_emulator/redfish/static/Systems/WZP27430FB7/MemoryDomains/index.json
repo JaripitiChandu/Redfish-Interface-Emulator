@@ -1,0 +1,9 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/MemoryDomains",
+    "@odata.type": "#MemoryDomainCollection.MemoryDomainCollection",
+    "@odata.context": "/redfish/v1/$metadata#MemoryDomainCollection.MemoryDomainCollection",
+    "Description": "Collection of Memory Domain resource instances for this system",
+    "Name": "Memory Domain Collection",
+    "Members": [],
+    "Members@odata.count": 0
+}

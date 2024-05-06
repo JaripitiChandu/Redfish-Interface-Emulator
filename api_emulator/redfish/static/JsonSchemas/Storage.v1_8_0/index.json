@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/Storage.v1_8_0",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "Storage.v1_8_0",
+    "Id": "Storage.v1_8_0",
+    "Name": "Storage.v1_8_0 Schema file",
+    "Description": "Storage.v1_8_0 Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/Storage.v1_8_0.json",
+            "Uri": "/redfish/schemas/Storage.v1_8_0.json",
+            "Language": "en"
+        }
+    ]
+}

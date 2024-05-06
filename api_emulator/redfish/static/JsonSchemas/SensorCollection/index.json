@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/SensorCollection",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "SensorCollection",
+    "Id": "SensorCollection",
+    "Name": "SensorCollection Schema file",
+    "Description": "SensorCollection Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/SensorCollection.json",
+            "Uri": "/redfish/schemas/SensorCollection.json",
+            "Language": "en"
+        }
+    ]
+}

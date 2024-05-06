@@ -1,0 +1,1 @@
+{"FlexBootOrder":{"FlexBootOrderHeader":{"BootMode":"Customized","SecureBoot":"disabled","BootPolicyName":"emu-Boot","ServiceProfile":"ericSP-blade","Version":"2.0"},"FlexBootTargets":[{"FlexBootTarget":"LocalCDD","BootOrder":1},{"FlexBootTarget":"LocalHDD","BootOrder":2},{"FlexBootTarget":"USB","BootOrder":3}]}}

@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/SerialInterface",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "SerialInterface",
+    "Id": "SerialInterface",
+    "Name": "SerialInterface Schema file",
+    "Description": "SerialInterface Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/SerialInterface.json",
+            "Uri": "/redfish/schemas/SerialInterface.json",
+            "Language": "en"
+        }
+    ]
+}

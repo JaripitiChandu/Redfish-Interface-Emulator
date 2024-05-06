@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/Session.v1_3_0",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "Session.v1_3_0",
+    "Id": "Session.v1_3_0",
+    "Name": "Session.v1_3_0 Schema file",
+    "Description": "Session.v1_3_0 Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/Session.v1_3_0.json",
+            "Uri": "/redfish/schemas/Session.v1_3_0.json",
+            "Language": "en"
+        }
+    ]
+}

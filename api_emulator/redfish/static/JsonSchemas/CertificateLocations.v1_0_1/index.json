@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/CertificateLocations.v1_0_1",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "CertificateLocations.v1_0_1",
+    "Id": "CertificateLocations.v1_0_1",
+    "Name": "CertificateLocations.v1_0_1 Schema file",
+    "Description": "CertificateLocations.v1_0_1 Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/CertificateLocations.v1_0_1.json",
+            "Uri": "/redfish/schemas/CertificateLocations.v1_0_1.json",
+            "Language": "en"
+        }
+    ]
+}

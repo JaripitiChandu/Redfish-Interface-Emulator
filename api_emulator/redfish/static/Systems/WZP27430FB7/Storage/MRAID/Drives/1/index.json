@@ -1,0 +1,90 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/1",
+    "@odata.type": "#Drive.v1_9_0.Drive",
+    "@odata.context": "/redfish/v1/$metadata#Drive.Drive",
+    "Id": "1",
+    "Name": "1",
+    "Model": "ST600MM0009",
+    "Revision": "CN03",
+    "Protocol": "SAS",
+    "MediaType": "HDD",
+    "Manufacturer": "SEAGATE",
+    "SerialNumber": "WFJ6RVWE0000C3470YWZ",
+    "BlockSizeBytes": 512,
+    "CapableSpeedGbs": 12,
+    "NegotiatedSpeedGbs": 12,
+    "HotspareType": "None",
+    "IndicatorLED": "Off",
+    "CapacityBytes": 600126259200,
+    "FailurePredicted": false,
+    "EncryptionAbility": "None",
+    "Oem": {
+        "Cisco": {
+            "DriveState": "Jbod",
+            "DrivePowerState": "Active",
+            "ReadyForRemoval": false,
+            "Bootable": false,
+            "PredictiveFailureCount": 0,
+            "MediaErrorCount": 0,
+            "StorageInstanceId": 1,
+            "CoercedSizeBytes": 598999040000,
+            "NonCoercedSizeBytes": 598999040000,
+            "SmartData": {
+                "ThresholdOperatingTemperatureInCel": 60,
+                "OperatingTemperatureInCel": 30,
+                "MaximumOperatingTemperatureInCel": 55
+            }
+        }
+    },
+    "Status": {
+        "Health": "OK",
+        "State": "Enabled"
+    },
+    "StatusIndicator": "OK",
+    "PhysicalLocation": {
+        "PartLocation": {
+            "LocationType": "Slot",
+            "ServiceLabel": "1"
+        }
+    },
+    "Actions": {
+        "Oem": {
+            "#Cisco.AddHotspare": {
+                "target": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/1/Actions/Oem/Cisco.AddHotspare",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.AddHotSpare",
+                "HotSpareType@Redfish.AllowableValues": [
+                    "Global",
+                    "Dedicated"
+                ]
+            },
+            "#Cisco.RemoveHotspare": {
+                "target": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/1/Actions/Oem/Cisco.RemoveHotspare",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.RemoveHotSpare"
+            },
+            "#Cisco.PrepareForRemoval": {
+                "target": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/1/Actions/Oem/Cisco.PrepareForRemoval",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.PrepareForRemoval"
+            },
+            "#Cisco.UndoPrepareForRemoval": {
+                "target": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/1/Actions/Oem/Cisco.UndoPrepareForRemoval",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.UndoPrepareForRemoval"
+            },
+            "#Cisco.StartDiagnostics": {
+                "target": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/1/Actions/Oem/Cisco.StartDiagnostics",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.StartDiagnostics"
+            },
+            "#Cisco.CancelDiag": {
+                "target": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/1/Actions/Oem/Cisco.CancelDiag",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.CancelDiag"
+            },
+            "#Cisco.Spinup": {
+                "target": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/1/Actions/Oem/Cisco.Spinup",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.Spinup"
+            },
+            "#Cisco.Spindown": {
+                "target": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/1/Actions/Oem/Cisco.Spindown",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.Spindown"
+            }
+        }
+    }
+}

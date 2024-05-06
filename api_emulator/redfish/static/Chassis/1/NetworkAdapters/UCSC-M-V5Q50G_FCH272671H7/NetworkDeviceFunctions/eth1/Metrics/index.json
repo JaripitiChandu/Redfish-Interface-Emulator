@@ -1,0 +1,27 @@
+{
+    "Id": "eth1",
+    "Name": "eth1",
+    "Description": "Shows traffic statistics related to a VNIC.",
+    "RXBytes": 536,
+    "RXFrames": 6,
+    "RXMulticastFrames": 6,
+    "RXUnicastFrames": 0,
+    "TXBytes": 0,
+    "TXFrames": 0,
+    "TXMulticastFrames": 0,
+    "TXUnicastFrames": 0,
+    "Oem": {
+        "Cisco": {
+            "@odata.type": "#CiscoUCSExtensions.v1_0_0.CiscoUCSExtensions",
+            "NetworkDeviceFunctionAdditionalMetrics": {
+                "RXFramesTotal": 6,
+                "RXMulticastBytes": 536,
+                "RXRss": 6,
+                "RXFrames127": 6
+            }
+        }
+    },
+    "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkDeviceFunctions/eth1/Metrics",
+    "@odata.type": "#NetworkDeviceFunctionMetrics.v1_1_0.NetworkDeviceFunctionMetrics",
+    "@odata.context": "/redfish/v1/$metadata#NetworkDeviceFunctionMetrics.NetworkDeviceFunctionMetrics"
+}

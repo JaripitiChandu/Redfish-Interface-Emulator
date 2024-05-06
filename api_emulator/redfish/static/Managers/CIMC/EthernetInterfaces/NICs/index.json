@@ -1,0 +1,96 @@
+{
+    "@odata.id": "/redfish/v1/Managers/CIMC/EthernetInterfaces/NICs",
+    "@odata.type": "#EthernetInterface.v1_4_1.EthernetInterface",
+    "@odata.context": "/redfish/v1/$metadata#EthernetInterface.EthernetInterface",
+    "Links": {
+        "Chassis": {
+            "@odata.id": "/redfish/v1/Chassis/1"
+        }
+    },
+    "DHCPv4": {
+        "DHCPEnabled": false,
+        "UseDNSServers": false,
+        "UseGateway": false,
+        "UseDomainName": false,
+        "UseNTPServers": false,
+        "UseStaticRoutes": false
+    },
+    "DHCPv6": {
+        "OperatingMode": "Stateful",
+        "UseNTPServers": false,
+        "UseDNSServers": true,
+        "UseDomainName": false
+    },
+    "IPv6DefaultGateway": "::",
+    "Oem": {
+        "Cisco": {
+            "DynamicDNS": {
+                "RefreshInterval": 0,
+                "DomainName": "cisco.com",
+                "Enabled": true
+            },
+            "NetworkPortProperties": {
+                "OperationModePortSpeed": 1024,
+                "OperationModeFullDuplex": true
+            },
+            "NICProperties": {
+                "NICMode": "Dedicated",
+                "VICSlot": "None",
+                "NICRedundancy": "None"
+            },
+            "IPv6Enabled": true
+        }
+    },
+    "NameServers": [
+        "64.104.128.236",
+        "72.163.128.140"
+    ],
+    "IPv6Addresses": [
+        {
+            "AddressOrigin": "DHCPv6",
+            "PrefixLength": 64,
+            "Address": "::"
+        },
+        {
+            "AddressOrigin": "LinkLocal",
+            "Address": "fe80::eef4:cff:fe60:24a0"
+        },
+        {
+            "AddressOrigin": "SLAAC",
+            "Address": "::"
+        }
+    ],
+    "Id": "NICs",
+    "Name": "Manager Ethernet Interface",
+    "StaticNameServers": [
+        "64.104.128.236",
+        "72.163.128.140"
+    ],
+    "Description": "Manager Network Interface",
+    "HostName": "C220-WZP27430FB7",
+    "InterfaceEnabled": true,
+    "PermanentMACAddress": "EC:F4:0C:60:24:A0",
+    "MACAddress": "EC:F4:0C:60:24:A0",
+    "SpeedMbps": 1024,
+    "IPv4Addresses": [
+        {
+            "AddressOrigin": "Static",
+            "Address": "10.104.223.123",
+            "SubnetMask": "255.255.255.0",
+            "Gateway": "10.104.223.1"
+        }
+    ],
+    "FullDuplex": true,
+    "AutoNeg": true,
+    "VLAN": {
+        "VLANEnable": false,
+        "VLANId": 1,
+        "VLANPriority": 0
+    },
+    "StatelessAddressAutoConfig": {
+        "IPv4AutoConfigEnabled": false,
+        "IPv6AutoConfigEnabled": true
+    },
+    "MaxIPv6StaticAddresses": 1,
+    "MTUSize": 1500
+}

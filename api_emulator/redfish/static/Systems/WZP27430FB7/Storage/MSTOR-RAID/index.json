@@ -1,0 +1,93 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MSTOR-RAID",
+    "@odata.type": "#Storage.v1_8_0.Storage",
+    "@odata.context": "/redfish/v1/$metadata#Storage.Storage",
+    "Description": "Storage Controller",
+    "Drives": [
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MSTOR-RAID/Drives/253"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MSTOR-RAID/Drives/254"
+        }
+    ],
+    "Volumes": {
+        "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MSTOR-RAID/Volumes"
+    },
+    "Links": {
+        "Oem": {
+            "Cisco": {
+                "PCIeInfo": [
+                    {
+                        "@odata.id": "/redfish/v1/Systems/WZP27430FB7/PCIeDevices/MSTOR-RAID/PCIeFunctions/0"
+                    }
+                ]
+            }
+        }
+    },
+    "Id": "MSTOR-RAID",
+    "Name": "MSTOR-RAID",
+    "StorageControllers": [
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MSTOR-RAID",
+            "SupportedControllerProtocols": [
+                "PCIe"
+            ],
+            "SupportedDeviceProtocols": [
+                "SATA"
+            ],
+            "MemberId": "MSTOR-RAID",
+            "Model": "UCS-M2-HWRAID",
+            "Name": "Cisco Boot optimized M.2 Raid controller",
+            "FirmwareVersion": "2.3.17.1014",
+            "Manufacturer": "Cisco Systems Inc",
+            "SupportedRAIDTypes": [
+                "RAID1"
+            ],
+            "SerialNumber": "FCH27277BSV",
+            "Oem": {
+                "Cisco": {
+                    "StorageControllerBiosVersion": "1.1.17.1002",
+                    "PCIeSlot": "MSTOR-RAID",
+                    "ChipRevision": "V02",
+                    "StorageInstanceId": 3,
+                    "ControllerInterfaceType": "Sata",
+                    "ControllerStatus": "Optimal",
+                    "StorageControllerDefaultDriveMode": "Jbod",
+                    "HasForeignConfig": false,
+                    "ForeignConfigPhysicalDriveCount": 0,
+                    "DefaultStripeSizeKiBytes": 64,
+                    "SupportedStripeSizesKiBytes": [
+                        32,
+                        64
+                    ],
+                    "MaximumVolumesPerController": 1,
+                    "ControllerType": "M.2-Hwraid"
+                }
+            },
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK",
+                "HealthRollup": "OK"
+            },
+            "Location": {
+                "PartLocation": {
+                    "LocationType": "Slot",
+                    "ServiceLabel": "MSTOR-RAID"
+                }
+            }
+        }
+    ],
+    "Actions": {
+        "Oem": {
+            "#Cisco.DoForeignConfig": {
+                "target": "/redfish/v1/Systems/WZP27430FB7/Storage/MSTOR-RAID/Actions/Oem/Cisco.DoForeignConfig",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.DoForeignConfig",
+                "ForeignCfgOp@Redfish.AllowableValues": [
+                    "Clear",
+                    "Import"
+                ]
+            }
+        }
+    }
+}

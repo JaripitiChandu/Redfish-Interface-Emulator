@@ -1,0 +1,191 @@
+{
+    "@odata.id": "/redfish/v1/UpdateService",
+    "@odata.type": "#UpdateService.v1_5_0.UpdateService",
+    "@odata.context": "/redfish/v1/$metadata#UpdateService.UpdateService",
+    "Id": "UpdateService",
+    "Name": "Update Service",
+    "Description": "Update Service",
+    "FirmwareInventory": {
+        "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory"
+    },
+    "SoftwareInventory": {
+        "@odata.id": "/redfish/v1/UpdateService/SoftwareInventory"
+    },
+    "ServiceEnabled": true,
+    "MaxImageSizeBytes": 60000000,
+    "Actions": {
+        "#UpdateService.SimpleUpdate": {
+            "target": "/redfish/v1/UpdateService/Actions/UpdateService.SimpleUpdate",
+            "Targets@Redfish.AllowableValues": [
+                "Array of Software/Firmware Inventory URI of either /redfish/v1/UpdateService/FirmwareInventory/CIMC or /redfish/v1/UpdateService/FirmwareInventory/BIOS indicating where the image is to be applied."
+            ],
+            "TransferProtocol@Redfish.AllowableValues": [
+                "TFTP",
+                "SCP",
+                "SFTP",
+                "FTP",
+                "HTTP"
+            ],
+            "ImageURI@Redfish.AllowableValues": [
+                "Path to Image File : Format - IP:/PATH - where IP can be IPv4, IPv6 or Hostname and PATH should start with a forward slash and should contain the appropriate file extension."
+            ],
+            "Username@Redfish.AllowableValues": [
+                "Server Username"
+            ],
+            "Password@Redfish.AllowableValues": [
+                "Server Password"
+            ]
+        },
+        "Oem": {
+            "#CiscoUCSExtensions.UCSUpdate": {
+                "target": "/redfish/v1/UpdateService/Actions/Oem/CiscoUCSExtensions.UCSUpdate",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.UCSUpdate",
+                "ApplyTime@Redfish.AllowableValues": [
+                    "Immediate",
+                    "OnNextBoot"
+                ],
+                "ForceUpdate@Redfish.AllowableValues": [
+                    true,
+                    false
+                ],
+                "AdaptorSecureUpdate@Redfish.AllowableValues": [
+                    true,
+                    false
+                ],
+                "AdaptorDowngradeSecurityLevel@Redfish.AllowableValues": [
+                    true,
+                    false
+                ],
+                "ImageRepository@Redfish.AllowableValues": [
+                    "This parameter shall specify the directory path of extracted HSU bundle or the string URI of the remote HUU ISO file. Standard mount options can be specified as query parameter to the URI."
+                ],
+                "Password@Redfish.AllowableValues": [
+                    "The password to be used when accessing the URI specified by the ImageRepository parameter."
+                ],
+                "Targets@Redfish.AllowableValues": [
+                    "Array of Software/Firmware Inventory URIs indicating where the image is to be applied."
+                ],
+                "ExcludeTargets@Redfish.AllowableValues": [
+                    "Array of Redfish Odata Types indicating types of components to be excluded."
+                ],
+                "TransferProtocol@Redfish.AllowableValues": [
+                    "CIFS",
+                    "HTTPS",
+                    "NFS",
+                    "VMEDIA-CIFS",
+                    "VMEDIA-HTTPS",
+                    "VMEDIA-NFS",
+                    "LOCAL-HOST"
+                ],
+                "Username@Redfish.AllowableValues": [
+                    "The username to be used when accessing the URI specified by the ImageRepository parameter."
+                ]
+            },
+            "#CiscoUCSExtensions.PrepareOSInstall": {
+                "target": "/redfish/v1/UpdateService/Actions/Oem/CiscoUCSExtensions.PrepareOSInstall",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.PrepareOSInstall",
+                "ApplyTime@Redfish.AllowableValues": [
+                    "Immediate",
+                    "OnNextBoot"
+                ],
+                "ImageRepository@Redfish.AllowableValues": [
+                    "The shared repository path of ISO image."
+                ],
+                "TransferProtocol@Redfish.AllowableValues": [
+                    "CIFS",
+                    "HTTPS",
+                    "NFS",
+                    "VMEDIA-CIFS",
+                    "VMEDIA-HTTPS",
+                    "VMEDIA-NFS",
+                    "SCP",
+                    "TFTP",
+                    "HOST-HTTPS",
+                    "HOST-PXE",
+                    "HOST-IPXE",
+                    "LOCAL-HOST"
+                ],
+                "MountOption@Redfish.AllowableValues": [
+                    "Mount option is optional and shall be used for accessing CIFS shared location specified by the ImageRepository parameter."
+                ],
+                "Username@Redfish.AllowableValues": [
+                    "The username to be used while accessing shared location specified by the ImageRepository parameter."
+                ],
+                "Password@Redfish.AllowableValues": [
+                    "The password to be used while accessing shared location specified by the ImageRepository parameter."
+                ],
+                "BaseISORepoDetails@Redfish.AllowableValues": [
+                    "This object specifies details required to access SCU ISO image. This object shall have properties ImageRepository, TransferProtocol, Username and Password."
+                ],
+                "OSISORepoDetails@Redfish.AllowableValues": [
+                    "This object specifies details required to access OS ISO image. This object shall have properties ImageRepository, TransferProtocol, Username and Password."
+                ],
+                "OSAnswerFileRepoDetails@Redfish.AllowableValues": [
+                    "This object specifies details required to access OS Answer file. This object shall have properties ImageRepository, TransferProtocol [SCP and TFTP], Username and Password."
+                ],
+                "ExternalEthernetMACAddressInterface@Redfish.AllowableValues": [
+                    "The ExternalEthernetMACAddressInterface is used to specify the MACAddress of the adapter port."
+                ],
+                "PCIeSlot@Redfish.AllowableValues": [
+                    "The PCIeSlot is used to specify Slot ID of the network adapter to enable network booting."
+                ],
+                "PhysicalPortNumber@Redfish.AllowableValues": [
+                    "The PhysicalPortNumber is used to specify physical port number of the ethernet adapter to enable network booting."
+                ],
+                "Address@Redfish.AllowableValues": [
+                    "The Address is used to specify IPv4 address of the ethernet interface to enable network booting."
+                ],
+                "AddressOrigin@Redfish.AllowableValues": [
+                    "The AddressOrigin is used to specify IPv4 address origin of the ethernet interface to enable network booting. This shall the take input as either DHCP or Static."
+                ],
+                "Netmask@Redfish.AllowableValues": [
+                    "The SubnetMask is used to specify IPv4 subnet mask of the ethernet interface to enable network booting."
+                ],
+                "Gateway@Redfish.AllowableValues": [
+                    "The Gateway is used to specify IPv4 default gateway of the ethernet interface to enable network booting."
+                ],
+                "IPv4Address@Redfish.AllowableValues": [
+                    "This is an optional object that specifies IPv4 Address details for the Ethernet interface to be used for network access. This object shall have properties Address, AddressOrigin, SubnetMask and Gateway. AddressOrigin is a mandatory property in IPv4Address."
+                ],
+                "IPv4DNS@Redfish.AllowableValues": [
+                    "This object specifies IPv4 Preferred DNS Server Address details for the Ethernet interface to be used for network access. This object shall have property Address, which takes IPv4 DNS Server Address."
+                ],
+                "PrefixLength@Redfish.AllowableValues": [
+                    "The PrefixLength is used to specify IPV6 prefix length of the ethernet interface to enable network booting."
+                ],
+                "IPv6Address@Redfish.AllowableValues": [
+                    "This is an optional object that specifies IPv6 Address details for the Ethernet interface to be used for network access. This object shall have properties Address, AddressOrigin, and PrefixLength. AddressOrigin is a mandatory property in IPv6Address."
+                ],
+                "IPv6Gateway@Redfish.AllowableValues": [
+                    "This object specifies IPv6 default gateway details for the Ethernet interface to be used for network access. This object shall have property Address, which takes IPv6 Default Gateway."
+                ],
+                "IPv6DNS@Redfish.AllowableValues": [
+                    "This object specifies IPv6 Preferred DNS Server Address details for the Ethernet interface to be used for network access. This object shall have property Address, which takes IPv6 DNS Server Address."
+                ],
+                "HostNetworkDetails@Redfish.AllowableValues": [
+                    "This object specifies the network booting details of an ISO over HTTPS/PXE. This object shall have properties ExternalEthernetMACAddressInterface, PCIeSlot, PhysicalPortNumber and IPv4Address, IPv4DNS (or) IPv6Address, IPv6Gateway, IPv6DNS. IPv4Address would take the priority, in case both Ipv4 and IPv6 details are specified in the request."
+                ],
+                "TargetUri@Redfish.AllowableValues": [
+                    "URI of SAN LUN - cisco-ucs-fc:<HostWWPN>:<LUNID>:<TargetWWPN> or cisco-ucs-iscsi:<HostMACAdress>:<TargetLUNID>:<TargetIQN>"
+                ],
+                "OSName@Redfish.AllowableValues": [
+                    "Unique name of the OS, as given in SCU Release Note."
+                ],
+                "OSEdition@Redfish.AllowableValues": [
+                    "None",
+                    "STANDARD",
+                    "DATACENTER",
+                    "CORE",
+                    "STANDARDCORE",
+                    "DATACENTERCORE"
+                ],
+                "TargetOS@Redfish.AllowableValues": [
+                    "This object specifies details of OS to be installed. This object shall have properties OSName and OSEdition."
+                ],
+                "TargetDisk@Redfish.AllowableValues": [
+                    "This parameter specifies the disk where OS is to be installed. For local disks use @odataid to specify storage URI URI and for remote disks, use TargetUri to specify the SAN LUN URI."
+                ]
+            }
+        }
+    }
+}

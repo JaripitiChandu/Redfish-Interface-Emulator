@@ -1,0 +1,14 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/Sensors/MOD6_FAN1_SPEED",
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "@odata.context": "/redfish/v1/$metadata#Sensor.Sensor",
+    "Description": "Sensor Inventory",
+    "Name": "MOD6_FAN1_SPEED",
+    "ReadingType": "Rotational",
+    "Reading": 5460,
+    "Id": "29",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    }
+}

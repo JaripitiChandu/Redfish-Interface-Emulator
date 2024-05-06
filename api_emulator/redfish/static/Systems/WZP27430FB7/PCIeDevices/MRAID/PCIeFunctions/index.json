@@ -1,0 +1,13 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/PCIeDevices/MRAID/PCIeFunctions",
+    "@odata.type": "#PCIeFunctionCollection.PCIeFunctionCollection",
+    "@odata.context": "/redfish/v1/$metadata#PCIeFunctionCollection.PCIeFunctionCollection",
+    "Description": "Collection of PCIeFunction resource instances for this PCIeDevice",
+    "Name": "PCIeFunction Collection",
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/WZP27430FB7/PCIeDevices/MRAID/PCIeFunctions/0"
+        }
+    ],
+    "Members@odata.count": 1
+}

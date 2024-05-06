@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/Role.v1_2_2",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "Role.v1_2_2",
+    "Id": "Role.v1_2_2",
+    "Name": "Role.v1_2_2 Schema file",
+    "Description": "Role.v1_2_2 Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/Role.v1_2_2.json",
+            "Uri": "/redfish/schemas/Role.v1_2_2.json",
+            "Language": "en"
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/FabricCollection",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "FabricCollection",
+    "Id": "FabricCollection",
+    "Name": "FabricCollection Schema file",
+    "Description": "FabricCollection Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/FabricCollection.json",
+            "Uri": "/redfish/schemas/FabricCollection.json",
+            "Language": "en"
+        }
+    ]
+}

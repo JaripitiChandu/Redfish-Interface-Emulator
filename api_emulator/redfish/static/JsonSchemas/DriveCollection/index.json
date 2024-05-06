@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/DriveCollection",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "DriveCollection",
+    "Id": "DriveCollection",
+    "Name": "DriveCollection Schema file",
+    "Description": "DriveCollection Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/DriveCollection.json",
+            "Uri": "/redfish/schemas/DriveCollection.json",
+            "Language": "en"
+        }
+    ]
+}

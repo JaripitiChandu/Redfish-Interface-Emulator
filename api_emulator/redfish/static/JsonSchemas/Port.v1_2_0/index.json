@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/Port.v1_2_0",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "Port.v1_2_0",
+    "Id": "Port.v1_2_0",
+    "Name": "Port.v1_2_0 Schema file",
+    "Description": "Port.v1_2_0 Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/Port.v1_2_0.json",
+            "Uri": "/redfish/schemas/Port.v1_2_0.json",
+            "Language": "en"
+        }
+    ]
+}

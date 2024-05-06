@@ -1,14 +1,19 @@
 {
-    "@odata.context": "/rest/v1/$metadata#TaskService/$entity",
-    "@odata.type": "#Tasks.0.94.0.TaskCollection",
-    "Name": "Task Collection",
-    "Modified": "2012-03-07T14:44",
-    "Links": {
-        "Members@odata.count": 1,
-        "Members": [
-            {
-                "@odata.id": "/redfish/v1/TaskService/1"
-            }
-        ]
-    }
+    "@odata.id": "/redfish/v1/TaskService",
+    "@odata.type": "#TaskService.v1_1_5.TaskService",
+    "@odata.context": "/redfish/v1/$metadata#TaskService.TaskService",
+    "Id": "TaskService",
+    "Name": "Tasks Service",
+    "Description": "Tasks Service",
+    "Tasks": {
+        "@odata.id": "/redfish/v1/TaskService/Tasks"
+    },
+    "ServiceEnabled": true,
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK",
+        "HealthRollup": "OK"
+    },
+    "LifeCycleEventOnTaskStateChange": false,
+    "CompletedTaskOverWritePolicy": "Oldest"
 }

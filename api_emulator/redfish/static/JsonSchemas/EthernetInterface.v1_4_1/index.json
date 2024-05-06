@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/JsonSchemas/EthernetInterface.v1_4_1",
+    "@odata.type": "#JsonSchemaFile.v1_1_4.JsonSchemaFile",
+    "@odata.context": "/redfish/v1/$metadata#JsonSchemaFile.JsonSchemaFile",
+    "Schema": "EthernetInterface.v1_4_1",
+    "Id": "EthernetInterface.v1_4_1",
+    "Name": "EthernetInterface.v1_4_1 Schema file",
+    "Description": "EthernetInterface.v1_4_1 Schema File Location",
+    "Languages": [
+        "en"
+    ],
+    "Location": [
+        {
+            "PublicationUri": "http://redfish.dmtf.org/schemas/v1/EthernetInterface.v1_4_1.json",
+            "Uri": "/redfish/schemas/EthernetInterface.v1_4_1.json",
+            "Language": "en"
+        }
+    ]
+}

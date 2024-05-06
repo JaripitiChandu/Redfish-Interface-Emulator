@@ -1,0 +1,23 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/NetworkInterfaces/UCSC-M-V5Q50G_FCH272671H7",
+    "@odata.type": "#NetworkInterface.v1_1_1.NetworkInterface",
+    "@odata.context": "/redfish/v1/$metadata#NetworkInterface.NetworkInterface",
+    "Description": "NetworkInterface contains references linking NetworkAdapter, NetworkPort, and NetworkDeviceFunction resources and represents the functionality available to the containing system.",
+    "Links": {
+        "NetworkAdapter": {
+            "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7"
+        }
+    },
+    "NetworkPorts": {
+        "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkPorts"
+    },
+    "NetworkDeviceFunctions": {
+        "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkDeviceFunctions"
+    },
+    "Id": "UCSC-M-V5Q50G_FCH272671H7",
+    "Name": "Adapter Card UCSC-M-V5Q50G_FCH272671H7",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    }
+}

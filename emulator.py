@@ -417,7 +417,7 @@ def get_odata():
 #
 # If any other RESTful request, send to RedfishAPI object for processing. Note: <path:path> specifies any path
 #
-g.api.add_resource(RedfishAPI, '/redfish/v1/', '/redfish/v1/<path:path>')
+g.api.add_resource(RedfishAPI, '/<path:path>', '/redfish/v1/', '/redfish/v1/<path:path>')
 
 #
 #

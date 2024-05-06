@@ -1,0 +1,33 @@
+{
+    "Id": "Port-2",
+    "Name": "Port-2",
+    "PhysicalPortNumber": "2",
+    "LinkStatus": "Down",
+    "AssociatedNetworkAddresses": [
+        "40:14:82:82:02:7A"
+    ],
+    "CurrentLinkSpeedMbps": 10000,
+    "Oem": {
+        "Cisco": {
+            "@odata.type": "#CiscoUCSExtensions.v1_0_0.CiscoUCSExtensions",
+            "VicPort": {
+                "AdminFecMode": "cl91",
+                "OperFecMode": "Off",
+                "ConnectorPresent": false,
+                "ConnectorType": "N/A",
+                "ConnectorVendorName": "N/A",
+                "ConnectorPartNumber": "N/A",
+                "ConnectorPartRevision": "N/A",
+                "ConnectorVendorPid": "N/A",
+                "AdminLinkSpeed": "Auto"
+            }
+        }
+    },
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkPorts/Port-2",
+    "@odata.type": "#NetworkPort.v1_2_0.NetworkPort",
+    "@odata.context": "/redfish/v1/$metadata#NetworkPort.NetworkPort"
+}

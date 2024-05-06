@@ -40,7 +40,7 @@ def load_static(name, spec, mode, rest_base, resource_dictionary):
         dirname = os.path.dirname(__file__)
         base_dir = os.path.join(dirname, spec.lower(), 'static')
         index = os.path.join(dirname, spec, 'static', name, 'index.json')
-        assert os.path.exists(index), 'Static data for ' + name + ' does not exist'
+        # assert os.path.exists(index), 'Static data for ' + name + ' does not exist'
 
         startDir = os.path.join(dirname, spec, 'static', name)
         for dirName, subdirList, fileList in os.walk(startDir):
@@ -64,7 +64,8 @@ def load_static(name, spec, mode, rest_base, resource_dictionary):
                 shortpath = re.sub('/index.json', '', shortpath)
                 resource_dictionary.add_resource(shortpath, m)
 # debug print
-#        resource_dictionary.print_dictionary()
+        if name == "cisco":
+            resource_dictionary.print_dictionary()
 
     except AssertionError as e:
         raise StaticLoadError(e.message)

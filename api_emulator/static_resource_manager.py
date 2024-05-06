@@ -133,6 +133,7 @@ class StaticResourceManager(object):
             self.Chassis =          load_static('Chassis', 'redfish', mode, rest_base, self.resource_dictionary)
             self.Systems=           load_static('Systems', 'redfish', mode, rest_base, self.resource_dictionary)
             self.Managers =         load_static('Managers', 'redfish', mode, rest_base, self.resource_dictionary)
+            self.cisco =            load_static('cisco', 'redfish', mode, rest_base, self.resource_dictionary)
 
 #        if "Swordfish" in mockupfolders:
 #            self.StorageServices = load_static('StorageServices', 'redfish', mode, rest_base, self.resource_dictionary)

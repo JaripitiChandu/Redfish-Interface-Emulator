@@ -1,0 +1,22 @@
+{
+    "@odata.id": "/redfish/v1/Managers/CIMC/Oem/CiscoInternalStorage/FlexMMC",
+    "@odata.type": "#CiscoInternalStorage.v1_0_0.CiscoInternalStorage",
+    "@odata.context": "/redfish/v1/$metadata#CiscoInternalStorage.CiscoInternalStorage",
+    "Partitions": [
+        {
+            "@odata.id": "/redfish/v1/Managers/CIMC/Oem/CiscoInternalStorage/FlexMMC/CiscoPartition/IMCImages"
+        },
+        {
+            "@odata.id": "/redfish/v1/Managers/CIMC/Oem/CiscoInternalStorage/FlexMMC/CiscoPartition/UserFiles"
+        }
+    ],
+    "Partitions@odata.count": 2,
+    "Id": "FlexMMC",
+    "Name": "FlexMMC",
+    "Description": "FlexMMC Details",
+    "Actions": {
+        "#CiscoInternalStorage.ResetToDefault": {
+            "target": "/redfish/v1/Managers/CIMC/Oem/CiscoInternalStorage/FlexMMC/Actions/CiscoInternalStorage.ResetToDefault"
+        }
+    }
+}

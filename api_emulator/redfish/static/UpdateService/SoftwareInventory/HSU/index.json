@@ -1,0 +1,10 @@
+{
+    "@odata.id": "/redfish/v1/UpdateService/SoftwareInventory/HSU",
+    "@odata.type": "#SoftwareInventory.v1_2_1.SoftwareInventory",
+    "@odata.context": "/redfish/v1/$metadata#SoftwareInventory.SoftwareInventory",
+    "Version": null,
+    "Id": "HSU",
+    "Name": "HSU",
+    "Manufacturer": "Cisco Systems Inc.",
+    "Updateable": false
+}

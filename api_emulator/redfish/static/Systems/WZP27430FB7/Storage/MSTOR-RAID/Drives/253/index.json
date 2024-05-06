@@ -1,0 +1,60 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MSTOR-RAID/Drives/253",
+    "@odata.type": "#Drive.v1_9_0.Drive",
+    "@odata.context": "/redfish/v1/$metadata#Drive.Drive",
+    "Id": "253",
+    "Name": "Micron_5300_MTFDDAV240TDS - 240GB SATA M.2",
+    "Model": "UCS-M2-240GB",
+    "Revision": "D3MC000",
+    "Protocol": "SATA",
+    "MediaType": "SSD",
+    "Manufacturer": "ATA",
+    "SerialNumber": "MSY27230682",
+    "BlockSizeBytes": 512,
+    "CapableSpeedGbs": 6,
+    "NegotiatedSpeedGbs": 6,
+    "HotspareType": "None",
+    "PredictedMediaLifeLeftPercent": 100,
+    "IndicatorLED": "Off",
+    "CapacityBytes": 240056795136,
+    "FailurePredicted": false,
+    "EncryptionAbility": "None",
+    "Oem": {
+        "Cisco": {
+            "DriveState": "Online",
+            "DrivePowerState": "Active",
+            "ReadyForRemoval": false,
+            "Bootable": false,
+            "PredictiveFailureCount": 0,
+            "MediaErrorCount": 0,
+            "StorageInstanceId": 253,
+            "CoercedSizeBytes": 240056795136,
+            "NonCoercedSizeBytes": 240056795136,
+            "SmartData": {
+                "PercentLifeLeft": 100,
+                "PercentReservedCapacityConsumed": 0,
+                "PowerCycleCount": 21,
+                "PowerOnHours": 3978,
+                "PowerOnHoursPercentage": 9,
+                "ThresholdOperatingTemperatureInCel": 77,
+                "OperatingTemperatureInCel": 68,
+                "MaximumOperatingTemperatureInCel": 77,
+                "WearStatusInDays": 1825
+            }
+        }
+    },
+    "Status": {
+        "Health": "OK",
+        "State": "Enabled"
+    },
+    "StatusIndicator": "OK",
+    "PhysicalLocation": {
+        "PartLocation": {
+            "LocationType": "Slot",
+            "ServiceLabel": "253"
+        }
+    },
+    "Actions": {
+        "Oem": {}
+    }
+}

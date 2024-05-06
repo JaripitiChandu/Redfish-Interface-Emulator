@@ -1,0 +1,113 @@
+{
+    "Id": "eth0",
+    "Name": "eth0",
+    "NetDevFuncType": "Ethernet",
+    "NetDevFuncCapabilities": [
+        "Ethernet",
+        "iSCSI"
+    ],
+    "Ethernet": {
+        "MACAddress": "40:14:82:82:02:80",
+        "MTUSize": 1500,
+        "VLAN": {
+            "VLANEnable": true,
+            "VLANId": 0
+        }
+    },
+    "BootMode": "Disabled",
+    "AssignablePhysicalPorts": [
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkPorts/Port-1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkPorts/Port-3"
+        }
+    ],
+    "AssignablePhysicalPorts@odata.count": 2,
+    "Links": {
+        "PhysicalPortAssignment": {
+            "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkPorts/Port-1"
+        }
+    },
+    "Oem": {
+        "Cisco": {
+            "@odata.type": "#CiscoUCSExtensions.v1_0_0.CiscoUCSExtensions",
+            "VnicConfiguration": {
+                "UplinkPort": 0,
+                "PCIOrder": "0.0",
+                "InterruptMode": "Any",
+                "VlanMode": "Trunk",
+                "ClassOfService": 0,
+                "PciLinkNumber": 1,
+                "Vif": {
+                    "VifId": 0,
+                    "VifCookie": 0
+                },
+                "EthConfiguration": {
+                    "Cdn": "VIC-MLOM-eth0",
+                    "TrustedClassOfServiceEnabled": false,
+                    "CompQueueCount": 5,
+                    "StandByRecoveryDly": 5,
+                    "StandByVif": {
+                        "VifId": 0,
+                        "VifCookie": 0
+                    },
+                    "WorkQueue": {
+                        "Count": 1,
+                        "RingSize": 256
+                    },
+                    "RecvQueue": {
+                        "Count": 4,
+                        "RingSize": 512
+                    },
+                    "InterruptProfile": {
+                        "Count": 8,
+                        "CoalescingTime": 125,
+                        "CoalescingType": "Min"
+                    },
+                    "Features": {
+                        "UplinkFailOverEnabled": false,
+                        "AdvancedFilterEnabled": false,
+                        "ArfsEnabled": false,
+                        "NvgreEnabled": false,
+                        "GroupInterruptEnabled": false,
+                        "VxlanEnabled": false,
+                        "Rocev2Enabled": false,
+                        "VmqEnabled": false,
+                        "MultiQueueEnabled": false,
+                        "GeneveEnabled": false,
+                        "PtpEnabled": false,
+                        "QinqEnabled": false
+                    },
+                    "OffloadProfile": {
+                        "TcpLargeReceiveEnabled": true,
+                        "TcpSegmentEnabled": true,
+                        "TcpRxChecksumEnabled": true,
+                        "TcpTxChecksumEnabled": true
+                    },
+                    "RssProfile": {
+                        "RssEnabled": true,
+                        "RssIpv4HashEnabled": true,
+                        "RssTcpIpv4HashEnabled": true,
+                        "RssIpv6HashEnabled": true,
+                        "RssTcpIpv6HashEnabled": true,
+                        "RssIpv6ExHashEnabled": false,
+                        "RssTcpIpv6ExHashEnabled": false,
+                        "RssUdpIpv4HashEnabled": false,
+                        "RssUdpIpv6HashEnabled": false
+                    }
+                }
+            }
+        }
+    },
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkDeviceFunctions/eth0",
+    "@odata.type": "#NetworkDeviceFunction.v1_9_0.NetworkDeviceFunction",
+    "@odata.context": "/redfish/v1/$metadata#NetworkDeviceFunction.NetworkDeviceFunction",
+    "Metrics": {
+        "@odata.id": "/redfish/v1/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/NetworkDeviceFunctions/eth0/Metrics"
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Memory/DIMM_P2_D1",
+    "@odata.type": "#Memory.v1_12_0.Memory",
+    "@odata.context": "/redfish/v1/$metadata#Memory.Memory",
+    "Id": "23",
+    "Name": "DIMM_P2_D1",
+    "Description": "Computer Memory",
+    "Links": {
+        "Chassis": {
+            "@odata.id": "/redfish/v1/Chassis/1"
+        }
+    },
+    "Status": {
+        "State": "Absent"
+    }
+}

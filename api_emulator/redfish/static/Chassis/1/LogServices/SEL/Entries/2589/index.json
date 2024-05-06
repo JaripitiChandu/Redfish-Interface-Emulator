@@ -1,0 +1,16 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/LogServices/SEL/Entries/2589",
+    "@odata.type": "#LogEntry.v1_4_0.LogEntry",
+    "@odata.context": "/redfish/v1/$metadata#LogEntry.LogEntry",
+    "Message": "P2_PRESENT: Presence sensor, Device Inserted / Device Present was asserted",
+    "EntryCode": "Device Inserted / Device Present",
+    "EventType": "ResourceAdded",
+    "Created": "2024-05-03T06:21:30+00:00",
+    "EventTimestamp": "2024-05-03T06:21:30+00:00",
+    "Id": "2589",
+    "EventId": "2589",
+    "EntryType": "SEL",
+    "Name": "Log Entry 2589",
+    "Description": "Log Entry 2589",
+    "Severity": "OK"
+}

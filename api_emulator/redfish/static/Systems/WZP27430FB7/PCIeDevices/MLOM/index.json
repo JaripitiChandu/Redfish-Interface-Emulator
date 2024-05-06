@@ -1,0 +1,25 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/PCIeDevices/MLOM",
+    "@odata.type": "#PCIeDevice.v1_4_0.PCIeDevice",
+    "@odata.context": "/redfish/v1/$metadata#PCIeDevice.PCIeDevice",
+    "PCIeFunctions": {
+        "@odata.id": "/redfish/v1/Systems/WZP27430FB7/PCIeDevices/MLOM/PCIeFunctions"
+    },
+    "Links": {
+        "Chassis": [
+            {
+                "@odata.id": "/redfish/v1/Chassis/1"
+            }
+        ],
+        "PCIeFunctions": [
+            {
+                "@odata.id": "/redfish/v1/Systems/WZP27430FB7/PCIeDevices/MLOM/PCIeFunctions/0"
+            }
+        ],
+        "PCIeFunctions@odata.count": 1
+    },
+    "Description": "This gives information of PCIeDevices on the system",
+    "Id": "MLOM",
+    "Name": "Cisco UCS VIC 15428 MLOM",
+    "FirmwareVersion": "5.3(3.10)"
+}

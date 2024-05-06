@@ -1,0 +1,17 @@
+{
+    "@odata.id": "/redfish/v1/Systems/WZP27430FB7/Storage/MRAID/Drives/8",
+    "@odata.type": "#Drive.v1_9_0.Drive",
+    "@odata.context": "/redfish/v1/$metadata#Drive.Drive",
+    "Id": "8",
+    "Name": "8",
+    "Status": {
+        "Health": "OK",
+        "State": "Absent"
+    },
+    "PhysicalLocation": {
+        "PartLocation": {
+            "LocationType": "Slot",
+            "ServiceLabel": "8"
+        }
+    }
+}

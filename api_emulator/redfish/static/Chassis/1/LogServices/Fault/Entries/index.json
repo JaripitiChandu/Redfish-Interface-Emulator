@@ -1,0 +1,24 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/LogServices/Fault/Entries",
+    "@odata.type": "#LogEntryCollection.LogEntryCollection",
+    "@odata.context": "/redfish/v1/$metadata#LogEntryCollection.LogEntryCollection",
+    "Name": "Log Service Collection",
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Chassis/1/LogServices/Fault/Entries/1",
+            "@odata.type": "#LogEntry.v1_4_0.LogEntry",
+            "Id": "1",
+            "EventId": "1",
+            "EntryType": "Event",
+            "Name": "Log Entry 1",
+            "Description": "Log Entry 1",
+            "Message": "PSU2_STATUS: Power Supply 2 has lost input or input is out of range : Check input to PS or replace PS 2",
+            "EventType": "Alert",
+            "Created": "2024-05-03T06:22:29Z",
+            "EventTimestamp": "2024-05-03T06:22:29Z",
+            "MessageId": "F0374",
+            "Severity": "Critical"
+        }
+    ],
+    "Members@odata.count": 1
+}

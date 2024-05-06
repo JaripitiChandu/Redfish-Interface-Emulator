@@ -1,0 +1,16 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/LogServices/SEL/Entries/2574",
+    "@odata.type": "#LogEntry.v1_4_0.LogEntry",
+    "@odata.context": "/redfish/v1/$metadata#LogEntry.LogEntry",
+    "Message": "BIOSPOST_TIMEOUT: Platform sensor, Predictive Failure deasserted",
+    "EntryCode": "Predictive Failure deasserted",
+    "EventType": "Alert",
+    "Created": "2024-05-03T06:21:22+00:00",
+    "EventTimestamp": "2024-05-03T06:21:22+00:00",
+    "Id": "2574",
+    "EventId": "2574",
+    "EntryType": "SEL",
+    "Name": "Log Entry 2574",
+    "Description": "Log Entry 2574",
+    "Severity": "OK"
+}

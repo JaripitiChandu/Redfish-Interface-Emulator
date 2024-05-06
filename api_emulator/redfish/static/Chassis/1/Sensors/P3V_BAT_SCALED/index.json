@@ -1,0 +1,22 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/1/Sensors/P3V_BAT_SCALED",
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "@odata.context": "/redfish/v1/$metadata#Sensor.Sensor",
+    "Description": "Sensor Inventory",
+    "Name": "P3V_BAT_SCALED",
+    "ReadingType": "Voltage",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "Thresholds": {
+        "UpperFatal": {
+            "Reading": 3.76
+        },
+        "UpperCritical": {
+            "Reading": 3.588
+        }
+    },
+    "Id": "7",
+    "Reading": 3.073
+}
