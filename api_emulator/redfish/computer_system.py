@@ -13,7 +13,7 @@ from .templates.redfish_computer_system import REDFISH_TEMPLATE
 from api_emulator.exceptions import CreatePooledNodeError
 from api_emulator import utils
 
-from .processor import Processors, Processor
+# from .processor import Processors, Processor
 
 from threading import Thread
 from time import sleep
@@ -53,7 +53,7 @@ class ComputerSystem(object):
         self.SimpleNetwork = simple_network.EthernetNetworkInterfaceCollection(self.rb)
         self.EthernetInterfaces= simple_network.EthernetNetworkInterfaceCollection(self.rb)
         self.SimpleStorage = simple_storage.SimpleStorageCollection(self.rb, suffix)
-        self.Processors = Processors(rest_base, suffix, cs_puid)
+        # self.Processors = Processors(rest_base, suffix, cs_puid)
 
         self.SimpleNetwork.init_config(self.cs_puid, suffix)
         self.EthernetInterfaces.init_config(self.cs_puid,suffix)
@@ -195,10 +195,10 @@ class ComputerSystem(object):
         """
         status = resource.Status(resource.StateEnum.ENABLED,
                                  resource.HealthEnum.OK)
-        for i in range(count):
-            p = Processor(self.rb, self.suffix, self.cs_puid,
-                          i + 1, i + 1, 3700, 8, 4, 4, 2, status)
-            self.Processors.add_processor(p)
+        # for i in range(count):
+        #     # p = Processor(self.rb, self.suffix, self.cs_puid,
+        #     #               i + 1, i + 1, 3700, 8, 4, 4, 2, status)
+        #     self.Processors.add_processor(p)
 
     def _base_configure(self):
         """

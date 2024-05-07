@@ -12,7 +12,8 @@ Singleton  API:  GET, POST, PATCH, DELETE
 import g
 
 import sys, traceback
-import logging
+from pprint import pprint
+import logging, json
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
@@ -20,7 +21,7 @@ from flask_restful import reqparse, Api, Resource
 from .templates.ComputerSystem import get_ComputerSystem_instance
 from .ResetActionInfo_api import ResetActionInfo_API
 from .ResetAction_api import ResetAction_API
-from .processor import members as processors
+# from .processor import members as processors
 from .memory import members as memory
 from .ethernetinterface import members as ethernetinterfaces
 from .simplestorage import members as simplestorage
@@ -59,13 +60,13 @@ class ComputerSystemAPI(Resource):
                     u'TotalSystemMemoryGiB': totalsysmem,
                     u'TotalSystemPersistentMemoryGiB': totalpsysmem}
 
-    def processor_summary(self,ident):
-        procs=list(processors.get(ident,{}).values())
-        if not procs:
-            return {}
-        return {u'Status': {u'Health': 'OK', u'State': 'Enabled'},
-                    u'Count': len(procs),
-                    u'Model': procs[0].get('Model','unknown')}
+    # def processor_summary(self,ident):
+    #     procs=list(processors.get(ident,{}).values())
+    #     if not procs:
+    #         return {}
+    #     return {u'Status': {u'Health': 'OK', u'State': 'Enabled'},
+    #                 u'Count': len(procs),
+    #                 u'Model': procs[0].get('Model','unknown')}
 
     # HTTP GET
     def get(self, ident):
@@ -74,8 +75,8 @@ class ComputerSystemAPI(Resource):
             # Find the entry with the correct value for Id
             if ident in members:
                 conf= members[ident]
-                conf['ProcessorSummary']=self.processor_summary(ident)
-                conf['MemorySummary']=self.memory_summary(ident)
+                # conf['ProcessorSummary']=self.processor_summary(ident)
+                # conf['MemorySummary']=self.memory_summary(ident)
                 resp = conf, 200
             else:
                 resp = "System " + ident + " not found" , 404
@@ -98,11 +99,12 @@ class ComputerSystemAPI(Resource):
         logging.info('ComputerSystemAPI POST called')
         try:
             global config
-            global wildcards
-            wildcards['id'] = ident
-            wildcards['linkMgr'] = 'UpdateWithPATCH'
-            wildcards['linkChassis'] = ['UpdateWithPATCH']
-            config=get_ComputerSystem_instance(wildcards)
+            # global wildcards
+            # wildcards['id'] = ident
+            # wildcards['linkMgr'] = 'UpdateWithPATCH'
+            # wildcards['linkChassis'] = ['UpdateWithPATCH']
+            # config=get_ComputerSystem_instance(wildcards)
+            config = request.json
             members[ident]=config
             resp = config, 200
         except Exception:
@@ -186,8 +188,8 @@ class ComputerSystemCollectionAPI(Resource):
             return False, "Missing attribute: Id"
         if 'Links' not in config:
             return False, "Missing attribute: Links"
-        if 'ResourceBlocks' not in config['Links']:
-            return False, "Missing array: Links['ResourceBlocks']"
+        # if 'ResourceBlocks' not in config['Links']:
+        #     return False, "Missing array: Links['ResourceBlocks']"
         return True,{}
 
     # HTTP POST
@@ -335,11 +337,11 @@ def CreateComposedSystem(req):
                             block = device.split('/', 1)[0]
                             device = device.split('/', 1)[-1]
                             device = device.split('/', 1)[-1]
-                            try:
-                                processors[req['Name']][device_back] = processors[block][device]
-                            except:
-                                processors[req['Name']] = {}
-                                processors[req['Name']][device_back] = processors[block][device]
+                            # try:
+                            #     processors[req['Name']][device_back] = processors[block][device]
+                            # except:
+                            #     processors[req['Name']] = {}
+                            #     processors[req['Name']][device_back] = processors[block][device]
                         elif device_type == 'Memory':
                             device = device['@odata.id'].replace(rb + 'CompositionService/ResourceBlocks/','')
                             device_back = device
@@ -424,8 +426,8 @@ def DeleteComposedSystem(ident):
                     for device in resource_ids[device_type]:
                         if device_type == 'Processors':
                             device_back = device['@odata.id'].replace(rb + 'CompositionService/ResourceBlocks/','')
-                            del processors[ident][device_back]
-                            if processors[ident]=={}: del processors[ident]
+                            # del processors[ident][device_back]
+                            # if processors[ident]=={}: del processors[ident]
                         elif device_type == 'Memory':
                             device_back = device['@odata.id'].replace(rb + 'CompositionService/ResourceBlocks/','')
                             del memory[ident][device_back]
