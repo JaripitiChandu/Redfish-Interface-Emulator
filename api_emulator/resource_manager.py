@@ -27,9 +27,9 @@ from .redfish.event import Event
 from .redfish.EventService_api import EventServiceAPI, CreateEventService
 from .redfish.Subscriptions_api import SubscriptionCollectionAPI, SubscriptionAPI, CreateSubscription
 # Chassis imports
-from .redfish.Chassis_api import ChassisCollectionAPI, ChassisAPI, CreateChassis
-from .redfish.power_api import PowerAPI, CreatePower
-from .redfish.thermal_api import ThermalAPI, CreateThermal
+from .redfish.Chassis_api import ChassisCollectionAPI, ChassisAPI
+from .redfish.power_api import PowerAPI
+from .redfish.thermal_api import ThermalAPI
 from .redfish.network_adapters_api import NetworkAdaptersCollectionAPI,NetworkAdaptersAPI
 from .redfish.network_ports_api import NetworkPortsCollectionAPI, NetworkPortsAPI
 from .redfish.network_device_functions_api import NetworkDeviceFunctionsCollectionAPI,NetworkDeviceFunctionsAPI
@@ -37,6 +37,7 @@ from .redfish.network_device_functions_metrics_api import NetworkDeviceFunctions
 # Manager imports
 from .redfish.Manager_api import ManagerCollectionAPI, ManagerAPI, CreateManager
 from .redfish.ethernet_interface_api import EthernetInterfaceCollectionAPI, EthernetInterfaceAPI
+from .redfish.network_protocols_api import NetworkProtocolAPI
 # EgResource imports
 from .redfish.eg_resource_api import EgResourceCollectionAPI, EgResourceAPI, CreateEgResource
 from .redfish.eg_subresource_api import EgSubResourceCollectionAPI, EgSubResourceAPI, CreateEgSubResource
@@ -181,7 +182,8 @@ class ResourceManager(object):
         #Manager SubResources
         g.api.add_resource(EthernetInterfaceCollectionAPI, '/redfish/v1/Managers/<string:ident>/EthernetInterfaces')
         g.api.add_resource(EthernetInterfaceAPI, '/redfish/v1/Managers/<string:ident>/EthernetInterfaces/<string:ident1>', resource_class_kwargs={'rb': g.rest_base})
-
+        #Manager SubResources
+        g.api.add_resource(NetworkProtocolAPI, '/redfish/v1/Managers/<string:ident>/NetworkProtocol')
         # EgResource Resources (Example entries for attaching APIs)
         # g.api.add_resource(EgResourceCollectionAPI,
         #     '/redfish/v1/EgResources')
