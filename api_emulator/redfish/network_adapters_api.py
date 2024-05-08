@@ -16,6 +16,7 @@ import logging
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
+from .Chassis_api import members as chassis_members
 
 members = {}
 
@@ -73,7 +74,7 @@ class NetworkAdaptersAPI(Resource):
         logging.info('NetworkAdaptersAPI POST called')
         try:
             global config
-            if ident in members:
+            if ident in chassis_members:
                 members.setdefault(ident, {})
                 if ident1 in members[ident]:
                     return ident1 + " NetworkAdapter already exists", 409
@@ -81,6 +82,7 @@ class NetworkAdaptersAPI(Resource):
                     members[ident][ident1] = request.json
             else:
                 resp = f"Chassis {ident} not found", 404
+
             resp = members[ident][ident1], 200
         except Exception:
             traceback.print_exc()

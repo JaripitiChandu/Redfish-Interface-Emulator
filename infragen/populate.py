@@ -1,11 +1,11 @@
 from api_emulator.redfish.EventService_api import EventServiceAPI, CreateEventService
-from api_emulator.redfish.Chassis_api import ChassisCollectionAPI, ChassisAPI, CreateChassis
+from api_emulator.redfish.Chassis_api import ChassisCollectionAPI, ChassisAPI
 from api_emulator.redfish.ComputerSystem_api import ComputerSystemCollectionAPI, ComputerSystemAPI, CreateComputerSystem
 from api_emulator.redfish.Manager_api import ManagerCollectionAPI, ManagerAPI, CreateManager
 from api_emulator.redfish.pcie_switch_api import PCIeSwitchesAPI, PCIeSwitchAPI
 from api_emulator.redfish.eg_resource_api import EgResourceCollectionAPI, EgResourceAPI, CreateEgResource
-from api_emulator.redfish.power_api import CreatePower
-from api_emulator.redfish.thermal_api import CreateThermal
+#from api_emulator.redfish.power_api import CreatePower
+#from api_emulator.redfish.thermal_api import CreateThermal
 from api_emulator.redfish.ResetAction_api import ResetAction_API
 from api_emulator.redfish.ResetActionInfo_api import ResetActionInfo_API
 from api_emulator.redfish.processor import CreateProcessor
