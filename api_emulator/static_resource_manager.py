@@ -38,7 +38,7 @@ from .redfish.eg_subresource_api import EgSubResourceCollectionAPI, EgSubResourc
 # ComputerSystem imports
 from .redfish.ComputerSystem_api import ComputerSystemCollectionAPI, ComputerSystemAPI, CreateComputerSystem
 from .redfish.processor_api import Processor, Processors
-from .redfish.memory import Memory, MemoryCollection
+from .redfish.memory_api import MemoryAPI, MemoryCollectionAPI
 from .redfish.simplestorage import SimpleStorage, SimpleStorageCollection
 from .redfish.ethernetinterface import EthernetInterfaceCollection, EthernetInterface
 from .redfish.ResetActionInfo_api import ResetActionInfo_API

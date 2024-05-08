@@ -14,7 +14,8 @@ from pprint import pprint
 import logging, json
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
-
+from .ComputerSystem_api import members as sys_members  
+from .storage_api import members as storage_memebers
 from .ResetActionInfo_api import ResetActionInfo_API
 from .ResetAction_api import ResetAction_API
 
@@ -24,7 +25,7 @@ INTERNAL_ERROR = 500
 
 
 # Storage Singleton API
-class StorageAPI(Resource):
+class Volume(Resource):
 
     # kwargs is used to pass in the wildcards values to be replaced
     # when an instance is created via get_<resource>_instance().
@@ -44,17 +45,20 @@ class StorageAPI(Resource):
 
 
     # HTTP GET
-    def get(self, ident1, ident2):
+    def get(self, ident1, ident2, ident3):
         logging.info(self.__class__.__name__ +' GET called')
         try:
             # Find the entry with the correct value for Id
             if ident1 in members:
                 if ident2 in members[ident1]:
-                    resp = members[ident1][ident2], 200
+                    if ident3 in members[ident1][ident2]:
+                        resp = members[ident1][ident2][ident3], 200
+                    else:
+                        resp = f"PCIeDeviceFunction {ident3} for PCIeDevice {ident2} of system {ident1} not found", 404
                 else:
-                    resp = f"Storage {ident2} for system {ident1} not found", 404
+                    resp = f"PCIeDevice {ident2} for system {ident1} not found", 404
             else:
-                resp = f"Storage {ident2} for system {ident1} not found", 404
+                resp = f"PCIeDevice {ident2} for system {ident1} not found", 404
         except Exception:
             traceback.print_exc()
             resp = "Internal Server Error", INTERNAL_ERROR
@@ -70,15 +74,22 @@ class StorageAPI(Resource):
     # instances from a predefined template. The new instance is given
     # the identifier "ident", which is taken from the end of the URL.
     # PATCH commands can then be used to update the new instance.
-    def post(self, ident1, ident2):
+    def post(self, ident1, ident2, ident3):
         logging.info(self.__class__.__name__ + ' POST called')
         try:
-            members.setdefault(ident1, {})
-            if ident2 in members[ident1]:
-                return ident2 + " storage already exists", 409
+            if ident1 in sys_members:
+                members.setdefault(ident1, {})
             else:
-                members[ident1][ident2] = request.json
-            resp = members[ident1][ident2], 200
+                return f"System {ident1} not found", 404
+            if ident2 in storage_memebers.get(ident1, {}):
+                members[ident1].setdefault(ident2, {})
+            else:
+                return f"Storage {ident2} not found for system {ident1}", 404
+            if ident3 in members[ident1][ident2]:
+                return "Resource already exists", 409
+            else:
+                members[ident1][ident2][ident3] = request.json
+                resp = members[ident1][ident2][ident3], 200
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -113,27 +124,29 @@ class StorageAPI(Resource):
         return resp
 
 # Storage Collection API
-class StorageCollectionAPI(Resource):
+class Volumes(Resource):
 
     def __init__(self):
         logging.info(self.__class__.__name__ + ' init called')
         self.config = {
     "@odata.id": "",
-    "@odata.type": "#StorageCollection.StorageCollection",
-    "@odata.context": "/redfish/v1/$metadata#StorageCollection.StorageCollection",
-    "Description": "Collection of storage resource instances for this system",
-    "Name": "Storage Collection",
-    "Members": [],
-    "Members@odata.count": 0
+    "@odata.type": "#VolumeCollection.VolumeCollection",
+    "@odata.context": "/redfish/v1/$metadata#VolumeCollection.VolumeCollection",
+    "Description": "Collection of Volumes for this system",
+    "Name": "Volume Collection",
+    "Members@odata.count": 0,
+    "Members": []
 }
 
     # HTTP GET
-    def get(self, ident):
+    def get(self, ident1, ident2):
         logging.info(self.__class__.__name__ +' GET called')
         try:
-            self.config["@odata.id"] = "/redfish/v1/Systems/{}/Storage".format(ident)
-            self.config["Members"] = [{'@odata.id': storage['@odata.id']} for storage in list(members.get(ident, {}).values())]
-            self.config["Members@odata.count"] = len(members.setdefault(ident, {}))
+            self.config["@odata.id"] = "/redfish/v1/Systems/{}/Storage/{}/Volumes".format(ident1, ident2)
+            self.config["Members"] = [
+                {'@odata.id': vol['@odata.id']} for vol in members.get(ident1, {}).get(ident2, {}).values()
+            ]
+            self.config["Members@odata.count"] = len(members.setdefault(ident1, {}).setdefault(ident2, {}))
             resp = self.config, 200
         except Exception:
             traceback.print_exc()

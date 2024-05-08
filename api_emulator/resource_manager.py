@@ -38,14 +38,18 @@ from .redfish.eg_subresource_api import EgSubResourceCollectionAPI, EgSubResourc
 # ComputerSystem imports
 from .redfish.ComputerSystem_api import ComputerSystemCollectionAPI, ComputerSystemAPI, CreateComputerSystem
 from .redfish.Bios_api import BiosAPI
+from .redfish.SecureBoot_api import SecureBootAPI
 from .redfish.processor_api import Processor, Processors
-from .redfish.memory import Memory, MemoryCollection
+from .redfish.memory_api import MemoryAPI, MemoryCollectionAPI
 from .redfish.simplestorage import SimpleStorage, SimpleStorageCollection
 from .redfish.storage_api import StorageAPI, StorageCollectionAPI
 from .redfish.ethernetinterface import EthernetInterfaceCollection, EthernetInterface
 from .redfish.ResetActionInfo_api import ResetActionInfo_API
 from .redfish.ResetAction_api import ResetAction_API
 from .redfish.drive_api import DriveAPI
+from .redfish.Volumes_api import Volumes, Volume
+from .redfish.PCIeDevice_api import PCIeDeviceAPI
+from .redfish.PCIeFunctions_api import PCIeFunction, PCIeFunctions
 # PCIe Switch imports
 from .redfish.pcie_switch_api import PCIeSwitchesAPI, PCIeSwitchAPI
 # CompositionService imports
@@ -184,13 +188,14 @@ class ResourceManager(object):
         # System SubResources
         g.api.add_resource(BiosAPI, "/redfish/v1/Systems/<string:ident>/Bios")
         # System SubResources
+        g.api.add_resource(SecureBootAPI, "/redfish/v1/Systems/<string:ident>/SecureBoot")
+        # System SubResources
         g.api.add_resource(Processors, '/redfish/v1/Systems/<string:ident>/Processors')
         g.api.add_resource(Processor, '/redfish/v1/Systems/<string:ident1>/Processors/<string:ident2>',
                 '/redfish/v1/CompositionService/ResourceBlocks/<string:ident1>/Processors/<string:ident2>')
         # System SubResources
-        g.api.add_resource(MemoryCollection, '/redfish/v1/Systems/<string:ident>/Memory',
-                 resource_class_kwargs={'rb': g.rest_base,'suffix':'Systems'})
-        g.api.add_resource(Memory, '/redfish/v1/Systems/<string:ident1>/Memory/<string:ident2>',
+        g.api.add_resource(MemoryCollectionAPI, '/redfish/v1/Systems/<string:ident>/Memory')
+        g.api.add_resource(MemoryAPI, '/redfish/v1/Systems/<string:ident1>/Memory/<string:ident2>',
                 '/redfish/v1/CompositionService/ResourceBlocks/<string:ident1>/Memory/<string:ident2>')
         # System SubResources
         g.api.add_resource(SimpleStorageCollection, '/redfish/v1/Systems/<string:ident>/SimpleStorage',
@@ -212,6 +217,15 @@ class ResourceManager(object):
                 resource_class_kwargs={'rb': g.rest_base})
         # System SubResources
         g.api.add_resource(DriveAPI, '/redfish/v1/Systems/<string:ident1>/Storage/<string:ident2>/Drives/<int:ident3>')
+        # System SubResources
+        g.api.add_resource(Volumes, '/redfish/v1/Systems/<string:ident1>/Storage/<string:ident2>/Volumes')
+        g.api.add_resource(Volume, '/redfish/v1/Systems/<string:ident1>/Storage/<string:ident2>/Volumes/<int:ident3>')
+        # System SubResources
+        g.api.add_resource(PCIeDeviceAPI, '/redfish/v1/Systems/<string:ident1>/PCIeDevices/<string:ident2>')
+        # System SubResources
+        g.api.add_resource(PCIeFunctions, '/redfish/v1/Systems/<string:ident1>/PCIeDevices/<string:ident2>/PCIeFunctions')
+        g.api.add_resource(PCIeFunction, '/redfish/v1/Systems/<string:ident1>/PCIeDevices/<string:ident2>/PCIeFunctions/<int:ident3>')
+
 
         # PCIe Switch Resources
         g.api.add_resource(PCIeSwitchesAPI, '/redfish/v1/PCIeSwitches')

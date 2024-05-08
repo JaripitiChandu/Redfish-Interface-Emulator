@@ -14,7 +14,7 @@ from pprint import pprint
 import logging, json
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
-
+from .ComputerSystem_api import members as sys_members  
 from .ResetActionInfo_api import ResetActionInfo_API
 from .ResetAction_api import ResetAction_API
 
@@ -24,7 +24,7 @@ INTERNAL_ERROR = 500
 
 
 # Storage Singleton API
-class StorageAPI(Resource):
+class PCIeDeviceAPI(Resource):
 
     # kwargs is used to pass in the wildcards values to be replaced
     # when an instance is created via get_<resource>_instance().
@@ -52,13 +52,14 @@ class StorageAPI(Resource):
                 if ident2 in members[ident1]:
                     resp = members[ident1][ident2], 200
                 else:
-                    resp = f"Storage {ident2} for system {ident1} not found", 404
+                    resp = f"Processor {ident2} for system {ident1} not found", 404
             else:
-                resp = f"Storage {ident2} for system {ident1} not found", 404
+                resp = f"Processor {ident2} for system {ident1} not found", 404
         except Exception:
             traceback.print_exc()
             resp = "Internal Server Error", INTERNAL_ERROR
         return resp
+
 
     # HTTP PUT
     def put(self, ident):
@@ -73,9 +74,12 @@ class StorageAPI(Resource):
     def post(self, ident1, ident2):
         logging.info(self.__class__.__name__ + ' POST called')
         try:
-            members.setdefault(ident1, {})
+            if ident1 in sys_members:
+                members.setdefault(ident1, {})
+            else:
+                return f"System {ident1} not found", 404
             if ident2 in members[ident1]:
-                return ident2 + " storage already exists", 409
+                return "PCIeDevice " + ident2 + " already exists", 409
             else:
                 members[ident1][ident2] = request.json
             resp = members[ident1][ident2], 200
@@ -111,69 +115,3 @@ class StorageAPI(Resource):
             traceback.print_exc()
             resp = "Internal Server Error", INTERNAL_ERROR
         return resp
-
-# Storage Collection API
-class StorageCollectionAPI(Resource):
-
-    def __init__(self):
-        logging.info(self.__class__.__name__ + ' init called')
-        self.config = {
-    "@odata.id": "",
-    "@odata.type": "#StorageCollection.StorageCollection",
-    "@odata.context": "/redfish/v1/$metadata#StorageCollection.StorageCollection",
-    "Description": "Collection of storage resource instances for this system",
-    "Name": "Storage Collection",
-    "Members": [],
-    "Members@odata.count": 0
-}
-
-    # HTTP GET
-    def get(self, ident):
-        logging.info(self.__class__.__name__ +' GET called')
-        try:
-            self.config["@odata.id"] = "/redfish/v1/Systems/{}/Storage".format(ident)
-            self.config["Members"] = [{'@odata.id': storage['@odata.id']} for storage in list(members.get(ident, {}).values())]
-            self.config["Members@odata.count"] = len(members.setdefault(ident, {}))
-            resp = self.config, 200
-        except Exception:
-            traceback.print_exc()
-            resp = INTERNAL_ERROR
-        return resp
-
-    # HTTP PUT
-    def put(self, ident):
-        logging.info(self.__class__.__name__ + ' PUT called')
-        return f'PUT is not a supported command for {self.__class__.__name__}', 405
-
-    def verify(self, config):
-        #TODO: Implement a method to verify that the POST body is valid
-        return True,{}
-
-    # HTTP POST
-    # POST should allow adding multiple instances to a collection.
-    # For now, this only adds one instance.
-    # TODO: 'id' should be obtained from the request data.
-    def post(self, ident):
-        logging.info(self.__class__.__name__ + ' POST called')
-        try:
-            config = request.get_json(force=True)
-            ok, msg = self.verify(config)
-            if ok:
-                members[config['Id']] = config
-                resp = config, 201
-            else:
-                resp = msg, 400
-        except Exception:
-            traceback.print_exc()
-            resp = INTERNAL_ERROR
-        return resp
-
-    # HTTP PATCH
-    def patch(self, ident):
-        logging.info(self.__class__.__name__ + ' PATCH called')
-        return f'PATCH is not a supported command for {self.__class__.__name__}', 405
-
-    # HTTP DELETE
-    def delete(self, ident):
-        logging.info(self.__class__.__name__ + ' DELETE called')
-        return f'DELETE is not a supported command for {self.__class__.__name__}', 405

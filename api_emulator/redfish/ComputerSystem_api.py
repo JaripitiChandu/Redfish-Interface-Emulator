@@ -21,8 +21,8 @@ from flask_restful import reqparse, Api, Resource
 from .templates.ComputerSystem import get_ComputerSystem_instance
 from .ResetActionInfo_api import ResetActionInfo_API
 from .ResetAction_api import ResetAction_API
-# from .processor import members as processors
-from .memory import members as memory
+from .processor_api import members as processors
+from .memory_api import members as memory
 from .ethernetinterface import members as ethernetinterfaces
 from .simplestorage import members as simplestorage
 from .ResourceBlock_api import members as resource_blocks
@@ -60,13 +60,13 @@ class ComputerSystemAPI(Resource):
                     u'TotalSystemMemoryGiB': totalsysmem,
                     u'TotalSystemPersistentMemoryGiB': totalpsysmem}
 
-    # def processor_summary(self,ident):
-    #     procs=list(processors.get(ident,{}).values())
-    #     if not procs:
-    #         return {}
-    #     return {u'Status': {u'Health': 'OK', u'State': 'Enabled'},
-    #                 u'Count': len(procs),
-    #                 u'Model': procs[0].get('Model','unknown')}
+    def processor_summary(self,ident):
+        procs=list(processors.get(ident,{}).values())
+        if not procs:
+            return {}
+        return {u'Status': {u'Health': 'OK', u'State': 'Enabled'},
+                    u'Count': len(procs),
+                    u'Model': procs[0].get('Model','unknown')}
 
     # HTTP GET
     def get(self, ident):

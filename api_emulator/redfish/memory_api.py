@@ -23,8 +23,8 @@ members = {}
 INTERNAL_ERROR = 500
 
 
-# Storage Singleton API
-class StorageAPI(Resource):
+# ComputerSystem Singleton API
+class MemoryAPI(Resource):
 
     # kwargs is used to pass in the wildcards values to be replaced
     # when an instance is created via get_<resource>_instance().
@@ -52,9 +52,9 @@ class StorageAPI(Resource):
                 if ident2 in members[ident1]:
                     resp = members[ident1][ident2], 200
                 else:
-                    resp = f"Storage {ident2} for system {ident1} not found", 404
+                    resp = f"Memory {ident2} for system {ident1} not found", 404
             else:
-                resp = f"Storage {ident2} for system {ident1} not found", 404
+                resp = f"Memory {ident2} for system {ident1} not found", 404
         except Exception:
             traceback.print_exc()
             resp = "Internal Server Error", INTERNAL_ERROR
@@ -75,7 +75,7 @@ class StorageAPI(Resource):
         try:
             members.setdefault(ident1, {})
             if ident2 in members[ident1]:
-                return ident2 + " storage already exists", 409
+                return ident2 + " memory already exists", 409
             else:
                 members[ident1][ident2] = request.json
             resp = members[ident1][ident2], 200
@@ -106,23 +106,23 @@ class StorageAPI(Resource):
                 del(members[ident])
                 resp = 200
             else:
-                resp = "Storage" + ident + " not found", 404
+                resp = "Memory" + ident + " not found", 404
         except Exception:
             traceback.print_exc()
             resp = "Internal Server Error", INTERNAL_ERROR
         return resp
 
-# Storage Collection API
-class StorageCollectionAPI(Resource):
+# Chassis Collection API
+class MemoryCollectionAPI(Resource):
 
     def __init__(self):
         logging.info(self.__class__.__name__ + ' init called')
         self.config = {
     "@odata.id": "",
-    "@odata.type": "#StorageCollection.StorageCollection",
-    "@odata.context": "/redfish/v1/$metadata#StorageCollection.StorageCollection",
-    "Description": "Collection of storage resource instances for this system",
-    "Name": "Storage Collection",
+    "@odata.type": "#MemoryCollection.MemoryCollection",
+    "@odata.context": "/redfish/v1/$metadata#MemoryCollection.MemoryCollection",
+    "Description": "Collection of Memory resource instances for this system",
+    "Name": "Memory Collection",
     "Members": [],
     "Members@odata.count": 0
 }
@@ -131,8 +131,8 @@ class StorageCollectionAPI(Resource):
     def get(self, ident):
         logging.info(self.__class__.__name__ +' GET called')
         try:
-            self.config["@odata.id"] = "/redfish/v1/Systems/{}/Storage".format(ident)
-            self.config["Members"] = [{'@odata.id': storage['@odata.id']} for storage in list(members.get(ident, {}).values())]
+            self.config["@odata.id"] = "/redfish/v1/Systems/{}/Memory".format(ident)
+            self.config["Members"] = [{'@odata.id': procs['@odata.id']} for procs in list(members.get(ident, {}).values())]
             self.config["Members@odata.count"] = len(members.setdefault(ident, {}))
             resp = self.config, 200
         except Exception:

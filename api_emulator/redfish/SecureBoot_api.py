@@ -14,8 +14,7 @@ from pprint import pprint
 import logging, json
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
-from .ComputerSystem_api import members as sys_members  
-from .storage_api import members as storage_memebers
+
 from .ResetActionInfo_api import ResetActionInfo_API
 from .ResetAction_api import ResetAction_API
 
@@ -24,8 +23,8 @@ members = {}
 INTERNAL_ERROR = 500
 
 
-# Storage Singleton API
-class DriveAPI(Resource):
+# ComputerSystem Singleton API
+class SecureBootAPI(Resource):
 
     # kwargs is used to pass in the wildcards values to be replaced
     # when an instance is created via get_<resource>_instance().
@@ -45,20 +44,15 @@ class DriveAPI(Resource):
 
 
     # HTTP GET
-    def get(self, ident1, ident2, ident3):
+    def get(self, ident):
         logging.info(self.__class__.__name__ +' GET called')
         try:
             # Find the entry with the correct value for Id
-            if ident1 in members:
-                if ident2 in members[ident1]:
-                    if ident3 in members[ident1][ident2]:
-                        resp = members[ident1][ident2][ident3], 200
-                    else:
-                        resp = f"Drive {ident3} for storage {ident2} of system {ident1} not found", 404
-                else:
-                    resp = f"Storage {ident2} for system {ident1} not found", 404
+            if ident in members:
+                conf= members[ident]
+                resp = conf, 200
             else:
-                resp = f"Storage {ident2} for system {ident1} not found", 404
+                resp = "SecureBoot for system " + ident + " not found" , 404
         except Exception:
             traceback.print_exc()
             resp = "Internal Server Error", INTERNAL_ERROR
@@ -74,23 +68,11 @@ class DriveAPI(Resource):
     # instances from a predefined template. The new instance is given
     # the identifier "ident", which is taken from the end of the URL.
     # PATCH commands can then be used to update the new instance.
-    def post(self, ident1, ident2, ident3):
+    def post(self, ident):
         logging.info(self.__class__.__name__ + ' POST called')
         try:
-            if ident1 in sys_members:
-                members.setdefault(ident1, {})
-            else:
-                return f"System {ident1} not found", 404
-            if ident2 in storage_memebers[ident1]:
-                members[ident1].setdefault(ident2, {})
-            else:
-                return f"Storage {ident2} not found for system {ident1}", 404
-            
-            if ident3 in members[ident1][ident2]:
-                return "Resource already exists", 409
-            else:
-                members[ident1][ident2][ident3] = request.json
-                resp = members[ident1][ident2][ident3], 200
+            members[ident]=request.json
+            resp = request.json, 200
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -118,8 +100,9 @@ class DriveAPI(Resource):
                 del(members[ident])
                 resp = 200
             else:
-                resp = "Storage" + ident + " not found", 404
+                resp = "Bios for system " + ident + " not found", 404
         except Exception:
             traceback.print_exc()
             resp = "Internal Server Error", INTERNAL_ERROR
         return resp
+

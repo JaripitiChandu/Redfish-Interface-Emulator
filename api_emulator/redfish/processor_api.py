@@ -116,7 +116,7 @@ class Processor(Resource):
 class Processors(Resource):
 
     def __init__(self):
-        logging.info('ChassisCollectionAPI init called')
+        logging.info(self.__class__.__name__ + ' init called')
         self.config = {
     "@odata.id": "",
     "@odata.type": "#ProcessorCollection.ProcessorCollection",

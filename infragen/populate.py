@@ -9,7 +9,7 @@ from api_emulator.redfish.thermal_api import CreateThermal
 from api_emulator.redfish.ResetAction_api import ResetAction_API
 from api_emulator.redfish.ResetActionInfo_api import ResetActionInfo_API
 # from api_emulator.redfish.processor import CreateProcessor
-from api_emulator.redfish.memory import CreateMemory
+# from api_emulator.redfish.memory_api import CreateMemory
 from api_emulator.redfish.simplestorage import CreateSimpleStorage
 from api_emulator.redfish.ethernetinterface import CreateEthernetInterface
 
@@ -32,9 +32,9 @@ def create_resources(template, chassis, suffix, suffix_id):
             proc_id=proc['Id'].format(proc_count)
             proc_count+=1
             resource_ids['Processors'].append(proc_id)
-            CreateProcessor(rb=g.rest_base, suffix=suffix, processor_id=proc_id,
-                            suffix_id=suffix_id, chassis_id=chassis, totalcores=proc.get('TotalCores', 8),
-                            maxspeedmhz=proc.get('MaxSpeedMHz', 2200))
+            # CreateProcessor(rb=g.rest_base, suffix=suffix, processor_id=proc_id,
+            #                 suffix_id=suffix_id, chassis_id=chassis, totalcores=proc.get('TotalCores', 8),
+            #                 maxspeedmhz=proc.get('MaxSpeedMHz', 2200))
     for mem in template['Memory']:
         memtype = mem.get('MemoryType', 'DRAM')
         opmodes = ['PMEM'] if 'NV' in memtype else ['Volatile']
@@ -42,9 +42,9 @@ def create_resources(template, chassis, suffix, suffix_id):
             mem_id=mem['Id'].format(mem_count)
             mem_count+=1
             resource_ids['Memory'].append(mem_id)
-            CreateMemory(rb=g.rest_base, suffix=suffix, memory_id=mem_id,
-                         suffix_id=suffix_id, chassis_id=chassis, capacitymb=mem.get('CapacityMiB', 8192),
-                         type=memtype, operatingmodes=opmodes)
+            # CreateMemory(rb=g.rest_base, suffix=suffix, memory_id=mem_id,
+            #              suffix_id=suffix_id, chassis_id=chassis, capacitymb=mem.get('CapacityMiB', 8192),
+            #              type=memtype, operatingmodes=opmodes)
 
     for dsk in template['SimpleStorage']:
         for k in range(dsk.get('Count', 1)):
@@ -143,11 +143,11 @@ def n_populate(num):
         # subordinates, note that .put does not need to be called here
         ResetAction_API(resource_class_kwargs={'rb': g.rest_base, 'sys_id': compSys})
         ResetActionInfo_API(resource_class_kwargs={'rb': g.rest_base, 'sys_id': compSys})
-        CreateProcessor(rb=g.rest_base, suffix='System', processor_id='CPU0', suffix_id=compSys, chassis_id=chassis)
-        CreateProcessor(rb=g.rest_base, suffix='System', processor_id='CPU1', suffix_id=compSys, chassis_id=chassis)
-        CreateMemory(rb=g.rest_base, suffix='System', memory_id='DRAM1', suffix_id=compSys, chassis_id=chassis)
-        CreateMemory(rb=g.rest_base, suffix='System', memory_id='NVRAM1', suffix_id=compSys, chassis_id=chassis,
-                     capacitymb=65536, devicetype='DDR4', type='NVDIMM_N', operatingmodes=['PMEM'])
+        # CreateProcessor(rb=g.rest_base, suffix='System', processor_id='CPU0', suffix_id=compSys, chassis_id=chassis)
+        # CreateProcessor(rb=g.rest_base, suffix='System', processor_id='CPU1', suffix_id=compSys, chassis_id=chassis)
+        # CreateMemory(rb=g.rest_base, suffix='System', memory_id='DRAM1', suffix_id=compSys, chassis_id=chassis)
+        # CreateMemory(rb=g.rest_base, suffix='System', memory_id='NVRAM1', suffix_id=compSys, chassis_id=chassis,
+        #              capacitymb=65536, devicetype='DDR4', type='NVDIMM_N', operatingmodes=['PMEM'])
         CreateSimpleStorage(rb=g.rest_base, suffix='System', suffix_id=compSys, storage_id='controller-1', drives=2,
                             capacitygb=512, chassis_id=chassis)
         CreateSimpleStorage(rb=g.rest_base, suffix='System', suffix_id=compSys, storage_id='controller-2', drives=2,
@@ -172,17 +172,17 @@ def n_populate(num):
 
         for j in range(2):
             # create ResourceBlock Processor (1)
-            CreateProcessor(rb=g.rest_base, suffix='CompositionService/ResourceBlocks', processor_id='CPU-%d' % (i + 1),
-                            suffix_id=RB, chassis_id=chassis)
+            # CreateProcessor(rb=g.rest_base, suffix='CompositionService/ResourceBlocks', processor_id='CPU-%d' % (i + 1),
+            #                 suffix_id=RB, chassis_id=chassis)
             config.post(g.rest_base, RB, "Processors", 'CPU-%d' % (j + 1))
 
-            # create ResourceBlock Memory (1)
-            CreateMemory(rb=g.rest_base, suffix='CompositionService/ResourceBlocks', memory_id='MEM-%d' % (i + 1),
-                         suffix_id=RB, chassis_id=chassis)
+            # # create ResourceBlock Memory (1)
+            # CreateMemory(rb=g.rest_base, suffix='CompositionService/ResourceBlocks', memory_id='MEM-%d' % (i + 1),
+            #              suffix_id=RB, chassis_id=chassis)
             config.post(g.rest_base, RB, "Memory", 'MEM-%d' % (j + 1))
-            CreateMemory(rb=g.rest_base, suffix='CompositionService/ResourceBlocks', memory_id='MEM-%d' % (i + 3),
-                         suffix_id=RB, chassis_id=chassis,
-                         capacitymb=65536, devicetype='DDR4', type='NVDIMM_N', operatingmodes='PMEM')
+            # CreateMemory(rb=g.rest_base, suffix='CompositionService/ResourceBlocks', memory_id='MEM-%d' % (i + 3),
+            #              suffix_id=RB, chassis_id=chassis,
+            #              capacitymb=65536, devicetype='DDR4', type='NVDIMM_N', operatingmodes='PMEM')
             config.post(g.rest_base, RB, "Memory", 'MEM-%d' % (j + 2))
 
             CreateSimpleStorage(rb=g.rest_base, suffix='CompositionService/ResourceBlocks', suffix_id=RB,
