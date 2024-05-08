@@ -28,6 +28,7 @@ from .redfish.EventService_api import EventServiceAPI, CreateEventService
 from .redfish.Subscriptions_api import SubscriptionCollectionAPI, SubscriptionAPI, CreateSubscription
 # Chassis imports
 from .redfish.Chassis_api import ChassisCollectionAPI, ChassisAPI, CreateChassis
+from .redfish.Fabrics_api import Fabrics, Fabric
 from .redfish.power_api import PowerAPI, CreatePower
 from .redfish.thermal_api import ThermalAPI, CreateThermal
 # Manager imports
@@ -117,7 +118,7 @@ class ResourceManager(object):
         """
 
         self.rest_base = rest_base
-
+        self.__config = None
         self.mode = mode
         self.spec = spec
         self.modified = utils.timestamp()
@@ -181,6 +182,10 @@ class ResourceManager(object):
         #     '/redfish/v1/EgResources/<string:ident1>/EgSubResources/<string:ident2>',
         #     resource_class_kwargs={'rb': g.rest_base})
 
+        # Fabrics Resources
+        g.api.add_resource(Fabrics, '/redfish/v1/Fabrics')
+        g.api.add_resource(Fabric, '/redfish/v1/Fabrics/<string:ident>',
+                resource_class_kwargs={'rb': g.rest_base})
         # System Resources
         g.api.add_resource(ComputerSystemCollectionAPI, '/redfish/v1/Systems')
         g.api.add_resource(ComputerSystemAPI, '/redfish/v1/Systems/<string:ident>',
@@ -251,27 +256,31 @@ class ResourceManager(object):
         """
         Configuration property - Service Root
         """
-        config = {
-            '@odata.context': self.rest_base + '$metadata#ServiceRoot',
-            '@odata.type': '#ServiceRoot.1.0.0.ServiceRoot',
-            '@odata.id': self.rest_base,
-            'Id': 'RootService',
-            'Name': 'Root Service',
-            'RedfishVersion': '1.0.0',
-            'UUID': self.uuid,
-            'Chassis': {'@odata.id': self.rest_base + 'Chassis'},
-            # 'EgResources': {'@odata.id': self.rest_base + 'EgResources'},
-            'Managers': {'@odata.id': self.rest_base + 'Managers'},
-            'TaskService': {'@odata.id': self.rest_base + 'TaskService'},
-            'SessionService': {'@odata.id': self.rest_base + 'SessionService'},
-            'AccountService': {'@odata.id': self.rest_base + 'AccountService'},
-            'EventService': {'@odata.id': self.rest_base + 'EventService'},
-            'Registries': {'@odata.id': self.rest_base + 'Registries'},
-            'Systems': {'@odata.id': self.rest_base + 'Systems'},
-            'CompositionService': {'@odata.id': self.rest_base + 'CompositionService'}
-        }
+        # config = {
+        #     '@odata.context': self.rest_base + '$metadata#ServiceRoot',
+        #     '@odata.type': '#ServiceRoot.1.0.0.ServiceRoot',
+        #     '@odata.id': self.rest_base,
+        #     'Id': 'RootService',
+        #     'Name': 'Root Service',
+        #     'RedfishVersion': '1.0.0',
+        #     'UUID': self.uuid,
+        #     'Chassis': {'@odata.id': self.rest_base + 'Chassis'},
+        #     # 'EgResources': {'@odata.id': self.rest_base + 'EgResources'},
+        #     'Managers': {'@odata.id': self.rest_base + 'Managers'},
+        #     'TaskService': {'@odata.id': self.rest_base + 'TaskService'},
+        #     'SessionService': {'@odata.id': self.rest_base + 'SessionService'},
+        #     'AccountService': {'@odata.id': self.rest_base + 'AccountService'},
+        #     'EventService': {'@odata.id': self.rest_base + 'EventService'},
+        #     'Registries': {'@odata.id': self.rest_base + 'Registries'},
+        #     'Systems': {'@odata.id': self.rest_base + 'Systems'},
+        #     'CompositionService': {'@odata.id': self.rest_base + 'CompositionService'}
+        # }
 
-        return config
+        return self.__config
+
+    @configuration.setter
+    def configuration(self, value):
+        self.__config = value
 
     @property
     def available_procs(self):

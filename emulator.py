@@ -176,8 +176,11 @@ class RedfishAPI(Resource):
         super(RedfishAPI, self).__init__()
 
 
-    def post(self, path):
-        if path.find(self.system_path) != -1 or path.find(self.chassis_path) != -1:
+    def post(self, path=None):
+        if path is None:
+            resource_manager.configuration = request.json
+            resp = resource_manager.configuration, 200
+        elif path.find(self.system_path) != -1 or path.find(self.chassis_path) != -1:
             args = parser.parse_args()
             try:
                 action = args['Action']
@@ -220,6 +223,8 @@ class RedfishAPI(Resource):
             else:
                 # path is None, fetch ServiceRoot
                 config = resource_manager.configuration
+                if config is None:
+                    return "Srevice Root not found !", 404
             resp = config, 200
         except PathError:
             resp = error_response('Attribute Does Not Exist', 404)
