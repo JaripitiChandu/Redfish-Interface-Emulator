@@ -30,8 +30,13 @@ from .redfish.Subscriptions_api import SubscriptionCollectionAPI, SubscriptionAP
 from .redfish.Chassis_api import ChassisCollectionAPI, ChassisAPI, CreateChassis
 from .redfish.power_api import PowerAPI, CreatePower
 from .redfish.thermal_api import ThermalAPI, CreateThermal
+from .redfish.network_adapters_api import NetworkAdaptersCollectionAPI,NetworkAdaptersAPI
+from .redfish.network_ports_api import NetworkPortsCollectionAPI, NetworkPortsAPI
+from .redfish.network_device_functions_api import NetworkDeviceFunctionsCollectionAPI,NetworkDeviceFunctionsAPI
+from .redfish.network_device_functions_metrics_api import NetworkDeviceFunctionsMetricsAPI
 # Manager imports
 from .redfish.Manager_api import ManagerCollectionAPI, ManagerAPI, CreateManager
+from .redfish.ethernet_interface_api import EthernetInterfaceCollectionAPI, EthernetInterfaceAPI
 # EgResource imports
 from .redfish.eg_resource_api import EgResourceCollectionAPI, EgResourceAPI, CreateEgResource
 from .redfish.eg_subresource_api import EgSubResourceCollectionAPI, EgSubResourceAPI, CreateEgSubResource
@@ -154,10 +159,28 @@ class ResourceManager(object):
         # Chassis SubResources
         g.api.add_resource(PowerAPI, '/redfish/v1/Chassis/<string:ident>/Power',
                 resource_class_kwargs={'rb': g.rest_base})
+        # Chassis SubResources
+        g.api.add_resource(NetworkAdaptersCollectionAPI, '/redfish/v1/Chassis/<string:ident>/NetworkAdapters')
+        g.api.add_resource(NetworkAdaptersAPI, '/redfish/v1/Chassis/<string:ident>/NetworkAdapters/<string:ident1>',
+                resource_class_kwargs={'rb': g.rest_base})
+        # Chassis SubResources
+        g.api.add_resource(NetworkPortsCollectionAPI, '/redfish/v1/Chassis/<string:ident>/NetworkAdapters/<string:ident1>/NetworkPorts')
+        g.api.add_resource(NetworkPortsAPI, '/redfish/v1/Chassis/<string:ident>/NetworkAdapters/<string:ident1>/NetworkPorts/<string:ident2>',
+                resource_class_kwargs={'rb': g.rest_base})
+        # Chassis SubResources
+        g.api.add_resource(NetworkDeviceFunctionsCollectionAPI, '/redfish/v1/Chassis/<string:ident>/NetworkAdapters/<string:ident1>/NetworkDeviceFunctions')
+        g.api.add_resource(NetworkDeviceFunctionsAPI, '/redfish/v1/Chassis/<string:ident>/NetworkAdapters/<string:ident1>/NetworkDeviceFunctions/<string:ident2>',
+                resource_class_kwargs={'rb': g.rest_base})
+        # Chassis SubResources
+        g.api.add_resource(NetworkDeviceFunctionsMetricsAPI, '/redfish/v1/Chassis/<string:ident>/NetworkAdapters/<string:ident1>/NetworkDeviceFunctions/<string:ident2>/Metrics',
+                resource_class_kwargs={'rb': g.rest_base})
 
         # Manager Resources
         g.api.add_resource(ManagerCollectionAPI, '/redfish/v1/Managers')
         g.api.add_resource(ManagerAPI, '/redfish/v1/Managers/<string:ident>', resource_class_kwargs={'rb': g.rest_base})
+        #Manager SubResources
+        g.api.add_resource(EthernetInterfaceCollectionAPI, '/redfish/v1/Managers/<string:ident>/EthernetInterfaces')
+        g.api.add_resource(EthernetInterfaceAPI, '/redfish/v1/Managers/<string:ident>/EthernetInterfaces/<string:ident1>', resource_class_kwargs={'rb': g.rest_base})
 
         # EgResource Resources (Example entries for attaching APIs)
         # g.api.add_resource(EgResourceCollectionAPI,

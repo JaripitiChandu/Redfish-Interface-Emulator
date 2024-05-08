@@ -17,9 +17,6 @@ import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
 
-# Resource and SubResource imports
-from .templates.power import get_power_instance
-
 members = {}
 
 INTERNAL_ERROR = 500
@@ -65,6 +62,14 @@ class PowerAPI(Resource):
     # HTTP POST
     def post(self, ident):
         logging.info('PowerAPI POST called')
+        try:
+            config=request.json
+            members[ident]=config
+            resp = config, 200
+        except Exception:
+            traceback.print_exc()
+            resp = INTERNAL_ERROR
+        return resp
         return 'POST is not a supported command for PowerAPI', 405
 
     # HTTP PATCH
@@ -94,38 +99,3 @@ class PowerAPI(Resource):
 # PowerCollection API
 # Power does not have a collection API
 
-
-# CreateEgSubResource
-#
-# Called internally to create instances of a subresource. If the
-# resource has subordinate resources, those subordinate resource(s)
-# are created automatically.
-#
-# Note: In 'init', the first time through, kwargs may not have any
-# values, so we need to check. The call to 'init' stores the path
-# wildcards. The wildcards are used to modify the resource template
-# when subsequent calls are made to instantiate resources.
-class CreatePower(Resource):
-
-    def __init__(self, **kwargs):
-        logging.info('CreatePower init called')
-        if 'resource_class_kwargs' in kwargs:
-            global wildcards
-            wildcards = copy.deepcopy(kwargs['resource_class_kwargs'])
-            logging.info(wildcards)
-            logging.info(wildcards.keys())
-
-    # PUT
-    # - Create the resource (since URI variables are avaiable)
-    def put(self,ch_id):
-        logging.info('CreatePower put called')
-        try:
-            global wildcards
-            config=get_power_instance(wildcards)
-            logging.debug('added config for %s'%ch_id)
-            members[ch_id]=config
-            resp = config, 200
-        except Exception:
-            traceback.print_exc()
-            resp = INTERNAL_ERROR
-        return resp
