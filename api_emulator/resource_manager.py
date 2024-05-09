@@ -66,6 +66,10 @@ from .redfish.pcie_switch_api import PCIeSwitchesAPI, PCIeSwitchAPI
 from .redfish.CompositionService_api import CompositionServiceAPI
 from .redfish.ResourceBlock_api import ResourceBlockCollectionAPI, ResourceBlockAPI, CreateResourceBlock
 from .redfish.ResourceZone_api import ResourceZoneCollectionAPI, ResourceZoneAPI, CreateResourceZone
+# Update Service imports
+from .redfish.updateservice_api import UpdateServiceAPI
+from .redfish.firmware_inventory_api import FirmwareInventoryCollectionAPI, FirmwareInventoryAPI
+from .redfish.software_inventory_api import SoftwareInventoryCollectionAPI, SoftwareInventoryAPI
 
 mockupfolders = []
 
@@ -286,7 +290,16 @@ class ResourceManager(object):
         g.api.add_resource(ResourceZoneCollectionAPI, '/redfish/v1/CompositionService/ResourceZones')
         g.api.add_resource(ResourceZoneAPI, '/redfish/v1/CompositionService/ResourceZones/<string:ident>',
                 resource_class_kwargs={'rb': g.rest_base})
-        
+        #Update Service Resources
+        g.api.add_resource(UpdateServiceAPI, '/redfish/v1/UpdateService')
+        #Update Service SubResources
+        g.api.add_resource(FirmwareInventoryCollectionAPI, '/redfish/v1/UpdateService/FirmwareInventory')
+        g.api.add_resource(FirmwareInventoryAPI, '/redfish/v1/UpdateService/FirmwareInventory/<string:ident>',
+                resource_class_kwargs={'rb': g.rest_base})
+        #Update Service SubResources
+        g.api.add_resource(SoftwareInventoryCollectionAPI, '/redfish/v1/UpdateService/SoftwareInventory')
+        g.api.add_resource(SoftwareInventoryAPI, '/redfish/v1/UpdateService/SoftwareInventory/<string:ident>',
+                resource_class_kwargs={'rb': g.rest_base})
 
 
     @property
