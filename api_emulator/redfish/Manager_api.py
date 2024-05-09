@@ -70,19 +70,14 @@ class ManagerAPI(Resource):
     def post(self, ident):
         logging.info('ManagerAPI POST called')
         try:
-            global wildcards
-            wildcards['id'] = ident
-            wildcards['linkSystem'] = ['UpdateWithPATCH']
-            wildcards['linkChassis'] = ['UpdateWithPATCH']
-            wildcards['linkInChassis'] = ['UpdateWithPATCH']
-            config = get_Manager_instance(wildcards)
-            members[ident] = config
+            global config
+            config=request.json
+            members[ident]=config
             resp = config, 200
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
         return resp
-
     # HTTP PATCH
     def patch(self, ident):
         logging.info('ManagerAPI PATCH called')
