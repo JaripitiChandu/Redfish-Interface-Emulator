@@ -48,6 +48,7 @@ g.rest_base = REST_BASE
 # Creating the ResourceManager
 resource_manager = None
 resource_dictionary = None
+cisco_endpoints = {}
 
 # Parse REST request for Action
 parser = reqparse.RequestParser()
@@ -176,10 +177,15 @@ class RedfishAPI(Resource):
         super(RedfishAPI, self).__init__()
 
 
-    def post(self, path=None):
+    def post(self, path:str=None):
         if path is None:
             resource_manager.configuration = request.json
-            resp = resource_manager.configuration, 200
+            resp = resource_manager.configuration, 201
+        elif path.startswith("cisco"):
+            if path in cisco_endpoints:
+                return "Resource already exists", 409
+            cisco_endpoints[path] = request.json
+            return path, 201
         elif path.find(self.system_path) != -1 or path.find(self.chassis_path) != -1:
             args = parser.parse_args()
             try:
@@ -214,12 +220,18 @@ class RedfishAPI(Resource):
         """
         Either return ServiceRoot or let resource manager handel
         """
-    def get(self, path=None):
+    def get(self, path:str=None):
 
         try:
             if path is not None:
                 # path has a value
-                config = self.get_configuration(resource_manager, path)
+                if path.startswith("cisco"):
+                    if path in cisco_endpoints:
+                        config = cisco_endpoints[path]
+                    else:
+                        return "Resource not found!", 404
+                else:
+                    config = self.get_configuration(resource_manager, path)
             else:
                 # path is None, fetch ServiceRoot
                 config = resource_manager.configuration
