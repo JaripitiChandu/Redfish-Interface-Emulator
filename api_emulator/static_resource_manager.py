@@ -27,9 +27,9 @@ from .redfish.event import Event
 from .redfish.EventService_api import EventServiceAPI, CreateEventService
 from .redfish.Subscriptions_api import SubscriptionCollectionAPI, SubscriptionAPI, CreateSubscription
 # Chassis imports
-from .redfish.Chassis_api import ChassisCollectionAPI, ChassisAPI, CreateChassis
-from .redfish.power_api import PowerAPI, CreatePower
-from .redfish.thermal_api import ThermalAPI, CreateThermal
+from .redfish.Chassis_api import ChassisCollectionAPI, ChassisAPI
+from .redfish.power_api import PowerAPI
+from .redfish.thermal_api import ThermalAPI
 # Manager imports
 from .redfish.Manager_api import ManagerCollectionAPI, ManagerAPI, CreateManager
 # EgResource imports

@@ -6,7 +6,7 @@
 
 """
 Collection API:  (None)
-Singleton  API:  GET, PATCH
+Singleton  API:  GET, POST
 """
 
 import g
@@ -16,9 +16,6 @@ import logging
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
-
-# Resource and SubResource imports
-from .templates.thermal import get_thermal_instance
 
 members = {}
 
@@ -122,7 +119,14 @@ class ThermalAPI(Resource):
     # HTTP POST
     def post(self, ident):
         logging.info('ThermalAPI POST called')
-        return 'POST is not a supported command for ThermalAPI', 405
+        try:
+            config=request.json
+            members[ident]=config
+            resp = config, 200
+        except Exception:
+            traceback.print_exc()
+            resp = INTERNAL_ERROR
+        return resp
 
     # HTTP PATCH
     # @g.delay_response()
@@ -152,37 +156,3 @@ class ThermalAPI(Resource):
 
 # ThermalCollection API
 # Thermal does not have a collection API
-
-
-# CreateEgSubResource
-#
-# Called internally to create instances of a subresource. If the
-# resource has subordinate resources, those subordinate resource(s)
-# are created automatically.
-#
-# Note: In 'init', the first time through, kwargs may not have any
-# values, so we need to check. The call to 'init' stores the path
-# wildcards. The wildcards are used to modify the resource template
-# when subsequent calls are made to instantiate resources.
-class CreateThermal(Resource):
-
-    def __init__(self, **kwargs):
-        logging.info('CreateThermal init called')
-        if 'resource_class_kwargs' in kwargs:
-            global wildcards
-            wildcards = copy.deepcopy(kwargs['resource_class_kwargs'])
-            logging.debug(wildcards)#, wildcards.keys())
-
-    # PUT
-    # - Create the resource (since URI variables are avaiable)
-    def put(self,ch_id):
-        logging.info('CreateThermal put called')
-        try:
-            global wildcards
-            config=get_thermal_instance(wildcards)
-            members[ch_id]=config
-            resp = config, 200
-        except Exception:
-            traceback.print_exc()
-            resp = INTERNAL_ERROR
-        return resp
