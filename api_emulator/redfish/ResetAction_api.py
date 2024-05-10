@@ -37,24 +37,47 @@ class ResetAction_API(Resource):
                     return "ResetType not provided in request payload", 400
             except Exception as e:
                 return "Invalid or no JSON payload passed", 400
+            allowableResetTypes = sys_members[ident]["Actions"]["#ComputerSystem.Reset"]["ResetType@Redfish.AllowableValues"]
+            if action not in allowableResetTypes:
+                return f"""Invalid reset type!
+ResetType, possible values:
+{allowableResetTypes}""", 400
             if action == "ForceOff":
-                sys_members[ident]["PowerState"] = "resetting"
-                sys_members[ident]['Status']['State'] = "resetting"
-                time.sleep(10)
-                sys_members[ident]["PowerState"] = "Off"
-                sys_members[ident]['Status']['State'] = "Disabled"
-                print ('State Powered Off')
+                self.force_off(sys_members, ident)
+            elif action == "On":
+                self.force_on(sys_members, ident)
             elif action == "ForceRestart":
-                sys_members[ident]["PowerState"] = "resetting"
-                sys_members[ident]['Status']['State'] = "resetting"
-                time.sleep(10)
-                sys_members[ident]["PowerState"] = "On"
-                sys_members[ident]['Status']['State'] = "Enabled"
-                print("System Restarted")
+                self.force_off(sys_members, ident)
+                self.force_on(sys_members, ident)
+                print(f"System {ident} restarted")
             return 'POST Action request completed', 200
         except Exception as e:
             traceback.print_exc()
             return "Internal Server error", INTERNAL_ERROR
+
+    @staticmethod
+    def force_off(sys_members, ident):
+        if sys_members[ident]["PowerState"] == "On":
+            sys_members[ident]["PowerState"] = "resetting"
+            sys_members[ident]['Status']['State'] = "resetting"
+            time.sleep(10)
+            sys_members[ident]["PowerState"] = "Off"
+            sys_members[ident]['Status']['State'] = "Disabled"
+            print (f'System {ident} Powered Off')
+        else:
+            print(f"System {ident} is already Powered Off")
+
+    @staticmethod
+    def force_on(sys_members, ident):
+        if sys_members[ident]["PowerState"] == "Off":
+            sys_members[ident]["PowerState"] = "resetting"
+            sys_members[ident]['Status']['State'] = "resetting"
+            time.sleep(10)
+            sys_members[ident]["PowerState"] = "On"
+            sys_members[ident]['Status']['State'] = "Enabled"
+            print (f'System {ident} Powered On')
+        else:
+            print(f"System {ident} is already Powered On")
 
     # HTTP GET
     def get(self,ident):
