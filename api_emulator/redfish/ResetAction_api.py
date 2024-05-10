@@ -11,7 +11,7 @@ import subprocess
 import time
 
 import sys, traceback
-from flask import Flask, request, make_response, render_template
+from flask import Flask, request, make_response, render_template, jsonify
 from flask_restful import reqparse, Api, Resource
 from subprocess import check_output
 
@@ -27,13 +27,34 @@ class ResetAction_API(Resource):
     
     # HTTP POST
     def post(self,ident):
-        from .ComputerSystem_api import state_disabled, state_enabled
-        print ('ResetAction')
-        state_disabled(ident)
-        print ('State disabled')
-        state_enabled(ident)
-        print ('State enabled')
-        return 'POST request completed', 200
+        from .ComputerSystem_api import members as sys_members
+        try:
+            if ident not in sys_members:
+                return f"System {ident} not found!", 400
+            try:
+                action = request.json.get("ResetType")
+                if action is None:
+                    return "ResetType not provided in request payload", 400
+            except Exception as e:
+                return "Invalid or no JSON payload passed", 400
+            if action == "ForceOff":
+                sys_members[ident]["PowerState"] = "resetting"
+                sys_members[ident]['Status']['State'] = "resetting"
+                time.sleep(10)
+                sys_members[ident]["PowerState"] = "Off"
+                sys_members[ident]['Status']['State'] = "Disabled"
+                print ('State Powered Off')
+            elif action == "ForceRestart":
+                sys_members[ident]["PowerState"] = "resetting"
+                sys_members[ident]['Status']['State'] = "resetting"
+                time.sleep(10)
+                sys_members[ident]["PowerState"] = "On"
+                sys_members[ident]['Status']['State'] = "Enabled"
+                print("System Restarted")
+            return 'POST Action request completed', 200
+        except Exception as e:
+            traceback.print_exc()
+            return "Internal Server error", INTERNAL_ERROR
 
     # HTTP GET
     def get(self,ident):

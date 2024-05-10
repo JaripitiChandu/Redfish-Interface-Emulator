@@ -19,8 +19,8 @@ from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
 
 from .templates.ComputerSystem import get_ComputerSystem_instance
-from .ResetActionInfo_api import ResetActionInfo_API
-from .ResetAction_api import ResetAction_API
+# from .ResetActionInfo_api import ResetActionInfo_API
+# from .ResetAction_api import ResetAction_API
 from .processor_api import members as processors
 from .memory_api import members as memory
 from .ethernetinterface import members as ethernetinterfaces
@@ -484,8 +484,8 @@ class CreateComputerSystem(Resource):
             config = get_ComputerSystem_instance(wildcards)
             members[ident] = config
 
-            ResetAction_API(resource_class_kwargs={'rb': g.rest_base,'sys_id': ident})
-            ResetActionInfo_API(resource_class_kwargs={'rb': g.rest_base,'sys_id': ident})
+            # ResetAction_API(resource_class_kwargs={'rb': g.rest_base,'sys_id': ident})
+            # ResetActionInfo_API(resource_class_kwargs={'rb': g.rest_base,'sys_id': ident})
 
             resp = config, 200
         except Exception:
