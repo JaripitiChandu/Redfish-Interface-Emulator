@@ -157,14 +157,16 @@ class ComputerSystemCollectionAPI(Resource):
         logging.info('ComputerSystemCollectionAPI init called')
         self.rb = g.rest_base
         self.config = {
-            '@odata.context': self.rb + '$metadata#ComputerSystemCollection.ComputerSystemCollection',
-            '@odata.id': self.rb + 'ComputerSystemCollection',
-            '@odata.type': '#ComputerSystemCollection.ComputerSystemCollection',
-            'Name': 'ComputerSystem Collection',
-            'Links': {}
+            "@odata.id": "/redfish/v1/Systems",
+            "@odata.type": "#ComputerSystemCollection.ComputerSystemCollection",
+            "@odata.context": "/redfish/v1/$metadata#ComputerSystemCollection.ComputerSystemCollection",
+            "Description": "Collection of Computer Systems",
+            "Name": "Computer System Collection",
+            "Members": [],
+            "Members@odata.count": 0
         }
-        self.config['Links']['Members@odata.count'] = len(members)
-        self.config['Links']['Members'] = [{'@odata.id':x['@odata.id']} for
+        self.config['Members@odata.count'] = len(members)
+        self.config['Members'] = [{'@odata.id':x['@odata.id']} for
                 x in list(members.values())]
 
     # HTTP GET
