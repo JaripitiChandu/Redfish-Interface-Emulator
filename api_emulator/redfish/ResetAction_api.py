@@ -10,7 +10,7 @@ import os
 import subprocess
 import time
 
-import sys, traceback
+import sys, traceback, json
 from flask import Flask, request, make_response, render_template, jsonify
 from flask_restful import reqparse, Api, Resource
 from subprocess import check_output
@@ -32,7 +32,8 @@ class ResetAction_API(Resource):
             if ident not in sys_members:
                 return f"System {ident} not found!", 400
             try:
-                action = request.json.get("ResetType")
+                json_payload = json.loads(request.data.decode("utf-8"))
+                action = json_payload.get("ResetType")
                 if action is None:
                     return "ResetType not provided in request payload", 400
             except Exception as e:
