@@ -40,8 +40,8 @@ from .redfish.Manager_api import ManagerCollectionAPI, ManagerAPI, CreateManager
 from .redfish.ethernet_interface_api import EthernetInterfaceCollectionAPI, EthernetInterfaceAPI
 from .redfish.network_protocols_api import NetworkProtocolAPI
 from .redfish.cisco_internal_storage_api import CiscoInternalStorageCollectionAPI, CiscoInternalStorageAPI
-from .redfish.userfiles_api import UserFilesCollectionAPI, UserFilesAPI
-from .redfish.IMCImages_api import IMCImagesCollectionAPI, IMCImagesAPI
+from .redfish.ciscopartition_api import CiscoPartitionAPI
+from .redfish.ciscofile_api import CiscoFileCollectionAPI, CiscoFileAPI
 # EgResource imports
 from .redfish.eg_resource_api import EgResourceCollectionAPI, EgResourceAPI, CreateEgResource
 from .redfish.eg_subresource_api import EgSubResourceCollectionAPI, EgSubResourceAPI, CreateEgSubResource
@@ -201,13 +201,12 @@ class ResourceManager(object):
         g.api.add_resource(NetworkProtocolAPI, '/redfish/v1/Managers/<string:ident>/NetworkProtocol')
         #Manager SubResources
         g.api.add_resource(CiscoInternalStorageCollectionAPI, '/redfish/v1/Managers/<string:ident>/Oem/CiscoInternalStorage')
-        g.api.add_resource(CiscoInternalStorageAPI, '/redfish/v1/Managers/<string:ident>/Oem/CiscoInternalStorage/<string:ident1>', resource_class_kwargs={'rb': g.rest_base})
+        g.api.add_resource(CiscoInternalStorageAPI, '/redfish/v1/Managers/<string:ident>/Oem/CiscoInternalStorage/FlexMMC', resource_class_kwargs={'rb': g.rest_base})
         #Manager SubResources
-        g.api.add_resource(IMCImagesCollectionAPI, '/redfish/v1/Managers/<string:ident>/Oem/CiscoInternalStorage/<string:ident1>/CiscoPartition/IMCImages')
-        g.api.add_resource(IMCImagesAPI, '/redfish/v1/Managers/<string:ident>/Oem/CiscoInternalStorage/<string:ident1>/CiscoPartition/IMCImages/<string:ident2>', resource_class_kwargs={'rb': g.rest_base})
+        g.api.add_resource(CiscoPartitionAPI, '/redfish/v1/Managers/<string:ident>/Oem/CiscoInternalStorage/FlexMMC/CiscoPartition/<string:ident1>', resource_class_kwargs={'rb': g.rest_base})
         #Manager SubResources
-        g.api.add_resource(UserFilesCollectionAPI, '/redfish/v1/Managers/<string:ident>/Oem/CiscoInternalStorage/<string:ident1>/CiscoPartition/UserFiles')
-        g.api.add_resource(UserFilesAPI, '/redfish/v1/Managers/<string:ident>/Oem/CiscoInternalStorage/<string:ident1>/CiscoPartition/UserFiles/<string:ident2>', resource_class_kwargs={'rb': g.rest_base})
+        g.api.add_resource(CiscoFileCollectionAPI, '/redfish/v1/Managers/<string:ident>/Oem/CiscoInternalStorage/FlexMMC/CiscoPartition/<string:ident1>/CiscoFile')
+        g.api.add_resource(CiscoFileAPI, '/redfish/v1/Managers/<string:ident>/Oem/CiscoInternalStorage/FlexMMC/CiscoPartition/<string:ident1>/CiscoFile/<string:ident2>', resource_class_kwargs={'rb': g.rest_base})
 
         # EgResource Resources (Example entries for attaching APIs)
         # g.api.add_resource(EgResourceCollectionAPI,

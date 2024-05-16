@@ -43,16 +43,13 @@ class CiscoInternalStorageAPI(Resource):
             traceback.print_exc()
 
     # HTTP GET
-    def get(self, ident, ident1):
+    def get(self, ident):
         logging.info('CiscoInternalStorageAPI GET called')
         try:
             # Find the entry with the correct value for Id
             resp = 404
             if ident in members:
-                if ident1 in members[ident]:
-                    resp = members[ident][ident1], 200
-                else:
-                    resp = f"CiscoInternalStorage {ident1} for Manager {ident} not found", 404
+                resp = members[ident], 200
             else:
                 resp = f"Manager {ident} not found", 404          
         except Exception:
@@ -70,27 +67,24 @@ class CiscoInternalStorageAPI(Resource):
     # instances from a predefined template. The new instance is given
     # the identifier "ident", which is taken from the end of the URL.
     # PATCH commands can then be used to update the new instance.
-    def post(self, ident, ident1):
+    def post(self, ident):
         logging.info('CiscoInternalStorageAPI POST called')
         try:
             global config
             if ident in manager_members:
                 members.setdefault(ident, {})
-                if ident1 in members[ident]:
-                    return ident1 + " CiscoInternalStorage already exists", 409
-                else:
-                    members[ident][ident1] = request.json
+                members[ident]["FlexMMC"] = request.json
             else:
                 resp = f"Manager {ident} not found", 404
             
-            resp = members[ident][ident1], 200
+            resp = members[ident]["FlexMMC"], 200
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
         return resp
 
     # HTTP PATCH
-    def patch(self, ident, ident1):
+    def patch(self, ident):
         logging.info('CiscoInternalStorageAPI PATCH called')
         raw_dict = request.get_json(force=True)
         try:
@@ -104,7 +98,7 @@ class CiscoInternalStorageAPI(Resource):
         return resp
 
     # HTTP DELETE
-    def delete(self, ident, ident1):
+    def delete(self, ident):
         logging.info('CiscoInternalStorageAPI DELETE called')
         try:
             # Find the entry with the correct value for Id
@@ -139,8 +133,8 @@ class CiscoInternalStorageCollectionAPI(Resource):
         logging.info('CiscoInternalStorageCollectionAPI GET called')
         try:
             self.config["@odata.id"] = "/redfish/v1/Manager/{}/Oem/CiscoInternalStorage".format(ident)
-            self.config["Members"] = [{'@odata.id': CiscoInternalStorage['@odata.id']} for CiscoInternalStorage in list(members.get(ident, {}).values())]
-            self.config["Members@odata.count"] = len(members.setdefault(ident, {}))
+            self.config["Members"] = [{'@odata.id': CiscoInternalStorage['@odata.id']} for CiscoInternalStorage in list(members.get(ident,{}).values())]
+            self.config["Members@odata.count"] = len(self.config["Members"])
             resp = self.config, 200
             
         except Exception:
