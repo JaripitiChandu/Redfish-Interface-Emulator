@@ -10,6 +10,7 @@ Singleton  API:  GET, POST, PATCH, DELETE
 """
 
 import g
+from api_emulator.utils import update_nested_dict
 
 import sys, traceback
 import logging
@@ -82,10 +83,10 @@ class ManagerAPI(Resource):
     def patch(self, ident):
         logging.info('ManagerAPI PATCH called')
         raw_dict = request.get_json(force=True)
+        logging.info(f"payload = {raw_dict}")
         try:
-            # Update specific portions of the identified object
-            for key, value in raw_dict.items():
-                members[ident][key] = value
+            # Update specific portions of the identified objec
+            update_nested_dict(members[ident], raw_dict)
             resp = members[ident], 200
         except Exception:
             traceback.print_exc()

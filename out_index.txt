@@ -642,8 +642,8 @@ api_emulator/redfish/static/Managers/CIMC/Oem/CiscoInternalStorage/FlexMMC/Cisco
 api_emulator/redfish/static/Managers/CIMC/Oem/CiscoInternalStorage/FlexMMC/CiscoPartition/UserFiles/index.json
 #api_emulator/redfish/static/Managers/CIMC/Oem/CiscoInternalStorage/FlexMMC/CiscoPartition/UserFiles/CiscoFile/go-coverage1.csv/index.json
 #api_emulator/redfish/static/Managers/CIMC/SerialInterfaces/TTY0/index.json
-#api_emulator/redfish/static/Managers/CIMC/VirtualMedia/0/index.json
-#api_emulator/redfish/static/Managers/CIMC/VirtualMedia/1/index.json
+api_emulator/redfish/static/Managers/CIMC/VirtualMedia/0/index.json
+api_emulator/redfish/static/Managers/CIMC/VirtualMedia/1/index.json
 api_emulator/redfish/static/Managers/UCSC-M-V5Q50G_FCH272671H7/index.json
 #api_emulator/redfish/static/odata/index.json
 #api_emulator/redfish/static/Registries/Base/index.json

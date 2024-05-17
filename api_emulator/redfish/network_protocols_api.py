@@ -17,6 +17,7 @@ import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
 from .Manager_api import members as manager_members
+from api_emulator.utils import update_nested_dict
 
 members = {}
 
@@ -87,10 +88,10 @@ class NetworkProtocolAPI(Resource):
     def patch(self, ident):
         logging.info('NetworkProtocolAPI PATCH called')
         raw_dict = request.get_json(force=True)
+        logging.info(f"payload = {raw_dict}")
         try:
             # Update specific portions of the identified object
-            for key, value in raw_dict.items():
-                members[ident][key] = value
+            update_nested_dict(members[ident], raw_dict)
             resp = members[ident], 200
         except Exception:
             traceback.print_exc()

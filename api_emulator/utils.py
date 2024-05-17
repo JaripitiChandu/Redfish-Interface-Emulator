@@ -77,3 +77,10 @@ def replace_recurse(c, wildcards):
             # print("c[k] : ", c[k])
             c[k] = c[k].format(**wildcards)
             # print("c[k]2: ", c[k])
+
+def update_nested_dict(d, update_dict):
+    for k,v in update_dict.items():
+        if type(v) is not dict:
+            d[k] = v
+        else:
+            update_nested_dict(d[k], v)

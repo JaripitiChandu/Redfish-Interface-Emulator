@@ -42,6 +42,7 @@ from .redfish.network_protocols_api import NetworkProtocolAPI
 from .redfish.cisco_internal_storage_api import CiscoInternalStorageCollectionAPI, CiscoInternalStorageAPI
 from .redfish.ciscopartition_api import CiscoPartitionAPI
 from .redfish.ciscofile_api import CiscoFileCollectionAPI, CiscoFileAPI
+from .redfish.VirtualMedia_api import VirtualMediaCollectionAPI, VirtualMediaAPI
 # EgResource imports
 from .redfish.eg_resource_api import EgResourceCollectionAPI, EgResourceAPI, CreateEgResource
 from .redfish.eg_subresource_api import EgSubResourceCollectionAPI, EgSubResourceAPI, CreateEgSubResource
@@ -207,6 +208,9 @@ class ResourceManager(object):
         #Manager SubResources
         g.api.add_resource(CiscoFileCollectionAPI, '/redfish/v1/Managers/<string:ident>/Oem/CiscoInternalStorage/FlexMMC/CiscoPartition/<string:ident1>/CiscoFile')
         g.api.add_resource(CiscoFileAPI, '/redfish/v1/Managers/<string:ident>/Oem/CiscoInternalStorage/FlexMMC/CiscoPartition/<string:ident1>/CiscoFile/<string:ident2>', resource_class_kwargs={'rb': g.rest_base})
+        #Manager SubResources
+        g.api.add_resource(VirtualMediaCollectionAPI, '/redfish/v1/Managers/<string:ident>/VirtualMedia')
+        g.api.add_resource(VirtualMediaAPI, '/redfish/v1/Managers/<string:ident1>/VirtualMedia/<int:ident2>')
 
         # EgResource Resources (Example entries for attaching APIs)
         # g.api.add_resource(EgResourceCollectionAPI,

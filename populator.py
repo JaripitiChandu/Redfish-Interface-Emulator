@@ -46,20 +46,23 @@ def find_index_json_files(root_folder):
 #     print("Found index.json file:", file_path)
 # print(len(index_json_files))
 
+def main():
+    with open('out_index.txt') as f:
+        for path in f.read().split('\n'):
+            # skip commented line
+            if path.startswith('#'):
+                continue
+            # form url from json path
+            url = path.replace(ROOT_FOLDER, REDFISH_URL).replace('/index.json', '')
+            with open(os.path.join(os.path.dirname(__file__), path)) as payload:
+                data = json.load(payload)
+            if not post_call(url, data):
+                print(f"PAYLOAD PATH: {path}")
+                break
+        else:
+            print("All post calls completed successfully")
+
 
 # read index files from list stored in file
-with open('out_index.txt') as f:
-    for path in f.read().split('\n'):
-        # skip commented line
-        if path.startswith('#'):
-            continue
-        # form url from json path
-        url = path.replace(ROOT_FOLDER, REDFISH_URL).replace('/index.json', '')
-        with open(os.path.join(os.path.dirname(__file__), path)) as payload:
-            data = json.load(payload)
-
-        if not post_call(url, data):
-            print(f"PAYLOAD PATH: {path}")
-            break
-    else:
-        print("All post calls completed successfully")
+if __name__ == "__main__":
+    main()
