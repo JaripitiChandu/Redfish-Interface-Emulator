@@ -79,7 +79,7 @@ class CiscoFileAPI(Resource):
                     members[ident].setdefault(ident1, {})
                 else:
                     return "{} of CiscoInternalStorage FlexMMC not found in Manager {}".format(ident1,ident),404      
-            else:    
+            else:
                 return "Manager {} not found".format(ident), 404
 
             if ident2 in partition_members:
@@ -143,7 +143,7 @@ class CiscoFileCollectionAPI(Resource):
         try:
             self.config["@odata.id"] = "/redfish/v1/Managers/{}/Oem/CiscoInternalStorage/FlexMMC/CiscoPartition/{}/CiscoFile".format(ident,ident1)
             self.config["Members"] = [{'@odata.id': CiscoFile['@odata.id']} for CiscoFile in list(members.get(ident, {}).get(ident1, {}).values())]
-            self.config["Members@odata.count"] = len(members[ident].setdefault(ident1, {}))
+            self.config["Members@odata.count"] = len(self.config["Members"])
             resp = self.config, 200
         except Exception:
             traceback.print_exc()

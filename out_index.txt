@@ -637,10 +637,10 @@ api_emulator/redfish/static/Managers/CIMC/NetworkProtocol/index.json
 #api_emulator/redfish/static/Managers/CIMC/Oem/Cisco/SPDMTrustStore/Certificates/2/index.json
 #api_emulator/redfish/static/Managers/CIMC/Oem/Cisco/SPDMTrustStore/Certificates/3/index.json
 api_emulator/redfish/static/Managers/CIMC/Oem/CiscoInternalStorage/FlexMMC/index.json
-api_emulator/redfish/static/Managers/CIMC/Oem/CiscoInternalStorage/FlexMMC/CiscoPartition/IMCImages/CiscoFile/index.json
-#api_emulator/redfish/static/Managers/CIMC/Oem/CiscoInternalStorage/FlexMMC/CiscoPartition/IMCImages/index.json
-api_emulator/redfish/static/Managers/CIMC/Oem/CiscoInternalStorage/FlexMMC/CiscoPartition/UserFiles/CiscoFile/index.json
-#api_emulator/redfish/static/Managers/CIMC/Oem/CiscoInternalStorage/FlexMMC/CiscoPartition/UserFiles/index.json
+api_emulator/redfish/static/Managers/CIMC/Oem/CiscoInternalStorage/FlexMMC/CiscoPartition/IMCImages/index.json
+#api_emulator/redfish/static/Managers/CIMC/Oem/CiscoInternalStorage/FlexMMC/CiscoPartition/IMCImages/CiscoFile/go-coverage.csv/index.json
+api_emulator/redfish/static/Managers/CIMC/Oem/CiscoInternalStorage/FlexMMC/CiscoPartition/UserFiles/index.json
+#api_emulator/redfish/static/Managers/CIMC/Oem/CiscoInternalStorage/FlexMMC/CiscoPartition/UserFiles/CiscoFile/go-coverage1.csv/index.json
 #api_emulator/redfish/static/Managers/CIMC/SerialInterfaces/TTY0/index.json
 #api_emulator/redfish/static/Managers/CIMC/VirtualMedia/0/index.json
 #api_emulator/redfish/static/Managers/CIMC/VirtualMedia/1/index.json
