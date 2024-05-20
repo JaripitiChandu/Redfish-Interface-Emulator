@@ -139,7 +139,7 @@ class NetworkAdaptersCollectionAPI(Resource):
         try:
             self.config["@odata.id"] = "/redfish/v1/Chassis/{}/NetworkAdapters".format(ident)
             self.config["Members"] = [{'@odata.id': NetworkAdapters['@odata.id']} for NetworkAdapters in list(members.get(ident, {}).values())]
-            self.config["Members@odata.count"] = len(members.setdefault(ident, {}))
+            self.config["Members@odata.count"] = len(self.config["Members"])
             resp = self.config, 200
             
         except Exception:
