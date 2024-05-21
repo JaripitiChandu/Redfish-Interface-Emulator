@@ -182,9 +182,7 @@ class RedfishAPI(Resource):
             resource_manager.configuration = request.json
             resp = resource_manager.configuration, 201
         elif path.startswith("cisco"):
-            if path in cisco_endpoints:
-                return "Resource already exists", 409
-            cisco_endpoints[path] = request.json
+            cisco_endpoints[path] = json.loads(request.data.decode())
             return path, 201
         elif path.find(self.system_path) != -1 or path.find(self.chassis_path) != -1:
             args = parser.parse_args()
