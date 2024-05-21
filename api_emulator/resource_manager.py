@@ -72,6 +72,9 @@ from .redfish.ResourceZone_api import ResourceZoneCollectionAPI, ResourceZoneAPI
 from .redfish.updateservice_api import UpdateServiceAPI
 from .redfish.firmware_inventory_api import FirmwareInventoryCollectionAPI, FirmwareInventoryAPI
 from .redfish.software_inventory_api import SoftwareInventoryCollectionAPI, SoftwareInventoryAPI
+# AccountService imports
+from .redfish.AccountService_api import AccountServiceAPI
+from .redfish.Accounts_api import Accounts, Account
 
 mockupfolders = []
 
@@ -148,7 +151,7 @@ class ResourceManager(object):
 
         if "Redfish" in mockupfolders:
             logging.info('Loading Redfish static resources')
-            self.AccountService =   load_static('AccountService', 'redfish', mode, rest_base, self.resource_dictionary)
+            # self.AccountService =   load_static('AccountService', 'redfish', mode, rest_base, self.resource_dictionary)
             self.Registries =       load_static('Registries', 'redfish', mode, rest_base, self.resource_dictionary)
             self.SessionService =   load_static('SessionService', 'redfish', mode, rest_base, self.resource_dictionary)
             self.TaskService =      load_static('TaskService', 'redfish', mode, rest_base, self.resource_dictionary)
@@ -308,6 +311,11 @@ class ResourceManager(object):
         g.api.add_resource(SoftwareInventoryAPI, '/redfish/v1/UpdateService/SoftwareInventory/<string:ident>',
                 resource_class_kwargs={'rb': g.rest_base})
 
+        #AccountService Resource
+        g.api.add_resource(AccountServiceAPI, "/redfish/v1/AccountService")
+        #AccountService Subresources
+        g.api.add_resource(Accounts, "/redfish/v1/AccountService/Accounts")
+        g.api.add_resource(Account, "/redfish/v1/AccountService/Accounts/<int:ident>")
 
     @property
     def configuration(self):

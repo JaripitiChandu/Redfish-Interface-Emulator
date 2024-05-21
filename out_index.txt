@@ -366,8 +366,8 @@ api_emulator/redfish/static/Chassis/1/NetworkAdapters/UCSC-M-V5Q50G_FCH272671H7/
 #api_emulator/redfish/static/Chassis/1/Sensors/RISER2_INLET_TMP/index.json
 #api_emulator/redfish/static/Chassis/1/Sensors/RISER3_INLET_TMP/index.json
 #api_emulator/redfish/static/Chassis/1/Sensors/TEMP_SENS_FRONT/index.json
-#api_emulator/redfish/static/AccountService/index.json
-#api_emulator/redfish/static/AccountService/Accounts/1/index.json
+api_emulator/redfish/static/AccountService/index.json
+api_emulator/redfish/static/AccountService/Accounts/1/index.json
 #api_emulator/redfish/static/AccountService/LDAP/Certificates/1/index.json
 #api_emulator/redfish/static/AccountService/PrivilegeMap/index.json
 #api_emulator/redfish/static/AccountService/Roles/admin/index.json

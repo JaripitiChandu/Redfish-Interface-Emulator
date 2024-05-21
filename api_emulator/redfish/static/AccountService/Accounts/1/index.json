@@ -15,7 +15,7 @@
     ],
     "Id": "1",
     "UserName": "admin",
-    "Enabled": 1,
+    "Enabled": true,
     "RoleId": "admin",
     "RedfishRoleId": "Admin",
     "AccountLockoutAttempt": 0,
