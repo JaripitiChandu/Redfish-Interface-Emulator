@@ -24,8 +24,8 @@ from .exceptions import CreatePooledNodeError, RemovePooledNodeError, EventSubsc
 from .redfish.event_service import EventService, Subscriptions
 from .redfish.event import Event
 # EventService imports
-from .redfish.EventService_api import EventServiceAPI, CreateEventService
-from .redfish.Subscriptions_api import SubscriptionCollectionAPI, SubscriptionAPI, CreateSubscription
+from .redfish.EventService_api import EventServiceAPI
+from .redfish.Subscriptions_api import SubscriptionCollectionAPI, SubscriptionAPI
 # Chassis imports
 from .redfish.Chassis_api import ChassisCollectionAPI, ChassisAPI
 from .redfish.power_api import PowerAPI

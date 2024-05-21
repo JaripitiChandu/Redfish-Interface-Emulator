@@ -2,10 +2,10 @@
 # Copyright 2017-2019 DMTF. All rights reserved.
 # License: BSD 3-Clause License. For full text see link: https://github.com/DMTF/Redfish-Interface-Emulator/blob/main/LICENSE.md
 
-# NetworkPorts API File
+# LogEntry API File
 
 """
-Collection API:  GET
+Collection API:  GET, POST
 Singleton  API:  GET, POST
 """
 
@@ -16,8 +16,8 @@ import logging
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
-from .Chassis_api import members as chassis_members
-from .network_adapters_api import members as network_adapters_members
+from .Manager_api import members as manager_members
+from .LogServices_api import members as logservices_members
 from api_emulator.utils import update_nested_dict
 
 members = {}
@@ -25,8 +25,8 @@ members = {}
 INTERNAL_ERROR = 500
 
 
-# NetworkPorts Singleton API
-class NetworkPortsAPI(Resource):
+# LogEntry Singleton API
+class LogEntryAPI(Resource):
 
     # kwargs is used to pass in the wildcards values to be replaced
     # when an instance is created via get_<resource>_instance().
@@ -37,16 +37,16 @@ class NetworkPortsAPI(Resource):
     # __init__ stores kwargs in wildcards, which is used to pass
     # values to the get_<resource>_instance() call.
     def __init__(self, **kwargs):
-        logging.info('NetworkPortsAPI init called')
+        logging.info('LogEntryAPI init called')
         try:
             global wildcards
             wildcards = kwargs
         except Exception:
             traceback.print_exc()
 
-    # HTTP GET
+       # HTTP GET
     def get(self, ident, ident1, ident2):
-        logging.info('NetworkPortsAPI GET called')
+        logging.info('LogEntryAPI GET called')
         try:
             # Find the entry with the correct value for Id
             resp = 404
@@ -55,11 +55,11 @@ class NetworkPortsAPI(Resource):
                     if ident2 in members[ident][ident1]:
                         resp = members[ident][ident1][ident2], 200
                     else:
-                        resp = f"NetworkPorts {ident2} for  NetworkAdapters {ident1} of Chassis {ident} not found", 404
+                        resp = f"LogEntry {ident2} for  LogServices {ident1} of Manager {ident} not found", 404
                 else:
-                    resp = f"NetworkAdapters {ident1} of Chassis {ident} not found", 404  
+                    resp = f"LogServices {ident1} of Manager {ident} not found", 404  
             else:
-                resp = f"Chassis {ident} not found", 404          
+                resp = f"Manager {ident} not found", 404          
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -67,21 +67,21 @@ class NetworkPortsAPI(Resource):
 
     # HTTP PUT
     def put(self,ident, ident1 , ident2):
-        logging.info('NetworkPortsAPI PUT called')
-        return 'PUT is not a supported command for NetworkPortsAPI', 405
+        logging.info('LogEntryAPI PUT called')
+        return 'PUT is not a supported command for LogEntryAPI', 405
 
     # HTTP POST
     def post(self, ident, ident1, ident2):
-        logging.info('NetworkPortsAPI POST called')
+        logging.info('LogEntryAPI POST called')
         try:
-            if ident in chassis_members:
+            if ident in manager_members:
                 members.setdefault(ident, {})
-                if ident1 in network_adapters_members[ident]:
+                if ident1 in logservices_members[ident]:
                  members[ident].setdefault(ident1, {})
                 else:
-                    return "NetworkAdapter {} does not exist in Chassis {}".format(ident1,ident), 404
+                    return "LogServices {} does not exist in Manager {}".format(ident1,ident), 404
             else:    
-                return "Chassis {} does not exist".format(ident), 404
+                return "Manager {} does not exist".format(ident), 404
 
             if ident2 in members[ident][ident1]:
                 return "NetworkPort {} already exists".format(ident2), 409
@@ -96,18 +96,18 @@ class NetworkPortsAPI(Resource):
 
     # HTTP PATCH
     def patch(self, ident, ident1, ident2):
-        logging.info('NetworkPortsAPI PATCH called')
+        logging.info('LogEntryAPI PATCH called')
         raw_dict = request.get_json(force=True)
         logging.info(f"Payload = {raw_dict}")
         try:
-            if ident in chassis_members:
+            if ident in manager_members:
                 members.setdefault(ident, {})
-                if ident1 in network_adapters_members[ident]:
+                if ident1 in logservices_members[ident]:
                  members[ident].setdefault(ident1, {})
                 else:
-                    return "NetworkAdapter {} does not exist in Chassis {}".format(ident1,ident), 404
+                    return "LogServices {} does not exist in Manager {}".format(ident1,ident), 404
             else:
-                return "Chassis {} does not exist".format(ident), 404
+                return "Manager {} does not exist".format(ident), 404
 
             # Update specific portions of the identified object
             update_nested_dict(members[ident][ident1][ident2], raw_dict)
@@ -116,9 +116,10 @@ class NetworkPortsAPI(Resource):
             traceback.print_exc()
             resp = INTERNAL_ERROR
         return resp
+
     # HTTP DELETE
     def delete(self, ident, ident1):
-        logging.info('NetworkPortsAPI DELETE called')
+        logging.info('LogEntryAPI DELETE called')
         try:
             # Find the entry with the correct value for Id
             resp = 404
@@ -131,29 +132,30 @@ class NetworkPortsAPI(Resource):
         return resp
 
 
-# NetworkPorts Collection API
-class NetworkPortsCollectionAPI(Resource):
+# LogEntry Collection API
+class LogEntryCollectionAPI(Resource):
 
     def __init__(self):
-        logging.info('NetworkPortsCollectionAPI init called')
+        logging.info('LogEntryCollectionAPI init called')
         self.rb = g.rest_base
         self.config = {
             '@odata.id': " ",
-            '@odata.type': '#NetworkPortCollection.NetworkPSortCollection',
-            '@odata.context': self.rb + '$metadata#NetworkPortCollection.NetworkPortCollection',
-            'Name': 'NetworkPorts Collection',
+            '@odata.type': '#LogEntryCollection.LogEntryCollection',
+            '@odata.context': self.rb + '$metadata#LogEntryCollection.LogEntryCollection',
+            'Name': 'Ethernet Interfaces Collection',
             "Members": [],
-            "Members@odata.count": 0
+            "Members@odata.count": 0,
         }
 
     # HTTP GET
     def get(self,ident,ident1):
-        logging.info('NetworkPortsCollectionAPI GET called')
+        logging.info('LogEntryCollectionAPI GET called')
         try:
-            self.config["@odata.id"] = "/redfish/v1/Chassis/{}/NetworkAdapters/{}/NetworkPorts".format(ident,ident1)
-            self.config["Members"] = [{'@odata.id': NetworkPorts['@odata.id']} for NetworkPorts in list(members.get(ident, {}).get(ident1, {}).values())]
+            self.config["@odata.id"] = "/redfish/v1/Managers/<string:ident>/LogServices/<string:ident1>/Entries".format(ident)
+            self.config["Members"] = [{'@odata.id': LogEntry['@odata.id']} for LogEntry in list(members.get(ident, {}).get(ident1, {}).values())]
             self.config["Members@odata.count"] = len(members[ident].setdefault(ident1, {}))
             resp = self.config, 200
+            
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -161,25 +163,29 @@ class NetworkPortsCollectionAPI(Resource):
 
     # HTTP PUT
     def put(self,ident):
-        logging.info('NetworkPortsCollectionAPI PUT called')
-        return 'PUT is not a supported command for NetworkPortsCollectionAPI', 405
+        logging.info('LogEntryCollectionAPI PUT called')
+        return 'PUT is not a supported command for LogEntryCollectionAPI', 405
 
     def verify(self, config):
         #TODO: Implement a method to verify that the POST body is valid
         return True,{}
 
     # HTTP POST
+    # POST should allow adding multiple instances to a collection.
+    # For now, this only adds one instance.
+    # TODO: 'id' should be obtained from the request data.
     def post(self,ident):
-        logging.info('NetworkPortsCollectionAPI POST called')
-        return 'POST is not a supported command for NetworkPortsCollectionAPI', 405
+        logging.info('LogEntryCollectionAPI POST called')
+        return 'POST is not a supported command for LogEntryCollectionAPI', 405
 
     # HTTP PATCH
     def patch(self):
-        logging.info('NetworkPortsCollectionAPI PATCH called')
-        return 'PATCH is not a supported command for NetworkPortsCollectionAPI', 405
+        logging.info('LogEntryCollectionAPI PATCH called')
+        return 'PATCH is not a supported command for LogEntryCollectionAPI', 405
 
     # HTTP DELETE
     def delete(self):
-        logging.info('NetworkPortsCollectionAPI DELETE called')
-        return 'DELETE is not a supported command for NetworkPortsCollectionAPI', 405
+        logging.info('LogEntryCollectionAPI DELETE called')
+        return 'DELETE is not a supported command for LogEntryCollectionAPI', 405
+
 

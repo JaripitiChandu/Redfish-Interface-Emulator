@@ -24,8 +24,8 @@ from .exceptions import CreatePooledNodeError, RemovePooledNodeError, EventSubsc
 from .redfish.event_service import EventService, Subscriptions
 from .redfish.event import Event
 # EventService imports
-from .redfish.EventService_api import EventServiceAPI, CreateEventService
-from .redfish.Subscriptions_api import SubscriptionCollectionAPI, SubscriptionAPI, CreateSubscription
+from .redfish.EventService_api import EventServiceAPI
+from .redfish.Subscriptions_api import SubscriptionCollectionAPI, SubscriptionAPI
 # Chassis imports
 from .redfish.Chassis_api import ChassisCollectionAPI, ChassisAPI
 from .redfish.power_api import PowerAPI
@@ -44,6 +44,9 @@ from .redfish.ciscopartition_api import CiscoPartitionAPI
 from .redfish.ciscofile_api import CiscoFileCollectionAPI, CiscoFileAPI
 from .redfish.VirtualMedia_api import VirtualMediaCollectionAPI, VirtualMediaAPI
 from .redfish.SerialInterfaces_api import SerialInterfaces, SerialInterface
+from .redfish.LogServices_api import LogServiceCollectionAPI, LogServiceAPI
+from .redfish.LogEntry_api import LogEntryCollectionAPI, LogEntryAPI
+from .redfish.ManagerResetAction_api import ManagerResetActionAPI
 # EgResource imports
 from .redfish.eg_resource_api import EgResourceCollectionAPI, EgResourceAPI, CreateEgResource
 from .redfish.eg_subresource_api import EgSubResourceCollectionAPI, EgSubResourceAPI, CreateEgSubResource
@@ -218,7 +221,14 @@ class ResourceManager(object):
         #Manager SubResources
         g.api.add_resource(SerialInterfaces, '/redfish/v1/Managers/<string:ident>/SerialInterfaces')
         g.api.add_resource(SerialInterface, '/redfish/v1/Managers/<string:ident1>/SerialInterfaces/<string:ident2>')
-
+        #Manager SubResources
+        g.api.add_resource(LogServiceCollectionAPI, '/redfish/v1/Managers/<string:ident>/LogServices')
+        g.api.add_resource(LogServiceAPI, '/redfish/v1/Managers/<string:ident>/LogServices/<string:ident1>', resource_class_kwargs={'rb': g.rest_base})
+        #Manager SubResources
+        g.api.add_resource(LogEntryCollectionAPI, '/redfish/v1/Managers/<string:ident>/LogServices/<string:ident1>/Entries')
+        g.api.add_resource(LogEntryAPI, '/redfish/v1/Managers/<string:ident>/LogServices/<string:ident1>/Entries/<string:ident2>', resource_class_kwargs={'rb': g.rest_base})
+        #Manager SubResources
+        g.api.add_resource(ManagerResetActionAPI, '/redfish/v1/Managers/<string:ident>/Actions/Manager.Reset', resource_class_kwargs={'rb': g.rest_base})
         # EgResource Resources (Example entries for attaching APIs)
         # g.api.add_resource(EgResourceCollectionAPI,
         #     '/redfish/v1/EgResources')

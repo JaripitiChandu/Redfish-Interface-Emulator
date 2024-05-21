@@ -1,4 +1,4 @@
-from api_emulator.redfish.EventService_api import EventServiceAPI, CreateEventService
+from api_emulator.redfish.EventService_api import EventServiceAPI
 from api_emulator.redfish.Chassis_api import ChassisCollectionAPI, ChassisAPI
 from api_emulator.redfish.ComputerSystem_api import ComputerSystemCollectionAPI, ComputerSystemAPI, CreateComputerSystem
 from api_emulator.redfish.Manager_api import ManagerCollectionAPI, ManagerAPI, CreateManager

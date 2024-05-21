@@ -116,21 +116,22 @@ class SubscriptionCollectionAPI(Resource):
 
     def __init__(self):
         logging.info('SubscriptionCollectionAPI init called')
-        self.rb = os.path.join (g.rest_base, 'EventService/')
+        self.rb = g.rest_base
         self.config = {
-            '@odata.id': self.rb + 'Subscriptions',
+            '@odata.id': "",
             '@odata.type': '#EventDestinationCollection.EventDestinationCollection',
-            'Name': 'Event Destination Collection',
-            'Links': {}
+            '@odata.context': self.rb + '$metadata#ChassisCollection.ChassisCollection',
+            'Name': 'Event Destination  Collection',
+            'Members': [{'@odata.id': x['@odata.id']} for
+                        x in list(members.values())],
+            'Members@odata.count': len(members)
         }
-        self.config['Links']['Members@odata.count'] = len(members)
-        self.config['Links']['Members'] = [{'@odata.id':x['@odata.id']} for
-                x in list(members.values())]
 
     # HTTP GET
     def get(self):
         logging.info('SubscriptionCollectionAPI GET called')
         try:
+            self.config["@odata.id"] = "/redfish/v1/EventService/Subscriptions"
             resp = self.config, 200
         except Exception:
             traceback.print_exc()
@@ -176,37 +177,37 @@ class SubscriptionCollectionAPI(Resource):
         return 'DELETE is not a supported command for SubscriptionCollectionAPI', 405
 
 
-# CreateSubscription
-#
-# Called internally to create instances of a subresource. If the
-# resource has subordinate resources, those subordinate resource(s)
-# are created automatically.
-#
-# Note: In 'init', the first time through, kwargs may not have any
-# values, so we need to check. The call to 'init' stores the path
-# wildcards. The wildcards are used to modify the resource template
-# when subsequent calls are made to instantiate resources.
-class CreateSubscription(Resource):
+# # CreateSubscription
+# #
+# # Called internally to create instances of a subresource. If the
+# # resource has subordinate resources, those subordinate resource(s)
+# # are created automatically.
+# #
+# # Note: In 'init', the first time through, kwargs may not have any
+# # values, so we need to check. The call to 'init' stores the path
+# # wildcards. The wildcards are used to modify the resource template
+# # when subsequent calls are made to instantiate resources.
+# class CreateSubscription(Resource):
 
-    def __init__(self, **kwargs):
-        logging.info('CreateSubscription init called')
-        logging.debug(kwargs)
-        if 'resource_class_kwargs' in kwargs:
-            global wildcards
-            wildcards = copy.deepcopy(kwargs['resource_class_kwargs'])
-            logging.debug(wildcards)
+#     def __init__(self, **kwargs):
+#         logging.info('CreateSubscription init called')
+#         logging.debug(kwargs)
+#         if 'resource_class_kwargs' in kwargs:
+#             global wildcards
+#             wildcards = copy.deepcopy(kwargs['resource_class_kwargs'])
+#             logging.debug(wildcards)
 
-    # Add subordinate resource
-    def put(self,ident):
-        logging.info('CreateSubscription put called')
-        try:
-            global config
-            global wildcards
-            config=get_Subscription_instance(wildcards)
-            members.append(config)
-            resp = config, 200
-        except Exception:
-            traceback.print_exc()
-            resp = INTERNAL_ERROR
-        logging.info('CreateSubscription init exit')
-        return resp
+#     # Add subordinate resource
+#     def put(self,ident):
+#         logging.info('CreateSubscription put called')
+#         try:
+#             global config
+#             global wildcards
+#             config=get_Subscription_instance(wildcards)
+#             members.append(config)
+#             resp = config, 200
+#         except Exception:
+#             traceback.print_exc()
+#             resp = INTERNAL_ERROR
+#         logging.info('CreateSubscription init exit')
+#         return resp

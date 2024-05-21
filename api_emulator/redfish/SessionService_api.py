@@ -107,7 +107,7 @@ class CreateSessionService(Resource):
             g.api.add_resource(SessionCollectionAPI,   '/redfish/v1/SessionService/Sessions')
             g.api.add_resource(SessionAPI,             '/redfish/v1/SessionService/Sessions/<string:ident>', resource_class_kwargs={'rb': g.rest_base})
             # Create an instance of subordinate subscription resource
-            cfg = CreateSubscription()
+            #cfg = CreateSubscription()
             out = cfg.__init__(resource_class_kwargs={'rb': g.rest_base,'id':"1"})
             out = cfg.put("1")
             resp = config, 200
