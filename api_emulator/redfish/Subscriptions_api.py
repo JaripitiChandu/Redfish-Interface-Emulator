@@ -120,7 +120,7 @@ class SubscriptionCollectionAPI(Resource):
         self.config = {
             '@odata.id': "",
             '@odata.type': '#EventDestinationCollection.EventDestinationCollection',
-            '@odata.context': self.rb + '$metadata#ChassisCollection.ChassisCollection',
+            '@odata.context': self.rb + '$metadata#EventDestinationCollection.EventDestinationCollection',
             'Name': 'Event Destination  Collection',
             'Members': [{'@odata.id': x['@odata.id']} for
                         x in list(members.values())],
