@@ -24,7 +24,6 @@ def post_to_db(data):
 def extract_bucket(b):
     result = {}
     for k, v in b:
-        print(k, v)
         if not v:
             if b.bucket(k):
                 result[k.decode('utf-8')] = extract_bucket(b.bucket(k))
@@ -40,5 +39,7 @@ def get_from_db(data_id=None):
     result = {}
     with db.view() as tx:
         b = tx.bucket(data_id.encode())
+        if not b:
+            return
         result = extract_bucket(b)            
         return result
