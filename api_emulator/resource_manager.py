@@ -352,11 +352,18 @@ class ResourceManager(object):
         #     'CompositionService': {'@odata.id': self.rest_base + 'CompositionService'}
         # }
 
-        return self.__config
+        print("here 1")
+        from db_conn import get
+        return get('/redfish/v1/')
+        # return self.__config
 
     @configuration.setter
     def configuration(self, value):
-        self.__config = value
+        print("here 11")
+        from db_conn import post
+        post(value)
+
+        # self.__config = value
 
     @property
     def available_procs(self):
@@ -446,6 +453,8 @@ class ResourceManager(object):
         """
         Call Resource_Dictionary's get_resource
         """
+        from db_conn import get
+        return get(path)
         obj = self.resource_dictionary.get_resource(path)
         return obj
 
