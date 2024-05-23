@@ -50,9 +50,6 @@ class NetworkDeviceFunctionsAPI(Resource):
         try:
             # Find the entry with the correct value for Id
             resp = 404
-            # print("ident: ",ident)
-            # print("ident1: ",members[ident])
-            # print("ident1: ",members[ident][ident1])
             if ident in members:
                 if ident1 in members[ident]:
                     if ident2 in members[ident][ident1]:
@@ -74,10 +71,6 @@ class NetworkDeviceFunctionsAPI(Resource):
         return 'PUT is not a supported command for NetworkDeviceFunctionsAPI', 405
 
     # HTTP POST
-    # This is an emulator-only POST command that creates new resource
-    # instances from a predefined template. The new instance is given
-    # the identifier "ident", which is taken from the end of the URL.
-    # PATCH commands can then be used to update the new instance.
     def post(self, ident, ident1, ident2):
         logging.info('NetworkDeviceFunctionsAPI POST called')
         try:
@@ -117,9 +110,11 @@ class NetworkDeviceFunctionsAPI(Resource):
                 return "Chassis {} does not exist".format(ident), 404
 
             # Update specific portions of the identified object
-            update_nested_dict(members[ident][ident1][ident2], raw_dict)
-            resp = members[ident][ident1][ident2], 200
-
+            if ident2 in members.get(ident, {}).get(ident1, {}):
+                update_nested_dict(members[ident][ident1][ident2], raw_dict)
+                resp = members[ident][ident1][ident2], 200
+            else:
+                return "NetworkDeviceFunction {} of NetworkAdapter {} does not exist in Chassis {}".format(ident2,ident1,ident), 404
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR

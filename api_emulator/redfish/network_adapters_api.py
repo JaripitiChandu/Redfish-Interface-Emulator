@@ -17,6 +17,7 @@ import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
 from .Chassis_api import members as chassis_members
+from api_emulator.utils import update_nested_dict
 
 members = {}
 
@@ -93,11 +94,19 @@ class NetworkAdaptersAPI(Resource):
     def patch(self, ident, ident1):
         logging.info('NetworkAdaptersAPI PATCH called')
         raw_dict = request.get_json(force=True)
+        logging.info(f"Payload = {raw_dict}")
         try:
-            # Update specific portions of the identified object
-            for key, value in raw_dict.items():
-                members[ident][key] = value
-            resp = members[ident], 200
+            global config
+            if ident in chassis_members:
+                members.setdefault(ident, {})
+            else:
+                resp = f"Chassis {ident} not found", 404
+
+            if ident1 in members[ident]:
+                update_nested_dict(members[ident][ident1], raw_dict)
+                resp = members[ident][ident1], 200
+            else:
+                return "NetworkAdapter {} does not exist in Chassis {}".format(ident1,ident), 404
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -139,7 +148,7 @@ class NetworkAdaptersCollectionAPI(Resource):
         try:
             self.config["@odata.id"] = "/redfish/v1/Chassis/{}/NetworkAdapters".format(ident)
             self.config["Members"] = [{'@odata.id': NetworkAdapters['@odata.id']} for NetworkAdapters in list(members.get(ident, {}).values())]
-            self.config["Members@odata.count"] = len(self.config["Members"])
+            self.config["Members@odata.count"] = len(members.setdefault(ident, {}))
             resp = self.config, 200
             
         except Exception:

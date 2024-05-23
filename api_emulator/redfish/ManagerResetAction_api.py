@@ -31,60 +31,38 @@ class ManagerResetActionAPI(Resource):
         logging.info('ManagerResetActionAPI POST called')
         try:
             if ident not in manager_members:
-                logging.info(f"ident not found")
+                logging.info(f"Manager {ident} not found")
                 return f"Manager {ident} not found!", 400
-            logging.info(f"{request.data}")
-            try:
-                json_payload = json.loads(request.data.decode("utf-8"))
-                action = json_payload.get("ResetType")
-                if action is None:
-                    logging.info(f"action not found")
-                    return f"ResetType not provided in request payload", 400
-            except Exception as e:
-                logging.info(f"invalid  not found : " + str(e))
-                return f"Invalid or no JSON payload passed", 400
+            if not request.data:
+                logging.info(f"No payload provided")
+                json_payload = {}
+                logging.info(f"Payload = {json_payload}")
+                return 'POST Action request completed', 200
+            else:
+                try:
+                    json_payload = json.loads(request.data.decode("utf-8"))
+                    action = json_payload.get("ResetType")
+                    if action is None:
+                        logging.info(f"ResetType not found")
+                        return f"ResetType not provided in request payload", 400
+                except Exception as e:
+                    logging.info(f"invalid  or no JSON payload found : " + str(e))
+                    return f"Invalid or no JSON payload passed", 400
+
             logging.info(f"Payload = {json_payload}")
             allowableResetTypes = manager_members[ident]["Actions"]["#Manager.Reset"]["ResetType@Redfish.AllowableValues"]
             if action not in allowableResetTypes:
                 return f"""Invalid reset type!
 ResetType, possible values:
 {allowableResetTypes}""", 400
-            if action == "ForceOff":
-                self.force_off(manager_members, ident)
-            elif action == "On":
-                self.force_on(manager_members, ident)
+            if action == "GracefulRestart":
+                print(f"Manager {ident} Gracefully restarted")
             elif action == "ForceRestart":
-                self.force_off(manager_members, ident)
-                self.force_on(manager_members, ident)
-                print(f"Manager {ident} restarted")
+                print(f"Manager {ident} Forcefully restarted")
             return 'POST Action request completed', 200
         except Exception as e:
             traceback.print_exc()
             return "Internal Server error", INTERNAL_ERROR
-
-    @staticmethod
-    def force_off(manager_members, ident):
-        if manager_members[ident]["PowerState"] == "On":
-            manager_members[ident]["PowerState"] = "resetting"
-            manager_members[ident]['Status']['State'] = "resetting"
-            time.sleep(10)
-            manager_members[ident]["PowerState"] = "Off"
-            manager_members[ident]['Status']['State'] = "Disabled"
-            print (f'Manager {ident} Powered Off')
-        else:
-            print(f"Manager {ident} is already Powered Off")
-
-    @staticmethod
-    def force_on(manager_members, ident):
-        if manager_members[ident]["PowerState"] == "Off":
-            manager_members[ident]["PowerState"] = "resetting"
-            manager_members[ident]['Status']['State'] = "resetting"
-            time.sleep(10)
-            manager_members[ident]["PowerState"] = "On"
-            manager_members[ident]['Status']['State'] = "Enabled"
-            print (f'System {ident} Powered On')
-        else:
-            print(f"System {ident} is already Powered On")
 
     # HTTP GET
     def get(self,ident):

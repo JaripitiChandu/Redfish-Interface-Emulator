@@ -110,8 +110,11 @@ class NetworkPortsAPI(Resource):
                 return "Chassis {} does not exist".format(ident), 404
 
             # Update specific portions of the identified object
-            update_nested_dict(members[ident][ident1][ident2], raw_dict)
-            resp = members[ident][ident1][ident2], 200
+            if ident2 in members.get(ident, {}).get(ident1, {}):
+                update_nested_dict(members[ident][ident1][ident2], raw_dict)
+                resp = members[ident][ident1][ident2], 200
+            else:
+                return "NetworkPort {} of NetworkAdapter {} does not exist in Chassis {}".format(ident2,ident1,ident), 404
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR

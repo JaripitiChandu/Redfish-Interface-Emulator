@@ -84,7 +84,7 @@ class LogEntryAPI(Resource):
                 return "Manager {} does not exist".format(ident), 404
 
             if ident2 in members[ident][ident1]:
-                return "NetworkPort {} already exists".format(ident2), 409
+                return "LogEntry {} already exists".format(ident2), 409
             else:
                 members[ident][ident1][ident2] = request.json
                 resp = members[ident][ident1][ident2], 200
