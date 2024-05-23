@@ -353,15 +353,15 @@ class ResourceManager(object):
         # }
 
         print("here 1")
-        from db_conn import get
-        return get('/redfish/v1/')
+        from db_conn import get_from_db
+        return get_from_db('/redfish/v1/')
         # return self.__config
 
     @configuration.setter
     def configuration(self, value):
         print("here 11")
-        from db_conn import post
-        post(value)
+        from db_conn import post_to_db
+        post_to_db(value)
 
         # self.__config = value
 
@@ -453,8 +453,8 @@ class ResourceManager(object):
         """
         Call Resource_Dictionary's get_resource
         """
-        from db_conn import get
-        return get(path)
+        from db_conn import get_from_db
+        return get_from_db(path)
         obj = self.resource_dictionary.get_resource(path)
         return obj
 

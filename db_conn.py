@@ -13,7 +13,7 @@ def add_bucket(tx, data):
             tx.put(k.encode(), str(v).encode())
 
 
-def post(data):
+def post_to_db(data):
     db = BoltDB("sample_bolt.db")
     with db.update() as tx:
         id = data['@odata.id']
@@ -35,7 +35,7 @@ def extract_bucket(b):
 
     return result
 
-def get(data_id=None):
+def get_from_db(data_id=None):
     db = BoltDB("sample_bolt.db")
     result = {}
     with db.view() as tx:
