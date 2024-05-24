@@ -6,8 +6,10 @@ import json
 import requests
 
 ROOT_FOLDER = 'api_emulator/redfish/static/'
+PORT = 444
+REFERENCE_FILE = 'out_index.txt'
 ENDPOINTS_TO_SKIP = []
-REDFISH_URL = 'http://127.0.0.1:444/redfish/v1/'
+REDFISH_URL = f'http://127.0.0.1:{PORT}/redfish/v1/'
 
 
 def post_call(url, data):
@@ -48,7 +50,7 @@ def find_index_json_files(root_folder):
 # print(len(index_json_files))
 
 def main():
-    with open('out_index.txt') as f:
+    with open(REFERENCE_FILE) as f:
         for path in f.read().split('\n'):
             # skip commented line
             if path.startswith('#'):
