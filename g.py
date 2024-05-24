@@ -61,6 +61,7 @@ rest_base = 'base'
 
 # Create the databse object to store emulator configs
 db = DataBase(DB_FILEPATH)
+INDEX = b"index"
 
 # Create Flask server
 app = Flask(__name__)

@@ -26,6 +26,7 @@ def post_call(url, data):
     else:
         print("POST request failed with status code:", response.status_code)
         print(f"URL: {url}")
+        print(f"RESPONSE: {response.text}")
         return False
 
 

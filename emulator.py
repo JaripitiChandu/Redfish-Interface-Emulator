@@ -188,7 +188,7 @@ class RedfishAPI(Resource):
                     if not b:
                         b = tx.create_bucket(BNAME)
                         b.put(INDEX, json.dumps(request.json).encode())
-                        resp = 200
+                        resp = "Service root created", 200
                     else:
                         resp = 'service root already exists', 409        
             except Exception as e:
