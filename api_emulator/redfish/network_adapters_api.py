@@ -171,7 +171,7 @@ class NetworkAdaptersCollectionAPI(Resource):
                                 bucket_members.append(json.loads(b.bucket(k).get(INDEX).decode())['@odata.id'])
 
             self.config["@odata.id"] = "/redfish/v1/Chassis/{}/NetworkAdapters".format(ident)
-            self.config['Members'] = [{'@odata.id': x} for x in bucket_members],
+            self.config['Members'] = [{'@odata.id': x} for x in bucket_members]
             self.config["Members@odata.count"] = len(bucket_members)
             resp = self.config, 200
             
