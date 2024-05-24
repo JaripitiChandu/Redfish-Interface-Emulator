@@ -1,4 +1,8 @@
+import json
+from pprint import pprint
+
 from boltdb import BoltDB
+
 
 class DataBase(BoltDB):
     """
@@ -84,3 +88,22 @@ class DataBase(BoltDB):
                 return
             result = self.extract_bucket(b)            
             return result
+
+
+    def print_db(self):
+        space = ''
+        def print_subbucket(b, space):
+            space += '\t'
+            for k, v in b:
+                if not v:
+                    if b.bucket(k):
+                        print(space, k.decode())
+                        print_subbucket(b.bucket(k), space)
+                    else:                        
+                        print(space, json.loads(v.decode()))
+                else:
+                    print(space, json.loads(v.decode()))
+
+        with self.view() as tx:
+            print_subbucket(tx.bucket(), space)
+                
