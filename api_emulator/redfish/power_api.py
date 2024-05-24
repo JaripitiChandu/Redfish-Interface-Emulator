@@ -11,6 +11,7 @@ Singleton  API:  GET, PATCH
 
 import g
 
+import json
 import sys, traceback
 import logging
 import copy
@@ -19,6 +20,9 @@ from flask_restful import reqparse, Api, Resource
 
 members = {}
 
+PRIMARY_BNAME = b'chassis'
+BNAME = b'power'
+INDEX = b'value'
 INTERNAL_ERROR = 500
 
 
@@ -47,8 +51,14 @@ class PowerAPI(Resource):
         try:
             # Find the entry with the correct value for Id
             resp = 404
-            if ident in members:
-                resp = members[ident], 200
+            with g.db.view() as tx:
+                if not tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()):
+                    resp = f"chassis {ident} not found", 404
+                else:
+                    b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME)
+                    if b:
+                        value = b.get(INDEX).decode()
+                        resp = json.loads(value), 200
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -63,14 +73,23 @@ class PowerAPI(Resource):
     def post(self, ident):
         logging.info('PowerAPI POST called')
         try:
-            config=request.json
-            members[ident]=config
-            resp = config, 200
+            with g.db.update() as tx:
+                if tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME):
+                    resp = f"power already exists in chassis {ident}", 409
+                else:
+                    pb = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode())
+                    if not pb:
+                        resp = f"chassis {ident} not found", 404
+                    else:
+                        b = pb.bucket(BNAME)
+                        if not b:
+                            b = pb.create_bucket(BNAME)
+                            b.put(INDEX, json.dumps(request.json).encode())
+                        resp = request.json, 200
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
         return resp
-        return 'POST is not a supported command for PowerAPI', 405
 
     # HTTP PATCH
     def patch(self, ident):
