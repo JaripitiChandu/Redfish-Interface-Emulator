@@ -15,7 +15,6 @@ import copy
 # Local imports
 import g
 from . import utils
-from db_conn import get_from_db, post_to_db
 from .resource_dictionary import ResourceDictionary
 from .static_loader import load_static
 # Local imports (special case)
@@ -353,11 +352,11 @@ class ResourceManager(object):
         #     'CompositionService': {'@odata.id': self.rest_base + 'CompositionService'}
         # }
 
-        return get_from_db('/redfish/v1/')
+        return g.db.get_from_db('/redfish/v1/')
 
     @configuration.setter
     def configuration(self, value):
-        post_to_db(value)
+        g.db.post_to_db(value)
 
     @property
     def available_procs(self):

@@ -13,6 +13,11 @@ from flask_restful import Api
 from functools import wraps
 from jsonschema import validate, ValidationError
 import time, json
+from db_conn import DataBase
+
+
+DB_FILEPATH = 'm7_database.db'
+
 
 def delay_response():
     def decorator(func):
@@ -53,6 +58,9 @@ staticfolders = []
 
 # Base URI. Will get overwritten in emulator.py
 rest_base = 'base'
+
+# Create the databse object to store emulator configs
+db = DataBase(DB_FILEPATH)
 
 # Create Flask server
 app = Flask(__name__)
