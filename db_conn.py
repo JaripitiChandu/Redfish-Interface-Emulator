@@ -6,7 +6,6 @@ class DataBase(BoltDB):
 
     Attributes:
         db_filepath (str): The file path to the BoltDB database.
-        db (BoltDB): The BoltDB instance.
     """
 
     def __init__(self, db_filepath) -> None:
