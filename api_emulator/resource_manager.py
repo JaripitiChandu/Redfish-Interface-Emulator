@@ -352,11 +352,11 @@ class ResourceManager(object):
         #     'CompositionService': {'@odata.id': self.rest_base + 'CompositionService'}
         # }
 
-        return g.db.get_from_db('/redfish/v1/')
+        return self.__config
 
     @configuration.setter
     def configuration(self, value):
-        g.db.post_to_db(value)
+        self.__config = value
 
     @property
     def available_procs(self):
@@ -446,8 +446,6 @@ class ResourceManager(object):
         """
         Call Resource_Dictionary's get_resource
         """
-        from db_conn import get_from_db
-        return get_from_db(path)
         obj = self.resource_dictionary.get_resource(path)
         return obj
 

@@ -43,6 +43,8 @@ CONFIG = 'emulator-config.json'
 
 # Base URL of the RESTful interface
 REST_BASE = '/redfish/v1/'
+BNAME = b'service-root'
+INDEX = b'value'
 g.rest_base = REST_BASE
 
 # Creating the ResourceManager
@@ -179,8 +181,19 @@ class RedfishAPI(Resource):
 
     def post(self, path:str=None):
         if path is None:
-            resource_manager.configuration = request.json
-            resp = resource_manager.configuration, 201
+            logging.info('Service root POST called')
+            try:
+                with g.db.update() as tx:
+                    b = tx.bucket(BNAME)
+                    if not b:
+                        b = tx.create_bucket(BNAME)
+                        b.put(INDEX, json.dumps(request.json).encode())
+                        resp = 200
+                    else:
+                        resp = 'service root already exists', 409        
+            except Exception as e:
+                logging.error(f'error creating service root - {e}')
+                resp = INTERNAL_ERROR
         elif path.startswith("cisco"):
             cisco_endpoints[path] = json.loads(request.data.decode())
             return path, 201
@@ -219,8 +232,8 @@ class RedfishAPI(Resource):
         Either return ServiceRoot or let resource manager handel
         """
     def get(self, path:str=None):
-
         try:
+            logging.info('Service root GET called')
             if path is not None:
                 # path has a value
                 if path.startswith("cisco"):
@@ -231,10 +244,16 @@ class RedfishAPI(Resource):
                 else:
                     config = self.get_configuration(resource_manager, path)
             else:
-                # path is None, fetch ServiceRoot
-                config = resource_manager.configuration
-                if config is None:
-                    return "Srevice Root not found !", 404
+                # path is None, fetch ServiceRoot                
+                resp = 404
+                with g.db.view() as tx:
+                    b = tx.bucket(BNAME)
+                    if b:
+                        value = b.get(INDEX).decode()
+                        config = json.loads(value)
+                    else:
+                        return "service root not found", 404
+
             resp = config, 200
         except PathError:
             resp = error_response('Attribute Does Not Exist', 404)
