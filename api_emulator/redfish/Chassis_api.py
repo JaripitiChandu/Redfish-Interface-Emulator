@@ -18,6 +18,8 @@ from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
 
 members = {}
+BNAME = b'chassis'
+INDEX = b'value'
 
 INTERNAL_ERROR = 500
 
@@ -87,8 +89,18 @@ class ChassisAPI(Resource):
         try:
             # Find the entry with the correct value for Id
             resp = 404
-            if ident in members:
-                resp = members[ident], 200
+            with g.db.view() as tx:
+                b = tx.bucket(BNAME)
+                if b:
+                    ident_bucket = b.bucket(str(ident).encode())
+                    if not ident_bucket:
+                        resp = f"chassis {ident} not found", 404
+                    else:
+                        value = ident_bucket.get(INDEX).decode()
+                        resp = json.loads(value), 200
+                else:
+                    resp = f"chassis {ident} not found", 404
+
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -107,10 +119,16 @@ class ChassisAPI(Resource):
     def post(self, ident):
         logging.info('ChassisAPI POST called')
         try:
-            global config
-            config=request.json
-            members[ident]=config
-            resp = config, 200
+            with g.db.update() as tx:
+                b = tx.bucket(BNAME)
+                if not b:
+                    b = tx.create_bucket(BNAME)
+                if b.bucket(str(ident).encode()):
+                    resp = f"chassis {ident} alredy exists", 409
+                else:
+                    ident_bucket = b.create_bucket(str(ident).encode())
+                    ident_bucket.put(INDEX, json.dumps(request.json).encode())
+                    resp = request.json, 200
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -153,14 +171,23 @@ class ChassisCollectionAPI(Resource):
     def __init__(self):
         logging.info('ChassisCollectionAPI init called')
         self.rb = g.rest_base
+        bucket_members = []
+
+        with g.db.view() as tx:
+            b = tx.bucket(BNAME)
+            if b:
+                for k, v in b:
+                    if not v:
+                        if b.bucket(k):
+                            bucket_members.append(json.loads(b.bucket(k).get(INDEX).decode())['@odata.id'])
+
         self.config = {
             '@odata.id': self.rb + 'Chassis',
             '@odata.type': '#ChassisCollection.1.0.0.ChassisCollection',
             '@odata.context': self.rb + '$metadata#ChassisCollection.ChassisCollection',
             'Name': 'Chassis Collection',
-            'Members': [{'@odata.id': x['@odata.id']} for
-                        x in list(members.values())],
-            'Members@odata.count': len(members)
+            'Members': [{'@odata.id': x} for x in bucket_members],
+            'Members@odata.count': len(bucket_members)
         }
 
     # HTTP GET

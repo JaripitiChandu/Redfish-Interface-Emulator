@@ -11,6 +11,7 @@ Singleton  API:  GET, POST
 
 import g
 
+import json
 import sys, traceback
 import logging
 import copy
@@ -20,7 +21,9 @@ from .Chassis_api import members as chassis_members
 from api_emulator.utils import update_nested_dict
 
 members = {}
-
+PRIMARY_BNAME = b'chassis'
+BNAME = b'network_adapters'
+INDEX = b'value'
 INTERNAL_ERROR = 500
 
 
@@ -49,13 +52,18 @@ class NetworkAdaptersAPI(Resource):
         try:
             # Find the entry with the correct value for Id
             resp = 404
-            if ident in members:
-                if ident1 in members[ident]:
-                    resp = members[ident][ident1], 200
+            with g.db.view() as tx:
+                if not tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()):
+                    resp = f"chassis {ident} not found", 404
                 else:
-                    resp = f"NetworkAdapters {ident1} for Chassis {ident} not found", 404
-            else:
-                resp = f"Chassis {ident} not found", 404          
+                    b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME)
+                    if b:
+                        ident_bucket = b.bucket(str(ident1).encode())
+                        if not ident_bucket:
+                            resp = f"chassis {ident} network adapter {ident1} not found", 404
+                        else:
+                            value = ident_bucket.get(INDEX).decode()
+                            resp = json.loads(value), 200
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -74,17 +82,20 @@ class NetworkAdaptersAPI(Resource):
     def post(self, ident, ident1):
         logging.info('NetworkAdaptersAPI POST called')
         try:
-            global config
-            if ident in chassis_members:
-                members.setdefault(ident, {})
-                if ident1 in members[ident]:
-                    return ident1 + " NetworkAdapter already exists", 409
+            with g.db.update() as tx:
+                if tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(str(ident1).encode()):
+                    resp = f"network adapters {ident1} already exists in chassis {ident}", 409
                 else:
-                    members[ident][ident1] = request.json
-            else:
-                resp = f"Chassis {ident} not found", 404
-
-            resp = members[ident][ident1], 200
+                    pb = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode())
+                    if not pb:
+                        resp = f"chassis {ident} not found", 404
+                    else:
+                        b = pb.bucket(BNAME)
+                        if not b:
+                            b = pb.create_bucket(BNAME)
+                        ident_bucket = b.create_bucket(str(ident1).encode())
+                        ident_bucket.put(INDEX, json.dumps(request.json).encode())
+                        resp = request.json, 200
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -133,6 +144,7 @@ class NetworkAdaptersCollectionAPI(Resource):
     def __init__(self):
         logging.info('NetworkAdaptersCollectionAPI init called')
         self.rb = g.rest_base
+
         self.config = {
             '@odata.id': " ",
             '@odata.type': '#NetworkAdapterCollection.NetworkAdapterCollection',
@@ -146,9 +158,21 @@ class NetworkAdaptersCollectionAPI(Resource):
     def get(self,ident):
         logging.info('NetworkAdaptersCollectionAPI GET called')
         try:
+            bucket_members = []
+            with g.db.view() as tx:
+                b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME)
+
+                if not b:
+                    resp = f'chassis {ident} network adapters not found', 404
+                else:
+                    for k, v in b:
+                        if not v:
+                            if b.bucket(k):
+                                bucket_members.append(json.loads(b.bucket(k).get(INDEX).decode())['@odata.id'])
+
             self.config["@odata.id"] = "/redfish/v1/Chassis/{}/NetworkAdapters".format(ident)
-            self.config["Members"] = [{'@odata.id': NetworkAdapters['@odata.id']} for NetworkAdapters in list(members.get(ident, {}).values())]
-            self.config["Members@odata.count"] = len(members.setdefault(ident, {}))
+            self.config['Members'] = [{'@odata.id': x} for x in bucket_members],
+            self.config["Members@odata.count"] = len(bucket_members)
             resp = self.config, 200
             
         except Exception:
