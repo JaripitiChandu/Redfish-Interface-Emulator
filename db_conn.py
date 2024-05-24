@@ -1,6 +1,6 @@
 from boltdb import BoltDB
 
-class DataBase:
+class DataBase(BoltDB):
     """
     A class representing a database wrapper for BoltDB.
 
@@ -16,7 +16,7 @@ class DataBase:
         Args:
             db_filepath (str): The file path to the BoltDB database.
         """
-        self.db = BoltDB(db_filepath)
+        super().__init__(db_filepath)
 
     def add_bucket(self, tx, data):
         """
@@ -42,7 +42,7 @@ class DataBase:
         Args:
             data (dict): The data to be posted to the database.
         """
-        with self.db.update() as tx:
+        with self.update() as tx:
             id = data['@odata.id']
             b = tx.create_bucket(id.encode("utf-8"))
             self.add_bucket(b, data)
@@ -79,7 +79,7 @@ class DataBase:
             dict: The retrieved data from the database.
         """
         result = {}
-        with self.db.view() as tx:
+        with self.view() as tx:
             b = tx.bucket(data_id.encode())
             if not b:
                 return
