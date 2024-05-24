@@ -83,19 +83,24 @@ class NetworkAdaptersAPI(Resource):
         logging.info('NetworkAdaptersAPI POST called')
         try:
             with g.db.update() as tx:
-                if tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(str(ident1).encode()):
-                    resp = f"network adapters {ident1} already exists in chassis {ident}", 409
+                primary_bucket = tx.bucket(PRIMARY_BNAME)
+                if not primary_bucket:
+                    resp = "chassis not found", 404                
                 else:
-                    pb = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode())
-                    if not pb:
-                        resp = f"chassis {ident} not found", 404
+                    primary_ident_bucket = primary_bucket.bucket(str(ident).encode())
+                    if not primary_ident_bucket:
+                        resp = f"chassis {1} not found", 404                
                     else:
-                        b = pb.bucket(BNAME)
-                        if not b:
-                            b = pb.create_bucket(BNAME)
-                        ident_bucket = b.create_bucket(str(ident1).encode())
-                        ident_bucket.put(INDEX, json.dumps(request.json).encode())
-                        resp = request.json, 200
+                        sub_resource_bucket = primary_ident_bucket.bucket(BNAME)
+                        if not sub_resource_bucket:
+                            sub_resource_bucket = primary_ident_bucket.create_bucket(BNAME)
+                        sub_resource_ident_bucket = sub_resource_bucket.bucket(str(ident1).encode())
+                        if sub_resource_ident_bucket:
+                            resp = f"network adapters {ident1} already exists in chassis {ident}", 409
+                        else:
+                            sub_resource_ident_bucket = sub_resource_bucket.create_bucket(str(ident1).encode())
+                            sub_resource_ident_bucket.put(INDEX, json.dumps(request.json).encode())
+                            resp = request.json, 200
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
