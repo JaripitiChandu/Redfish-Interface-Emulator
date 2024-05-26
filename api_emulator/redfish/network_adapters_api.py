@@ -18,12 +18,11 @@ import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
 from .Chassis_api import members as chassis_members
+from .Chassis_api import BNAME as RESOURCE_BNAME
 from api_emulator.utils import update_nested_dict
 
 members = {}
-PRIMARY_BNAME = b'chassis'
-BNAME = b'network_adapters'
-INDEX = b'value'
+BNAME = 'NetworkAdapters'
 INTERNAL_ERROR = 500
 
 
@@ -50,20 +49,12 @@ class NetworkAdaptersAPI(Resource):
     def get(self, ident, ident1):
         logging.info('NetworkAdaptersAPI GET called')
         try:
-            # Find the entry with the correct value for Id
             resp = 404
-            with g.db.view() as tx:
-                if not tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()):
-                    resp = f"chassis {ident} not found", 404
-                else:
-                    b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME)
-                    if b:
-                        ident_bucket = b.bucket(str(ident1).encode())
-                        if not ident_bucket:
-                            resp = f"chassis {ident} network adapter {ident1} not found", 404
-                        else:
-                            value = ident_bucket.get(INDEX).decode()
-                            resp = json.loads(value), 200
+            # define the bucket hierarchy
+            bucket_hierarchy = [RESOURCE_BNAME, ident, BNAME, ident1]
+            # get value of bucket using defined hierarchy
+            passed, output = g.get_value_from_bucket_hierarchy(bucket_hierarchy)
+            resp = output, 200 if passed else 404        
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -82,25 +73,24 @@ class NetworkAdaptersAPI(Resource):
     def post(self, ident, ident1):
         logging.info('NetworkAdaptersAPI POST called')
         try:
-            with g.db.update() as tx:
-                primary_bucket = tx.bucket(PRIMARY_BNAME)
-                if not primary_bucket:
-                    resp = "chassis not found", 404                
-                else:
-                    primary_ident_bucket = primary_bucket.bucket(str(ident).encode())
-                    if not primary_ident_bucket:
-                        resp = f"chassis {1} not found", 404                
-                    else:
-                        sub_resource_bucket = primary_ident_bucket.bucket(BNAME)
-                        if not sub_resource_bucket:
-                            sub_resource_bucket = primary_ident_bucket.create_bucket(BNAME)
-                        sub_resource_ident_bucket = sub_resource_bucket.bucket(str(ident1).encode())
-                        if sub_resource_ident_bucket:
-                            resp = f"network adapters {ident1} already exists in chassis {ident}", 409
-                        else:
-                            sub_resource_ident_bucket = sub_resource_bucket.create_bucket(str(ident1).encode())
-                            sub_resource_ident_bucket.put(INDEX, json.dumps(request.json).encode())
-                            resp = request.json, 200
+            # define the bucket hierarchy
+            bucket_hierarchy = [RESOURCE_BNAME, ident, BNAME, ident1]
+            # define hierarchy of buckets that should exist before creation of bucket for this resource
+            required_buckets_hierarchy = [RESOURCE_BNAME, ident]         
+            
+            # check if required buckets are present
+            passed, message = g.is_required_bucket_hierarchy_present(required_buckets_hierarchy)
+            if not passed:
+                return message, 404
+            
+            # check if bucket already exists for current resource
+            passed, message = g.is_not_resource_bucket_already_present_in_hierarchy(bucket_hierarchy)
+            if not passed:
+                return message, 409
+            
+            # now create the required bucket for resource and put value
+            g.post_value_to_bucket_hierarchy(bucket_hierarchy, json.dumps(request.json))
+            resp = request.json, 200
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -163,21 +153,16 @@ class NetworkAdaptersCollectionAPI(Resource):
     def get(self,ident):
         logging.info('NetworkAdaptersCollectionAPI GET called')
         try:
-            bucket_members = []
-            with g.db.view() as tx:
-                b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME)
-
-                if not b:
-                    resp = f'chassis {ident} network adapters not found', 404
-                else:
-                    for k, v in b:
-                        if not v:
-                            if b.bucket(k):
-                                bucket_members.append(json.loads(b.bucket(k).get(INDEX).decode())['@odata.id'])
-
+            # define the bucket hierarchy for collection
+            bucket_hierarchy = [RESOURCE_BNAME, ident, BNAME]
+            # get list of resources
+            passed, output = g.get_collection_from_bucket_hierarchy(bucket_hierarchy)
+            if not passed:
+                return output, 404
+            # update the value of config using obtained values
             self.config["@odata.id"] = "/redfish/v1/Chassis/{}/NetworkAdapters".format(ident)
-            self.config['Members'] = [{'@odata.id': x} for x in bucket_members]
-            self.config["Members@odata.count"] = len(bucket_members)
+            self.config['Members'] = [{'@odata.id': x} for x in output]
+            self.config["Members@odata.count"] = len(output)
             resp = self.config, 200
             
         except Exception:

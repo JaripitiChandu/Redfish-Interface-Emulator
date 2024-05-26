@@ -18,8 +18,7 @@ from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
 
 members = {}
-BNAME = b'chassis'
-INDEX = b'value'
+BNAME = 'Chassis'
 
 INTERNAL_ERROR = 500
 
@@ -87,20 +86,12 @@ class ChassisAPI(Resource):
     def get(self, ident):
         logging.info('ChassisAPI GET called')
         try:
-            # Find the entry with the correct value for Id
             resp = 404
-            with g.db.view() as tx:
-                b = tx.bucket(BNAME)
-                if b:
-                    ident_bucket = b.bucket(str(ident).encode())
-                    if not ident_bucket:
-                        resp = f"chassis {ident} not found", 404
-                    else:
-                        value = ident_bucket.get(INDEX).decode()
-                        resp = json.loads(value), 200
-                else:
-                    resp = f"chassis {ident} not found", 404
-
+            # define the bucket hierarchy
+            bucket_hierarchy = [BNAME, ident]
+            # get value of bucket using defined hierarchy
+            passed, output = g.get_value_from_bucket_hierarchy(bucket_hierarchy)
+            resp = output, 200 if passed else 404
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -119,16 +110,15 @@ class ChassisAPI(Resource):
     def post(self, ident):
         logging.info('ChassisAPI POST called')
         try:
-            with g.db.update() as tx:
-                b = tx.bucket(BNAME)
-                if not b:
-                    b = tx.create_bucket(BNAME)
-                if b.bucket(str(ident).encode()):
-                    resp = f"chassis {ident} alredy exists", 409
-                else:
-                    ident_bucket = b.create_bucket(str(ident).encode())
-                    ident_bucket.put(INDEX, json.dumps(request.json).encode())
-                    resp = request.json, 200
+            # define the bucket hierarchy
+            bucket_hierarchy = [BNAME, ident]        
+            # check if bucket already exists for current resource
+            passed, message = g.is_not_resource_bucket_already_present_in_hierarchy(bucket_hierarchy)
+            if not passed:
+                return message, 409
+            # now create the required bucket for resource and put value
+            g.post_value_to_bucket_hierarchy(bucket_hierarchy, json.dumps(request.json))
+            resp = request.json, 200
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -171,29 +161,28 @@ class ChassisCollectionAPI(Resource):
     def __init__(self):
         logging.info('ChassisCollectionAPI init called')
         self.rb = g.rest_base
-        bucket_members = []
-
-        with g.db.view() as tx:
-            b = tx.bucket(BNAME)
-            if b:
-                for k, v in b:
-                    if not v:
-                        if b.bucket(k):
-                            bucket_members.append(json.loads(b.bucket(k).get(INDEX).decode())['@odata.id'])
-
         self.config = {
             '@odata.id': self.rb + 'Chassis',
             '@odata.type': '#ChassisCollection.1.0.0.ChassisCollection',
             '@odata.context': self.rb + '$metadata#ChassisCollection.ChassisCollection',
             'Name': 'Chassis Collection',
-            'Members': [{'@odata.id': x} for x in bucket_members],
-            'Members@odata.count': len(bucket_members)
+            "Members": [],
+            'Members@odata.count': 0
         }
 
     # HTTP GET
     def get(self):
         logging.info('ChassisCollectionAPI GET called')
         try:
+            # define the bucket hierarchy for collection
+            bucket_hierarchy = [BNAME]
+            # get list of resources
+            passed, output = g.get_collection_from_bucket_hierarchy(bucket_hierarchy)
+            if not passed:
+                return output, 404
+            # update the value of config using obtained values
+            self.config["Members"] = [{'@odata.id': x} for x in output]
+            self.config["Members@odata.count"] = len(output)
             resp = self.config, 200
         except Exception:
             traceback.print_exc()

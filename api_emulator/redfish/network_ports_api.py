@@ -10,20 +10,24 @@ Singleton  API:  GET, POST
 """
 
 import g
+from g import INDEX, db
 
+import json
 import sys, traceback
 import logging
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
 from .Chassis_api import members as chassis_members
+from .Chassis_api import BNAME as RESOURCE_BNAME
+from .network_adapters_api import BNAME as SUB_RESOURCE_BNAME 
 from .network_adapters_api import members as network_adapters_members
 from api_emulator.utils import update_nested_dict
 
 members = {}
 
 INTERNAL_ERROR = 500
-
+BNAME = 'NetworkPorts'
 
 # NetworkPorts Singleton API
 class NetworkPortsAPI(Resource):
@@ -48,18 +52,12 @@ class NetworkPortsAPI(Resource):
     def get(self, ident, ident1, ident2):
         logging.info('NetworkPortsAPI GET called')
         try:
-            # Find the entry with the correct value for Id
             resp = 404
-            if ident in members:
-                if ident1 in members[ident]:
-                    if ident2 in members[ident][ident1]:
-                        resp = members[ident][ident1][ident2], 200
-                    else:
-                        resp = f"NetworkPorts {ident2} for  NetworkAdapters {ident1} of Chassis {ident} not found", 404
-                else:
-                    resp = f"NetworkAdapters {ident1} of Chassis {ident} not found", 404  
-            else:
-                resp = f"Chassis {ident} not found", 404          
+            # define the bucket hierarchy
+            bucket_hierarchy = [RESOURCE_BNAME, ident, SUB_RESOURCE_BNAME, ident1, BNAME, ident2]
+            # get value of bucket using defined hierarchy
+            passed, output = g.get_value_from_bucket_hierarchy(bucket_hierarchy)
+            resp = output, 200 if passed else 404
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -74,21 +72,24 @@ class NetworkPortsAPI(Resource):
     def post(self, ident, ident1, ident2):
         logging.info('NetworkPortsAPI POST called')
         try:
-            if ident in chassis_members:
-                members.setdefault(ident, {})
-                if ident1 in network_adapters_members[ident]:
-                 members[ident].setdefault(ident1, {})
-                else:
-                    return "NetworkAdapter {} does not exist in Chassis {}".format(ident1,ident), 404
-            else:    
-                return "Chassis {} does not exist".format(ident), 404
-
-            if ident2 in members[ident][ident1]:
-                return "NetworkPort {} already exists".format(ident2), 409
-            else:
-                members[ident][ident1][ident2] = request.json
-                resp = members[ident][ident1][ident2], 200
-
+            # define the bucket hierarchy
+            bucket_hierarchy = [RESOURCE_BNAME, ident, SUB_RESOURCE_BNAME, ident1, BNAME, ident2]
+            # define hierarchy of buckets that should exist before creation of bucket for this resource
+            required_buckets_hierarchy = [RESOURCE_BNAME, ident, SUB_RESOURCE_BNAME, ident1]            
+            
+            # check if required buckets are present
+            passed, message = g.is_required_bucket_hierarchy_present(required_buckets_hierarchy)
+            if not passed:
+                return message, 404
+            
+            # check if bucket already exists for current resource
+            passed, message = g.is_not_resource_bucket_already_present_in_hierarchy(bucket_hierarchy)
+            if not passed:
+                return message, 409
+            
+            # now create the required bucket for resource and put value
+            g.post_value_to_bucket_hierarchy(bucket_hierarchy, json.dumps(request.json))
+            resp = request.json, 200
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -119,6 +120,7 @@ class NetworkPortsAPI(Resource):
             traceback.print_exc()
             resp = INTERNAL_ERROR
         return resp
+
     # HTTP DELETE
     def delete(self, ident, ident1):
         logging.info('NetworkPortsAPI DELETE called')
@@ -153,9 +155,16 @@ class NetworkPortsCollectionAPI(Resource):
     def get(self,ident,ident1):
         logging.info('NetworkPortsCollectionAPI GET called')
         try:
+            # define the bucket hierarchy for collection
+            bucket_hierarchy = [RESOURCE_BNAME, ident, SUB_RESOURCE_BNAME, ident1, BNAME]
+            # get list of resources
+            passed, output = g.get_collection_from_bucket_hierarchy(bucket_hierarchy)
+            if not passed:
+                return output, 404
+            # update the value of config using obtained values
             self.config["@odata.id"] = "/redfish/v1/Chassis/{}/NetworkAdapters/{}/NetworkPorts".format(ident,ident1)
-            self.config["Members"] = [{'@odata.id': NetworkPorts['@odata.id']} for NetworkPorts in list(members.get(ident, {}).get(ident1, {}).values())]
-            self.config["Members@odata.count"] = len(members[ident].setdefault(ident1, {}))
+            self.config["Members"] = [{'@odata.id': x} for x in output]
+            self.config["Members@odata.count"] = len(output)
             resp = self.config, 200
         except Exception:
             traceback.print_exc()
@@ -185,4 +194,3 @@ class NetworkPortsCollectionAPI(Resource):
     def delete(self):
         logging.info('NetworkPortsCollectionAPI DELETE called')
         return 'DELETE is not a supported command for NetworkPortsCollectionAPI', 405
-

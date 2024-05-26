@@ -16,7 +16,13 @@ import time, json
 from db_conn import DataBase
 
 
+#
+# Database configs
+INDEX = b"index"
 DB_FILEPATH = 'm7_database.db'
+
+# Create the databse object to store emulator configs
+db = DataBase(DB_FILEPATH)
 
 
 def delay_response():
@@ -52,16 +58,77 @@ def validate_json(schema):
         return wrapper
     return decorator
 
+
+def get_value_from_bucket_hierarchy(buckets): 
+    with db.view() as bucket:
+        for bucket_name in buckets:
+            bucket = bucket.bucket(str(bucket_name).encode())
+            if not bucket:
+                message = ' '.join(buckets[:buckets.index(bucket_name)+1]) + ' not found'
+                print(message)
+                return False, message
+        else:
+            value = bucket.get(INDEX).decode()
+            return True, json.loads(value)
+
+
+def get_collection_from_bucket_hierarchy(buckets):
+    bucket_members = []
+    with db.view() as bucket:
+        for bucket_name in buckets:
+            bucket = bucket.bucket(str(bucket_name).encode())
+            if not bucket:
+                message = ' '.join(buckets[:buckets.index(bucket_name)+1]) + ' not found'
+                print(message)
+                return False, message
+        else:
+            for k, v in bucket:
+                if not v:
+                    if bucket.bucket(k):
+                        bucket_members.append(json.loads(bucket.bucket(k).get(INDEX).decode())['@odata.id'])
+    return True, bucket_members
+
+
+def is_required_bucket_hierarchy_present(buckets):
+    with db.view() as bucket:
+        for bucket_name in buckets:
+            bucket = bucket.bucket(str(bucket_name).encode())
+            if not bucket:
+                message = ' '.join(buckets[:buckets.index(bucket_name)+1]) + ' not found'
+                print(message)
+                return False, message
+        else:
+            return True, 'all required buckets present'
+
+
+def is_not_resource_bucket_already_present_in_hierarchy(buckets):
+    with db.view() as bucket:
+        for bucket_name in buckets:
+            bucket = bucket.bucket(str(bucket_name).encode())
+            if not bucket:
+                break
+        else:
+            message = ' '.join(buckets[:buckets.index(bucket_name)+1]) + ' already exists'
+            return False, message
+    return True, 'bucket hierarchy not present'
+
+
+def post_value_to_bucket_hierarchy(buckets, value):
+    with db.update() as bucket:
+        for bucket_name in buckets:
+            if not bucket.bucket(str(bucket_name).encode()):
+                bucket = bucket.create_bucket(str(bucket_name).encode())
+            else:
+                bucket = bucket.bucket(str(bucket_name).encode())
+        bucket.put(INDEX, str(value).encode())
+
+
 # Settings from emulator-config.json
 #
 staticfolders = []
 
 # Base URI. Will get overwritten in emulator.py
 rest_base = 'base'
-
-# Create the databse object to store emulator configs
-db = DataBase(DB_FILEPATH)
-INDEX = b"index"
 
 # Create Flask server
 app = Flask(__name__)

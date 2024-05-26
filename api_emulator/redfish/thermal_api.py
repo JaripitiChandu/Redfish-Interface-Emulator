@@ -10,15 +10,20 @@ Singleton  API:  GET, POST
 """
 
 import g
+from g import INDEX, db
 
+import json
 import sys, traceback
 import logging
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
 
+from .Chassis_api import BNAME as RESOURCE_BNAME
+
 members = {}
 
+BNAME = 'Thermal'
 INTERNAL_ERROR = 500
 
 
@@ -88,10 +93,12 @@ class ThermalAPI(Resource):
     def get(self, ident):
         logging.info('ThermalAPI GET called')
         try:
-            # Find the entry with the correct value for Id
             resp = 404
-            if ident in members:
-                resp = members[ident], 200
+            # define the bucket hierarchy
+            bucket_hierarchy = [RESOURCE_BNAME, ident, BNAME]
+            # get value of bucket using defined hierarchy
+            passed, output = g.get_value_from_bucket_hierarchy(bucket_hierarchy)
+            resp = output, 200 if passed else 404    
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -120,9 +127,24 @@ class ThermalAPI(Resource):
     def post(self, ident):
         logging.info('ThermalAPI POST called')
         try:
-            config=request.json
-            members[ident]=config
-            resp = config, 200
+            # define the bucket hierarchy
+            bucket_hierarchy = [RESOURCE_BNAME, ident, BNAME]
+            # define hierarchy of buckets that should exist before creation of bucket for this resource
+            required_buckets_hierarchy = [RESOURCE_BNAME, ident]            
+            
+            # check if required buckets are present
+            passed, message = g.is_required_bucket_hierarchy_present(required_buckets_hierarchy)
+            if not passed:
+                return message, 404
+            
+            # check if bucket already exists for current resource
+            passed, message = g.is_not_resource_bucket_already_present_in_hierarchy(bucket_hierarchy)
+            if not passed:
+                return message, 409
+            
+            # now create the required bucket for resource and put value
+            g.post_value_to_bucket_hierarchy(bucket_hierarchy, json.dumps(request.json))
+            resp = request.json, 200
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
