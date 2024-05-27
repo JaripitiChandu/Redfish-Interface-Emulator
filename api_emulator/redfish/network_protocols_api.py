@@ -12,7 +12,7 @@ Singleton  API:  GET, POST
 import g
 
 import sys, traceback
-import logging
+import logging , json
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
@@ -20,6 +20,9 @@ from .Manager_api import members as manager_members
 from api_emulator.utils import update_nested_dict
 
 members = {}
+
+PRIMARY_BNAME = b'managers'
+BNAME = b'network_protocols'
 
 INTERNAL_ERROR = 500
 
@@ -48,11 +51,18 @@ class NetworkProtocolAPI(Resource):
         logging.info('NetworkProtocolAPI GET called')
         try:
             # Find the entry with the correct value for Id
-            resp = 404
-            if ident in members:
-                    resp = members[ident], 200
-            else:
-                resp = f"Manager {ident} not found", 404          
+            with g.db.view() as tx:
+                if not tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()):
+                    resp = f"Manager {ident} not found", 404
+                else:
+                    b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode())
+                    if b:
+                        ident_bucket = b.bucket(BNAME)
+                        if not ident_bucket:
+                            resp = f"Manager {ident} NetworkProtocols not found", 404
+                        else:
+                            value = ident_bucket.get(BNAME)
+                            resp = json.loads(value), 200
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -71,14 +81,19 @@ class NetworkProtocolAPI(Resource):
     def post(self, ident):
         logging.info('NetworkProtocolAPI POST called')
         try:
-            global config
-            if ident in manager_members:
-                members.setdefault(ident, {})
-                members[ident] = request.json
-            else:
-                resp = f"Manager {ident} not found", 404
-            
-            resp = members[ident], 200
+            with g.db.update() as tx:
+                if tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME):
+                    resp = f"NetworkProtocols already exists in Manager {ident}", 409
+                else:
+                    pb = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode())
+                    if not pb:
+                        resp = f"Manager {ident} not found", 404
+                    else:
+                        b = pb.bucket(BNAME)
+                        if not b:
+                            b = pb.create_bucket(BNAME)
+                        b.put(BNAME, json.dumps(request.json).encode())
+                        resp = request.json, 200
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR

@@ -13,7 +13,7 @@ import g
 from api_emulator.utils import update_nested_dict
 
 import sys, traceback
-import logging
+import logging, json
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
@@ -22,7 +22,8 @@ from flask_restful import reqparse, Api, Resource
 from .templates.Manager import get_Manager_instance
 
 members = {}
-
+BNAME = b'managers'
+INDEX = b'value'
 INTERNAL_ERROR = 500
 
 
@@ -51,8 +52,17 @@ class ManagerAPI(Resource):
         try:
             # Find the entry with the correct value for Id
             resp = 404
-            if ident in members:
-                resp = members[ident], 200
+            with g.db.view() as tx:
+                b = tx.bucket(BNAME)
+                if b:
+                    ident_bucket = b.bucket(str(ident).encode())
+                    if not ident_bucket:
+                        resp = f"Manager {ident} not found", 404
+                    else:
+                        value = ident_bucket.get(INDEX).decode()
+                        resp = json.loads(value), 200
+                else:
+                    resp = f"Manager {ident} not found", 404
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -64,21 +74,24 @@ class ManagerAPI(Resource):
         return 'PUT is not a supported command for ManagerAPI', 405
 
     # HTTP POST
-    # This is an emulator-only POST command that creates new resource
-    # instances from a predefined template. The new instance is given
-    # the identifier "ident", which is taken from the end of the URL.
-    # PATCH commands can then be used to update the new instance.
     def post(self, ident):
         logging.info('ManagerAPI POST called')
         try:
-            global config
-            config=request.json
-            members[ident]=config
-            resp = config, 200
+            with g.db.update() as tx:
+                b = tx.bucket(BNAME)
+                if not b:
+                    b = tx.create_bucket(BNAME)
+                if b.bucket(str(ident).encode()):
+                    resp = f"Manager {ident} already exists", 409
+                else:
+                    ident_bucket = b.create_bucket(str(ident).encode())
+                    ident_bucket.put(INDEX, json.dumps(request.json).encode())
+                    resp = request.json, 200
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
         return resp
+
     # HTTP PATCH
     def patch(self, ident):
         logging.info('ManagerAPI PATCH called')
@@ -114,16 +127,23 @@ class ManagerCollectionAPI(Resource):
     def __init__(self):
         logging.info('ManagerCollectionAPI init called')
         self.rb = g.rest_base
+        bucket_members = []
+
+        with g.db.view() as tx:
+            b = tx.bucket(BNAME)
+            if b:
+                for k, v in b:
+                    if not v:
+                        if b.bucket(k):
+                            bucket_members.append(json.loads(b.bucket(k).get(INDEX).decode())['@odata.id'])
         self.config = {
             '@odata.context': self.rb + '$metadata#ManagerCollection.ManagerCollection',
             '@odata.id': self.rb + 'Managers',
             '@odata.type': '#ManagerCollection.ManagerCollection',
             'Name': 'Manager Collection',
-            'Links': {}
+            'Members': [{'@odata.id': x} for x in bucket_members],
+            'Members@odata.count': len(bucket_members)
         }
-        self.config['Links']['Members@odata.count'] = len(members)
-        self.config['Links']['Members'] = [{'@odata.id':x['@odata.id']} for
-                x in list(members.values())]
 
     # HTTP GET
     def get(self):

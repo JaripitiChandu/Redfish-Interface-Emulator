@@ -12,7 +12,7 @@ Singleton  API:  GET, POST
 import g
 
 import sys, traceback
-import logging
+import logging, json
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
@@ -20,6 +20,10 @@ from .Manager_api import members as manager_members
 from api_emulator.utils import update_nested_dict
 
 members = {}
+
+PRIMARY_BNAME = b'managers'
+BNAME = b'log_services'
+INDEX = b'value'
 
 INTERNAL_ERROR = 500
 
@@ -49,13 +53,18 @@ class LogServiceAPI(Resource):
         try:
             # Find the entry with the correct value for Id
             resp = 404
-            if ident in members:
-                if ident1 in members[ident]:
-                    resp = members[ident][ident1], 200
+            with g.db.view() as tx:
+                if not tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()):
+                    resp = f"Manager {ident} not found", 404
                 else:
-                    resp = f"LogService {ident1} for Manager {ident} not found", 404
-            else:
-                resp = f"Manager {ident} not found", 404          
+                    b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME)
+                    if b:
+                        ident_bucket = b.bucket(str(ident1).encode())
+                        if not ident_bucket:
+                            resp = f"LogService {ident1} for Manager {ident} not found", 404
+                        else:
+                            value = ident_bucket.get(INDEX).decode()
+                            resp = json.loads(value), 200
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -74,17 +83,27 @@ class LogServiceAPI(Resource):
     def post(self, ident, ident1):
         logging.info('LogServiceAPI POST called')
         try:
-            global config
-            if ident in manager_members:
-                members.setdefault(ident, {})
-                if ident1 in members[ident]:
-                    return ident1 + " LogService already exists", 409
+            with g.db.update() as tx:
+                managers = tx.bucket(PRIMARY_BNAME)
+                if managers:
+                    managers_ident = managers.bucket(str(ident).encode())
+                    if managers_ident:
+                        log_services=managers_ident.bucket(BNAME)
                 else:
-                    members[ident][ident1] = request.json
-            else:
-                resp = f"Manager {ident} not found", 404
-            
-            resp = members[ident][ident1], 200
+                    resp = f"Manager {ident} not found", 404
+
+                if not log_services:
+                    log_services=managers_ident.create_bucket(BNAME)
+
+                log_services_index = log_services.bucket(str(ident1).encode())
+
+                if log_services_index:
+                    resp = f"LogService {str(ident1).encode()} already exists in Manager {ident}", 409
+                else:
+                    ident_bucket = log_services.create_bucket(str(ident1).encode())
+                    ident_bucket.put(INDEX, json.dumps(request.json).encode())
+                    resp = request.json, 200
+
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -145,9 +164,20 @@ class LogServiceCollectionAPI(Resource):
     def get(self,ident):
         logging.info('LogServiceCollectionAPI GET called')
         try:
+            bucket_members = []
+            with g.db.view() as tx:
+                b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME)
+
+                if not b:
+                    resp = f'Managers {ident} CiscoInternalStorage not found', 404
+                else:
+                    for k, v in b:
+                        if not v:
+                            if b.bucket(k):
+                                bucket_members.append(json.loads(b.bucket(k).get(INDEX).decode())['@odata.id'])
             self.config["@odata.id"] = "/redfish/v1/Manager/{}/LogServices".format(ident)
-            self.config["Members"] = [{'@odata.id': LogService['@odata.id']} for LogService in list(members.get(ident, {}).values())]
-            self.config["Members@odata.count"] = len(members.setdefault(ident, {}))
+            self.config['Members'] = [{'@odata.id': x} for x in bucket_members]
+            self.config["Members@odata.count"] = len(bucket_members)
             resp = self.config, 200
             
         except Exception:

@@ -12,14 +12,22 @@ Singleton  API:  GET, POST
 import g
 
 import sys, traceback
-import logging
+import logging, json
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
 from .Manager_api import members as manager_members
 from .cisco_internal_storage_api import members as internalstorage_members
 from .ciscopartition_api import members as partition_members
+
 members = {}
+
+PRIMARY_BNAME = b'managers'
+BNAME = b'cisco_internal_storage'
+OEM_BNAME = b'FlexMMC'  #OEM Resource
+OEM_SR_BNAME = b'cisco_partition'   #OEM  Sub Resource
+OEM_SR_BNAME_2 = b'cisco_files'
+INDEX = b'value'
 
 INTERNAL_ERROR = 500
 
@@ -47,16 +55,19 @@ class CiscoFileAPI(Resource):
     def get(self, ident, ident1, ident2):
         logging.info('CiscoFileAPI GET called')
         try:
-            if ident in members:
-                if ident1 in members[ident]:
-                    if ident2 in members[ident][ident1]:
-                        resp = members[ident][ident1][ident2], 200
-                    else:
-                        resp = f"CiscoFile {ident2} for  CiscoPartition {ident1} of Manager {ident} not found", 404
+            resp = 404
+            with g.db.view() as tx:
+                if not tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()):
+                    resp = f"Manager {ident} not found", 404
                 else:
-                    resp = f"CiscoPartition {ident1} of Manager {ident} not found", 404  
-            else:
-                resp = f"Manager {ident} not found", 404          
+                    b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME).bucket(OEM_BNAME).bucket(OEM_SR_BNAME).bucket(str(ident1).encode()).bucket(OEM_SR_BNAME_2)
+                    if b:
+                        ident_bucket = b.bucket(str(ident2).encode())
+                        if not ident_bucket:
+                            resp = f"CiscoFile {ident2} of CiscoPartition {ident1} for {OEM_BNAME} Manager {ident} not found", 404
+                        else:
+                            value = ident_bucket.get(INDEX).decode()
+                            resp = json.loads(value), 200
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -71,22 +82,34 @@ class CiscoFileAPI(Resource):
     def post(self, ident, ident1, ident2):
         logging.info('CiscoFileAPI POST called')
         try:
-            if ident in manager_members:
-                members.setdefault(ident, {})
-                if "FlexMMC" not in internalstorage_members[ident]:
-                    return "CiscoInternalStorage FlexMMC not found in Manager {}".format(ident), 404
-                elif ident1 in partition_members.get(ident,{}):
-                    members[ident].setdefault(ident1, {})
-                else:
-                    return "{} of CiscoInternalStorage FlexMMC not found in Manager {}".format(ident1,ident),404      
-            else:
-                return "Manager {} not found".format(ident), 404
+            with g.db.update() as tx:
+                managers = tx.bucket(PRIMARY_BNAME)
+                if managers:
+                    managers_ident = managers.bucket(str(ident).encode())
+                    if managers_ident:
+                        oem_storage = managers_ident.bucket(BNAME).bucket(OEM_BNAME)
+                        if oem_storage:
+                            oem_partition_ident = oem_storage.bucket(OEM_SR_BNAME).bucket(str(ident1).encode())
+                            if oem_partition_ident:
+                                oem_file=oem_partition_ident.bucket(OEM_SR_BNAME_2)
+                            else:
+                                resp = f"CiscoPartition {ident1} for {str(OEM_BNAME)} not found in Manager {ident}", 404
+                        else:
+                            resp = f"Manager {ident} {BNAME} {OEM_BNAME} not found", 404
+                    else:
+                        resp = f"Manager {ident} not found", 404
 
-            if ident2 in partition_members:
-                return "CiscoFile {} already exists".format(ident2), 409
-            else:
-                members[ident][ident1][ident2] = request.json
-                resp = members[ident][ident1][ident2], 200
+                if not oem_file:
+                    oem_file = oem_partition_ident.create_bucket(OEM_SR_BNAME_2)
+
+                oem_file_ident = oem_file.bucket(str(ident2).encode())
+
+                if oem_file_ident:
+                    resp = f"CiscoFile {ident2} of CiscoPartition {ident1} for {str(OEM_BNAME)} already exists in Manager {ident}", 409
+                else:
+                    ident_bucket = oem_file.create_bucket(str(ident2).encode())
+                    ident_bucket.put(INDEX, json.dumps(request.json).encode())
+                    resp = request.json, 200
 
         except Exception:
             traceback.print_exc()
@@ -141,9 +164,20 @@ class CiscoFileCollectionAPI(Resource):
     def get(self,ident,ident1):
         logging.info('CiscoFileCollectionAPI GET called')
         try:
+            bucket_members = []
+            with g.db.view() as tx:
+                b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME).bucket(OEM_BNAME).bucket(OEM_SR_BNAME).bucket(str(ident1).encode()).bucket(OEM_SR_BNAME_2)
+
+                if not b:
+                    resp = f"CiscoFile of CiscoPartition {ident1} for {str(OEM_BNAME)} not found in Manager {ident}", 404
+                else:
+                    for k, v in b:
+                        if not v:
+                            if b.bucket(k):
+                                bucket_members.append(json.loads(b.bucket(k).get(INDEX).decode())['@odata.id'])
             self.config["@odata.id"] = "/redfish/v1/Managers/{}/Oem/CiscoInternalStorage/FlexMMC/CiscoPartition/{}/CiscoFile".format(ident,ident1)
-            self.config["Members"] = [{'@odata.id': CiscoFile['@odata.id']} for CiscoFile in list(members.get(ident, {}).get(ident1, {}).values())]
-            self.config["Members@odata.count"] = len(self.config["Members"])
+            self.config['Members'] = [{'@odata.id': x} for x in bucket_members]
+            self.config["Members@odata.count"] = len(bucket_members)
             resp = self.config, 200
         except Exception:
             traceback.print_exc()

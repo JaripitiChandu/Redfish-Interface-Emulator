@@ -12,13 +12,17 @@ Singleton  API:  GET, POST
 import g
 
 import sys, traceback
-import logging
+import logging, json
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
-from .Manager_api import members as manager_members
+#from .Manager_api import members as manager_members
 
 members = {}
+
+PRIMARY_BNAME = b'managers'
+BNAME = b'ethernet_interfaces'
+INDEX = b'value'
 
 INTERNAL_ERROR = 500
 
@@ -48,13 +52,18 @@ class EthernetInterfaceAPI(Resource):
         try:
             # Find the entry with the correct value for Id
             resp = 404
-            if ident in members:
-                if ident1 in members[ident]:
-                    resp = members[ident][ident1], 200
+            with g.db.view() as tx:
+                if not tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()):
+                    resp = f"Manager {ident} not found", 404
                 else:
-                    resp = f"EthernetInterface {ident1} for Manager {ident} not found", 404
-            else:
-                resp = f"Manager {ident} not found", 404          
+                    b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME)
+                    if b:
+                        ident_bucket = b.bucket(str(ident1).encode())
+                        if not ident_bucket:
+                            resp = f"Manager {ident} Etherent Interface {ident1} not found", 404
+                        else:
+                            value = ident_bucket.get(INDEX).decode()
+                            resp = json.loads(value), 200
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -73,17 +82,27 @@ class EthernetInterfaceAPI(Resource):
     def post(self, ident, ident1):
         logging.info('EthernetInterfaceAPI POST called')
         try:
-            global config
-            if ident in manager_members:
-                members.setdefault(ident, {})
-                if ident1 in members[ident]:
-                    return ident1 + " EthernetInterface already exists", 409
+            with g.db.update() as tx:
+                managers = tx.bucket(PRIMARY_BNAME)
+                if managers:
+                    managers_ident = managers.bucket(str(ident).encode())
+                    if managers_ident:
+                        eth_interfaces = managers_ident.bucket(BNAME)
                 else:
-                    members[ident][ident1] = request.json
-            else:
-                resp = f"Manager {ident} not found", 404
-            
-            resp = members[ident][ident1], 200
+                    resp = f"Manager {ident} not found", 404
+
+                if not eth_interfaces:
+                    eth_interfaces = managers_ident.create_bucket(BNAME)
+
+                eth_interfaces_ident = eth_interfaces.bucket(str(ident1).encode())
+
+                if eth_interfaces_ident:
+                    resp = f"Ethernet Interfaces {ident1} already exists in Manager {ident}", 409
+                else:
+                    ident_bucket = eth_interfaces.create_bucket(str(ident1).encode())
+                    ident_bucket.put(INDEX, json.dumps(request.json).encode())
+                    resp = request.json, 200
+
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -138,9 +157,20 @@ class EthernetInterfaceCollectionAPI(Resource):
     def get(self,ident):
         logging.info('EthernetInterfaceCollectionAPI GET called')
         try:
+            bucket_members = []
+            with g.db.view() as tx:
+                b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME)
+
+                if not b:
+                    resp = f'Managers {ident} Ethernet Interfaces not found', 404
+                else:
+                    for k, v in b:
+                        if not v:
+                            if b.bucket(k):
+                                bucket_members.append(json.loads(b.bucket(k).get(INDEX).decode())['@odata.id'])
             self.config["@odata.id"] = "/redfish/v1/Manager/{}/EthernetInterfaces".format(ident)
-            self.config["Members"] = [{'@odata.id': EthernetInterface['@odata.id']} for EthernetInterface in list(members.get(ident, {}).values())]
-            self.config["Members@odata.count"] = len(members.setdefault(ident, {}))
+            self.config['Members'] = [{'@odata.id': x} for x in bucket_members]
+            self.config["Members@odata.count"] = len(bucket_members)
             resp = self.config, 200
             
         except Exception:

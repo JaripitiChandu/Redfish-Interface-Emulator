@@ -12,13 +12,17 @@ Singleton  API:  GET, POST
 import g
 
 import sys, traceback
-import logging
+import logging, json
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
-from .Manager_api import members as manager_members
+#from .Manager_api import members as manager_members
 
 members = {}
+
+PRIMARY_BNAME = b'managers'
+BNAME = b'cisco_internal_storage'
+OEM_BNAME = b'FlexMMC'  #OEM Resource
 
 INTERNAL_ERROR = 500
 
@@ -47,11 +51,18 @@ class CiscoInternalStorageAPI(Resource):
         logging.info('CiscoInternalStorageAPI GET called')
         try:
             # Find the entry with the correct value for Id
-            resp = 404
-            if ident in members:
-                resp = members[ident], 200
-            else:
-                resp = f"Manager {ident} not found", 404          
+            with g.db.view() as tx:
+                if not tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()):
+                    resp = f"Manager {ident} not found", 404
+                else:
+                    b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME)
+                    if b:
+                        ident_bucket = b.bucket(OEM_BNAME)
+                        if not ident_bucket:
+                            resp = f"Manager {ident} CiscoInternalStorage FlexMMC not found", 404
+                        else:
+                            value = ident_bucket.get(OEM_BNAME)
+                            resp = json.loads(value), 200
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -70,14 +81,27 @@ class CiscoInternalStorageAPI(Resource):
     def post(self, ident):
         logging.info('CiscoInternalStorageAPI POST called')
         try:
-            global config
-            if ident in manager_members:
-                members.setdefault(ident, {})
-                members[ident]["FlexMMC"] = request.json
-            else:
-                resp = f"Manager {ident} not found", 404
-            
-            resp = members[ident]["FlexMMC"], 200
+            with g.db.update() as tx:
+                managers = tx.bucket(PRIMARY_BNAME)
+                if managers:
+                    managers_ident = managers.bucket(str(ident).encode())
+                    if managers_ident:
+                        oem_storage=managers_ident.bucket(BNAME)
+                else:
+                    resp = f"Manager {ident} not found", 404
+
+                if not oem_storage:
+                    oem_storage=managers_ident.create_bucket(BNAME)
+
+                oem_storage_index = oem_storage.bucket(OEM_BNAME)
+
+                if oem_storage_index:
+                    resp = f"CiscoInternalStorage {str(OEM_BNAME)} already exists in Manager {ident}", 409
+                else:
+                    ident_bucket = oem_storage.create_bucket(OEM_BNAME)
+                    ident_bucket.put(OEM_BNAME, json.dumps(request.json).encode())
+                    resp = request.json, 200
+
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -132,9 +156,20 @@ class CiscoInternalStorageCollectionAPI(Resource):
     def get(self,ident):
         logging.info('CiscoInternalStorageCollectionAPI GET called')
         try:
+            bucket_members = []
+            with g.db.view() as tx:
+                b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME)
+
+                if not b:
+                    resp = f'Managers {ident} CiscoInternalStorage not found', 404
+                else:
+                    for k, v in b:
+                        if not v:
+                            if b.bucket(k):
+                                bucket_members.append(json.loads(b.bucket(k).get(OEM_BNAME).decode())['@odata.id'])
             self.config["@odata.id"] = "/redfish/v1/Manager/{}/Oem/CiscoInternalStorage".format(ident)
-            self.config["Members"] = [{'@odata.id': CiscoInternalStorage['@odata.id']} for CiscoInternalStorage in list(members.get(ident,{}).values())]
-            self.config["Members@odata.count"] = len(self.config["Members"])
+            self.config['Members'] = [{'@odata.id': x} for x in bucket_members]
+            self.config["Members@odata.count"] = len(bucket_members)
             resp = self.config, 200
             
         except Exception:

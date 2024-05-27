@@ -11,17 +11,22 @@ Singleton  API:  GET, POST
 import g
 
 import sys, traceback
-import logging
+import logging, json
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
-from .Manager_api import members as manager_members
-from .cisco_internal_storage_api import members as internalstorage_members
+#from .Manager_api import members as manager_members
+#from .cisco_internal_storage_api import members as internalstorage_members
 
 members = {}
 
 INTERNAL_ERROR = 500
 
+PRIMARY_BNAME = b'managers'
+BNAME = b'cisco_internal_storage'
+OEM_BNAME = b'FlexMMC'  #OEM Resource
+OEM_SR_BNAME = b'cisco_partition'   #OEM  Sub Resource
+INDEX = b'value'
 
 # CiscoPartition Singleton API
 class CiscoPartitionAPI(Resource):
@@ -46,14 +51,19 @@ class CiscoPartitionAPI(Resource):
     def get(self, ident, ident1):
         logging.info('CiscoPartitionAPI GET called')
         try:
-            resp = 404     
-            if ident in manager_members:
-                if "FlexMMC" in internalstorage_members[ident]:
-                    resp = members[ident][ident1], 200
+            resp = 404
+            with g.db.view() as tx:
+                if not tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()):
+                    resp = f"Manager {ident} not found", 404
                 else:
-                    resp = f"CiscoInternalStorage FlexMMC for  Manager {ident} not found", 404
-            else:
-                resp = f"Manager {ident} not found", 404          
+                    b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME).bucket(OEM_BNAME).bucket(OEM_SR_BNAME)
+                    if b:
+                        ident_bucket = b.bucket(str(ident1).encode())
+                        if not ident_bucket:
+                            resp = f"CiscoPartition {ident1} for {OEM_BNAME} Manager {ident} not found", 404
+                        else:
+                            value = ident_bucket.get(INDEX).decode()
+                            resp = json.loads(value), 200
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -68,17 +78,30 @@ class CiscoPartitionAPI(Resource):
     def post(self, ident, ident1):
         logging.info('CiscoPartitionAPI POST called')
         try:
-            if ident in manager_members:
-                members.setdefault(ident,{})
-                if "FlexMMC" not in internalstorage_members[ident]:
-                    return "CiscoInternalStorage FlexMMC not found in Manager {}".format(ident), 404
-            else:    
-                return "Manager {} not found".format(ident), 404
+            with g.db.update() as tx:
+                managers = tx.bucket(PRIMARY_BNAME)
+                if managers:
+                    managers_ident = managers.bucket(str(ident).encode())
+                    if managers_ident:
+                        oem_storage=managers_ident.bucket(BNAME).bucket(OEM_BNAME)
+                    else:
+                        resp = f"Manager {ident} {BNAME} {OEM_BNAME} not found", 404
+                else:
+                    resp = f"Manager {ident} not found", 404
 
-            if ident1 in internalstorage_members:
-               return "CiscoPartition {} already exists for CiscoInternalStorage FlexMMC in Manager {}".format(ident1,ident), 409
-            members[ident][ident1] = request.json
-            resp = members[ident][ident1], 200
+                oem_partition=oem_storage.bucket(OEM_SR_BNAME)
+
+                if not oem_partition:
+                    oem_partition = oem_storage.create_bucket(OEM_SR_BNAME)
+
+                oem_partition_ident = oem_partition.bucket(str(ident1).encode())
+
+                if oem_partition_ident:
+                    resp = f"CiscoPartition {ident1} for {str(OEM_BNAME)} already exists in Manager {ident}", 409
+                else:
+                    ident_bucket = oem_partition.create_bucket(str(ident1).encode())
+                    ident_bucket.put(INDEX, json.dumps(request.json).encode())
+                    resp = request.json, 200
 
         except Exception:
             traceback.print_exc()
