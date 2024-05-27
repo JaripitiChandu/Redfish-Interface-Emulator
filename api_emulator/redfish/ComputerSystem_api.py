@@ -84,13 +84,6 @@ class ComputerSystemAPI(Resource):
                     resp = "System " + ident + " not found" , 404
                 else:
                     resp = json.loads(system.get(INDEX).decode()), 200
-            # if ident in members:
-            #     conf= members[ident]
-            #     # conf['ProcessorSummary']=self.processor_summary(ident)
-            #     # conf['MemorySummary']=self.memory_summary(ident)
-            #     resp = conf, 200
-            # else:
-            #     resp = "System " + ident + " not found" , 404
         except Exception:
             traceback.print_exc()
             resp = "Internal Server Error", INTERNAL_ERROR
@@ -109,11 +102,6 @@ class ComputerSystemAPI(Resource):
     def post(self, ident):
         logging.info('ComputerSystemAPI POST called')
         try:
-            # global wildcards
-            # wildcards['id'] = ident
-            # wildcards['linkMgr'] = 'UpdateWithPATCH'
-            # wildcards['linkChassis'] = ['UpdateWithPATCH']
-            # config=get_ComputerSystem_instance(wildcards)
             with db.update() as tx:
                 b = tx.bucket(BNAME)
                 if not b:

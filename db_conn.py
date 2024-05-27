@@ -2,6 +2,7 @@ import json
 from pprint import pprint
 
 from boltdb import BoltDB
+from boltdb.bucket import Bucket
 
 
 class DataBase(BoltDB):
@@ -90,20 +91,28 @@ class DataBase(BoltDB):
             return result
 
 
-    def print_db(self):
-        space = ''
-        def print_subbucket(b, space):
-            space += '\t'
-            for k, v in b:
-                if not v:
-                    if b.bucket(k):
-                        print(space, k.decode())
-                        print_subbucket(b.bucket(k), space)
+    def print_db(self, bucket: Bucket = None):
+        elbow = "└──"
+        pipe = "│  "
+        tee = "├──"
+        blank = "   "
+        def print_subbucket(b, name, last=True, header=''):
+
+            # print(lenb)
+            print((header + (elbow if last else tee) + name))
+            if isinstance(b, Bucket):
+                lenb = 0
+                for k,_ in b:
+                    lenb+=1
+                for i, (k, _) in enumerate(b):
+                    if isinstance(b.bucket(k), Bucket):
+                        print_subbucket(b.bucket(k), k.decode(), header = header + (blank if last else pipe), last= i == lenb-1)
                     else:                        
-                        print(space, json.loads(v.decode()))
-                else:
-                    print(space, json.loads(v.decode()))
+                        # print(header + (elbow if last else tee), f"{k.decode()} -> index")
+                        print_subbucket(k.decode(), k.decode(), header = header + (blank if last else pipe), last= i == lenb-1)
 
         with self.view() as tx:
-            print_subbucket(tx.bucket(), space)
-                
+            if bucket:
+                print_subbucket(bucket, "bucket")
+            else:
+                print_subbucket(tx.bucket(), "root")

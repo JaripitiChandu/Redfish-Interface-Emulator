@@ -18,6 +18,11 @@ from flask_restful import reqparse, Api, Resource
 from .ResetActionInfo_api import ResetActionInfo_API
 from .ResetAction_api import ResetAction_API
 
+from g import db, INDEX, INTERNAL_SERVER_ERROR
+
+SYS_BNAME = b"Systems"
+BNAME = b"Memory"
+
 members = {}
 
 INTERNAL_ERROR = 500
@@ -48,16 +53,27 @@ class MemoryAPI(Resource):
         logging.info(self.__class__.__name__ +' GET called')
         try:
             # Find the entry with the correct value for Id
-            if ident1 in members:
-                if ident2 in members[ident1]:
-                    resp = members[ident1][ident2], 200
+            with db.view() as tx:
+                sb = tx.bucket(SYS_BNAME)
+                if sb:
+                    system = sb.bucket(str(ident1).encode())
+                    if system:
+                        mems = system.bucket(BNAME)
+                        if mems:
+                            mem = mems.bucket(str(ident2).encode())
+                            if mem:
+                                resp = json.loads(mem.get(INDEX).decode()), 200
+                            else:
+                                return f"Memory {ident2} not found in System {ident1}", 404
+                        else:
+                            return f"Memory {ident2} not found in System {ident1}", 404
+                    else:
+                        return "System " + ident1 + " not found" , 404
                 else:
-                    resp = f"Memory {ident2} for system {ident1} not found", 404
-            else:
-                resp = f"Memory {ident2} for system {ident1} not found", 404
+                    return "System " + ident1 + " not found" , 404
         except Exception:
             traceback.print_exc()
-            resp = "Internal Server Error", INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT
@@ -73,15 +89,27 @@ class MemoryAPI(Resource):
     def post(self, ident1, ident2):
         logging.info(self.__class__.__name__ + ' POST called')
         try:
-            members.setdefault(ident1, {})
-            if ident2 in members[ident1]:
-                return ident2 + " memory already exists", 409
-            else:
-                members[ident1][ident2] = request.json
-            resp = members[ident1][ident2], 200
+            with db.update() as tx:
+                b = tx.bucket(SYS_BNAME)
+                if b:
+                    sb = b.bucket(str(ident1).encode())
+                    if sb:
+                        mems = sb.bucket(BNAME)
+                        if not mems:
+                            mems = sb.create_bucket(BNAME)
+                        if mems.bucket(str(ident2).encode()):
+                            return f"Memory {ident2} is already present in System {ident1}", 404
+                        else:
+                            mem = mems.create_bucket(str(ident2).encode())
+                            mem.put(INDEX, json.dumps(request.json).encode())
+                    else:
+                        return f"System {ident1} does not exist", 404
+                else:
+                    return f"System {ident1} does not exist", 404
+            resp = request.json, 201
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PATCH
@@ -118,22 +146,35 @@ class MemoryCollectionAPI(Resource):
     def __init__(self):
         logging.info(self.__class__.__name__ + ' init called')
         self.config = {
-    "@odata.id": "",
-    "@odata.type": "#MemoryCollection.MemoryCollection",
-    "@odata.context": "/redfish/v1/$metadata#MemoryCollection.MemoryCollection",
-    "Description": "Collection of Memory resource instances for this system",
-    "Name": "Memory Collection",
-    "Members": [],
-    "Members@odata.count": 0
-}
+            "@odata.id": "",
+            "@odata.type": "#MemoryCollection.MemoryCollection",
+            "@odata.context": "/redfish/v1/$metadata#MemoryCollection.MemoryCollection",
+            "Description": "Collection of Memory resource instances for this system",
+            "Name": "Memory Collection",
+            "Members": [],
+            "Members@odata.count": 0
+        }
 
     # HTTP GET
     def get(self, ident):
         logging.info(self.__class__.__name__ +' GET called')
         try:
+            bucket_members = []
+
+            with db.view() as tx:
+                systems = tx.bucket(SYS_BNAME)
+                if systems:
+                    sb = systems.bucket(str(ident).encode())
+                    if sb:
+                        mems = sb.bucket(BNAME)
+                        if mems:
+                            for k, v in mems:
+                                if not v and mems.bucket(k):
+                                    bucket_members.append(json.loads(mems.bucket(k).get(INDEX).decode())['@odata.id'])
+
             self.config["@odata.id"] = "/redfish/v1/Systems/{}/Memory".format(ident)
-            self.config["Members"] = [{'@odata.id': procs['@odata.id']} for procs in list(members.get(ident, {}).values())]
-            self.config["Members@odata.count"] = len(members.setdefault(ident, {}))
+            self.config["Members"] = [{'@odata.id': x} for x in bucket_members]
+            self.config["Members@odata.count"] = len(bucket_members)
             resp = self.config, 200
         except Exception:
             traceback.print_exc()

@@ -143,7 +143,7 @@ api_emulator/redfish/static/Systems/WZP27430FB7/Memory/DIMM_P2_F2/index.json
 api_emulator/redfish/static/Systems/WZP27430FB7/Memory/DIMM_P2_G1/index.json
 api_emulator/redfish/static/Systems/WZP27430FB7/Memory/DIMM_P2_G2/index.json
 api_emulator/redfish/static/Systems/WZP27430FB7/Memory/DIMM_P2_H1/index.json
-#api_emulator/redfish/static/Systems/WZP27430FB7/Memory/DIMM_P2_H2/index.json
+api_emulator/redfish/static/Systems/WZP27430FB7/Memory/DIMM_P2_H2/index.json
 #api_emulator/redfish/static/Systems/WZP27430FB7/NetworkInterfaces/UCSC-M-V5Q50G_FCH272671H7/index.json
 #api_emulator/redfish/static/Systems/WZP27430FB7/Oem/Cisco/SPDMDevice/Certificates/MRAID_0/index.json
 #api_emulator/redfish/static/Systems/WZP27430FB7/Oem/Cisco/SPDMDevice/Certificates/MRAID_1/index.json

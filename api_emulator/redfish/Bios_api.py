@@ -18,7 +18,11 @@ from flask_restful import reqparse, Api, Resource
 from .ResetActionInfo_api import ResetActionInfo_API
 from .ResetAction_api import ResetAction_API
 
+from g import db, INDEX, INTERNAL_SERVER_ERROR
+from .ComputerSystem_api import BNAME as SYS_BNAME
+
 members = {}
+BNAME = b"Bios"
 
 INTERNAL_ERROR = 500
 
@@ -47,15 +51,24 @@ class BiosAPI(Resource):
     def get(self, ident):
         logging.info(self.__class__.__name__ +' GET called')
         try:
-            # Find the entry with the correct value for Id
-            if ident in members:
-                conf= members[ident]
-                resp = conf, 200
-            else:
-                resp = "Bios for system " + ident + " not found" , 404
+            with db.view() as tx:
+                sb = tx.bucket(SYS_BNAME)
+                if sb:
+                    system = sb.bucket(str(ident).encode())
+                    if system:
+                        bios = system.bucket(BNAME)
+                        if bios:
+                            resp = json.loads(bios.get(INDEX).decode()), 200
+                        else:
+                            return "Bios for system " + ident + " not found" , 404
+                    else:
+                        return "System " + ident + " not found" , 404
+                else:
+                    return "System " + ident + " not found" , 404
+
         except Exception:
             traceback.print_exc()
-            resp = "Internal Server Error", INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT
@@ -71,11 +84,24 @@ class BiosAPI(Resource):
     def post(self, ident):
         logging.info(self.__class__.__name__ + ' POST called')
         try:
-            members[ident]=request.json
-            resp = request.json, 200
+            with db.update() as tx:
+                b = tx.bucket(SYS_BNAME)
+                if b:
+                    sb = b.bucket(str(ident).encode())
+                    if sb:
+                        if sb.bucket(BNAME):
+                            return f"Bios is already present in System {ident}", 404
+                        else:
+                            bios = sb.create_bucket(BNAME)
+                            bios.put(INDEX, json.dumps(request.json).encode())
+                    else:
+                        return f"System {ident} does not exist", 404
+                else:
+                    return f"System {ident} does not exist", 404
+            resp = request.json, 201
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PATCH
