@@ -6,7 +6,7 @@
 
 """
 Collection API:  GET
-Singleton  API:  GET, POST, PATCH, DELETE
+Singleton  API:  GET, POST
 """
 
 import g
@@ -17,9 +17,10 @@ import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
 
-members = {}
+from g import INDEX, INTERNAL_SERVER_ERROR
 
-INTERNAL_ERROR = 500
+PRIMARY_BNAME = b'UpdateService'
+BNAME = b'FirmwareInventory'
 
 # FirmwareInventory Singleton API
 class FirmwareInventoryAPI(Resource):
@@ -47,12 +48,20 @@ class FirmwareInventoryAPI(Resource):
         logging.info('FirmwareInventoryAPI GET called')
         try:
             # Find the entry with the correct value for Id
-            resp = 404
-            if ident in members:
-                resp = members[ident], 200
+            with g.db.view() as tx:
+                b = tx.bucket(PRIMARY_BNAME).bucket(BNAME)
+                if not b:
+                    resp = f"FirmwareInventory for UpdateService not found"
+                else:
+                    ident_bucket = b.bucket(str(ident).encode())
+                    if not ident_bucket:
+                        resp = f" {ident} for FirmwareInventory in UpdateService not found", 404
+                    else:
+                        value = ident_bucket.get(INDEX).decode()
+                        resp = json.loads(value), 200
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT
@@ -61,36 +70,41 @@ class FirmwareInventoryAPI(Resource):
         return 'PUT is not a supported command for FirmwareInventoryAPI', 405
 
     # HTTP POST
-    # This is an emulator-only POST command that creates new resource
-    # instances from a predefined template. The new instance is given
-    # the identifier "ident", which is taken from the end of the URL.
-    # PATCH commands can then be used to update the new instance.
     def post(self, ident):
         logging.info('FirmwareInventoryAPI POST called')
         try:
-            global config
-            config=request.json
-            members[ident]=config
-            resp = config, 200
+            resp = 404
+            with g.db.update() as tx:
+                updateservice = tx.bucket(PRIMARY_BNAME)
+                if updateservice:
+                    firmware_inv = updateservice.bucket(BNAME)
+                else:
+                    return f"UpdateService not found"
+
+                if not firmware_inv:
+                    firmware_inv = updateservice.create_bucket(BNAME)
+                
+                if firmware_inv.bucket(str(ident).encode()):
+                    return f"{ident} of FirmwareInventory in UpdateService already exists"
+                else:
+                    firmware_inv_ident = firmware_inv.create_bucket(str(ident).encode())
+                    firmware_inv_ident.put(INDEX, json.dumps(request.json).encode())
+                    resp = request.json, 201      
+            
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
+
+    # HTTP PATCH
+    def patch(self, ident):
+        logging.info('FirmwareInventoryAPI PATCH called')
+        return 'PATCH is not a supported command for FirmwareInventoryAPI', 405
 
     # HTTP DELETE
     def delete(self, ident):
         logging.info('FirmwareInventoryAPI DELETE called')
-        try:
-            # Find the entry with the correct value for Id
-            resp = 404
-            if ident in members:
-                del(members[ident])
-                resp = 200
-        except Exception:
-            traceback.print_exc()
-            resp = INTERNAL_ERROR
-        return resp
-
+        return 'DELETE is not a supported command for FirmwareInventoryAPI', 405
 
 # FirmwareInventory Collection API
 class FirmwareInventoryCollectionAPI(Resource):
@@ -98,14 +112,24 @@ class FirmwareInventoryCollectionAPI(Resource):
     def __init__(self):
         logging.info('FirmwareInventoryCollectionAPI init called')
         self.rb = g.rest_base
+        bucket_members = []
+
+        with g.db.view() as tx:
+            b = tx.bucket(PRIMARY_BNAME).bucket(BNAME)
+            if not b:
+                    resp = f'FirmwareInventory of UpdateService not found', 404
+            else:
+                for k, v in b:
+                    if not v:
+                        if b.bucket(k):
+                            bucket_members.append(json.loads(b.bucket(k).get(INDEX).decode())['@odata.id'])
         self.config = {
             '@odata.id': self.rb + 'UpdateService/FirmwareInventory',
             '@odata.type': '#FirmwareInventoryCollection.1.0.0.FirmwareInventoryCollection',
             '@odata.context': self.rb + '$metadata#FirmwareInventoryCollection.FirmwareInventoryCollection',
             'Name': 'FirmwareInventory Collection',
-            'Members': [{'@odata.id': x['@odata.id']} for
-                        x in list(members.values())],
-            'Members@odata.count': len(members)
+            'Members': [{'@odata.id': x} for x in bucket_members],
+            'Members@odata.count': len(bucket_members)
         }
 
     # HTTP GET
@@ -115,7 +139,7 @@ class FirmwareInventoryCollectionAPI(Resource):
             resp = self.config, 200
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT

@@ -15,18 +15,13 @@ import logging, json
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
-#from .Manager_api import members as manager_members
-#from .cisco_internal_storage_api import members as internalstorage_members
 
-members = {}
+from g import INDEX, INTERNAL_SERVER_ERROR
 
-INTERNAL_ERROR = 500
-
-PRIMARY_BNAME = b'managers'
-BNAME = b'cisco_internal_storage'
+PRIMARY_BNAME = b'Managers'
+BNAME = b'CiscoInternalStorage'
 OEM_BNAME = b'FlexMMC'  #OEM Resource
-OEM_SR_BNAME = b'cisco_partition'   #OEM  Sub Resource
-INDEX = b'value'
+OEM_SR_BNAME = b'CiscoPartition'   #OEM  Sub Resource
 
 # CiscoPartition Singleton API
 class CiscoPartitionAPI(Resource):
@@ -60,13 +55,13 @@ class CiscoPartitionAPI(Resource):
                     if b:
                         ident_bucket = b.bucket(str(ident1).encode())
                         if not ident_bucket:
-                            resp = f"CiscoPartition {ident1} for {OEM_BNAME} Manager {ident} not found", 404
+                            resp = f"CiscoPartition {ident1} for {OEM_BNAME.decode('utf-8')} Manager {ident} not found", 404
                         else:
                             value = ident_bucket.get(INDEX).decode()
                             resp = json.loads(value), 200
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT
@@ -83,13 +78,15 @@ class CiscoPartitionAPI(Resource):
                 if managers:
                     managers_ident = managers.bucket(str(ident).encode())
                     if managers_ident:
-                        oem_storage=managers_ident.bucket(BNAME).bucket(OEM_BNAME)
+                        oem_storage = managers_ident.bucket(BNAME).bucket(OEM_BNAME)
+                        if oem_storage:
+                                oem_partition=oem_storage.bucket(OEM_SR_BNAME)
+                        else:
+                            return f"{OEM_BNAME.decode('utf-8')} of CiscoInternalStorage for Manager {ident} not found", 404
                     else:
-                        resp = f"Manager {ident} {BNAME} {OEM_BNAME} not found", 404
+                        return f"{OEM_BNAME.decode('utf-8')} of CiscoInternalStorage for Manager {ident} not found", 404
                 else:
-                    resp = f"Manager {ident} not found", 404
-
-                oem_partition=oem_storage.bucket(OEM_SR_BNAME)
+                    return f"Manager {ident} not found", 404
 
                 if not oem_partition:
                     oem_partition = oem_storage.create_bucket(OEM_SR_BNAME)
@@ -97,42 +94,25 @@ class CiscoPartitionAPI(Resource):
                 oem_partition_ident = oem_partition.bucket(str(ident1).encode())
 
                 if oem_partition_ident:
-                    resp = f"CiscoPartition {ident1} for {str(OEM_BNAME)} already exists in Manager {ident}", 409
+                    return f"CiscoPartition {ident1} for {OEM_BNAME.decode('utf-8')} already exists in Manager {ident}", 409
                 else:
                     ident_bucket = oem_partition.create_bucket(str(ident1).encode())
                     ident_bucket.put(INDEX, json.dumps(request.json).encode())
-                    resp = request.json, 200
+                    resp = request.json, 201
 
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PATCH
     def patch(self, ident, ident1):
         logging.info('CiscoPartitionAPI PATCH called')
-        raw_dict = request.get_json(force=True)
-        try:
-            # Update specific portions of the identified object
-            for key, value in raw_dict.items():
-                members[ident][key] = value
-            resp = members[ident], 200
-        except Exception:
-            traceback.print_exc()
-            resp = INTERNAL_ERROR
-        return resp
+        return 'PATCH is not a supported command for CiscoPartitionAPI', 405
+
 
     # HTTP DELETE
     def delete(self, ident, ident1):
         logging.info('CiscoPartitionAPI DELETE called')
-        try:
-            # Find the entry with the correct value for Id
-            resp = 404
-            if ident in members:
-                del(members[ident])
-                resp = 200
-        except Exception:
-            traceback.print_exc()
-            resp = INTERNAL_ERROR
-        return resp
+        return 'DELETE is not a supported command for CiscoPartitionAPI', 405
 

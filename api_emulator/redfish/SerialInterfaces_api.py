@@ -13,7 +13,6 @@ import sys, traceback
 import logging, json
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
-from .Manager_api import members as manager_members
 from api_emulator.utils import update_nested_dict
 
 members = {}

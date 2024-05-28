@@ -5,8 +5,8 @@
 # Manager API File
 
 """
-Collection API:  GET, POST
-Singleton  API:  GET, POST, PATCH, DELETE
+Collection API:  GET
+Singleton  API:  GET, POST
 """
 
 import g
@@ -21,11 +21,9 @@ from flask_restful import reqparse, Api, Resource
 # Resource and SubResource imports
 from .templates.Manager import get_Manager_instance
 
-members = {}
-BNAME = b'managers'
-INDEX = b'value'
-INTERNAL_ERROR = 500
+from g import INDEX, INTERNAL_SERVER_ERROR
 
+BNAME = b'Managers'
 
 # Manager Singleton API
 class ManagerAPI(Resource):
@@ -65,7 +63,7 @@ class ManagerAPI(Resource):
                     resp = f"Manager {ident} not found", 404
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT
@@ -86,39 +84,21 @@ class ManagerAPI(Resource):
                 else:
                     ident_bucket = b.create_bucket(str(ident).encode())
                     ident_bucket.put(INDEX, json.dumps(request.json).encode())
-                    resp = request.json, 200
+                    resp = request.json, 201
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PATCH
     def patch(self, ident):
         logging.info('ManagerAPI PATCH called')
-        raw_dict = request.get_json(force=True)
-        logging.info(f"payload = {raw_dict}")
-        try:
-            # Update specific portions of the identified objec
-            update_nested_dict(members[ident], raw_dict)
-            resp = members[ident], 200
-        except Exception:
-            traceback.print_exc()
-            resp = INTERNAL_ERROR
-        return resp
+        return 'PATCH is not a supported command for ManagerAPI', 405
 
     # HTTP DELETE
     def delete(self, ident):
         logging.info('ManagerAPI DELETE called')
-        try:
-            # Find the entry with the correct value for Id
-            resp = 404
-            if ident in members:
-                del(members[ident])
-                resp = 200
-        except Exception:
-            traceback.print_exc()
-            resp = INTERNAL_ERROR
-        return resp
+        return 'DELETE is not a supported command for ManagerAPI', 405
 
 
 # Manager Collection API
@@ -131,7 +111,9 @@ class ManagerCollectionAPI(Resource):
 
         with g.db.view() as tx:
             b = tx.bucket(BNAME)
-            if b:
+            if not b:
+                  resp = f'Manager not found', 404
+            else:
                 for k, v in b:
                     if not v:
                         if b.bucket(k):
@@ -152,7 +134,7 @@ class ManagerCollectionAPI(Resource):
             resp = self.config, 200
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT
@@ -170,18 +152,8 @@ class ManagerCollectionAPI(Resource):
     # TODO: 'id' should be obtained from the request data.
     def post(self):
         logging.info('ManagerCollectionAPI POST called')
-        try:
-            config = request.get_json(force=True)
-            ok, msg = self.verify(config)
-            if ok:
-                members[config['Id']] = config
-                resp = config, 201
-            else:
-                resp = msg, 400
-        except Exception:
-            traceback.print_exc()
-            resp = INTERNAL_ERROR
-        return resp
+        return 'POST is not a supported command for ManagerCollectionAPI', 405
+
 
     # HTTP PATCH
     def patch(self):
@@ -192,38 +164,3 @@ class ManagerCollectionAPI(Resource):
     def delete(self):
         logging.info('ManagerCollectionAPI DELETE called')
         return 'DELETE is not a supported command for ManagerCollectionAPI', 405
-
-
-# CreateManager
-#
-# Called internally to create instances of a resource. If the
-# resource has subordinate resources, those subordinate resource(s)
-# are created automatically.
-#
-# Note: In 'init', the first time through, kwargs may not have any
-# values, so we need to check. The call to 'init' stores the path
-# wildcards. The wildcards are used to modify the resource template
-# when subsequent calls are made to instantiate resources.
-class CreateManager(Resource):
-
-    def __init__(self, **kwargs):
-        logging.info('CreateManager init called')
-        if 'resource_class_kwargs' in kwargs:
-            global wildcards
-            wildcards = copy.deepcopy(kwargs['resource_class_kwargs'])
-
-    # Create instance
-    def put(self, ident):
-        logging.info('CreateManager put called')
-        try:
-            global config
-            global wildcards
-            wildcards['id'] = ident
-            config = get_Manager_instance(wildcards)
-            members[ident] = config
-            resp = config, 200
-        except Exception:
-            traceback.print_exc()
-            resp = INTERNAL_ERROR
-        logging.info('CreateManager init exit')
-        return resp

@@ -16,21 +16,14 @@ import logging, json
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
-from .Manager_api import members as manager_members
-from .cisco_internal_storage_api import members as internalstorage_members
-from .ciscopartition_api import members as partition_members
 
-members = {}
+from g import INDEX, INTERNAL_SERVER_ERROR
 
-PRIMARY_BNAME = b'managers'
-BNAME = b'cisco_internal_storage'
+PRIMARY_BNAME = b'Managers'
+BNAME = b'CiscoInternalStorage'
 OEM_BNAME = b'FlexMMC'  #OEM Resource
-OEM_SR_BNAME = b'cisco_partition'   #OEM  Sub Resource
-OEM_SR_BNAME_2 = b'cisco_files'
-INDEX = b'value'
-
-INTERNAL_ERROR = 500
-
+OEM_SR_BNAME = b'CiscoPartition'   #OEM  Sub Resource
+OEM_SR_BNAME_2 = b'CiscoFiles'
 
 # CiscoFile Singleton API
 class CiscoFileAPI(Resource):
@@ -64,13 +57,13 @@ class CiscoFileAPI(Resource):
                     if b:
                         ident_bucket = b.bucket(str(ident2).encode())
                         if not ident_bucket:
-                            resp = f"CiscoFile {ident2} of CiscoPartition {ident1} for {OEM_BNAME} Manager {ident} not found", 404
+                            resp = f"CiscoFile {ident2} of CiscoPartition {ident1} for {OEM_BNAME.decode('utf-8')} in Manager {ident} not found", 404
                         else:
                             value = ident_bucket.get(INDEX).decode()
                             resp = json.loads(value), 200
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT
@@ -93,11 +86,11 @@ class CiscoFileAPI(Resource):
                             if oem_partition_ident:
                                 oem_file=oem_partition_ident.bucket(OEM_SR_BNAME_2)
                             else:
-                                resp = f"CiscoPartition {ident1} for {str(OEM_BNAME)} not found in Manager {ident}", 404
+                                return f"CiscoPartition {ident1} for {OEM_BNAME.decode('utf-8')} for Manager {ident} not found", 404
                         else:
-                            resp = f"Manager {ident} {BNAME} {OEM_BNAME} not found", 404
+                            return f"CiscoInternalStorage {OEM_BNAME.decode('utf-8')} for Manager {ident} not found", 404
                     else:
-                        resp = f"Manager {ident} not found", 404
+                        return f"Manager {ident} not found", 404
 
                 if not oem_file:
                     oem_file = oem_partition_ident.create_bucket(OEM_SR_BNAME_2)
@@ -105,44 +98,26 @@ class CiscoFileAPI(Resource):
                 oem_file_ident = oem_file.bucket(str(ident2).encode())
 
                 if oem_file_ident:
-                    resp = f"CiscoFile {ident2} of CiscoPartition {ident1} for {str(OEM_BNAME)} already exists in Manager {ident}", 409
+                    return f"CiscoFile {ident2} of CiscoPartition {ident1} for {OEM_BNAME.decode('utf-8')} already exists in Manager {ident}", 409
                 else:
                     ident_bucket = oem_file.create_bucket(str(ident2).encode())
                     ident_bucket.put(INDEX, json.dumps(request.json).encode())
-                    resp = request.json, 200
+                    resp = request.json, 201
 
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PATCH
     def patch(self, ident, ident1):
         logging.info('CiscoFileAPI PATCH called')
-        raw_dict = request.get_json(force=True)
-        try:
-            # Update specific portions of the identified object
-            for key, value in raw_dict.items():
-                members[ident][key] = value
-            resp = members[ident], 200
-        except Exception:
-            traceback.print_exc()
-            resp = INTERNAL_ERROR
-        return resp
+        return 'PATCH is not a supported command for CiscoFileAPI', 405
 
     # HTTP DELETE
     def delete(self, ident, ident1):
         logging.info('CiscoFileAPI DELETE called')
-        try:
-            # Find the entry with the correct value for Id
-            resp = 404
-            if ident in members:
-                del(members[ident])
-                resp = 200
-        except Exception:
-            traceback.print_exc()
-            resp = INTERNAL_ERROR
-        return resp
+        return 'DELETE is not a supported command for CiscoFileAPI', 405
 
 
 # CiscoFile Collection API
@@ -169,7 +144,7 @@ class CiscoFileCollectionAPI(Resource):
                 b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME).bucket(OEM_BNAME).bucket(OEM_SR_BNAME).bucket(str(ident1).encode()).bucket(OEM_SR_BNAME_2)
 
                 if not b:
-                    resp = f"CiscoFile of CiscoPartition {ident1} for {str(OEM_BNAME)} not found in Manager {ident}", 404
+                    resp = f"CiscoFile of CiscoPartition {ident1} for {OEM_BNAME.decode('utf-8')} not found in Manager {ident}", 404
                 else:
                     for k, v in b:
                         if not v:
@@ -181,7 +156,7 @@ class CiscoFileCollectionAPI(Resource):
             resp = self.config, 200
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT

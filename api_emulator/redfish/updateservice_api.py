@@ -5,22 +5,20 @@
 # UpdateService API File
 
 """
-Collection API:  GET
-Singleton  API:  (None)
+Singleton  API: GET, POST
 """
 
 import g
 
 import sys, traceback
-import logging
+import logging,json
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
 
-config = {}
+from g import INTERNAL_SERVER_ERROR
 
-INTERNAL_ERROR = 500
-
+PRIMARY_BNAME=b'UpdateService'
 
 # UpdateService Singleton API
 # UpdateService does not have a Singleton API
@@ -41,11 +39,17 @@ class UpdateServiceAPI(Resource):
     def get(self):
         logging.info('UpdateServiceAPI GET called')
         try:
-            global config
-            resp = config, 200
+            resp = 404
+            with g.db.view() as tx:
+                b = tx.bucket(PRIMARY_BNAME)                    
+                if not b:
+                    resp = f"UpdateService not found", 404
+                else:
+                    value = b.get(PRIMARY_BNAME).decode()
+                    resp = json.loads(value), 200
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT
@@ -57,12 +61,18 @@ class UpdateServiceAPI(Resource):
     def post(self):
         logging.info('UpdateServiceAPI POST called')
         try:
-            global config
-            config=request.json
-            resp = config, 200
+            resp = 404
+            with g.db.update() as tx:
+                updateservice = tx.bucket(PRIMARY_BNAME)
+                if updateservice:
+                    resp = f"UpdateService already exists", 404
+                else:
+                    updateservice = tx.create_bucket(PRIMARY_BNAME)
+                    updateservice.put(PRIMARY_BNAME, json.dumps(request.json).encode())
+                    resp = request.json, 201
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PATCH

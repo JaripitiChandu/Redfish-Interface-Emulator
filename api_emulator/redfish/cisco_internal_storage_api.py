@@ -16,16 +16,12 @@ import logging, json
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
-#from .Manager_api import members as manager_members
 
-members = {}
+from g import INDEX, INTERNAL_SERVER_ERROR
 
-PRIMARY_BNAME = b'managers'
-BNAME = b'cisco_internal_storage'
+PRIMARY_BNAME = b'Managers'
+BNAME = b'CiscoInternalStorage'
 OEM_BNAME = b'FlexMMC'  #OEM Resource
-
-INTERNAL_ERROR = 500
-
 
 # CiscoInternalStorage Singleton API
 class CiscoInternalStorageAPI(Resource):
@@ -59,13 +55,13 @@ class CiscoInternalStorageAPI(Resource):
                     if b:
                         ident_bucket = b.bucket(OEM_BNAME)
                         if not ident_bucket:
-                            resp = f"Manager {ident} CiscoInternalStorage FlexMMC not found", 404
+                            return f"{OEM_BNAME.decode('utf-8')} of CiscoInteralStorage for Manager {ident} not found", 404
                         else:
                             value = ident_bucket.get(OEM_BNAME)
                             resp = json.loads(value), 200
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT
@@ -74,10 +70,6 @@ class CiscoInternalStorageAPI(Resource):
         return 'PUT is not a supported command for CiscoInternalStorageAPI', 405
 
     # HTTP POST
-    # This is an emulator-only POST command that creates new resource
-    # instances from a predefined template. The new instance is given
-    # the identifier "ident", which is taken from the end of the URL.
-    # PATCH commands can then be used to update the new instance.
     def post(self, ident):
         logging.info('CiscoInternalStorageAPI POST called')
         try:
@@ -88,7 +80,7 @@ class CiscoInternalStorageAPI(Resource):
                     if managers_ident:
                         oem_storage=managers_ident.bucket(BNAME)
                 else:
-                    resp = f"Manager {ident} not found", 404
+                    return f"Manager {ident} not found", 404
 
                 if not oem_storage:
                     oem_storage=managers_ident.create_bucket(BNAME)
@@ -96,44 +88,26 @@ class CiscoInternalStorageAPI(Resource):
                 oem_storage_index = oem_storage.bucket(OEM_BNAME)
 
                 if oem_storage_index:
-                    resp = f"CiscoInternalStorage {str(OEM_BNAME)} already exists in Manager {ident}", 409
+                    return f"{OEM_BNAME.decode('utf-8')} of CiscoInteralStorage already exists in Manager {ident}", 409
                 else:
                     ident_bucket = oem_storage.create_bucket(OEM_BNAME)
                     ident_bucket.put(OEM_BNAME, json.dumps(request.json).encode())
-                    resp = request.json, 200
+                    resp = request.json, 201
 
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PATCH
     def patch(self, ident):
         logging.info('CiscoInternalStorageAPI PATCH called')
-        raw_dict = request.get_json(force=True)
-        try:
-            # Update specific portions of the identified object
-            for key, value in raw_dict.items():
-                members[ident][key] = value
-            resp = members[ident], 200
-        except Exception:
-            traceback.print_exc()
-            resp = INTERNAL_ERROR
-        return resp
+        return 'PATCH is not a supported command for CiscoInternalStorageAPI', 405
 
     # HTTP DELETE
     def delete(self, ident):
         logging.info('CiscoInternalStorageAPI DELETE called')
-        try:
-            # Find the entry with the correct value for Id
-            resp = 404
-            if ident in members:
-                del(members[ident])
-                resp = 200
-        except Exception:
-            traceback.print_exc()
-            resp = INTERNAL_ERROR
-        return resp
+        return 'DELETE is not a supported command for CiscoInternalStorageAPI', 405
 
 
 # CiscoInternalStorage Collection API
@@ -159,9 +133,8 @@ class CiscoInternalStorageCollectionAPI(Resource):
             bucket_members = []
             with g.db.view() as tx:
                 b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME)
-
                 if not b:
-                    resp = f'Managers {ident} CiscoInternalStorage not found', 404
+                    resp = f'CiscoInternalStorage of Managers {ident} not found', 404
                 else:
                     for k, v in b:
                         if not v:
@@ -174,7 +147,7 @@ class CiscoInternalStorageCollectionAPI(Resource):
             
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT

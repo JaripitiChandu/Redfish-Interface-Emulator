@@ -1,7 +1,7 @@
 from api_emulator.redfish.EventService_api import EventServiceAPI
 from api_emulator.redfish.Chassis_api import ChassisCollectionAPI, ChassisAPI
 from api_emulator.redfish.ComputerSystem_api import ComputerSystemCollectionAPI, ComputerSystemAPI, CreateComputerSystem
-from api_emulator.redfish.Manager_api import ManagerCollectionAPI, ManagerAPI, CreateManager
+from api_emulator.redfish.Manager_api import ManagerCollectionAPI, ManagerAPI
 from api_emulator.redfish.pcie_switch_api import PCIeSwitchesAPI, PCIeSwitchAPI
 from api_emulator.redfish.eg_resource_api import EgResourceCollectionAPI, EgResourceAPI, CreateEgResource
 #from api_emulator.redfish.power_api import CreatePower
@@ -112,12 +112,12 @@ def populate(cfg):
                         for resource_id in resource_ids[resource_name]:
                             rb.post(g.rest_base,rb_id,resource_name,resource_id)
 
-            CreateChassis(resource_class_kwargs={
-                'rb': g.rest_base, 'linkSystem': sys_ids, 'linkResourceBlocks':rb_ids, 'linkMgr': bmc}).put(chassis)
-            CreatePower(resource_class_kwargs={'rb': g.rest_base, 'ch_id': chassis}).put(chassis)
-            CreateThermal(resource_class_kwargs={'rb': g.rest_base, 'ch_id': chassis}).put(chassis)
-            CreateManager(resource_class_kwargs={
-                'rb': g.rest_base, 'linkSystem': sys_ids, 'linkChassis': chassis, 'linkInChassis': chassis}).put(bmc)
+            #CreateChassis(resource_class_kwargs={
+            #    'rb': g.rest_base, 'linkSystem': sys_ids, 'linkResourceBlocks':rb_ids, 'linkMgr': bmc}).put(chassis)
+            #CreatePower(resource_class_kwargs={'rb': g.rest_base, 'ch_id': chassis}).put(chassis)
+            #CreateThermal(resource_class_kwargs={'rb': g.rest_base, 'ch_id': chassis}).put(chassis)
+            #CreateManager(resource_class_kwargs={
+            #    'rb': g.rest_base, 'linkSystem': sys_ids, 'linkChassis': chassis, 'linkInChassis': chassis}).put(bmc)
 
     for zone in zones:
         z=CreateResourceZone(resource_class_kwargs={'rb': g.rest_base})
@@ -132,11 +132,11 @@ def n_populate(num):
         compSys = 'System-{0}'.format(i + 1)
         bmc = 'BMC-{0}'.format(i + 1)
         # create chassi
-        CreateChassis(resource_class_kwargs={
-            'rb': g.rest_base, 'linkSystem': [compSys], 'linkMgr': bmc}).put(chassis)
+        #CreateChassis(resource_class_kwargs={
+        #    'rb': g.rest_base, 'linkSystem': [compSys], 'linkMgr': bmc}).put(chassis)
         # create chassi subordinate sustems
-        CreatePower(resource_class_kwargs={'rb': g.rest_base, 'ch_id': chassis}).put(chassis)
-        CreateThermal(resource_class_kwargs={'rb': g.rest_base, 'ch_id': chassis}).put(chassis)
+        #CreatePower(resource_class_kwargs={'rb': g.rest_base, 'ch_id': chassis}).put(chassis)
+        #CreateThermal(resource_class_kwargs={'rb': g.rest_base, 'ch_id': chassis}).put(chassis)
         # create ComputerSystem
         CreateComputerSystem(resource_class_kwargs={
             'rb': g.rest_base, 'linkChassis': [chassis], 'linkMgr': bmc}).put(compSys)
@@ -157,8 +157,8 @@ def n_populate(num):
         CreateEthernetInterface(rb=g.rest_base, suffix='System', suffix_id=compSys, nic_id='NIC-2',
                                 speedmbps=40000, vlan_id=4095, chassis_id=chassis)
         # create manager
-        CreateManager(resource_class_kwargs={
-            'rb': g.rest_base, 'linkSystem': compSys, 'linkChassis': chassis, 'linkInChassis': chassis}).put(bmc)
+        #CreateManager(resource_class_kwargs={
+        #    'rb': g.rest_base, 'linkSystem': compSys, 'linkChassis': chassis, 'linkInChassis': chassis}).put(bmc)
 
         # create Resource Block
 

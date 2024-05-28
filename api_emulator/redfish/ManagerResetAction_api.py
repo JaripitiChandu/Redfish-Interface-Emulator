@@ -14,7 +14,6 @@ import sys, traceback, json, logging
 from flask import Flask, request, make_response, render_template, jsonify
 from flask_restful import reqparse, Api, Resource
 from subprocess import check_output
-from .Manager_api import members as manager_members
 
 members={}
 

@@ -36,7 +36,7 @@ from .redfish.network_device_functions_api import NetworkDeviceFunctionsCollecti
 from .redfish.network_device_functions_metrics_api import NetworkDeviceFunctionsMetricsAPI
 from .redfish.Fabrics_api import Fabrics, Fabric
 # Manager imports
-from .redfish.Manager_api import ManagerCollectionAPI, ManagerAPI, CreateManager
+from .redfish.Manager_api import ManagerCollectionAPI, ManagerAPI
 from .redfish.ethernet_interface_api import EthernetInterfaceCollectionAPI, EthernetInterfaceAPI
 from .redfish.network_protocols_api import NetworkProtocolAPI
 from .redfish.cisco_internal_storage_api import CiscoInternalStorageCollectionAPI, CiscoInternalStorageAPI

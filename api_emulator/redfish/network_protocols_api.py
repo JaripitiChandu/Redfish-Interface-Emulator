@@ -5,7 +5,6 @@
 # NetworkProtocol API File
 
 """
-Collection API:  GET, POST
 Singleton  API:  GET, POST
 """
 
@@ -16,16 +15,11 @@ import logging , json
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
-from .Manager_api import members as manager_members
-from api_emulator.utils import update_nested_dict
 
-members = {}
+from g import INTERNAL_SERVER_ERROR
 
-PRIMARY_BNAME = b'managers'
-BNAME = b'network_protocols'
-
-INTERNAL_ERROR = 500
-
+PRIMARY_BNAME = b'Managers'
+BNAME = b'NetworkProtocols'
 
 # NetworkProtocol Singleton API
 class NetworkProtocolAPI(Resource):
@@ -55,17 +49,17 @@ class NetworkProtocolAPI(Resource):
                 if not tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()):
                     resp = f"Manager {ident} not found", 404
                 else:
-                    b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode())
-                    if b:
-                        ident_bucket = b.bucket(BNAME)
-                        if not ident_bucket:
+                    manager_ident = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode())
+                    if manager_ident:
+                        network_protocols = manager_ident.bucket(BNAME)
+                        if not network_protocols:
                             resp = f"Manager {ident} NetworkProtocols not found", 404
                         else:
-                            value = ident_bucket.get(BNAME)
+                            value = network_protocols.get(BNAME)
                             resp = json.loads(value), 200
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT
@@ -74,56 +68,36 @@ class NetworkProtocolAPI(Resource):
         return 'PUT is not a supported command for NetworkProtocolAPI', 405
 
     # HTTP POST
-    # This is an emulator-only POST command that creates new resource
-    # instances from a predefined template. The new instance is given
-    # the identifier "ident", which is taken from the end of the URL.
-    # PATCH commands can then be used to update the new instance.
     def post(self, ident):
         logging.info('NetworkProtocolAPI POST called')
         try:
             with g.db.update() as tx:
                 if tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME):
-                    resp = f"NetworkProtocols already exists in Manager {ident}", 409
+                    return f"NetworkProtocols already exists in Manager {ident}", 409
                 else:
-                    pb = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode())
-                    if not pb:
-                        resp = f"Manager {ident} not found", 404
+                    manager_ident = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode())
+                    if not manager_ident:
+                        return f"Manager {ident} not found", 404
                     else:
-                        b = pb.bucket(BNAME)
-                        if not b:
-                            b = pb.create_bucket(BNAME)
-                        b.put(BNAME, json.dumps(request.json).encode())
-                        resp = request.json, 200
+                        network_protocols = manager_ident.bucket(BNAME)
+                        if not network_protocols:
+                            network_protocols = manager_ident.create_bucket(BNAME)
+                        network_protocols.put(BNAME, json.dumps(request.json).encode())
+                        resp = request.json, 201
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PATCH
     def patch(self, ident):
         logging.info('NetworkProtocolAPI PATCH called')
-        raw_dict = request.get_json(force=True)
-        logging.info(f"payload = {raw_dict}")
-        try:
-            # Update specific portions of the identified object
-            update_nested_dict(members[ident], raw_dict)
-            resp = members[ident], 200
-        except Exception:
-            traceback.print_exc()
-            resp = INTERNAL_ERROR
-        return resp
+        return 'PATCH is not a supported command for NetworkProtocolAPI', 405
+
 
     # HTTP DELETE
     def delete(self, ident):
         logging.info('NetworkProtocolAPI DELETE called')
-        try:
-            # Find the entry with the correct value for Id
-            resp = 404
-            if ident in members:
-                del(members[ident])
-                resp = 200
-        except Exception:
-            traceback.print_exc()
-            resp = INTERNAL_ERROR
-        return resp
+        return 'DELETE is not a supported command for NetworkProtocolAPI', 405
+
 

@@ -5,7 +5,7 @@
 # LogEntry API File
 
 """
-Collection API:  GET, POST
+Collection API:  GET
 Singleton  API:  GET, POST
 """
 
@@ -16,19 +16,12 @@ import logging, json
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
-from .Manager_api import members as manager_members
-from .LogServices_api import members as logservices_members
-from api_emulator.utils import update_nested_dict
 
-members = {}
+from g import INDEX, INTERNAL_SERVER_ERROR
 
-PRIMARY_BNAME = b'managers'
-BNAME = b'log_services'
-SR_BNAME= b'log_entries'
-INDEX = b'value'
-
-INTERNAL_ERROR = 500
-
+PRIMARY_BNAME = b'Managers'
+BNAME = b'LogServices'
+SR_BNAME= b'LogEntries'
 
 # LogEntry Singleton API
 class LogEntryAPI(Resource):
@@ -57,9 +50,9 @@ class LogEntryAPI(Resource):
             resp = 404
             with g.db.view() as tx:
                 if not tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()):
-                    resp = f"Manager {ident} not found", 404
+                    return f"Manager {ident} not found", 404
                 if not tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME).bucket(str(ident1).encode()):
-                    resp = f"LogService {ident1} for LogManager {ident} not found", 404
+                    return f"LogService {ident1} for Manager {ident} not found", 404
                 else:
                     b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME).bucket(str(ident1).encode()).bucket(SR_BNAME)
                     if b:
@@ -71,7 +64,7 @@ class LogEntryAPI(Resource):
                             resp = json.loads(value), 200
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT
@@ -88,68 +81,44 @@ class LogEntryAPI(Resource):
                 if managers:
                     managers_ident = managers.bucket(str(ident).encode())
                     if managers_ident:
-                        log_services=managers_ident.bucket(BNAME).bucket(str(ident1).encode())
+                        log_services=managers_ident.bucket(BNAME)
                         if log_services:
-                            log_entries=log_services.bucket(SR_BNAME)
+                            log_services_ident=log_services.bucket(str(ident1).encode())
+                            if log_services_ident:
+                                log_entries=log_services_ident.bucket(SR_BNAME)
+                            else:
+                                return f"LogService {ident1} not found for Manager {ident}", 404
+                        else:
+                           return f"LogService {ident1} not found for Manager {ident}", 404
                     else:
-                        resp = f"LogService {ident1} not found for Manager {ident}", 404
-                else:
-                    resp = f"Manager {ident} not found", 404
+                      return f"Manager {ident} not found", 404
 
                 if not log_entries:
-                    log_entries=log_services.create_bucket(SR_BNAME)
-
+                    log_entries=log_services_ident.create_bucket(SR_BNAME)
+                
                 log_entries_index = log_entries.bucket(str(ident2).encode())
 
                 if log_entries_index:
-                    resp = f"LogEntry {str(ident2).encode()} for LogService {str(ident2).encode()} already exists in Manager {ident}", 409
+                    resp = f"LogEntry {ident2} for LogService {ident1} already exists in Manager {ident}", 409
                 else:
                     ident_bucket = log_entries.create_bucket(str(ident2).encode())
                     ident_bucket.put(INDEX, json.dumps(request.json).encode())
-                    resp = request.json, 200
+                    resp = request.json, 201
 
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PATCH
     def patch(self, ident, ident1, ident2):
         logging.info('LogEntryAPI PATCH called')
-        raw_dict = request.get_json(force=True)
-        logging.info(f"Payload = {raw_dict}")
-        try:
-            if ident in manager_members:
-                members.setdefault(ident, {})
-                if ident1 in logservices_members[ident]:
-                 members[ident].setdefault(ident1, {})
-                else:
-                    return "LogServices {} does not exist in Manager {}".format(ident1,ident), 404
-            else:
-                return "Manager {} does not exist".format(ident), 404
-
-            # Update specific portions of the identified object
-            update_nested_dict(members[ident][ident1][ident2], raw_dict)
-            resp = members[ident][ident1][ident2], 200
-        except Exception:
-            traceback.print_exc()
-            resp = INTERNAL_ERROR
-        return resp
+        return 'PATCH is not a supported command for LogEntryAPI', 405
 
     # HTTP DELETE
     def delete(self, ident, ident1):
         logging.info('LogEntryAPI DELETE called')
-        try:
-            # Find the entry with the correct value for Id
-            resp = 404
-            if ident in members:
-                del(members[ident])
-                resp = 200
-        except Exception:
-            traceback.print_exc()
-            resp = INTERNAL_ERROR
-        return resp
-
+        return 'DELETE is not a supported command for LogEntryAPI', 405
 
 # LogEntry Collection API
 class LogEntryCollectionAPI(Resource):
@@ -187,7 +156,7 @@ class LogEntryCollectionAPI(Resource):
             
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT

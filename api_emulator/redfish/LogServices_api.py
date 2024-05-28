@@ -5,7 +5,7 @@
 # LogService API File
 
 """
-Collection API:  GET, POST
+Collection API:  GET
 Singleton  API:  GET, POST
 """
 
@@ -16,17 +16,13 @@ import logging, json
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
-from .Manager_api import members as manager_members
-from api_emulator.utils import update_nested_dict
+
+from g import INDEX, INTERNAL_SERVER_ERROR
 
 members = {}
 
-PRIMARY_BNAME = b'managers'
-BNAME = b'log_services'
-INDEX = b'value'
-
-INTERNAL_ERROR = 500
-
+PRIMARY_BNAME = b'Managers'
+BNAME = b'LogServices'
 
 # LogService Singleton API
 class LogServiceAPI(Resource):
@@ -61,13 +57,13 @@ class LogServiceAPI(Resource):
                     if b:
                         ident_bucket = b.bucket(str(ident1).encode())
                         if not ident_bucket:
-                            resp = f"LogService {ident1} for Manager {ident} not found", 404
+                            resp = f"{BNAME.decode('utf-8')} {ident1} for Manager {ident} not found", 404
                         else:
                             value = ident_bucket.get(INDEX).decode()
                             resp = json.loads(value), 200
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT
@@ -76,10 +72,6 @@ class LogServiceAPI(Resource):
         return 'PUT is not a supported command for LogServiceAPI', 405
 
     # HTTP POST
-    # This is an emulator-only POST command that creates new resource
-    # instances from a predefined template. The new instance is given
-    # the identifier "ident", which is taken from the end of the URL.
-    # PATCH commands can then be used to update the new instance.
     def post(self, ident, ident1):
         logging.info('LogServiceAPI POST called')
         try:
@@ -90,7 +82,7 @@ class LogServiceAPI(Resource):
                     if managers_ident:
                         log_services=managers_ident.bucket(BNAME)
                 else:
-                    resp = f"Manager {ident} not found", 404
+                    return f"Manager {ident} not found", 404
 
                 if not log_services:
                     log_services=managers_ident.create_bucket(BNAME)
@@ -98,51 +90,26 @@ class LogServiceAPI(Resource):
                 log_services_index = log_services.bucket(str(ident1).encode())
 
                 if log_services_index:
-                    resp = f"LogService {str(ident1).encode()} already exists in Manager {ident}", 409
+                    return f"{BNAME.decode('utf-8')} {ident1} already exists in Manager {ident}", 409
                 else:
                     ident_bucket = log_services.create_bucket(str(ident1).encode())
                     ident_bucket.put(INDEX, json.dumps(request.json).encode())
-                    resp = request.json, 200
+                    resp = request.json, 201
 
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PATCH
     def patch(self, ident, ident1):
         logging.info('LogServiceAPI PATCH called')
-        raw_dict = request.get_json(force=True)
-        logging.info(f"Payload = {raw_dict}")
-        try:
-            global config
-            if ident in manager_members:
-                members.setdefault(ident, {})
-                members[ident][ident1] = request.json
-            else:
-                resp = f"Manager {ident} not found", 404
-            
-            update_nested_dict(members[ident][ident1], raw_dict)
-            resp = members[ident][ident1], 200
-        except Exception:
-            traceback.print_exc()
-            resp = INTERNAL_ERROR
-        return resp
+        return 'PATCH is not a supported command for LogServiceAPI', 405
 
     # HTTP DELETE
     def delete(self, ident, ident1):
         logging.info('LogServiceAPI DELETE called')
-        try:
-            # Find the entry with the correct value for Id
-            resp = 404
-            if ident in members:
-                del(members[ident])
-                resp = 200
-        except Exception:
-            traceback.print_exc()
-            resp = INTERNAL_ERROR
-        return resp
-
+        return 'DELETE is not a supported command for LogServiceAPI', 405
 
 # LogService Collection API
 class LogServiceCollectionAPI(Resource):
@@ -182,7 +149,7 @@ class LogServiceCollectionAPI(Resource):
             
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT

@@ -31,7 +31,7 @@ from .redfish.Chassis_api import ChassisCollectionAPI, ChassisAPI
 from .redfish.power_api import PowerAPI
 from .redfish.thermal_api import ThermalAPI
 # Manager imports
-from .redfish.Manager_api import ManagerCollectionAPI, ManagerAPI, CreateManager
+from .redfish.Manager_api import ManagerCollectionAPI, ManagerAPI
 # EgResource imports
 from .redfish.eg_resource_api import EgResourceCollectionAPI, EgResourceAPI, CreateEgResource
 from .redfish.eg_subresource_api import EgSubResourceCollectionAPI, EgSubResourceAPI, CreateEgSubResource
