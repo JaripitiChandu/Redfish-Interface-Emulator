@@ -90,7 +90,7 @@ class SecureBootAPI(Resource):
                     sb = b.bucket(str(ident).encode())
                     if sb:
                         if sb.bucket(BNAME):
-                            return f"SecureBoot is already present in System {ident}", 404
+                            return f"SecureBoot is already present in System {ident}", 409
                         else:
                             secure_boot = sb.create_bucket(BNAME)
                             secure_boot.put(INDEX, json.dumps(request.json).encode())

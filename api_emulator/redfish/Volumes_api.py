@@ -14,12 +14,15 @@ from pprint import pprint
 import logging, json
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
-from .ComputerSystem_api import members as sys_members  
-from .storage_api import members as storage_memebers
+from .ComputerSystem_api import BNAME as SYS_BNAME
+from .storage_api import BNAME as STR_BNAME
 from .ResetActionInfo_api import ResetActionInfo_API
 from .ResetAction_api import ResetAction_API
 
+from g import db, INDEX, INTERNAL_SERVER_ERROR
+
 members = {}
+BNAME = b"Volumes"
 
 INTERNAL_ERROR = 500
 
@@ -48,20 +51,35 @@ class Volume(Resource):
     def get(self, ident1, ident2, ident3):
         logging.info(self.__class__.__name__ +' GET called')
         try:
-            # Find the entry with the correct value for Id
-            if ident1 in members:
-                if ident2 in members[ident1]:
-                    if ident3 in members[ident1][ident2]:
-                        resp = members[ident1][ident2][ident3], 200
+            with db.view() as tx:
+                sb = tx.bucket(SYS_BNAME)
+                if sb:
+                    system = sb.bucket(str(ident1).encode())
+                    if system:
+                        storages = system.bucket(STR_BNAME)
+                        if storages:
+                            storage = storages.bucket(str(ident2).encode())
+                            if storage:
+                                volumes = storage.bucket(BNAME)
+                                if volumes:
+                                    vol = volumes.bucket(str(ident3).encode())
+                                    if vol:
+                                        resp = json.loads(vol.get(INDEX).decode()), 200
+                                    else:
+                                        return f"Volume {ident3} not found in Storage {ident2} of System {ident1}", 404
+                                else:
+                                    return f"Volume {ident3} not found in Storage {ident2} of System {ident1}", 404
+                            else:
+                                return f"Storage {ident2} not found in System {ident1}", 404
+                        else:
+                            return f"Storage {ident2} not found in System {ident1}", 404
                     else:
-                        resp = f"PCIeDeviceFunction {ident3} for PCIeDevice {ident2} of system {ident1} not found", 404
+                        return "System " + ident1 + " not found" , 404
                 else:
-                    resp = f"PCIeDevice {ident2} for system {ident1} not found", 404
-            else:
-                resp = f"PCIeDevice {ident2} for system {ident1} not found", 404
+                    return "System " + ident1 + " not found" , 404
         except Exception:
             traceback.print_exc()
-            resp = "Internal Server Error", INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT
@@ -77,22 +95,35 @@ class Volume(Resource):
     def post(self, ident1, ident2, ident3):
         logging.info(self.__class__.__name__ + ' POST called')
         try:
-            if ident1 in sys_members:
-                members.setdefault(ident1, {})
-            else:
-                return f"System {ident1} not found", 404
-            if ident2 in storage_memebers.get(ident1, {}):
-                members[ident1].setdefault(ident2, {})
-            else:
-                return f"Storage {ident2} not found for system {ident1}", 404
-            if ident3 in members[ident1][ident2]:
-                return "Resource already exists", 409
-            else:
-                members[ident1][ident2][ident3] = request.json
-                resp = members[ident1][ident2][ident3], 200
+            with db.update() as tx:
+                b = tx.bucket(SYS_BNAME)
+                if b:
+                    sb = b.bucket(str(ident1).encode())
+                    if sb:
+                        storages = sb.bucket(STR_BNAME)
+                        if storages:
+                            storage = storages.bucket(str(ident2).encode())
+                            if storage:
+                                volumes = storage.bucket(BNAME)
+                                if not volumes:
+                                    volumes = storage.create_bucket(BNAME)
+                                if volumes.bucket(str(ident2).encode()):
+                                    return f"Volume {ident3} is already present in Storage {ident2} of System {ident1}", 409
+                                else:
+                                    vol = volumes.create_bucket(str(ident3).encode())
+                                    vol.put(INDEX, json.dumps(request.json).encode())
+                            else:
+                                return f"Storage {ident2} does not exist in System {ident1}", 404
+                        else:
+                            return f"Storage {ident2} does not exist in System {ident1}", 404
+                    else:
+                        return f"System {ident1} does not exist", 404
+                else:
+                    return f"System {ident1} does not exist", 404
+            resp = request.json, 201
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PATCH
@@ -129,24 +160,39 @@ class Volumes(Resource):
     def __init__(self):
         logging.info(self.__class__.__name__ + ' init called')
         self.config = {
-    "@odata.id": "",
-    "@odata.type": "#VolumeCollection.VolumeCollection",
-    "@odata.context": "/redfish/v1/$metadata#VolumeCollection.VolumeCollection",
-    "Description": "Collection of Volumes for this system",
-    "Name": "Volume Collection",
-    "Members@odata.count": 0,
-    "Members": []
-}
+            "@odata.id": "",
+            "@odata.type": "#VolumeCollection.VolumeCollection",
+            "@odata.context": "/redfish/v1/$metadata#VolumeCollection.VolumeCollection",
+            "Description": "Collection of Volumes for this system",
+            "Name": "Volume Collection",
+            "Members": [],
+            "Members@odata.count": 0
+        }
 
     # HTTP GET
     def get(self, ident1, ident2):
         logging.info(self.__class__.__name__ +' GET called')
         try:
+            bucket_members = []
+
+            with db.view() as tx:
+                systems = tx.bucket(SYS_BNAME)
+                if systems:
+                    sb = systems.bucket(str(ident1).encode())
+                    if sb:
+                        storages = sb.bucket(STR_BNAME)
+                        if storages:
+                            storage = storages.bucket(str(ident2).encode())
+                            if storage:
+                                b = storage.bucket(BNAME)
+                                if b:
+                                    for k, v in b:
+                                        if not v and b.bucket(k):
+                                            bucket_members.append(json.loads(b.bucket(k).get(INDEX).decode())['@odata.id'])
+
             self.config["@odata.id"] = "/redfish/v1/Systems/{}/Storage/{}/Volumes".format(ident1, ident2)
-            self.config["Members"] = [
-                {'@odata.id': vol['@odata.id']} for vol in members.get(ident1, {}).get(ident2, {}).values()
-            ]
-            self.config["Members@odata.count"] = len(members.setdefault(ident1, {}).setdefault(ident2, {}))
+            self.config["Members"] = [{'@odata.id': x} for x in bucket_members]
+            self.config["Members@odata.count"] = len(bucket_members)
             resp = self.config, 200
         except Exception:
             traceback.print_exc()

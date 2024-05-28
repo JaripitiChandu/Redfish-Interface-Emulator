@@ -98,7 +98,7 @@ class MemoryAPI(Resource):
                         if not mems:
                             mems = sb.create_bucket(BNAME)
                         if mems.bucket(str(ident2).encode()):
-                            return f"Memory {ident2} is already present in System {ident1}", 404
+                            return f"Memory {ident2} is already present in System {ident1}", 409
                         else:
                             mem = mems.create_bucket(str(ident2).encode())
                             mem.put(INDEX, json.dumps(request.json).encode())

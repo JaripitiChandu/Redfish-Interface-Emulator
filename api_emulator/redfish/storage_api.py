@@ -18,7 +18,11 @@ from flask_restful import reqparse, Api, Resource
 from .ResetActionInfo_api import ResetActionInfo_API
 from .ResetAction_api import ResetAction_API
 
+from g import db, INDEX, INTERNAL_SERVER_ERROR
+from .ComputerSystem_api import BNAME as SYS_BNAME
+
 members = {}
+BNAME = b"Storage"
 
 INTERNAL_ERROR = 500
 
@@ -47,17 +51,27 @@ class StorageAPI(Resource):
     def get(self, ident1, ident2):
         logging.info(self.__class__.__name__ +' GET called')
         try:
-            # Find the entry with the correct value for Id
-            if ident1 in members:
-                if ident2 in members[ident1]:
-                    resp = members[ident1][ident2], 200
+            with db.view() as tx:
+                sb = tx.bucket(SYS_BNAME)
+                if sb:
+                    system = sb.bucket(str(ident1).encode())
+                    if system:
+                        storages = system.bucket(BNAME)
+                        if storages:
+                            storage = storages.bucket(str(ident2).encode())
+                            if storage:
+                                resp = json.loads(storage.get(INDEX).decode()), 200
+                            else:
+                                return f"Storage {ident2} not found in System {ident1}", 404
+                        else:
+                            return f"Storage {ident2} not found in System {ident1}", 404
+                    else:
+                        return "System " + ident1 + " not found" , 404
                 else:
-                    resp = f"Storage {ident2} for system {ident1} not found", 404
-            else:
-                resp = f"Storage {ident2} for system {ident1} not found", 404
+                    return "System " + ident1 + " not found" , 404
         except Exception:
             traceback.print_exc()
-            resp = "Internal Server Error", INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT
@@ -73,15 +87,27 @@ class StorageAPI(Resource):
     def post(self, ident1, ident2):
         logging.info(self.__class__.__name__ + ' POST called')
         try:
-            members.setdefault(ident1, {})
-            if ident2 in members[ident1]:
-                return ident2 + " storage already exists", 409
-            else:
-                members[ident1][ident2] = request.json
-            resp = members[ident1][ident2], 200
+            with db.update() as tx:
+                b = tx.bucket(SYS_BNAME)
+                if b:
+                    sb = b.bucket(str(ident1).encode())
+                    if sb:
+                        storages = sb.bucket(BNAME)
+                        if not storages:
+                            storages = sb.create_bucket(BNAME)
+                        if storages.bucket(str(ident2).encode()):
+                            return f"Storage {ident2} is already present in System {ident1}", 409
+                        else:
+                            storage = storages.create_bucket(str(ident2).encode())
+                            storage.put(INDEX, json.dumps(request.json).encode())
+                    else:
+                        return f"System {ident1} does not exist", 404
+                else:
+                    return f"System {ident1} does not exist", 404
+            resp = request.json, 201
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PATCH
@@ -118,22 +144,35 @@ class StorageCollectionAPI(Resource):
     def __init__(self):
         logging.info(self.__class__.__name__ + ' init called')
         self.config = {
-    "@odata.id": "",
-    "@odata.type": "#StorageCollection.StorageCollection",
-    "@odata.context": "/redfish/v1/$metadata#StorageCollection.StorageCollection",
-    "Description": "Collection of storage resource instances for this system",
-    "Name": "Storage Collection",
-    "Members": [],
-    "Members@odata.count": 0
-}
+            "@odata.id": "",
+            "@odata.type": "#StorageCollection.StorageCollection",
+            "@odata.context": "/redfish/v1/$metadata#StorageCollection.StorageCollection",
+            "Description": "Collection of storage resource instances for this system",
+            "Name": "Storage Collection",
+            "Members": [],
+            "Members@odata.count": 0
+        }
 
     # HTTP GET
     def get(self, ident):
         logging.info(self.__class__.__name__ +' GET called')
         try:
+            bucket_members = []
+
+            with db.view() as tx:
+                systems = tx.bucket(SYS_BNAME)
+                if systems:
+                    sb = systems.bucket(str(ident).encode())
+                    if sb:
+                        storages = sb.bucket(BNAME)
+                        if storages:
+                            for k, v in storages:
+                                if not v and storages.bucket(k):
+                                    bucket_members.append(json.loads(storages.bucket(k).get(INDEX).decode())['@odata.id'])
+
             self.config["@odata.id"] = "/redfish/v1/Systems/{}/Storage".format(ident)
-            self.config["Members"] = [{'@odata.id': storage['@odata.id']} for storage in list(members.get(ident, {}).values())]
-            self.config["Members@odata.count"] = len(members.setdefault(ident, {}))
+            self.config["Members"] = [{'@odata.id': x} for x in bucket_members]
+            self.config["Members@odata.count"] = len(bucket_members)
             resp = self.config, 200
         except Exception:
             traceback.print_exc()

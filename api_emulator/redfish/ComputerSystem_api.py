@@ -10,7 +10,7 @@ Singleton  API:  GET, POST, PATCH, DELETE
 """
 
 import g
-from g import db, INDEX
+from g import db, INDEX, INTERNAL_SERVER_ERROR
 
 import sys, traceback
 from pprint import pprint
@@ -74,7 +74,6 @@ class ComputerSystemAPI(Resource):
     def get(self, ident):
         logging.info('ComputerSystemAPI GET called')
         try:
-            # Find the entry with the correct value for Id
             with db.view() as tx:
                 b = tx.bucket(BNAME)
                 if not b:
@@ -86,7 +85,7 @@ class ComputerSystemAPI(Resource):
                     resp = json.loads(system.get(INDEX).decode()), 200
         except Exception:
             traceback.print_exc()
-            resp = "Internal Server Error", INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT
@@ -108,10 +107,10 @@ class ComputerSystemAPI(Resource):
                     b = tx.create_bucket(BNAME)
                 system = b.create_bucket(str(ident).encode())
                 system.put(INDEX, json.dumps(request.json).encode())
-            resp = request.json, 200
+            resp = request.json, 201
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PATCH

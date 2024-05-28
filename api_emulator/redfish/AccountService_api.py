@@ -18,7 +18,10 @@ from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Resource
 from api_emulator.utils import update_nested_dict
 
+from g import db, INDEX, INTERNAL_SERVER_ERROR
+
 config = None
+BNAME = b"AccountService"
 
 INTERNAL_ERROR = 500
 
@@ -38,14 +41,16 @@ class AccountServiceAPI(Resource):
     def get(self):
         logging.info(self.__class__.__name__ +' GET called')
         try:
-            global config
-            if config:
-                resp = config, 200
-            else:
-                resp = "AccountService not found", 404
+            # Find the entry with the correct value for Id
+            with db.view() as tx:
+                b = tx.bucket(BNAME)
+                if not b:
+                    return "AccountService not found" , 404
+                else:
+                    resp = json.loads(b.get(INDEX).decode()), 200
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT
@@ -57,12 +62,17 @@ class AccountServiceAPI(Resource):
     def post(self):
         logging.info(self.__class__.__name__ + ' POST called')
         try:
-            global config
-            config=request.json
-            resp = config, 201
+            with db.update() as tx:
+                b = tx.bucket(BNAME)
+                if b:
+                    resp = "AccountService already present", 409
+                else:
+                    b = tx.create_bucket(BNAME)
+                    b.put(INDEX, json.dumps(request.json).encode())
+            resp = request.json, 201
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PATCH    

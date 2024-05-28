@@ -14,12 +14,16 @@ from pprint import pprint
 import logging, json
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
-from .ComputerSystem_api import members as sys_members  
-from .storage_api import members as storage_memebers
+from .ComputerSystem_api import BNAME as SYS_BNAME
+from .storage_api import BNAME as STR_BNAME
 from .ResetActionInfo_api import ResetActionInfo_API
 from .ResetAction_api import ResetAction_API
 
+from g import db, INDEX, INTERNAL_SERVER_ERROR
+from .ComputerSystem_api import BNAME as SYS_BNAME
+
 members = {}
+BNAME = b"Drives"
 
 INTERNAL_ERROR = 500
 
@@ -48,21 +52,37 @@ class DriveAPI(Resource):
     def get(self, ident1, ident2, ident3):
         logging.info(self.__class__.__name__ +' GET called')
         try:
-            # Find the entry with the correct value for Id
-            if ident1 in members:
-                if ident2 in members[ident1]:
-                    if ident3 in members[ident1][ident2]:
-                        resp = members[ident1][ident2][ident3], 200
+            with db.view() as tx:
+                sb = tx.bucket(SYS_BNAME)
+                if sb:
+                    system = sb.bucket(str(ident1).encode())
+                    if system:
+                        storages = system.bucket(STR_BNAME)
+                        if storages:
+                            storage = storages.bucket(str(ident2).encode())
+                            if storage:
+                                drives = storage.bucket(BNAME)
+                                if drives:
+                                    drive = drives.bucket(str(ident3).encode())
+                                    if drive:
+                                        resp = json.loads(drive.get(INDEX).decode()), 200
+                                    else:
+                                        return f"Drive {ident3} not found in Storage {ident2} of System {ident1}", 404
+                                else:
+                                    return f"Drive {ident3} not found in Storage {ident2} of System {ident1}", 404
+                            else:
+                                return f"Storage {ident2} not found in System {ident1}", 404
+                        else:
+                            return f"Storage {ident2} not found in System {ident1}", 404
                     else:
-                        resp = f"Drive {ident3} for storage {ident2} of system {ident1} not found", 404
+                        return "System " + ident1 + " not found" , 404
                 else:
-                    resp = f"Storage {ident2} for system {ident1} not found", 404
-            else:
-                resp = f"Storage {ident2} for system {ident1} not found", 404
+                    return "System " + ident1 + " not found" , 404
         except Exception:
             traceback.print_exc()
-            resp = "Internal Server Error", INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
+
 
     # HTTP PUT
     def put(self, ident):
@@ -77,23 +97,35 @@ class DriveAPI(Resource):
     def post(self, ident1, ident2, ident3):
         logging.info(self.__class__.__name__ + ' POST called')
         try:
-            if ident1 in sys_members:
-                members.setdefault(ident1, {})
-            else:
-                return f"System {ident1} not found", 404
-            if ident2 in storage_memebers[ident1]:
-                members[ident1].setdefault(ident2, {})
-            else:
-                return f"Storage {ident2} not found for system {ident1}", 404
-            
-            if ident3 in members[ident1][ident2]:
-                return "Resource already exists", 409
-            else:
-                members[ident1][ident2][ident3] = request.json
-                resp = members[ident1][ident2][ident3], 200
+            with db.update() as tx:
+                b = tx.bucket(SYS_BNAME)
+                if b:
+                    sb = b.bucket(str(ident1).encode())
+                    if sb:
+                        storages = sb.bucket(STR_BNAME)
+                        if storages:
+                            storage = storages.bucket(str(ident2).encode())
+                            if storage:
+                                drives = storage.bucket(BNAME)
+                                if not drives:
+                                    drives = storage.create_bucket(BNAME)
+                                if drives.bucket(str(ident2).encode()):
+                                    return f"Drive {ident3} is already present in Storage {ident2} of System {ident1}", 409
+                                else:
+                                    drive = drives.create_bucket(str(ident3).encode())
+                                    drive.put(INDEX, json.dumps(request.json).encode())
+                            else:
+                                return f"Storage {ident2} does not exist in System {ident1}", 404
+                        else:
+                            return f"Storage {ident2} does not exist in System {ident1}", 404
+                    else:
+                        return f"System {ident1} does not exist", 404
+                else:
+                    return f"System {ident1} does not exist", 404
+            resp = request.json, 201
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PATCH

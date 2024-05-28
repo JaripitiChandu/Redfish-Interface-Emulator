@@ -90,7 +90,7 @@ class BiosAPI(Resource):
                     sb = b.bucket(str(ident).encode())
                     if sb:
                         if sb.bucket(BNAME):
-                            return f"Bios is already present in System {ident}", 404
+                            return f"Bios is already present in System {ident}", 409
                         else:
                             bios = sb.create_bucket(BNAME)
                             bios.put(INDEX, json.dumps(request.json).encode())

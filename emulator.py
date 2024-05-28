@@ -29,6 +29,7 @@ from api_emulator.resource_manager import ResourceManager
 from api_emulator.static_resource_manager import StaticResourceManager
 from api_emulator.exceptions import CreatePooledNodeError, ConfigurationError, RemovePooledNodeError
 from api_emulator.resource_dictionary import ResourceDictionary
+from g import db,INDEX,INTERNAL_SERVER_ERROR
 
 from infragen.populate import populate
 
@@ -43,8 +44,7 @@ CONFIG = 'emulator-config.json'
 
 # Base URL of the RESTful interface
 REST_BASE = '/redfish/v1/'
-BNAME = b'service-root'
-INDEX = b'value'
+
 g.rest_base = REST_BASE
 
 # Creating the ResourceManager
@@ -127,12 +127,12 @@ INTERNAL_ERROR = error_response('Internal Server Error', 500)
 class PathError(Exception):
     pass
 
-@g.api.representation('application/xml')
-def output_xml(data, code, headers=None):
-    resp = make_response(data, code)
-    resp.headers.extend(headers or {})
-    resp.headers['Content-Type'] = 'text/xml; charset=ISO-8859-1'
-    return resp
+# @g.api.representation('application/xml')
+# def output_xml(data, code, headers=None):
+#     resp = make_response(data, code)
+#     resp.headers.extend(headers or {})
+#     resp.headers['Content-Type'] = 'text/xml; charset=ISO-8859-1'
+#     return resp
 
 @g.api.representation('application/json')
 def output_json(data, code, headers=None):
@@ -184,10 +184,10 @@ class RedfishAPI(Resource):
             logging.info('Service root POST called')
             try:
                 with g.db.update() as tx:
-                    b = tx.bucket(BNAME)
-                    if not b:
-                        b = tx.create_bucket(BNAME)
-                        b.put(INDEX, json.dumps(request.json).encode())
+                    root = tx.bucket()
+                    v = root.get(INDEX)
+                    if not v:
+                        root.put(INDEX, json.dumps(request.json).encode())
                         resp = "Service root created", 200
                     else:
                         resp = 'service root already exists', 409        
@@ -245,14 +245,13 @@ class RedfishAPI(Resource):
                     config = self.get_configuration(resource_manager, path)
             else:
                 # path is None, fetch ServiceRoot                
-                resp = 404
                 with g.db.view() as tx:
-                    b = tx.bucket(BNAME)
-                    if b:
-                        value = b.get(INDEX).decode()
-                        config = json.loads(value)
+                    root = tx.bucket()
+                    v = root.get(INDEX)
+                    if v:
+                        config = json.loads(v.decode())
                     else:
-                        return "service root not found", 404
+                        return "Service root not found", 404
 
             resp = config, 200
         except PathError:

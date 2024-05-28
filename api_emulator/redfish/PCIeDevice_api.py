@@ -18,7 +18,11 @@ from .ComputerSystem_api import members as sys_members
 from .ResetActionInfo_api import ResetActionInfo_API
 from .ResetAction_api import ResetAction_API
 
+from g import db, INDEX, INTERNAL_SERVER_ERROR
+from .ComputerSystem_api import BNAME as SYS_BNAME
+
 members = {}
+BNAME = b"PCIeDevices"
 
 INTERNAL_ERROR = 500
 
@@ -47,17 +51,27 @@ class PCIeDeviceAPI(Resource):
     def get(self, ident1, ident2):
         logging.info(self.__class__.__name__ +' GET called')
         try:
-            # Find the entry with the correct value for Id
-            if ident1 in members:
-                if ident2 in members[ident1]:
-                    resp = members[ident1][ident2], 200
+            with db.view() as tx:
+                sb = tx.bucket(SYS_BNAME)
+                if sb:
+                    system = sb.bucket(str(ident1).encode())
+                    if system:
+                        devices = system.bucket(BNAME)
+                        if devices:
+                            device = devices.bucket(str(ident2).encode())
+                            if device:
+                                resp = json.loads(device.get(INDEX).decode()), 200
+                            else:
+                                return f"PCIeDevice {ident2} not found in System {ident1}", 404
+                        else:
+                            return f"PCIeDevice {ident2} not found in System {ident1}", 404
+                    else:
+                        return "System " + ident1 + " not found" , 404
                 else:
-                    resp = f"Processor {ident2} for system {ident1} not found", 404
-            else:
-                resp = f"Processor {ident2} for system {ident1} not found", 404
+                    return "System " + ident1 + " not found" , 404
         except Exception:
             traceback.print_exc()
-            resp = "Internal Server Error", INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
 
@@ -74,18 +88,27 @@ class PCIeDeviceAPI(Resource):
     def post(self, ident1, ident2):
         logging.info(self.__class__.__name__ + ' POST called')
         try:
-            if ident1 in sys_members:
-                members.setdefault(ident1, {})
-            else:
-                return f"System {ident1} not found", 404
-            if ident2 in members[ident1]:
-                return "PCIeDevice " + ident2 + " already exists", 409
-            else:
-                members[ident1][ident2] = request.json
-            resp = members[ident1][ident2], 200
+            with db.update() as tx:
+                b = tx.bucket(SYS_BNAME)
+                if b:
+                    sb = b.bucket(str(ident1).encode())
+                    if sb:
+                        devices = sb.bucket(BNAME)
+                        if not devices:
+                            devices = sb.create_bucket(BNAME)
+                        if devices.bucket(str(ident2).encode()):
+                            return f"PCIeDevice {ident2} is already present in System {ident1}", 409
+                        else:
+                            device = devices.create_bucket(str(ident2).encode())
+                            device.put(INDEX, json.dumps(request.json).encode())
+                    else:
+                        return f"System {ident1} does not exist", 404
+                else:
+                    return f"System {ident1} does not exist", 404
+            resp = request.json, 201
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PATCH
