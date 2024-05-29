@@ -16,7 +16,6 @@ import logging
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
-from .Chassis_api import members as chassis_members
 from .Chassis_api import BNAME as RESOURCE_BNAME
 from .network_adapters_api import BNAME as SUB_RESOURCE_BNAME 
 from .network_adapters_api import members as network_adapters_members

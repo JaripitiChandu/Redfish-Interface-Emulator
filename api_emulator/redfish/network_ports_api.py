@@ -18,11 +18,8 @@ import logging
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
-from .Chassis_api import members as chassis_members
 from .Chassis_api import BNAME as RESOURCE_BNAME
 from .network_adapters_api import BNAME as SUB_RESOURCE_BNAME 
-from .network_adapters_api import members as network_adapters_members
-from api_emulator.utils import update_nested_dict
 
 members = {}
 
@@ -98,24 +95,23 @@ class NetworkPortsAPI(Resource):
     # HTTP PATCH
     def patch(self, ident, ident1, ident2):
         logging.info('NetworkPortsAPI PATCH called')
-        raw_dict = request.get_json(force=True)
-        logging.info(f"Payload = {raw_dict}")
+        patch_data = request.get_json(force=True)
+        logging.info(f"Payload = {patch_data}")
         try:
-            if ident in chassis_members:
-                members.setdefault(ident, {})
-                if ident1 in network_adapters_members[ident]:
-                 members[ident].setdefault(ident1, {})
-                else:
-                    return "NetworkAdapter {} does not exist in Chassis {}".format(ident1,ident), 404
-            else:
-                return "Chassis {} does not exist".format(ident), 404
+            bucket_hierarchy = [RESOURCE_BNAME, ident, SUB_RESOURCE_BNAME, ident1, BNAME, ident2]
 
-            # Update specific portions of the identified object
-            if ident2 in members.get(ident, {}).get(ident1, {}):
-                update_nested_dict(members[ident][ident1][ident2], raw_dict)
-                resp = members[ident][ident1][ident2], 200
-            else:
-                return "NetworkPort {} of NetworkAdapter {} does not exist in Chassis {}".format(ident2,ident1,ident), 404
+            passed, ports_data = g.get_value_from_bucket_hierarchy(bucket_hierarchy)
+
+            if not passed:
+                return f"NetworkPort {ident2} of NetworkAdapter {ident1} for Chassis {ident} not found", 404
+
+            for key, value in patch_data.items():
+                if key in ports_data:
+                    ports_data[key] = value
+
+            g.post_value_to_bucket_hierarchy(bucket_hierarchy, json.dumps(ports_data))
+            resp = ports_data, 200
+
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR

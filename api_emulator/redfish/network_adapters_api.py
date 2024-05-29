@@ -17,7 +17,6 @@ import logging
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
-from .Chassis_api import members as chassis_members
 from .Chassis_api import BNAME as RESOURCE_BNAME
 from api_emulator.utils import update_nested_dict
 
@@ -99,20 +98,22 @@ class NetworkAdaptersAPI(Resource):
     # HTTP PATCH
     def patch(self, ident, ident1):
         logging.info('NetworkAdaptersAPI PATCH called')
-        raw_dict = request.get_json(force=True)
-        logging.info(f"Payload = {raw_dict}")
+        patch_data = request.get_json(force=True)
+        logging.info(f"Payload = {patch_data}")
         try:
-            global config
-            if ident in chassis_members:
-                members.setdefault(ident, {})
-            else:
-                resp = f"Chassis {ident} not found", 404
+            bucket_hierarchy = [RESOURCE_BNAME, ident, BNAME, ident1]
 
-            if ident1 in members[ident]:
-                update_nested_dict(members[ident][ident1], raw_dict)
-                resp = members[ident][ident1], 200
-            else:
-                return "NetworkAdapter {} does not exist in Chassis {}".format(ident1,ident), 404
+            passed, adapters_data = g.get_value_from_bucket_hierarchy(bucket_hierarchy)
+
+            if not passed:
+                return f"NetworkAdapter {ident1} for Chassis {ident} not found", 404
+
+            for key, value in patch_data.items():
+                if key in adapters_data:
+                    adapters_data[key] = value
+
+            g.post_value_to_bucket_hierarchy(bucket_hierarchy, json.dumps(adapters_data))
+            resp = adapters_data, 200
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR

@@ -79,13 +79,24 @@ class EventServiceAPI(Resource):
     # HTTP PATCH
     def patch(self):
         logging.info('EventServiceAPI PATCH called')
-        raw_dict = request.get_json(force=True)
-        logging.info(f"Payload = {raw_dict}")
+        patch_data = request.get_json(force=True)
+        logging.info(f"Payload = {patch_data}")
         try:
             # Update specific portions of the identified object
-            for key, value in raw_dict.items():
-                config[key] = value
-            resp = config[key], 200
+            with g.db.update() as tx:
+                eventservice = tx.bucket(PRIMARY_BNAME)
+                if not eventservice:
+                    return f"EventService not found", 404
+                else:
+                    event_data = json.loads(eventservice.get(INDEX).decode())
+
+                    for key, value in patch_data.items():
+                        if key in event_data:
+                            event_data[key] = value
+
+                    eventservice.put(INDEX, json.dumps(event_data).encode())
+                    resp = event_data, 200
+
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR

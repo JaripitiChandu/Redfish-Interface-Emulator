@@ -104,7 +104,41 @@ class LogServiceAPI(Resource):
     # HTTP PATCH
     def patch(self, ident, ident1):
         logging.info('LogServiceAPI PATCH called')
-        return 'PATCH is not a supported command for LogServiceAPI', 405
+        patch_data = request.get_json(force=True)
+        logging.info(f"Payload = {patch_data}")
+        try:
+            # Update specific portions of the identified object
+            with g.db.update() as tx:
+                managers = tx.bucket(PRIMARY_BNAME)
+                if managers:
+                    managers_ident = managers.bucket(str(ident).encode())
+                    if managers_ident:
+                        log_services = managers_ident.bucket(BNAME)
+                        if log_services:
+                            log_services_ident = log_services.bucket(str(ident1).encode())
+                        else:
+                            return f"Logservice {ident1} for Manager {ident} not found", 404
+                    else:
+                        return f"Manager {ident} not found", 404
+                else:
+                    return f"Manager {ident} not found", 404
+
+                if log_services_ident:
+                    log_service_data = json.loads(log_services_ident.get(INDEX).decode())
+                else:
+                    return f"Logservice {ident1} for Manager {ident} not found", 404
+
+                for key, value in patch_data.items():
+                    if key in log_service_data:
+                        log_service_data[key] = value
+
+                    log_services_ident.put(INDEX, json.dumps(log_service_data).encode())
+                    resp = log_service_data, 200
+
+        except Exception:
+            traceback.print_exc()
+            resp = INTERNAL_SERVER_ERROR
+        return resp
 
     # HTTP DELETE
     def delete(self, ident, ident1):
