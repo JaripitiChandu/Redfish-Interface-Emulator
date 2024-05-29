@@ -98,7 +98,16 @@ class NetworkProtocolAPI(Resource):
     # HTTP PATCH
     def patch(self, ident):
         logging.info('NetworkProtocolAPI PATCH called')
-        return 'PATCH is not a supported command for NetworkProtocolAPI', 405
+        raw_dict = request.get_json(force=True)
+        logging.info(f"payload = {raw_dict}")
+        try:
+            # Update specific portions of the identified object
+            update_nested_dict(members[ident], raw_dict)
+            resp = members[ident], 200
+        except Exception:
+            traceback.print_exc()
+            resp = INTERNAL_ERROR
+        return resp
 
 
     # HTTP DELETE

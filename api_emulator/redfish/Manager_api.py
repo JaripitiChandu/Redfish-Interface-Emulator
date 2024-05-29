@@ -93,7 +93,16 @@ class ManagerAPI(Resource):
     # HTTP PATCH
     def patch(self, ident):
         logging.info('ManagerAPI PATCH called')
-        return 'PATCH is not a supported command for ManagerAPI', 405
+        raw_dict = request.get_json(force=True)
+        logging.info(f"payload = {raw_dict}")
+        try:
+            # Update specific portions of the identified objec
+            update_nested_dict(members[ident], raw_dict)
+            resp = members[ident], 200
+        except Exception:
+            traceback.print_exc()
+            resp = INTERNAL_ERROR
+        return resp
 
     # HTTP DELETE
     def delete(self, ident):
