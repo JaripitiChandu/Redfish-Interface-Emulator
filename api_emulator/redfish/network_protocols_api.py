@@ -16,7 +16,7 @@ import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
 
-from g import INTERNAL_SERVER_ERROR
+from g import INDEX, INTERNAL_SERVER_ERROR
 
 PRIMARY_BNAME = b'Managers'
 BNAME = b'NetworkProtocols'
@@ -55,7 +55,7 @@ class NetworkProtocolAPI(Resource):
                         if not network_protocols:
                             resp = f"Manager {ident} NetworkProtocols not found", 404
                         else:
-                            value = network_protocols.get(BNAME)
+                            value = network_protocols.get(INDEX)
                             resp = json.loads(value), 200
         except Exception:
             traceback.print_exc()
@@ -71,19 +71,25 @@ class NetworkProtocolAPI(Resource):
     def post(self, ident):
         logging.info('NetworkProtocolAPI POST called')
         try:
+            resp = 404
             with g.db.update() as tx:
-                if tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME):
-                    return f"NetworkProtocols already exists in Manager {ident}", 409
-                else:
-                    manager_ident = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode())
-                    if not manager_ident:
-                        return f"Manager {ident} not found", 404
+                managers = tx.bucket(PRIMARY_BNAME)
+                if managers:
+                    managers_ident = managers.bucket(str(ident).encode())
+                    if managers_ident:
+                        network_protocols = managers_ident.bucket(BNAME)
                     else:
-                        network_protocols = manager_ident.bucket(BNAME)
-                        if not network_protocols:
-                            network_protocols = manager_ident.create_bucket(BNAME)
-                        network_protocols.put(BNAME, json.dumps(request.json).encode())
-                        resp = request.json, 201
+                        return f"Manager {ident} not found", 404
+                else:
+                    return f"Manager {ident} not found", 404
+
+                if not network_protocols:
+                    network_protocols = managers_ident.create_bucket(BNAME)
+                    network_protocols.put(INDEX, json.dumps(request.json).encode())
+                    resp = request.json, 201
+                else:
+                    return f"NetworkProtocols already exists in Manager {ident}", 409
+
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR

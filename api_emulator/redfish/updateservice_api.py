@@ -16,15 +16,11 @@ import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
 
-from g import INTERNAL_SERVER_ERROR
+from g import INDEX, INTERNAL_SERVER_ERROR
 
 PRIMARY_BNAME=b'UpdateService'
 
 # UpdateService Singleton API
-# UpdateService does not have a Singleton API
-
-
-# UpdateService Collection API
 class UpdateServiceAPI(Resource):
 
     def __init__(self, **kwargs):
@@ -45,7 +41,7 @@ class UpdateServiceAPI(Resource):
                 if not b:
                     resp = f"UpdateService not found", 404
                 else:
-                    value = b.get(PRIMARY_BNAME).decode()
+                    value = b.get(INDEX).decode()
                     resp = json.loads(value), 200
         except Exception:
             traceback.print_exc()
@@ -68,7 +64,7 @@ class UpdateServiceAPI(Resource):
                     resp = f"UpdateService already exists", 404
                 else:
                     updateservice = tx.create_bucket(PRIMARY_BNAME)
-                    updateservice.put(PRIMARY_BNAME, json.dumps(request.json).encode())
+                    updateservice.put(INDEX, json.dumps(request.json).encode())
                     resp = request.json, 201
         except Exception:
             traceback.print_exc()
