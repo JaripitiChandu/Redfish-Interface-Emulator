@@ -15,10 +15,11 @@ import logging , json
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
+from .Manager_api import BNAME as PRIMARY_BNAME
+from api_emulator.utils import update_nested_dict
 
-from g import INDEX, INTERNAL_SERVER_ERROR
+from g import db, INDEX, INTERNAL_SERVER_ERROR
 
-PRIMARY_BNAME = b'Managers'
 BNAME = b'NetworkProtocols'
 
 # NetworkProtocol Singleton API
@@ -101,12 +102,26 @@ class NetworkProtocolAPI(Resource):
         raw_dict = request.get_json(force=True)
         logging.info(f"payload = {raw_dict}")
         try:
-            # Update specific portions of the identified object
-            update_nested_dict(members[ident], raw_dict)
-            resp = members[ident], 200
+            with db.update() as tx:
+                b = tx.bucket(PRIMARY_BNAME)
+                if b:
+                    mb = b.bucket(str(ident).encode())
+                    if mb:
+                        np = mb.bucket(BNAME)
+                        if np:
+                            config = json.loads(np.get(INDEX).decode())
+                            update_nested_dict(config, raw_dict)
+                            np.put(INDEX, json.dumps(config).encode())
+                        else:
+                            return f"NetworkProtocols for Manager {ident} not found", 404
+                    else:
+                        return f"Manager {ident} not found", 404
+                else:
+                    return f"Manager {ident} not found", 404
+            resp = config, 200
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
 
