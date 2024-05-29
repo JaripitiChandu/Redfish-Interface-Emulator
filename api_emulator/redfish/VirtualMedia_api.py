@@ -15,7 +15,11 @@ from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
 from api_emulator.utils import update_nested_dict
 
+from g import db, INDEX, INTERNAL_SERVER_ERROR
+from .Manager_api import BNAME as MGR_BNAME
+
 members = {}
+BNAME = b"VirtualMedia"
 
 INTERNAL_ERROR = 500
 
@@ -44,17 +48,27 @@ class VirtualMediaAPI(Resource):
     def get(self, ident1, ident2):
         logging.info(self.__class__.__name__ +' GET called')
         try:
-            # Find the entry with the correct value for Id
-            if ident1 in members:
-                if ident2 in members[ident1]:
-                    resp = members[ident1][ident2], 200
+            with db.view() as tx:
+                sb = tx.bucket(MGR_BNAME)
+                if sb:
+                    system = sb.bucket(str(ident1).encode())
+                    if system:
+                        mems = system.bucket(BNAME)
+                        if mems:
+                            mem = mems.bucket(str(ident2).encode())
+                            if mem:
+                                resp = json.loads(mem.get(INDEX).decode()), 200
+                            else:
+                                return f"VirtualMedia {ident2} not found in Manager {ident1}", 404
+                        else:
+                            return f"VirtualMedia {ident2} not found in Manager {ident1}", 404
+                    else:
+                        return "Manager " + ident1 + " not found" , 404
                 else:
-                    resp = f"VirtualMedia {ident2} for manager {ident1} not found", 404
-            else:
-                resp = f"VirtualMedia {ident2} for manager {ident1} not found", 404
+                    return "Manager " + ident1 + " not found" , 404
         except Exception:
             traceback.print_exc()
-            resp = "Internal Server Error", INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT
@@ -70,18 +84,27 @@ class VirtualMediaAPI(Resource):
     def post(self, ident1: str, ident2: int):
         logging.info(self.__class__.__name__ + ' POST called')
         try:
-            if ident1 in manager_members:
-                members.setdefault(ident1, {})
-            else:
-                return f"Manager {ident1} not found", 404
-            if ident2 in members[ident1]:
-                return "VirtualMedia " + str(ident2) + " already exists", 409
-            else:
-                members[ident1][ident2] = request.json
-            resp = members[ident1][ident2], 201
+            with db.update() as tx:
+                b = tx.bucket(MGR_BNAME)
+                if b:
+                    sb = b.bucket(str(ident1).encode())
+                    if sb:
+                        mems = sb.bucket(BNAME)
+                        if not mems:
+                            mems = sb.create_bucket(BNAME)
+                        if mems.bucket(str(ident2).encode()):
+                            return f"VirtualMedia {ident2} is already present in Manager {ident1}", 409
+                        else:
+                            mem = mems.create_bucket(str(ident2).encode())
+                            mem.put(INDEX, json.dumps(request.json).encode())
+                    else:
+                        return f"Manager {ident1} does not exist", 404
+                else:
+                    return f"Manager {ident1} does not exist", 404
+            resp = request.json, 201
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PATCH
@@ -130,13 +153,26 @@ class VirtualMediaCollectionAPI(Resource):
     def get(self, ident):
         logging.info(self.__class__.__name__ +' GET called')
         try:
+            bucket_members = []
+
+            with db.view() as tx:
+                systems = tx.bucket(MGR_BNAME)
+                if systems:
+                    sb = systems.bucket(str(ident).encode())
+                    if sb:
+                        mems = sb.bucket(BNAME)
+                        if mems:
+                            for k, v in mems:
+                                if not v and mems.bucket(k):
+                                    bucket_members.append(json.loads(mems.bucket(k).get(INDEX).decode())['@odata.id'])
+
             self.config["@odata.id"] = "/redfish/v1/Managers/{}/VirtualMedia".format(ident)
-            self.config["Members"] = [{'@odata.id': vm['@odata.id']} for vm in list(members.get(ident, {}).values())]
-            self.config["Members@odata.count"] = len(members.setdefault(ident, {}))
+            self.config["Members"] = [{'@odata.id': x} for x in bucket_members]
+            self.config["Members@odata.count"] = len(bucket_members)
             resp = self.config, 200
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT
