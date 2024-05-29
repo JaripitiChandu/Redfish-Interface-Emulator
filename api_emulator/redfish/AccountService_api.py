@@ -20,7 +20,6 @@ from api_emulator.utils import update_nested_dict
 
 from g import db, INDEX, INTERNAL_SERVER_ERROR
 
-config = None
 BNAME = b"AccountService"
 
 INTERNAL_ERROR = 500
@@ -81,12 +80,18 @@ class AccountServiceAPI(Resource):
         raw_dict = request.get_json(force=True)
         logging.info(f"payload = {json.dumps(raw_dict)}")
         try:
-            global config
-            update_nested_dict(config, raw_dict)
+            with db.update() as tx:
+                b = tx.bucket(BNAME)
+                if b:
+                    config = json.loads(b.get(INDEX).decode())
+                    update_nested_dict(config, raw_dict)
+                    b.put(INDEX, json.dumps(config).encode())
+                else:
+                    return f"AccountService not found", 404
             resp = config, 200
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP DELETE
