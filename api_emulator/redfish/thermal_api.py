@@ -10,7 +10,7 @@ Singleton  API:  GET, POST
 """
 
 import g
-from g import INDEX, db
+from g import INTERNAL_SERVER_ERROR as INTERNAL_ERROR
 
 import json
 import sys, traceback
@@ -22,9 +22,7 @@ from flask_restful import reqparse, Api, Resource
 from .Chassis_api import BNAME as RESOURCE_BNAME
 
 members = {}
-
 BNAME = 'Thermal'
-INTERNAL_ERROR = 500
 
 
 # Thermal API
@@ -144,7 +142,7 @@ class ThermalAPI(Resource):
             
             # now create the required bucket for resource and put value
             g.post_value_to_bucket_hierarchy(bucket_hierarchy, json.dumps(request.json))
-            resp = request.json, 200
+            resp = request.json, 201
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR

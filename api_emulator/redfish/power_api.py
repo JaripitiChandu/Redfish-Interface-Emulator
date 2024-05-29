@@ -10,6 +10,7 @@ Singleton  API:  GET, PATCH
 """
 
 import g
+from g import INTERNAL_SERVER_ERROR as INTERNAL_ERROR
 
 import json
 import sys, traceback
@@ -22,9 +23,7 @@ from .Chassis_api import BNAME as RESOURCE_BNAME
 
 
 members = {}
-
 BNAME = 'Power'
-INTERNAL_ERROR = 500
 
 
 # Power API
@@ -87,7 +86,7 @@ class PowerAPI(Resource):
             
             # now create the required bucket for resource and put value
             g.post_value_to_bucket_hierarchy(bucket_hierarchy, json.dumps(request.json))
-            resp = request.json, 200
+            resp = request.json, 201
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR

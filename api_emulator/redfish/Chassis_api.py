@@ -10,6 +10,7 @@ Singleton  API:  GET, POST, PATCH, DELETE
 """
 
 import g
+from g import INTERNAL_SERVER_ERROR as INTERNAL_ERROR
 
 import sys, traceback, json
 import logging
@@ -19,8 +20,6 @@ from flask_restful import reqparse, Api, Resource
 
 members = {}
 BNAME = 'Chassis'
-
-INTERNAL_ERROR = 500
 
 # Chassis Singleton API
 class ChassisAPI(Resource):
@@ -118,7 +117,7 @@ class ChassisAPI(Resource):
                 return message, 409
             # now create the required bucket for resource and put value
             g.post_value_to_bucket_hierarchy(bucket_hierarchy, json.dumps(request.json))
-            resp = request.json, 200
+            resp = request.json, 201
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR

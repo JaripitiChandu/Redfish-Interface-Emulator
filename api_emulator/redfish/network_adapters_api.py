@@ -10,6 +10,7 @@ Singleton  API:  GET, POST
 """
 
 import g
+from g import INTERNAL_SERVER_ERROR as INTERNAL_ERROR
 
 import json
 import sys, traceback
@@ -22,7 +23,6 @@ from api_emulator.utils import update_nested_dict
 
 members = {}
 BNAME = 'NetworkAdapters'
-INTERNAL_ERROR = 500
 
 
 # NetworkAdapters Singleton API
@@ -89,7 +89,7 @@ class NetworkAdaptersAPI(Resource):
             
             # now create the required bucket for resource and put value
             g.post_value_to_bucket_hierarchy(bucket_hierarchy, json.dumps(request.json))
-            resp = request.json, 200
+            resp = request.json, 201
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR

@@ -43,6 +43,7 @@ def delay_response():
         return wrapper
     return decorator
 
+
 def validate_json(schema):
     def decorator(f):
         @wraps(f)
@@ -59,13 +60,22 @@ def validate_json(schema):
     return decorator
 
 
-def get_value_from_bucket_hierarchy(buckets): 
+def get_value_from_bucket_hierarchy(buckets):
+    """
+    Retrieve a value from the bucket hierarchy.
+
+    Args:
+        buckets (list): List of bucket names representing the hierarchy.
+
+    Returns:
+        tuple: A tuple containing a boolean indicating success or failure,
+        and a message indicating the result or error.
+    """
     with db.view() as bucket:
         for bucket_name in buckets:
             bucket = bucket.bucket(str(bucket_name).encode())
             if not bucket:
-                message = ' '.join(buckets[:buckets.index(bucket_name)+1]) + ' not found'
-                print(message)
+                message = ' '.join(map(str, buckets[:buckets.index(bucket_name) + 1])) + ' not found'
                 return False, message
         else:
             value = bucket.get(INDEX).decode()
@@ -73,13 +83,22 @@ def get_value_from_bucket_hierarchy(buckets):
 
 
 def get_collection_from_bucket_hierarchy(buckets):
+    """
+    Retrieve a collection from the bucket hierarchy.
+
+    Args:
+        buckets (list): List of bucket names representing the hierarchy.
+
+    Returns:
+        tuple: A tuple containing a boolean indicating success or failure,
+        and a message or list of bucket members.
+    """
     bucket_members = []
     with db.view() as bucket:
         for bucket_name in buckets:
             bucket = bucket.bucket(str(bucket_name).encode())
             if not bucket:
-                message = ' '.join(buckets[:buckets.index(bucket_name)+1]) + ' not found'
-                print(message)
+                message = ' '.join(map(str, buckets[:buckets.index(bucket_name) + 1])) + ' not found'
                 return False, message
         else:
             for k, v in bucket:
@@ -90,30 +109,59 @@ def get_collection_from_bucket_hierarchy(buckets):
 
 
 def is_required_bucket_hierarchy_present(buckets):
+    """
+    Check if the required bucket hierarchy is present.
+
+    Args:
+        buckets (list): List of bucket names representing the hierarchy.
+
+    Returns:
+        tuple: A tuple containing a boolean indicating success or failure,
+        and a message indicating the result or error.
+    """
     with db.view() as bucket:
         for bucket_name in buckets:
             bucket = bucket.bucket(str(bucket_name).encode())
             if not bucket:
-                message = ' '.join(buckets[:buckets.index(bucket_name)+1]) + ' not found'
-                print(message)
+                message = ' '.join(map(str, buckets[:buckets.index(bucket_name) + 1])) + ' not found'
                 return False, message
         else:
             return True, 'all required buckets present'
 
 
 def is_not_resource_bucket_already_present_in_hierarchy(buckets):
+    """
+    Check if a resource bucket already exists in the hierarchy.
+
+    Args:
+        buckets (list): List of bucket names representing the hierarchy.
+
+    Returns:
+        tuple: A tuple containing a boolean indicating success or failure,
+        and a message indicating the result or error.
+    """
     with db.view() as bucket:
         for bucket_name in buckets:
             bucket = bucket.bucket(str(bucket_name).encode())
             if not bucket:
                 break
         else:
-            message = ' '.join(buckets[:buckets.index(bucket_name)+1]) + ' already exists'
+            message = ' '.join(map(str, buckets[:buckets.index(bucket_name) + 1])) + ' already exists'
             return False, message
     return True, 'bucket hierarchy not present'
 
 
 def post_value_to_bucket_hierarchy(buckets, value):
+    """
+    Post a value to the bucket hierarchy.
+
+    Args:
+        buckets (list): List of bucket names representing the hierarchy.
+        value: Value to be posted to the hierarchy.
+
+    Returns:
+        None
+    """
     with db.update() as bucket:
         for bucket_name in buckets:
             if not bucket.bucket(str(bucket_name).encode()):
