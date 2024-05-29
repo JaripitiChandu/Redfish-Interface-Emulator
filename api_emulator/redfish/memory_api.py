@@ -178,7 +178,7 @@ class MemoryCollectionAPI(Resource):
             resp = self.config, 200
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT

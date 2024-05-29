@@ -21,7 +21,7 @@ from flask_restful import reqparse, Api, Resource
 # Resource and SubResource imports
 from .templates.Manager import get_Manager_instance
 
-from g import INDEX, INTERNAL_SERVER_ERROR
+from g import db, INDEX, INTERNAL_SERVER_ERROR
 
 BNAME = b'Managers'
 
@@ -96,12 +96,22 @@ class ManagerAPI(Resource):
         raw_dict = request.get_json(force=True)
         logging.info(f"payload = {raw_dict}")
         try:
-            # Update specific portions of the identified objec
-            update_nested_dict(members[ident], raw_dict)
-            resp = members[ident], 200
+            with db.update() as tx:
+                b = tx.bucket(BNAME)
+                if b:
+                    mb = b.bucket(str(ident).encode())
+                    if mb:
+                        config = json.loads(mb.get(INDEX).decode())
+                        update_nested_dict(config, raw_dict)
+                        mb.put(INDEX, json.dumps(config).encode())
+                    else:
+                        return f"Manager {ident} not found", 404
+                else:
+                    return f"Manager {ident} not found", 404
+            resp = config, 200
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP DELETE
