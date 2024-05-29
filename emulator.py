@@ -33,6 +33,8 @@ from g import db,INDEX,INTERNAL_SERVER_ERROR
 
 from infragen.populate import populate
 
+CBNAME = b"cisco_blob"
+
 # Trays to load into the resource manager
 TRAYS = None
 SPEC = None
@@ -190,12 +192,24 @@ class RedfishAPI(Resource):
                         root.put(INDEX, json.dumps(request.json).encode())
                         resp = "Service root created", 200
                     else:
-                        resp = 'service root already exists', 409        
+                        resp = 'Service root already exists', 409
             except Exception as e:
-                logging.error(f'error creating service root - {e}')
-                resp = INTERNAL_ERROR
+                traceback.print_exc()
+                resp = INTERNAL_SERVER_ERROR
         elif path.startswith("cisco"):
-            cisco_endpoints[path] = json.loads(request.data.decode())
+            res = path.lstrip("cisco/blob/")
+            try:
+                with db.update() as tx:
+                    blob = tx.bucket(CBNAME)
+                    if not blob:
+                        blob = tx.create_bucket(CBNAME)
+                    resb = blob.bucket(res.encode())
+                    if not resb:
+                        resb = blob.create_bucket(res.encode())
+                    resb.put(INDEX, request.data)
+            except Exception as e:
+                traceback.print_exc()
+                resp = INTERNAL_SERVER_ERROR
             return path, 201
         elif path.find(self.system_path) != -1 or path.find(self.chassis_path) != -1:
             args = parser.parse_args()
@@ -237,10 +251,17 @@ class RedfishAPI(Resource):
             if path is not None:
                 # path has a value
                 if path.startswith("cisco"):
-                    if path in cisco_endpoints:
-                        config = cisco_endpoints[path]
-                    else:
-                        return "Resource not found!", 404
+                    res = path.lstrip("cisco/blob/")
+                    with db.view() as tx:
+                        blob = tx.bucket(CBNAME)
+                        if blob:
+                            resb = blob.bucket(res.encode())
+                            if resb:
+                                config = json.loads(resb.get(INDEX).decode())
+                            else:
+                                return f"Resource /{path} not found", 404
+                        else:
+                            return f"Resource /{path} not found", 404
                 else:
                     config = self.get_configuration(resource_manager, path)
             else:
