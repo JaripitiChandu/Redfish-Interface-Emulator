@@ -12,4 +12,5 @@ flask_restful
 urllib3
 flask_httpauth 
 jsonschema
-boltdb
+cryptography
+cffi
