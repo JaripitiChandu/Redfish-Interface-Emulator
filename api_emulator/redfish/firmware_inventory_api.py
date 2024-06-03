@@ -93,7 +93,8 @@ class FirmwareInventoryCollectionAPI(Resource):
             '@odata.id': self.rb + 'UpdateService/FirmwareInventory',
             '@odata.type': '#FirmwareInventoryCollection.1.0.0.FirmwareInventoryCollection',
             '@odata.context': self.rb + '$metadata#FirmwareInventoryCollection.FirmwareInventoryCollection',
-            'Name': 'FirmwareInventory Collection',
+            'Description': 'Inventory of Firmware components',
+            'Name': 'Firmware Inventory',
             'Members': [{'@odata.id': x} for x in output],
             'Members@odata.count': len(output)
         }

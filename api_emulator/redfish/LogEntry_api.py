@@ -87,7 +87,7 @@ class LogEntryCollectionAPI(Resource):
             '@odata.id': " ",
             '@odata.type': '#LogEntryCollection.LogEntryCollection',
             '@odata.context': self.rb + '$metadata#LogEntryCollection.LogEntryCollection',
-            'Name': 'Ethernet Interfaces Collection',
+            'Name': 'Log Service Collection',
             "Members": [],
             "Members@odata.count": 0,
         }

@@ -105,7 +105,6 @@ class SubscriptionCollectionAPI(Resource):
             passed, output = g.get_collection_from_bucket_hierarchy(bucket_hierarchy, INDICES[:-1])
             if not passed:
                 return output, 404
-            self.config["@odata.id"] = "/redfish/v1/EventService/Subscriptions"
             self.config['Members'] = [{'@odata.id': x} for x in output]
             self.config["Members@odata.count"] = len(output)
             resp = self.config, 200

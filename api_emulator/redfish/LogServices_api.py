@@ -96,7 +96,7 @@ class LogServiceCollectionAPI(Resource):
             '@odata.id': " ",
             '@odata.type': '#LogServiceCollection.LogServiceCollection',
             '@odata.context': self.rb + '$metadata#LogServiceCollection.LogServiceCollection',
-            'Name': 'Ethernet Interfaces Collection',
+            'Name': 'Log Service Collection',
             "Members": [],
             "Members@odata.count": 0,
             "Description": "Collection of LogServices for this Manager"

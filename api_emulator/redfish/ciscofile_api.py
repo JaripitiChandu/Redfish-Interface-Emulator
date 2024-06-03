@@ -87,7 +87,8 @@ class CiscoFileCollectionAPI(Resource):
             '@odata.id': " ",
             '@odata.type': '#CiscoFileCollection.CiscoFileCollection',
             '@odata.context': self.rb + '$metadata#CiscoFileCollection.CiscoFileCollection',
-            'Name': 'CiscoFile Collection',
+            'Description': 'Collection of Cisco Internal Storge Partition resources',
+            'Name': 'Cisco Internal Storage Partition Collections',
             "Members": [],
             "Members@odata.count": 0
         }

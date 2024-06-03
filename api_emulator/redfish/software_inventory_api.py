@@ -96,7 +96,8 @@ class SoftwareInventoryCollectionAPI(Resource):
             '@odata.id': self.rb + 'UpdateService/SoftwareInventory',
             '@odata.type': '#SoftwareInventoryCollection.1.0.0.SoftwareInventoryCollection',
             '@odata.context': self.rb + '$metadata#SoftwareInventoryCollection.SoftwareInventoryCollection',
-            'Name': 'SoftwareInventory Collection',
+            'Description': 'Inventory of Software components',
+            'Name': 'Software Inventory',
             'Members': [{'@odata.id': x} for x in output],
             'Members@odata.count': len(output)
         }
