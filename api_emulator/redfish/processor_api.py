@@ -18,10 +18,10 @@ from flask_restful import reqparse, Api, Resource
 from .ResetActionInfo_api import ResetActionInfo_API
 from .ResetAction_api import ResetAction_API
 
-from g import db, INDEX, INTERNAL_SERVER_ERROR
+import g
+from g import INTERNAL_SERVER_ERROR
 
-SYS_BNAME = b"Systems"
-BNAME = b"Processors"
+INDICES = [1,3]
 
 members = {}
 
@@ -52,25 +52,8 @@ class Processor(Resource):
     def get(self, ident1, ident2):
         logging.info(self.__class__.__name__ +' GET called')
         try:
-            # Find the entry with the correct value for Id
-            with db.view() as tx:
-                sb = tx.bucket(SYS_BNAME)
-                if sb:
-                    system = sb.bucket(str(ident1).encode())
-                    if system:
-                        procs = system.bucket(BNAME)
-                        if procs:
-                            proc = procs.bucket(str(ident2).encode())
-                            if proc:
-                                resp = json.loads(proc.get(INDEX).decode()), 200
-                            else:
-                                return f"Proccessor {ident2} not found in System {ident1}", 404
-                        else:
-                            return f"Proccessor {ident2} not found in System {ident1}", 404
-                    else:
-                        return "System " + ident1 + " not found" , 404
-                else:
-                    return "System " + ident1 + " not found" , 404
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.get_value_from_bucket_hierarchy(bucket_hierarchy, INDICES)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -89,24 +72,8 @@ class Processor(Resource):
     def post(self, ident1, ident2):
         logging.info(self.__class__.__name__ + ' POST called')
         try:
-            with db.update() as tx:
-                b = tx.bucket(SYS_BNAME)
-                if b:
-                    sb = b.bucket(str(ident1).encode())
-                    if sb:
-                        procs = sb.bucket(BNAME)
-                        if not procs:
-                            procs = sb.create_bucket(BNAME)
-                        if procs.bucket(str(ident2).encode()):
-                            return f"Processor {ident2} is already present in System {ident1}", 404
-                        else:
-                            proc = procs.create_bucket(str(ident2).encode())
-                            proc.put(INDEX, json.dumps(request.json).encode())
-                    else:
-                        return f"System {ident1} does not exist", 404
-                else:
-                    return f"System {ident1} does not exist", 404
-            resp = request.json, 201
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.post_value_to_bucket_hierarchy(bucket_hierarchy, INDICES, request.json)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -169,21 +136,13 @@ class Processors(Resource):
     def get(self, ident):
         logging.info(self.__class__.__name__ +' GET called')
         try:
-            bucket_members = []
-
-            with db.view() as tx:
-                systems = tx.bucket(SYS_BNAME)
-                if systems:
-                    sb = systems.bucket(str(ident).encode())
-                    if sb:
-                        procs = sb.bucket(BNAME)
-                        if procs:
-                            for k, v in procs:
-                                if not v and procs.bucket(k):
-                                    bucket_members.append(json.loads(procs.bucket(k).get(INDEX).decode())['@odata.id'])
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            passed, output = g.get_collection_from_bucket_hierarchy(bucket_hierarchy, INDICES[:-1])
+            if not passed:
+                return output, 404
             self.config["@odata.id"] = "/redfish/v1/Systems/{}/Processors".format(ident)
-            self.config["Members"] = [{'@odata.id': x} for x in bucket_members]
-            self.config["Members@odata.count"] = len(bucket_members)
+            self.config["Members"] = [{'@odata.id': x} for x in output]
+            self.config["Members@odata.count"] = len(output)
             resp = self.config, 200
         except Exception:
             traceback.print_exc()

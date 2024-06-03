@@ -17,11 +17,9 @@ import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
 
-from g import INDEX, INTERNAL_SERVER_ERROR
+from g import INTERNAL_SERVER_ERROR
 
-PRIMARY_BNAME = b'Managers'
-BNAME = b'LogServices'
-SR_BNAME= b'LogEntries'
+INDICES = [1,3,5]
 
 # LogEntry Singleton API
 class LogEntryAPI(Resource):
@@ -46,22 +44,8 @@ class LogEntryAPI(Resource):
     def get(self, ident, ident1, ident2):
         logging.info('LogEntryAPI GET called')
         try:
-            # Find the entry with the correct value for Id
-            resp = 404
-            with g.db.view() as tx:
-                if not tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()):
-                    return f"Manager {ident} not found", 404
-                if not tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME).bucket(str(ident1).encode()):
-                    return f"LogService {ident1} for Manager {ident} not found", 404
-                else:
-                    b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME).bucket(str(ident1).encode()).bucket(SR_BNAME)
-                    if b:
-                        ident_bucket = b.bucket(str(ident2).encode())
-                        if not ident_bucket:
-                            resp = f"LogEntry {ident2} of LogService {ident1} for Manager {ident} not found", 404
-                        else:
-                            value = ident_bucket.get(INDEX).decode()
-                            resp = json.loads(value), 200
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.get_value_from_bucket_hierarchy(bucket_hierarchy, INDICES)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -76,35 +60,8 @@ class LogEntryAPI(Resource):
     def post(self, ident, ident1, ident2):
         logging.info('LogEntryAPI POST called')
         try:
-            with g.db.update() as tx:
-                managers = tx.bucket(PRIMARY_BNAME)
-                if managers:
-                    managers_ident = managers.bucket(str(ident).encode())
-                    if managers_ident:
-                        log_services=managers_ident.bucket(BNAME)
-                        if log_services:
-                            log_services_ident=log_services.bucket(str(ident1).encode())
-                            if log_services_ident:
-                                log_entries=log_services_ident.bucket(SR_BNAME)
-                            else:
-                                return f"LogService {ident1} not found for Manager {ident}", 404
-                        else:
-                           return f"LogService {ident1} not found for Manager {ident}", 404
-                    else:
-                      return f"Manager {ident} not found", 404
-
-                if not log_entries:
-                    log_entries=log_services_ident.create_bucket(SR_BNAME)
-                
-                log_entries_index = log_entries.bucket(str(ident2).encode())
-
-                if log_entries_index:
-                    resp = f"LogEntry {ident2} for LogService {ident1} already exists in Manager {ident}", 409
-                else:
-                    ident_bucket = log_entries.create_bucket(str(ident2).encode())
-                    ident_bucket.put(INDEX, json.dumps(request.json).encode())
-                    resp = request.json, 201
-
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.post_value_to_bucket_hierarchy(bucket_hierarchy, INDICES, request.json)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -139,19 +96,13 @@ class LogEntryCollectionAPI(Resource):
     def get(self,ident,ident1):
         logging.info('LogEntryCollectionAPI GET called')
         try:
-            bucket_members = []
-            with g.db.view() as tx:
-                b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME).bucket(str(ident1).encode()).bucket(SR_BNAME)
-                if not b:
-                    resp = f'Managers {ident} CiscoInternalStorage not found', 404
-                else:
-                    for k, v in b:
-                        if not v:
-                            if b.bucket(k):
-                                bucket_members.append(json.loads(b.bucket(k).get(INDEX).decode())['@odata.id'])
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            passed, output = g.get_collection_from_bucket_hierarchy(bucket_hierarchy, INDICES[:-1])
+            if not passed:
+                return output, 404
             self.config["@odata.id"] = "/redfish/v1/Managers/<string:ident>/LogServices/<string:ident1>/Entries".format(ident)
-            self.config['Members'] = [{'@odata.id': x} for x in bucket_members]
-            self.config["Members@odata.count"] = len(bucket_members)
+            self.config['Members'] = [{'@odata.id': x} for x in output]
+            self.config["Members@odata.count"] = len(output)
             resp = self.config, 200
             
         except Exception:

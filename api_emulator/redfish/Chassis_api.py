@@ -20,6 +20,7 @@ from flask_restful import reqparse, Api, Resource
 
 members = {}
 BNAME = 'Chassis'
+INDICES = [1]
 
 # Chassis Singleton API
 class ChassisAPI(Resource):
@@ -85,12 +86,8 @@ class ChassisAPI(Resource):
     def get(self, ident):
         logging.info('ChassisAPI GET called')
         try:
-            resp = 404
-            # define the bucket hierarchy
-            bucket_hierarchy = [BNAME, ident]
-            # get value of bucket using defined hierarchy
-            passed, output = g.get_value_from_bucket_hierarchy(bucket_hierarchy)
-            resp = output, 200 if passed else 404
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.get_value_from_bucket_hierarchy(bucket_hierarchy, INDICES)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -109,15 +106,8 @@ class ChassisAPI(Resource):
     def post(self, ident):
         logging.info('ChassisAPI POST called')
         try:
-            # define the bucket hierarchy
-            bucket_hierarchy = [BNAME, ident]        
-            # check if bucket already exists for current resource
-            passed, message = g.is_not_resource_bucket_already_present_in_hierarchy(bucket_hierarchy)
-            if not passed:
-                return message, 409
-            # now create the required bucket for resource and put value
-            g.post_value_to_bucket_hierarchy(bucket_hierarchy, json.dumps(request.json))
-            resp = request.json, 201
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.post_value_to_bucket_hierarchy(bucket_hierarchy, INDICES, request.json)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -174,7 +164,7 @@ class ChassisCollectionAPI(Resource):
         logging.info('ChassisCollectionAPI GET called')
         try:
             # define the bucket hierarchy for collection
-            bucket_hierarchy = [BNAME]
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
             # get list of resources
             passed, output = g.get_collection_from_bucket_hierarchy(bucket_hierarchy)
             if not passed:

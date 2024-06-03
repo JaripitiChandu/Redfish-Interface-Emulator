@@ -20,10 +20,9 @@ from flask_restful import reqparse, Api, Resource
 # Resource and SubResource imports
 from .templates.Subscription import get_Subscription_instance
 
-from g import INDEX, INTERNAL_SERVER_ERROR
+from g import INTERNAL_SERVER_ERROR
 
-PRIMARY_BNAME = b'EventService'
-BNAME = b'Subscriptions'
+INDICES = [0,2]
 
 # Subscription Singleton API
 class SubscriptionAPI(Resource):
@@ -48,19 +47,8 @@ class SubscriptionAPI(Resource):
     def get(self, ident):
         logging.info('SubscriptionAPI GET called')
         try:
-            # Find the entry with the correct value for Id
-            resp = 404
-            with g.db.view() as tx:
-                event_service = tx.bucket(PRIMARY_BNAME)
-                if event_service:
-                        ident_bucket = event_service.bucket(BNAME).bucket(str(ident).encode())
-                        if not ident_bucket:
-                            resp = f"Subscription {ident} of EventService not found", 404
-                        else:
-                            value = ident_bucket.get(INDEX).decode()
-                            resp = json.loads(value), 200
-                else:
-                    resp = f"EventService not found", 404
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.get_value_from_bucket_hierarchy(bucket_hierarchy, INDICES)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -75,26 +63,8 @@ class SubscriptionAPI(Resource):
     def post(self, ident):
         logging.info('SubscriptionAPI POST called')
         try:
-            resp = 404
-            with g.db.update() as tx:
-                eventservice = tx.bucket(PRIMARY_BNAME)
-                if eventservice:
-                    subscriptions = eventservice.bucket(BNAME)
-                else:
-                    return f"EventService not found", 404
-
-                if not subscriptions:
-                    subscriptions = eventservice.create_bucket(BNAME)
-
-                if subscriptions:
-                    subscriptions_ident = subscriptions.bucket(str(ident).encode())
-
-                if subscriptions_ident:
-                    return f"Subscription {ident} for EventService already exists", 404
-                else:
-                    subscriptions_ident = subscriptions.create_bucket(str(ident).encode())
-                    subscriptions_ident.put(INDEX, json.dumps(request.json).encode())
-                    resp = request.json, 201
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.post_value_to_bucket_hierarchy(bucket_hierarchy, INDICES, request.json)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -118,10 +88,11 @@ class SubscriptionCollectionAPI(Resource):
         logging.info('SubscriptionCollectionAPI init called')
         self.rb = g.rest_base
         self.config = {
-            '@odata.id': "",
-            '@odata.type': '#EventDestinationCollection.EventDestinationCollection',
-            '@odata.context': self.rb + '$metadata#EventDestinationCollection.EventDestinationCollection',
-            'Name': 'Event Destination  Collection',
+            "@odata.id": "/redfish/v1/EventService/Subscriptions",
+            "@odata.type": "#EventDestinationCollection.EventDestinationCollection",
+            "@odata.context": "/redfish/v1/$metadata#EventDestinationCollection.EventDestinationCollection",
+            "Description": "List of Event subscriptions",
+            "Name": "Event Subscriptions Collection",
             "Members": [],
             "Members@odata.count": 0
         }
@@ -130,20 +101,13 @@ class SubscriptionCollectionAPI(Resource):
     def get(self):
         logging.info('SubscriptionCollectionAPI GET called')
         try:
-            bucket_members = []
-            with g.db.view() as tx:
-                b = tx.bucket(PRIMARY_BNAME).bucket(BNAME)
-
-                if not b:
-                    resp = f'Subscription for EventServices not found', 404
-                else:
-                    for k, v in b:
-                        if not v:
-                            if b.bucket(k):
-                                bucket_members.append(json.loads(b.bucket(k).get(INDEX).decode())['@odata.id'])
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            passed, output = g.get_collection_from_bucket_hierarchy(bucket_hierarchy, INDICES[:-1])
+            if not passed:
+                return output, 404
             self.config["@odata.id"] = "/redfish/v1/EventService/Subscriptions"
-            self.config['Members'] = [{'@odata.id': x} for x in bucket_members]
-            self.config["Members@odata.count"] = len(bucket_members)
+            self.config['Members'] = [{'@odata.id': x} for x in output]
+            self.config["Members@odata.count"] = len(output)
             resp = self.config, 200
         except Exception:
             traceback.print_exc()

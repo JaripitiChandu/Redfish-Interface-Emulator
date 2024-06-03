@@ -18,11 +18,12 @@ from flask_restful import reqparse, Api, Resource
 from .ResetActionInfo_api import ResetActionInfo_API
 from .ResetAction_api import ResetAction_API
 
-from g import db, INDEX, INTERNAL_SERVER_ERROR
-from .ComputerSystem_api import BNAME as SYS_BNAME
+import g
+from g import INTERNAL_SERVER_ERROR
 
 members = {}
 BNAME = b"Storage"
+INDICES = [1,3]
 
 INTERNAL_ERROR = 500
 
@@ -51,24 +52,8 @@ class StorageAPI(Resource):
     def get(self, ident1, ident2):
         logging.info(self.__class__.__name__ +' GET called')
         try:
-            with db.view() as tx:
-                sb = tx.bucket(SYS_BNAME)
-                if sb:
-                    system = sb.bucket(str(ident1).encode())
-                    if system:
-                        storages = system.bucket(BNAME)
-                        if storages:
-                            storage = storages.bucket(str(ident2).encode())
-                            if storage:
-                                resp = json.loads(storage.get(INDEX).decode()), 200
-                            else:
-                                return f"Storage {ident2} not found in System {ident1}", 404
-                        else:
-                            return f"Storage {ident2} not found in System {ident1}", 404
-                    else:
-                        return "System " + ident1 + " not found" , 404
-                else:
-                    return "System " + ident1 + " not found" , 404
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.get_value_from_bucket_hierarchy(bucket_hierarchy, INDICES)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -87,24 +72,8 @@ class StorageAPI(Resource):
     def post(self, ident1, ident2):
         logging.info(self.__class__.__name__ + ' POST called')
         try:
-            with db.update() as tx:
-                b = tx.bucket(SYS_BNAME)
-                if b:
-                    sb = b.bucket(str(ident1).encode())
-                    if sb:
-                        storages = sb.bucket(BNAME)
-                        if not storages:
-                            storages = sb.create_bucket(BNAME)
-                        if storages.bucket(str(ident2).encode()):
-                            return f"Storage {ident2} is already present in System {ident1}", 409
-                        else:
-                            storage = storages.create_bucket(str(ident2).encode())
-                            storage.put(INDEX, json.dumps(request.json).encode())
-                    else:
-                        return f"System {ident1} does not exist", 404
-                else:
-                    return f"System {ident1} does not exist", 404
-            resp = request.json, 201
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.post_value_to_bucket_hierarchy(bucket_hierarchy, INDICES, request.json)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -157,22 +126,14 @@ class StorageCollectionAPI(Resource):
     def get(self, ident):
         logging.info(self.__class__.__name__ +' GET called')
         try:
-            bucket_members = []
-
-            with db.view() as tx:
-                systems = tx.bucket(SYS_BNAME)
-                if systems:
-                    sb = systems.bucket(str(ident).encode())
-                    if sb:
-                        storages = sb.bucket(BNAME)
-                        if storages:
-                            for k, v in storages:
-                                if not v and storages.bucket(k):
-                                    bucket_members.append(json.loads(storages.bucket(k).get(INDEX).decode())['@odata.id'])
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            passed, output = g.get_collection_from_bucket_hierarchy(bucket_hierarchy, INDICES[:-1])
+            if not passed:
+                return output, 404
 
             self.config["@odata.id"] = "/redfish/v1/Systems/{}/Storage".format(ident)
-            self.config["Members"] = [{'@odata.id': x} for x in bucket_members]
-            self.config["Members@odata.count"] = len(bucket_members)
+            self.config["Members"] = [{'@odata.id': x} for x in output]
+            self.config["Members@odata.count"] = len(output)
             resp = self.config, 200
         except Exception:
             traceback.print_exc()

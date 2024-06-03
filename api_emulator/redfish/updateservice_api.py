@@ -16,9 +16,9 @@ import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
 
-from g import INDEX, INTERNAL_SERVER_ERROR
+from g import INTERNAL_SERVER_ERROR
 
-PRIMARY_BNAME=b'UpdateService'
+INDICES = [0]
 
 # UpdateService Singleton API
 class UpdateServiceAPI(Resource):
@@ -35,14 +35,8 @@ class UpdateServiceAPI(Resource):
     def get(self):
         logging.info('UpdateServiceAPI GET called')
         try:
-            resp = 404
-            with g.db.view() as tx:
-                b = tx.bucket(PRIMARY_BNAME)                    
-                if not b:
-                    resp = f"UpdateService not found", 404
-                else:
-                    value = b.get(INDEX).decode()
-                    resp = json.loads(value), 200
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.get_value_from_bucket_hierarchy(bucket_hierarchy, INDICES)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -57,15 +51,8 @@ class UpdateServiceAPI(Resource):
     def post(self):
         logging.info('UpdateServiceAPI POST called')
         try:
-            resp = 404
-            with g.db.update() as tx:
-                updateservice = tx.bucket(PRIMARY_BNAME)
-                if updateservice:
-                    resp = f"UpdateService already exists", 404
-                else:
-                    updateservice = tx.create_bucket(PRIMARY_BNAME)
-                    updateservice.put(INDEX, json.dumps(request.json).encode())
-                    resp = request.json, 201
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.post_value_to_bucket_hierarchy(bucket_hierarchy, INDICES, request.json)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR

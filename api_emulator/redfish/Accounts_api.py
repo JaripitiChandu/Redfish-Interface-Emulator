@@ -16,12 +16,14 @@ import logging
 import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
+from api_emulator.utils import update_nested_dict
 
 from g import db, INDEX, INTERNAL_SERVER_ERROR
 from .AccountService_api import BNAME as AS_BNAME
 
 members = {}
 BNAME = b"Accounts"
+INDICES = [0,2]
 
 INTERNAL_ERROR = 500
 
@@ -50,21 +52,8 @@ class Account(Resource):
     def get(self, ident):
         logging.info(self.__class__.__name__ +' GET called')
         try:
-            # Find the entry with the correct value for Id
-            with db.view() as tx:
-                b = tx.bucket(AS_BNAME)
-                if b:
-                    acs = b.bucket(BNAME)
-                    if acs:
-                        ac = acs.bucket(str(ident).encode())
-                        if ac:
-                            resp = json.loads(ac.get(INDEX).decode()), 200
-                        else:
-                            return f"Account {ident} not found", 404
-                    else:
-                        return f"Account {ident} not found", 404
-                else:
-                    return "AccountService not found" , 404
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.get_value_from_bucket_hierarchy(bucket_hierarchy, INDICES)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -83,20 +72,8 @@ class Account(Resource):
     def post(self, ident):
         logging.info(self.__class__.__name__ + ' POST called')
         try:
-            with db.update() as tx:
-                b = tx.bucket(AS_BNAME)
-                if b:
-                    acs = b.bucket(BNAME)
-                    if not acs:
-                        acs = b.create_bucket(BNAME)
-                    if acs.bucket(str(ident).encode()):
-                        return f"Account {ident} is already present", 409
-                    else:
-                        ac = acs.create_bucket(str(ident).encode())
-                        ac.put(INDEX, json.dumps(request.json).encode())
-                else:
-                    return f"AccountService does not exist", 404
-            resp = request.json, 201
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.post_value_to_bucket_hierarchy(bucket_hierarchy, INDICES, request.json)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -105,15 +82,14 @@ class Account(Resource):
     # HTTP PATCH
     def patch(self, ident):
         logging.info(self.__class__.__name__ + ' PATCH called')
-        raw_dict = request.get_json(force=True)
+        patch_data = request.get_json(force=True)
+        logging.info(f"Payload = {patch_data}")
         try:
-            # Update specific portions of the identified object
-            for key, value in raw_dict.items():
-                members[ident][key] = value
-            resp = members[ident], 200
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.patch_bucket_value(bucket_hierarchy, INDICES, patch_data)
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP DELETE
@@ -151,19 +127,13 @@ class Accounts(Resource):
     def get(self):
         logging.info(self.__class__.__name__ +' GET called')
         try:
-            bucket_members = []
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            passed, output = g.get_collection_from_bucket_hierarchy(bucket_hierarchy, INDICES[:-1])
+            if not passed:
+                return output, 404
 
-            with db.view() as tx:
-                a_s = tx.bucket(AS_BNAME)
-                if a_s:
-                    accounts = a_s.bucket(BNAME)
-                    if accounts:
-                        for k, v in accounts:
-                            if not v and accounts.bucket(k):
-                                bucket_members.append(json.loads(accounts.bucket(k).get(INDEX).decode())['@odata.id'])
-
-            self.config["Members"] = [{'@odata.id': x} for x in bucket_members]
-            self.config["Members@odata.count"] = len(bucket_members)
+            self.config["Members"] = [{'@odata.id': x} for x in output]
+            self.config["Members@odata.count"] = len(output)
             resp = self.config, 200
         except Exception:
             traceback.print_exc()

@@ -23,6 +23,7 @@ from .network_adapters_api import BNAME as SUB_RESOURCE_BNAME
 
 members = {}
 BNAME = 'NetworkPorts'
+INDICES = [1,3,5]
 
 # NetworkPorts Singleton API
 class NetworkPortsAPI(Resource):
@@ -47,12 +48,8 @@ class NetworkPortsAPI(Resource):
     def get(self, ident, ident1, ident2):
         logging.info('NetworkPortsAPI GET called')
         try:
-            resp = 404
-            # define the bucket hierarchy
-            bucket_hierarchy = [RESOURCE_BNAME, ident, SUB_RESOURCE_BNAME, ident1, BNAME, ident2]
-            # get value of bucket using defined hierarchy
-            passed, output = g.get_value_from_bucket_hierarchy(bucket_hierarchy)
-            resp = output, 200 if passed else 404
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.get_value_from_bucket_hierarchy(bucket_hierarchy, INDICES)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -67,24 +64,8 @@ class NetworkPortsAPI(Resource):
     def post(self, ident, ident1, ident2):
         logging.info('NetworkPortsAPI POST called')
         try:
-            # define the bucket hierarchy
-            bucket_hierarchy = [RESOURCE_BNAME, ident, SUB_RESOURCE_BNAME, ident1, BNAME, ident2]
-            # define hierarchy of buckets that should exist before creation of bucket for this resource
-            required_buckets_hierarchy = [RESOURCE_BNAME, ident, SUB_RESOURCE_BNAME, ident1]            
-            
-            # check if required buckets are present
-            passed, message = g.is_required_bucket_hierarchy_present(required_buckets_hierarchy)
-            if not passed:
-                return message, 404
-            
-            # check if bucket already exists for current resource
-            passed, message = g.is_not_resource_bucket_already_present_in_hierarchy(bucket_hierarchy)
-            if not passed:
-                return message, 409
-            
-            # now create the required bucket for resource and put value
-            g.post_value_to_bucket_hierarchy(bucket_hierarchy, json.dumps(request.json))
-            resp = request.json, 201
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.post_value_to_bucket_hierarchy(bucket_hierarchy, INDICES, request.json)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -92,24 +73,12 @@ class NetworkPortsAPI(Resource):
 
     # HTTP PATCH
     def patch(self, ident, ident1, ident2):
-        logging.info('NetworkPortsAPI PATCH called')
+        logging.info(self.__class__.__name__ + ' PATCH called')
         patch_data = request.get_json(force=True)
         logging.info(f"Payload = {patch_data}")
         try:
-            bucket_hierarchy = [RESOURCE_BNAME, ident, SUB_RESOURCE_BNAME, ident1, BNAME, ident2]
-
-            passed, ports_data = g.get_value_from_bucket_hierarchy(bucket_hierarchy)
-
-            if not passed:
-                return f"NetworkPort {ident2} of NetworkAdapter {ident1} for Chassis {ident} not found", 404
-
-            for key, value in patch_data.items():
-                if key in ports_data:
-                    ports_data[key] = value
-
-            g.post_value_to_bucket_hierarchy(bucket_hierarchy, json.dumps(ports_data))
-            resp = ports_data, 200
-
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.patch_bucket_value(bucket_hierarchy, INDICES, patch_data)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
@@ -150,9 +119,9 @@ class NetworkPortsCollectionAPI(Resource):
         logging.info('NetworkPortsCollectionAPI GET called')
         try:
             # define the bucket hierarchy for collection
-            bucket_hierarchy = [RESOURCE_BNAME, ident, SUB_RESOURCE_BNAME, ident1, BNAME]
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
             # get list of resources
-            passed, output = g.get_collection_from_bucket_hierarchy(bucket_hierarchy)
+            passed, output = g.get_collection_from_bucket_hierarchy(bucket_hierarchy, INDICES[:-1])
             if not passed:
                 return output, 404
             # update the value of config using obtained values

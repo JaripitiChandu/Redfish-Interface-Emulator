@@ -17,10 +17,9 @@ import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
 
-from g import INDEX, INTERNAL_SERVER_ERROR
+from g import INTERNAL_SERVER_ERROR
 
-PRIMARY_BNAME = b'UpdateService'
-BNAME = b'FirmwareInventory'
+INDICES = [0,2]
 
 # FirmwareInventory Singleton API
 class FirmwareInventoryAPI(Resource):
@@ -47,18 +46,8 @@ class FirmwareInventoryAPI(Resource):
     def get(self, ident):
         logging.info('FirmwareInventoryAPI GET called')
         try:
-            # Find the entry with the correct value for Id
-            with g.db.view() as tx:
-                b = tx.bucket(PRIMARY_BNAME).bucket(BNAME)
-                if not b:
-                    resp = f"FirmwareInventory for UpdateService not found"
-                else:
-                    ident_bucket = b.bucket(str(ident).encode())
-                    if not ident_bucket:
-                        resp = f" {ident} for FirmwareInventory in UpdateService not found", 404
-                    else:
-                        value = ident_bucket.get(INDEX).decode()
-                        resp = json.loads(value), 200
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.get_value_from_bucket_hierarchy(bucket_hierarchy, INDICES)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -73,24 +62,8 @@ class FirmwareInventoryAPI(Resource):
     def post(self, ident):
         logging.info('FirmwareInventoryAPI POST called')
         try:
-            resp = 404
-            with g.db.update() as tx:
-                updateservice = tx.bucket(PRIMARY_BNAME)
-                if updateservice:
-                    firmware_inv = updateservice.bucket(BNAME)
-                else:
-                    return f"UpdateService not found"
-
-                if not firmware_inv:
-                    firmware_inv = updateservice.create_bucket(BNAME)
-                
-                if firmware_inv.bucket(str(ident).encode()):
-                    return f"{ident} of FirmwareInventory in UpdateService already exists"
-                else:
-                    firmware_inv_ident = firmware_inv.create_bucket(str(ident).encode())
-                    firmware_inv_ident.put(INDEX, json.dumps(request.json).encode())
-                    resp = request.json, 201      
-            
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.post_value_to_bucket_hierarchy(bucket_hierarchy, INDICES, request.json)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -112,24 +85,17 @@ class FirmwareInventoryCollectionAPI(Resource):
     def __init__(self):
         logging.info('FirmwareInventoryCollectionAPI init called')
         self.rb = g.rest_base
-        bucket_members = []
-
-        with g.db.view() as tx:
-            b = tx.bucket(PRIMARY_BNAME).bucket(BNAME)
-            if not b:
-                    resp = f'FirmwareInventory of UpdateService not found', 404
-            else:
-                for k, v in b:
-                    if not v:
-                        if b.bucket(k):
-                            bucket_members.append(json.loads(b.bucket(k).get(INDEX).decode())['@odata.id'])
+        bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+        passed, output = g.get_collection_from_bucket_hierarchy(bucket_hierarchy, INDICES[:-1])
+        if not passed:
+            return output, 404
         self.config = {
             '@odata.id': self.rb + 'UpdateService/FirmwareInventory',
             '@odata.type': '#FirmwareInventoryCollection.1.0.0.FirmwareInventoryCollection',
             '@odata.context': self.rb + '$metadata#FirmwareInventoryCollection.FirmwareInventoryCollection',
             'Name': 'FirmwareInventory Collection',
-            'Members': [{'@odata.id': x} for x in bucket_members],
-            'Members@odata.count': len(bucket_members)
+            'Members': [{'@odata.id': x} for x in output],
+            'Members@odata.count': len(output)
         }
 
     # HTTP GET

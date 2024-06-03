@@ -17,13 +17,8 @@ import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
 
-from g import INDEX, INTERNAL_SERVER_ERROR
-
-PRIMARY_BNAME = b'Managers'
-BNAME = b'CiscoInternalStorage'
-OEM_BNAME = b'FlexMMC'  #OEM Resource
-OEM_SR_BNAME = b'CiscoPartition'   #OEM  Sub Resource
-OEM_SR_BNAME_2 = b'CiscoFiles'
+from g import INTERNAL_SERVER_ERROR
+INDICES = [1,4,6,8]
 
 # CiscoFile Singleton API
 class CiscoFileAPI(Resource):
@@ -48,19 +43,8 @@ class CiscoFileAPI(Resource):
     def get(self, ident, ident1, ident2):
         logging.info('CiscoFileAPI GET called')
         try:
-            resp = 404
-            with g.db.view() as tx:
-                if not tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()):
-                    resp = f"Manager {ident} not found", 404
-                else:
-                    b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME).bucket(OEM_BNAME).bucket(OEM_SR_BNAME).bucket(str(ident1).encode()).bucket(OEM_SR_BNAME_2)
-                    if b:
-                        ident_bucket = b.bucket(str(ident2).encode())
-                        if not ident_bucket:
-                            resp = f"CiscoFile {ident2} of CiscoPartition {ident1} for {OEM_BNAME.decode('utf-8')} in Manager {ident} not found", 404
-                        else:
-                            value = ident_bucket.get(INDEX).decode()
-                            resp = json.loads(value), 200
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.get_value_from_bucket_hierarchy(bucket_hierarchy, INDICES)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -75,35 +59,8 @@ class CiscoFileAPI(Resource):
     def post(self, ident, ident1, ident2):
         logging.info('CiscoFileAPI POST called')
         try:
-            with g.db.update() as tx:
-                managers = tx.bucket(PRIMARY_BNAME)
-                if managers:
-                    managers_ident = managers.bucket(str(ident).encode())
-                    if managers_ident:
-                        oem_storage = managers_ident.bucket(BNAME).bucket(OEM_BNAME)
-                        if oem_storage:
-                            oem_partition_ident = oem_storage.bucket(OEM_SR_BNAME).bucket(str(ident1).encode())
-                            if oem_partition_ident:
-                                oem_file=oem_partition_ident.bucket(OEM_SR_BNAME_2)
-                            else:
-                                return f"CiscoPartition {ident1} for {OEM_BNAME.decode('utf-8')} for Manager {ident} not found", 404
-                        else:
-                            return f"CiscoInternalStorage {OEM_BNAME.decode('utf-8')} for Manager {ident} not found", 404
-                    else:
-                        return f"Manager {ident} not found", 404
-
-                if not oem_file:
-                    oem_file = oem_partition_ident.create_bucket(OEM_SR_BNAME_2)
-
-                oem_file_ident = oem_file.bucket(str(ident2).encode())
-
-                if oem_file_ident:
-                    return f"CiscoFile {ident2} of CiscoPartition {ident1} for {OEM_BNAME.decode('utf-8')} already exists in Manager {ident}", 409
-                else:
-                    ident_bucket = oem_file.create_bucket(str(ident2).encode())
-                    ident_bucket.put(INDEX, json.dumps(request.json).encode())
-                    resp = request.json, 201
-
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.post_value_to_bucket_hierarchy(bucket_hierarchy, INDICES, request.json)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -139,20 +96,13 @@ class CiscoFileCollectionAPI(Resource):
     def get(self,ident,ident1):
         logging.info('CiscoFileCollectionAPI GET called')
         try:
-            bucket_members = []
-            with g.db.view() as tx:
-                b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME).bucket(OEM_BNAME).bucket(OEM_SR_BNAME).bucket(str(ident1).encode()).bucket(OEM_SR_BNAME_2)
-
-                if not b:
-                    resp = f"CiscoFile of CiscoPartition {ident1} for {OEM_BNAME.decode('utf-8')} not found in Manager {ident}", 404
-                else:
-                    for k, v in b:
-                        if not v:
-                            if b.bucket(k):
-                                bucket_members.append(json.loads(b.bucket(k).get(INDEX).decode())['@odata.id'])
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            passed, output = g.get_collection_from_bucket_hierarchy(bucket_hierarchy, INDICES[:-1])
+            if not passed:
+                return output, 404
             self.config["@odata.id"] = "/redfish/v1/Managers/{}/Oem/CiscoInternalStorage/FlexMMC/CiscoPartition/{}/CiscoFile".format(ident,ident1)
-            self.config['Members'] = [{'@odata.id': x} for x in bucket_members]
-            self.config["Members@odata.count"] = len(bucket_members)
+            self.config['Members'] = [{'@odata.id': x} for x in output]
+            self.config["Members@odata.count"] = len(output)
             resp = self.config, 200
         except Exception:
             traceback.print_exc()

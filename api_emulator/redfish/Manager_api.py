@@ -24,6 +24,7 @@ from .templates.Manager import get_Manager_instance
 from g import db, INDEX, INTERNAL_SERVER_ERROR
 
 BNAME = b'Managers'
+INDICES = [1]
 
 # Manager Singleton API
 class ManagerAPI(Resource):
@@ -48,19 +49,8 @@ class ManagerAPI(Resource):
     def get(self, ident):
         logging.info('ManagerAPI GET called')
         try:
-            # Find the entry with the correct value for Id
-            resp = 404
-            with g.db.view() as tx:
-                b = tx.bucket(BNAME)
-                if b:
-                    ident_bucket = b.bucket(str(ident).encode())
-                    if not ident_bucket:
-                        resp = f"Manager {ident} not found", 404
-                    else:
-                        value = ident_bucket.get(INDEX).decode()
-                        resp = json.loads(value), 200
-                else:
-                    resp = f"Manager {ident} not found", 404
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.get_value_from_bucket_hierarchy(bucket_hierarchy, INDICES)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -75,16 +65,8 @@ class ManagerAPI(Resource):
     def post(self, ident):
         logging.info('ManagerAPI POST called')
         try:
-            with g.db.update() as tx:
-                b = tx.bucket(BNAME)
-                if not b:
-                    b = tx.create_bucket(BNAME)
-                if b.bucket(str(ident).encode()):
-                    resp = f"Manager {ident} already exists", 409
-                else:
-                    ident_bucket = b.create_bucket(str(ident).encode())
-                    ident_bucket.put(INDEX, json.dumps(request.json).encode())
-                    resp = request.json, 201
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.post_value_to_bucket_hierarchy(bucket_hierarchy, INDICES, request.json)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -92,23 +74,12 @@ class ManagerAPI(Resource):
 
     # HTTP PATCH
     def patch(self, ident):
-        logging.info('ManagerAPI PATCH called')
-        raw_dict = request.get_json(force=True)
-        logging.info(f"payload = {raw_dict}")
+        logging.info(self.__class__.__name__ + ' PATCH called')
+        patch_data = request.get_json(force=True)
+        logging.info(f"Payload = {patch_data}")
         try:
-            with db.update() as tx:
-                b = tx.bucket(BNAME)
-                if b:
-                    mb = b.bucket(str(ident).encode())
-                    if mb:
-                        config = json.loads(mb.get(INDEX).decode())
-                        update_nested_dict(config, raw_dict)
-                        mb.put(INDEX, json.dumps(config).encode())
-                    else:
-                        return f"Manager {ident} not found", 404
-                else:
-                    return f"Manager {ident} not found", 404
-            resp = config, 200
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.patch_bucket_value(bucket_hierarchy, INDICES, patch_data)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -126,24 +97,18 @@ class ManagerCollectionAPI(Resource):
     def __init__(self):
         logging.info('ManagerCollectionAPI init called')
         self.rb = g.rest_base
-        bucket_members = []
-
-        with g.db.view() as tx:
-            b = tx.bucket(BNAME)
-            if not b:
-                  resp = f'Manager not found', 404
-            else:
-                for k, v in b:
-                    if not v:
-                        if b.bucket(k):
-                            bucket_members.append(json.loads(b.bucket(k).get(INDEX).decode())['@odata.id'])
+        bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+        passed, output = g.get_collection_from_bucket_hierarchy(bucket_hierarchy)
+        if not passed:
+            return output, 404
+        
         self.config = {
             '@odata.context': self.rb + '$metadata#ManagerCollection.ManagerCollection',
             '@odata.id': self.rb + 'Managers',
             '@odata.type': '#ManagerCollection.ManagerCollection',
             'Name': 'Manager Collection',
-            'Members': [{'@odata.id': x} for x in bucket_members],
-            'Members@odata.count': len(bucket_members)
+            'Members': [{'@odata.id': x} for x in output],
+            'Members@odata.count': len(output)
         }
 
     # HTTP GET

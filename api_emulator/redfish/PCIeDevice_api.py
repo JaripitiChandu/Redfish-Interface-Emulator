@@ -14,15 +14,15 @@ from pprint import pprint
 import logging, json
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
-from .ComputerSystem_api import members as sys_members  
 from .ResetActionInfo_api import ResetActionInfo_API
 from .ResetAction_api import ResetAction_API
 
-from g import db, INDEX, INTERNAL_SERVER_ERROR
-from .ComputerSystem_api import BNAME as SYS_BNAME
+import g
+from g import INTERNAL_SERVER_ERROR
 
 members = {}
 BNAME = b"PCIeDevices"
+INDICES = [1,3]
 
 INTERNAL_ERROR = 500
 
@@ -51,24 +51,8 @@ class PCIeDeviceAPI(Resource):
     def get(self, ident1, ident2):
         logging.info(self.__class__.__name__ +' GET called')
         try:
-            with db.view() as tx:
-                sb = tx.bucket(SYS_BNAME)
-                if sb:
-                    system = sb.bucket(str(ident1).encode())
-                    if system:
-                        devices = system.bucket(BNAME)
-                        if devices:
-                            device = devices.bucket(str(ident2).encode())
-                            if device:
-                                resp = json.loads(device.get(INDEX).decode()), 200
-                            else:
-                                return f"PCIeDevice {ident2} not found in System {ident1}", 404
-                        else:
-                            return f"PCIeDevice {ident2} not found in System {ident1}", 404
-                    else:
-                        return "System " + ident1 + " not found" , 404
-                else:
-                    return "System " + ident1 + " not found" , 404
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.get_value_from_bucket_hierarchy(bucket_hierarchy, INDICES)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -88,24 +72,8 @@ class PCIeDeviceAPI(Resource):
     def post(self, ident1, ident2):
         logging.info(self.__class__.__name__ + ' POST called')
         try:
-            with db.update() as tx:
-                b = tx.bucket(SYS_BNAME)
-                if b:
-                    sb = b.bucket(str(ident1).encode())
-                    if sb:
-                        devices = sb.bucket(BNAME)
-                        if not devices:
-                            devices = sb.create_bucket(BNAME)
-                        if devices.bucket(str(ident2).encode()):
-                            return f"PCIeDevice {ident2} is already present in System {ident1}", 409
-                        else:
-                            device = devices.create_bucket(str(ident2).encode())
-                            device.put(INDEX, json.dumps(request.json).encode())
-                    else:
-                        return f"System {ident1} does not exist", 404
-                else:
-                    return f"System {ident1} does not exist", 404
-            resp = request.json, 201
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.post_value_to_bucket_hierarchy(bucket_hierarchy, INDICES, request.json)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR

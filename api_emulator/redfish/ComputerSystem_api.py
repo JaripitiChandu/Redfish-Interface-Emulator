@@ -30,6 +30,7 @@ from .ResourceBlock_api import members as resource_blocks
 
 members = {}
 BNAME = b"Systems"
+INDICES = [1]
 
 INTERNAL_ERROR = 500
 
@@ -74,15 +75,8 @@ class ComputerSystemAPI(Resource):
     def get(self, ident):
         logging.info('ComputerSystemAPI GET called')
         try:
-            with db.view() as tx:
-                b = tx.bucket(BNAME)
-                if not b:
-                    return "System " + ident + " not found" , 404
-                system = b.bucket(str(ident).encode())
-                if not system:
-                    resp = "System " + ident + " not found" , 404
-                else:
-                    resp = json.loads(system.get(INDEX).decode()), 200
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.get_value_from_bucket_hierarchy(bucket_hierarchy, INDICES)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -101,13 +95,8 @@ class ComputerSystemAPI(Resource):
     def post(self, ident):
         logging.info('ComputerSystemAPI POST called')
         try:
-            with db.update() as tx:
-                b = tx.bucket(BNAME)
-                if not b:
-                    b = tx.create_bucket(BNAME)
-                system = b.create_bucket(str(ident).encode())
-                system.put(INDEX, json.dumps(request.json).encode())
-            resp = request.json, 201
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.post_value_to_bucket_hierarchy(bucket_hierarchy, INDICES, request.json)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -157,23 +146,18 @@ class ComputerSystemCollectionAPI(Resource):
     def __init__(self):
         logging.info('ComputerSystemCollectionAPI init called')
         self.rb = g.rest_base
-        bucket_members = []
-
-        with db.view() as tx:
-            b = tx.bucket(BNAME)
-            if b:
-                for k, v in b:
-                    if not v:
-                        if b.bucket(k):
-                            bucket_members.append(json.loads(b.bucket(k).get(INDEX).decode())['@odata.id'])
+        bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+        passed, output = g.get_collection_from_bucket_hierarchy(bucket_hierarchy)
+        if not passed:
+            return output, 404
         self.config = {
             "@odata.id": "/redfish/v1/Systems",
             "@odata.type": "#ComputerSystemCollection.ComputerSystemCollection",
             "@odata.context": "/redfish/v1/$metadata#ComputerSystemCollection.ComputerSystemCollection",
             "Description": "Collection of Computer Systems",
             "Name": "Computer System Collection",
-            "Members":  [{'@odata.id': x} for x in bucket_members],
-            "Members@odata.count": len(bucket_members)
+            "Members":  [{'@odata.id': x} for x in output],
+            "Members@odata.count": len(output)
         }
 
     # HTTP GET

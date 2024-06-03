@@ -22,6 +22,7 @@ from g import INDEX, INTERNAL_SERVER_ERROR
 PRIMARY_BNAME = b'Managers'
 BNAME = b'CiscoInternalStorage'
 OEM_BNAME = b'FlexMMC'  #OEM Resource
+INDICES = [1,4]
 
 # CiscoInternalStorage Singleton API
 class CiscoInternalStorageAPI(Resource):
@@ -46,19 +47,8 @@ class CiscoInternalStorageAPI(Resource):
     def get(self, ident):
         logging.info('CiscoInternalStorageAPI GET called')
         try:
-            # Find the entry with the correct value for Id
-            with g.db.view() as tx:
-                if not tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()):
-                    resp = f"Manager {ident} not found", 404
-                else:
-                    b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME)
-                    if b:
-                        ident_bucket = b.bucket(OEM_BNAME)
-                        if not ident_bucket:
-                            return f"{OEM_BNAME.decode('utf-8')} of CiscoInteralStorage for Manager {ident} not found", 404
-                        else:
-                            value = ident_bucket.get(OEM_BNAME)
-                            resp = json.loads(value), 200
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.get_value_from_bucket_hierarchy(bucket_hierarchy, INDICES)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -73,27 +63,8 @@ class CiscoInternalStorageAPI(Resource):
     def post(self, ident):
         logging.info('CiscoInternalStorageAPI POST called')
         try:
-            with g.db.update() as tx:
-                managers = tx.bucket(PRIMARY_BNAME)
-                if managers:
-                    managers_ident = managers.bucket(str(ident).encode())
-                    if managers_ident:
-                        oem_storage=managers_ident.bucket(BNAME)
-                else:
-                    return f"Manager {ident} not found", 404
-
-                if not oem_storage:
-                    oem_storage=managers_ident.create_bucket(BNAME)
-
-                oem_storage_index = oem_storage.bucket(OEM_BNAME)
-
-                if oem_storage_index:
-                    return f"{OEM_BNAME.decode('utf-8')} of CiscoInteralStorage already exists in Manager {ident}", 409
-                else:
-                    ident_bucket = oem_storage.create_bucket(OEM_BNAME)
-                    ident_bucket.put(OEM_BNAME, json.dumps(request.json).encode())
-                    resp = request.json, 201
-
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.post_value_to_bucket_hierarchy(bucket_hierarchy, INDICES, request.json)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -130,19 +101,13 @@ class CiscoInternalStorageCollectionAPI(Resource):
     def get(self,ident):
         logging.info('CiscoInternalStorageCollectionAPI GET called')
         try:
-            bucket_members = []
-            with g.db.view() as tx:
-                b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME)
-                if not b:
-                    resp = f'CiscoInternalStorage of Managers {ident} not found', 404
-                else:
-                    for k, v in b:
-                        if not v:
-                            if b.bucket(k):
-                                bucket_members.append(json.loads(b.bucket(k).get(OEM_BNAME).decode())['@odata.id'])
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            passed, output = g.get_collection_from_bucket_hierarchy(bucket_hierarchy, INDICES[:-1])
+            if not passed:
+                return output, 404
             self.config["@odata.id"] = "/redfish/v1/Manager/{}/Oem/CiscoInternalStorage".format(ident)
-            self.config['Members'] = [{'@odata.id': x} for x in bucket_members]
-            self.config["Members@odata.count"] = len(bucket_members)
+            self.config['Members'] = [{'@odata.id': x} for x in output]
+            self.config["Members@odata.count"] = len(output)
             resp = self.config, 200
             
         except Exception:

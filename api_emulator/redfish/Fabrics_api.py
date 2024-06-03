@@ -10,7 +10,7 @@ Singleton  API:  GET, POST, PATCH, DELETE
 """
 
 import g
-from g import db, INDEX, INTERNAL_SERVER_ERROR
+from g import INTERNAL_SERVER_ERROR
 
 import sys, traceback, json
 import logging
@@ -20,6 +20,7 @@ from flask_restful import reqparse, Api, Resource
 
 members = {}
 BNAME = b"Fabrics"
+INDICES = [1]
 
 INTERNAL_ERROR = 500
 
@@ -48,19 +49,11 @@ class Fabric(Resource):
     def get(self, ident):
         logging.info(self.__class__.__name__ +' GET called')
         try:
-            # Find the entry with the correct value for Id
-            with db.view() as tx:
-                b = tx.bucket(BNAME)
-                if not b:
-                    return "Fabric " + ident + " not found" , 404
-                fabric = b.bucket(str(ident).encode())
-                if not fabric:
-                    resp = "Fabric " + ident + " not found" , 404
-                else:
-                    resp = json.loads(fabric.get(INDEX).decode()), 200
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.get_value_from_bucket_hierarchy(bucket_hierarchy, INDICES)
         except Exception:
             traceback.print_exc()
-            resp = "Internal Server Error", INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT
@@ -76,16 +69,11 @@ class Fabric(Resource):
     def post(self, ident):
         logging.info(self.__class__.__name__ + ' POST called')
         try:
-            with db.update() as tx:
-                b = tx.bucket(BNAME)
-                if not b:
-                    b = tx.create_bucket(BNAME)
-                system = b.create_bucket(str(ident).encode())
-                system.put(INDEX, json.dumps(request.json).encode())
-            resp = request.json, 200
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.post_value_to_bucket_hierarchy(bucket_hierarchy, INDICES, request.json)
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PATCH
@@ -123,23 +111,18 @@ class Fabrics(Resource):
     def __init__(self):
         logging.info(f'{self.__class__.__name__} init called')
         self.rb = g.rest_base
-        bucket_members = []
-
-        with db.view() as tx:
-            b = tx.bucket(BNAME)
-            if b:
-                for k, v in b:
-                    if not v:
-                        if b.bucket(k):
-                            bucket_members.append(json.loads(b.bucket(k).get(INDEX).decode())['@odata.id'])
+        bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+        passed, output = g.get_collection_from_bucket_hierarchy(bucket_hierarchy)
+        if not passed:
+            return output, 404
         self.config = {
             "@odata.id": self.rb + "Fabrics",
             "@odata.type": "#FabricCollection.FabricCollection",
             "@odata.context": self.rb + "$metadata#FabricCollection.FabricCollection",
             "Description": "Collection of Fabrics",
             "Name": "Fabric Collection",
-            "Members@odata.count": len(bucket_members),
-            "Members":  [{'@odata.id': x} for x in bucket_members],
+            "Members@odata.count": len(output),
+            "Members":  [{'@odata.id': x} for x in output],
         }
 
     # HTTP GET
@@ -149,7 +132,7 @@ class Fabrics(Resource):
             resp = self.config, 200
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT

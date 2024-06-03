@@ -22,7 +22,7 @@ from .Subscriptions_api import SubscriptionCollectionAPI, SubscriptionAPI
 
 from g import INDEX, INTERNAL_SERVER_ERROR
 
-PRIMARY_BNAME=b'EventService'
+INDICES = [0]
 
 # EventService Singleton API
 class EventServiceAPI(Resource):
@@ -40,14 +40,8 @@ class EventServiceAPI(Resource):
     def get(self):
         logging.info('EventServiceAPI GET called')
         try:
-            resp = 404
-            with g.db.view() as tx:
-                eventservice = tx.bucket(PRIMARY_BNAME)
-                if not eventservice:
-                    resp = f"EventService not found", 404
-                else:
-                    value = eventservice.get(INDEX).decode()
-                    resp = json.loads(value), 200
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.get_value_from_bucket_hierarchy(bucket_hierarchy, INDICES)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -62,15 +56,8 @@ class EventServiceAPI(Resource):
     def post(self):
         logging.info('EventServiceAPI POST called')
         try:
-            resp = 404
-            with g.db.update() as tx:
-                eventservice = tx.bucket(PRIMARY_BNAME)
-                if eventservice:
-                    resp = f"EventService already exists", 404
-                else:
-                    eventservice = tx.create_bucket(PRIMARY_BNAME)
-                    eventservice.put(INDEX, json.dumps(request.json).encode())
-                    resp = request.json, 201
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.post_value_to_bucket_hierarchy(bucket_hierarchy, INDICES, request.json)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -78,25 +65,12 @@ class EventServiceAPI(Resource):
 
     # HTTP PATCH
     def patch(self):
-        logging.info('EventServiceAPI PATCH called')
+        logging.info(self.__class__.__name__ + ' PATCH called')
         patch_data = request.get_json(force=True)
         logging.info(f"Payload = {patch_data}")
         try:
-            # Update specific portions of the identified object
-            with g.db.update() as tx:
-                eventservice = tx.bucket(PRIMARY_BNAME)
-                if not eventservice:
-                    return f"EventService not found", 404
-                else:
-                    event_data = json.loads(eventservice.get(INDEX).decode())
-
-                    for key, value in patch_data.items():
-                        if key in event_data:
-                            event_data[key] = value
-
-                    eventservice.put(INDEX, json.dumps(event_data).encode())
-                    resp = event_data, 200
-
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.patch_bucket_value(bucket_hierarchy, INDICES, patch_data)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR

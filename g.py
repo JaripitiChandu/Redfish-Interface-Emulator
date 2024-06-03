@@ -14,6 +14,7 @@ from functools import wraps
 from jsonschema import validate, ValidationError
 import time, json
 from db_conn import DataBase
+from api_emulator.utils import update_nested_dict
 
 
 #
@@ -60,7 +61,14 @@ def validate_json(schema):
     return decorator
 
 
-def get_value_from_bucket_hierarchy(buckets):
+def get_index(indices, idx):
+    if max(indices)<idx:
+        raise Exception(f"Invalid Arguments indices = {indices}, idx = {idx}")
+    for i in indices:
+        if idx<=i:
+            return i
+
+def get_value_from_bucket_hierarchy(buckets, indices):
     """
     Retrieve a value from the bucket hierarchy.
 
@@ -72,17 +80,17 @@ def get_value_from_bucket_hierarchy(buckets):
         and a message indicating the result or error.
     """
     with db.view() as bucket:
-        for bucket_name in buckets:
+        for i, bucket_name in enumerate(buckets):
             bucket = bucket.bucket(str(bucket_name).encode())
             if not bucket:
-                message = ' '.join(map(str, buckets[:buckets.index(bucket_name) + 1])) + ' not found'
-                return False, message
+                idx = get_index(indices, i)
+                return rest_base+'/'.join(map(str, buckets[:idx+1])) + ' not found', 404
         else:
             value = bucket.get(INDEX).decode()
-            return True, json.loads(value)
+            return json.loads(value), 200
 
 
-def get_collection_from_bucket_hierarchy(buckets):
+def get_collection_from_bucket_hierarchy(buckets, indices=None):
     """
     Retrieve a collection from the bucket hierarchy.
 
@@ -95,11 +103,22 @@ def get_collection_from_bucket_hierarchy(buckets):
     """
     bucket_members = []
     with db.view() as bucket:
-        for bucket_name in buckets:
+        for i, bucket_name in enumerate(buckets):
             bucket = bucket.bucket(str(bucket_name).encode())
             if not bucket:
-                message = ' '.join(map(str, buckets[:buckets.index(bucket_name) + 1])) + ' not found'
-                return False, message
+                # if this bucket isn't final collection bucket
+                if i+1 != len(buckets):
+                    if indices:
+                        if max(indices)<i:
+                            return True, bucket_members
+                        idx = get_index(indices, i)
+                        message = rest_base+'/'.join(map(str, buckets[:idx+1])) + ' not found'
+                    else:
+                        message = rest_base+'/'.join(map(str, buckets)) + ' not found'
+                    return False, message
+                # if it is final collection bucket
+                else:
+                    return True, bucket_members
         else:
             for k, v in bucket:
                 if not v:
@@ -108,7 +127,7 @@ def get_collection_from_bucket_hierarchy(buckets):
     return True, bucket_members
 
 
-def is_required_bucket_hierarchy_present(buckets):
+def is_required_bucket_hierarchy_present(buckets, indices):
     """
     Check if the required bucket hierarchy is present.
 
@@ -120,38 +139,16 @@ def is_required_bucket_hierarchy_present(buckets):
         and a message indicating the result or error.
     """
     with db.view() as bucket:
-        for bucket_name in buckets:
+        for i, bucket_name in enumerate(buckets):
             bucket = bucket.bucket(str(bucket_name).encode())
             if not bucket:
-                message = ' '.join(map(str, buckets[:buckets.index(bucket_name) + 1])) + ' not found'
+                idx = get_index(indices, i)
+                message = rest_base+'/'.join(map(str, buckets[:idx+1])) + ' not found'
                 return False, message
         else:
             return True, 'all required buckets present'
 
-
-def is_not_resource_bucket_already_present_in_hierarchy(buckets):
-    """
-    Check if a resource bucket already exists in the hierarchy.
-
-    Args:
-        buckets (list): List of bucket names representing the hierarchy.
-
-    Returns:
-        tuple: A tuple containing a boolean indicating success or failure,
-        and a message indicating the result or error.
-    """
-    with db.view() as bucket:
-        for bucket_name in buckets:
-            bucket = bucket.bucket(str(bucket_name).encode())
-            if not bucket:
-                break
-        else:
-            message = ' '.join(map(str, buckets[:buckets.index(bucket_name) + 1])) + ' already exists'
-            return False, message
-    return True, 'bucket hierarchy not present'
-
-
-def post_value_to_bucket_hierarchy(buckets, value):
+def post_value_to_bucket_hierarchy(buckets, indices, value, post=True):
     """
     Post a value to the bucket hierarchy.
 
@@ -162,14 +159,34 @@ def post_value_to_bucket_hierarchy(buckets, value):
     Returns:
         None
     """
-    with db.update() as bucket:
-        for bucket_name in buckets:
-            if not bucket.bucket(str(bucket_name).encode()):
-                bucket = bucket.create_bucket(str(bucket_name).encode())
-            else:
-                bucket = bucket.bucket(str(bucket_name).encode())
-        bucket.put(INDEX, str(value).encode())
+    if len(indices)>1:
+        split1, split2 = buckets[:indices[-2]+1], buckets[indices[-2]+1:]
+        present, message = is_required_bucket_hierarchy_present(buckets[:indices[-2]+1], indices[:-1]) 
+        if not present:
+            return message, 404
+    else:
+        split1, split2 = tuple(), buckets
 
+    with db.update() as bucket:
+        for bucket_name in split1:
+            bucket = bucket.bucket(str(bucket_name).encode())
+        for bucket_name in split2:
+            temp = bucket.bucket(str(bucket_name).encode())
+            if not temp:
+                temp = bucket.create_bucket(str(bucket_name).encode())
+            bucket = temp
+        if bucket.get(INDEX) and post:
+            return rest_base+'/'.join(map(str, buckets)) + ' already exists', 409
+        bucket.put(INDEX, json.dumps(value).encode())
+        return value, 201
+
+def patch_bucket_value(buckets, indices, payload):
+    value, status = get_value_from_bucket_hierarchy(buckets, indices)
+    if status == 404:
+        return value, status
+    update_nested_dict(value, payload)
+    post_value_to_bucket_hierarchy(buckets, indices, value, post=False)
+    return value, 200
 
 # Settings from emulator-config.json
 #

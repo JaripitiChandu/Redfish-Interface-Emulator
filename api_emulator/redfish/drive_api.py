@@ -19,11 +19,12 @@ from .storage_api import BNAME as STR_BNAME
 from .ResetActionInfo_api import ResetActionInfo_API
 from .ResetAction_api import ResetAction_API
 
-from g import db, INDEX, INTERNAL_SERVER_ERROR
-from .ComputerSystem_api import BNAME as SYS_BNAME
+import g
+from g import INTERNAL_SERVER_ERROR
 
 members = {}
 BNAME = b"Drives"
+INDICES = [1,3,5]
 
 INTERNAL_ERROR = 500
 
@@ -52,32 +53,8 @@ class DriveAPI(Resource):
     def get(self, ident1, ident2, ident3):
         logging.info(self.__class__.__name__ +' GET called')
         try:
-            with db.view() as tx:
-                sb = tx.bucket(SYS_BNAME)
-                if sb:
-                    system = sb.bucket(str(ident1).encode())
-                    if system:
-                        storages = system.bucket(STR_BNAME)
-                        if storages:
-                            storage = storages.bucket(str(ident2).encode())
-                            if storage:
-                                drives = storage.bucket(BNAME)
-                                if drives:
-                                    drive = drives.bucket(str(ident3).encode())
-                                    if drive:
-                                        resp = json.loads(drive.get(INDEX).decode()), 200
-                                    else:
-                                        return f"Drive {ident3} not found in Storage {ident2} of System {ident1}", 404
-                                else:
-                                    return f"Drive {ident3} not found in Storage {ident2} of System {ident1}", 404
-                            else:
-                                return f"Storage {ident2} not found in System {ident1}", 404
-                        else:
-                            return f"Storage {ident2} not found in System {ident1}", 404
-                    else:
-                        return "System " + ident1 + " not found" , 404
-                else:
-                    return "System " + ident1 + " not found" , 404
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.get_value_from_bucket_hierarchy(bucket_hierarchy, INDICES)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -97,32 +74,8 @@ class DriveAPI(Resource):
     def post(self, ident1, ident2, ident3):
         logging.info(self.__class__.__name__ + ' POST called')
         try:
-            with db.update() as tx:
-                b = tx.bucket(SYS_BNAME)
-                if b:
-                    sb = b.bucket(str(ident1).encode())
-                    if sb:
-                        storages = sb.bucket(STR_BNAME)
-                        if storages:
-                            storage = storages.bucket(str(ident2).encode())
-                            if storage:
-                                drives = storage.bucket(BNAME)
-                                if not drives:
-                                    drives = storage.create_bucket(BNAME)
-                                if drives.bucket(str(ident2).encode()):
-                                    return f"Drive {ident3} is already present in Storage {ident2} of System {ident1}", 409
-                                else:
-                                    drive = drives.create_bucket(str(ident3).encode())
-                                    drive.put(INDEX, json.dumps(request.json).encode())
-                            else:
-                                return f"Storage {ident2} does not exist in System {ident1}", 404
-                        else:
-                            return f"Storage {ident2} does not exist in System {ident1}", 404
-                    else:
-                        return f"System {ident1} does not exist", 404
-                else:
-                    return f"System {ident1} does not exist", 404
-            resp = request.json, 201
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.post_value_to_bucket_hierarchy(bucket_hierarchy, INDICES, request.json)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR

@@ -17,12 +17,10 @@ import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
 
-from g import INDEX, INTERNAL_SERVER_ERROR
+from g import INTERNAL_SERVER_ERROR
 
 members = {}
-
-PRIMARY_BNAME = b'Managers'
-BNAME = b'LogServices'
+INDICES = [1,3]
 
 # LogService Singleton API
 class LogServiceAPI(Resource):
@@ -47,20 +45,8 @@ class LogServiceAPI(Resource):
     def get(self, ident, ident1):
         logging.info('LogServiceAPI GET called')
         try:
-            # Find the entry with the correct value for Id
-            resp = 404
-            with g.db.view() as tx:
-                if not tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()):
-                    resp = f"Manager {ident} not found", 404
-                else:
-                    b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME)
-                    if b:
-                        ident_bucket = b.bucket(str(ident1).encode())
-                        if not ident_bucket:
-                            resp = f"{BNAME.decode('utf-8')} {ident1} for Manager {ident} not found", 404
-                        else:
-                            value = ident_bucket.get(INDEX).decode()
-                            resp = json.loads(value), 200
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.get_value_from_bucket_hierarchy(bucket_hierarchy, INDICES)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -75,27 +61,8 @@ class LogServiceAPI(Resource):
     def post(self, ident, ident1):
         logging.info('LogServiceAPI POST called')
         try:
-            with g.db.update() as tx:
-                managers = tx.bucket(PRIMARY_BNAME)
-                if managers:
-                    managers_ident = managers.bucket(str(ident).encode())
-                    if managers_ident:
-                        log_services=managers_ident.bucket(BNAME)
-                else:
-                    return f"Manager {ident} not found", 404
-
-                if not log_services:
-                    log_services=managers_ident.create_bucket(BNAME)
-
-                log_services_index = log_services.bucket(str(ident1).encode())
-
-                if log_services_index:
-                    return f"{BNAME.decode('utf-8')} {ident1} already exists in Manager {ident}", 409
-                else:
-                    ident_bucket = log_services.create_bucket(str(ident1).encode())
-                    ident_bucket.put(INDEX, json.dumps(request.json).encode())
-                    resp = request.json, 201
-
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.post_value_to_bucket_hierarchy(bucket_hierarchy, INDICES, request.json)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -103,38 +70,12 @@ class LogServiceAPI(Resource):
 
     # HTTP PATCH
     def patch(self, ident, ident1):
-        logging.info('LogServiceAPI PATCH called')
+        logging.info(self.__class__.__name__ + ' PATCH called')
         patch_data = request.get_json(force=True)
         logging.info(f"Payload = {patch_data}")
         try:
-            # Update specific portions of the identified object
-            with g.db.update() as tx:
-                managers = tx.bucket(PRIMARY_BNAME)
-                if managers:
-                    managers_ident = managers.bucket(str(ident).encode())
-                    if managers_ident:
-                        log_services = managers_ident.bucket(BNAME)
-                        if log_services:
-                            log_services_ident = log_services.bucket(str(ident1).encode())
-                        else:
-                            return f"Logservice {ident1} for Manager {ident} not found", 404
-                    else:
-                        return f"Manager {ident} not found", 404
-                else:
-                    return f"Manager {ident} not found", 404
-
-                if log_services_ident:
-                    log_service_data = json.loads(log_services_ident.get(INDEX).decode())
-                else:
-                    return f"Logservice {ident1} for Manager {ident} not found", 404
-
-                for key, value in patch_data.items():
-                    if key in log_service_data:
-                        log_service_data[key] = value
-
-                    log_services_ident.put(INDEX, json.dumps(log_service_data).encode())
-                    resp = log_service_data, 200
-
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.patch_bucket_value(bucket_hierarchy, INDICES, patch_data)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -165,20 +106,13 @@ class LogServiceCollectionAPI(Resource):
     def get(self,ident):
         logging.info('LogServiceCollectionAPI GET called')
         try:
-            bucket_members = []
-            with g.db.view() as tx:
-                b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME)
-
-                if not b:
-                    resp = f'Managers {ident} CiscoInternalStorage not found', 404
-                else:
-                    for k, v in b:
-                        if not v:
-                            if b.bucket(k):
-                                bucket_members.append(json.loads(b.bucket(k).get(INDEX).decode())['@odata.id'])
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            passed, output = g.get_collection_from_bucket_hierarchy(bucket_hierarchy, INDICES[:-1])
+            if not passed:
+                return output, 404
             self.config["@odata.id"] = "/redfish/v1/Manager/{}/LogServices".format(ident)
-            self.config['Members'] = [{'@odata.id': x} for x in bucket_members]
-            self.config["Members@odata.count"] = len(bucket_members)
+            self.config['Members'] = [{'@odata.id': x} for x in output]
+            self.config["Members@odata.count"] = len(output)
             resp = self.config, 200
             
         except Exception:

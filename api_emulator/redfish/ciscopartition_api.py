@@ -16,12 +16,9 @@ import copy
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
 
-from g import INDEX, INTERNAL_SERVER_ERROR
+from g import INTERNAL_SERVER_ERROR
 
-PRIMARY_BNAME = b'Managers'
-BNAME = b'CiscoInternalStorage'
-OEM_BNAME = b'FlexMMC'  #OEM Resource
-OEM_SR_BNAME = b'CiscoPartition'   #OEM  Sub Resource
+INDICES = [1,4,6]
 
 # CiscoPartition Singleton API
 class CiscoPartitionAPI(Resource):
@@ -46,19 +43,8 @@ class CiscoPartitionAPI(Resource):
     def get(self, ident, ident1):
         logging.info('CiscoPartitionAPI GET called')
         try:
-            resp = 404
-            with g.db.view() as tx:
-                if not tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()):
-                    resp = f"Manager {ident} not found", 404
-                else:
-                    b = tx.bucket(PRIMARY_BNAME).bucket(str(ident).encode()).bucket(BNAME).bucket(OEM_BNAME).bucket(OEM_SR_BNAME)
-                    if b:
-                        ident_bucket = b.bucket(str(ident1).encode())
-                        if not ident_bucket:
-                            resp = f"CiscoPartition {ident1} for {OEM_BNAME.decode('utf-8')} Manager {ident} not found", 404
-                        else:
-                            value = ident_bucket.get(INDEX).decode()
-                            resp = json.loads(value), 200
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.get_value_from_bucket_hierarchy(bucket_hierarchy, INDICES)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -73,33 +59,8 @@ class CiscoPartitionAPI(Resource):
     def post(self, ident, ident1):
         logging.info('CiscoPartitionAPI POST called')
         try:
-            with g.db.update() as tx:
-                managers = tx.bucket(PRIMARY_BNAME)
-                if managers:
-                    managers_ident = managers.bucket(str(ident).encode())
-                    if managers_ident:
-                        oem_storage = managers_ident.bucket(BNAME).bucket(OEM_BNAME)
-                        if oem_storage:
-                                oem_partition=oem_storage.bucket(OEM_SR_BNAME)
-                        else:
-                            return f"{OEM_BNAME.decode('utf-8')} of CiscoInternalStorage for Manager {ident} not found", 404
-                    else:
-                        return f"{OEM_BNAME.decode('utf-8')} of CiscoInternalStorage for Manager {ident} not found", 404
-                else:
-                    return f"Manager {ident} not found", 404
-
-                if not oem_partition:
-                    oem_partition = oem_storage.create_bucket(OEM_SR_BNAME)
-
-                oem_partition_ident = oem_partition.bucket(str(ident1).encode())
-
-                if oem_partition_ident:
-                    return f"CiscoPartition {ident1} for {OEM_BNAME.decode('utf-8')} already exists in Manager {ident}", 409
-                else:
-                    ident_bucket = oem_partition.create_bucket(str(ident1).encode())
-                    ident_bucket.put(INDEX, json.dumps(request.json).encode())
-                    resp = request.json, 201
-
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.post_value_to_bucket_hierarchy(bucket_hierarchy, INDICES, request.json)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR

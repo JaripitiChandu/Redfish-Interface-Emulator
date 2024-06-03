@@ -13,13 +13,13 @@ import sys, traceback
 import logging, json
 from flask import Flask, request, make_response, render_template
 from flask_restful import reqparse, Api, Resource
-from api_emulator.utils import update_nested_dict
 
-from g import db, INDEX, INTERNAL_SERVER_ERROR
-from .Manager_api import BNAME as MGR_BNAME
+import g
+from g import INTERNAL_SERVER_ERROR
 
 members = {}
 BNAME = b"SerialInterfaces"
+INDICES = [1,3]
 
 INTERNAL_ERROR = 500
 
@@ -48,24 +48,8 @@ class SerialInterface(Resource):
     def get(self, ident1, ident2):
         logging.info(self.__class__.__name__ +' GET called')
         try:
-            with db.view() as tx:
-                b = tx.bucket(MGR_BNAME)
-                if b:
-                    mb = b.bucket(str(ident1).encode())
-                    if mb:
-                        sb = mb.bucket(BNAME)
-                        if sb:
-                            sib = sb.bucket(str(ident2).encode())
-                            if sib:
-                                resp = json.loads(sib.get(INDEX).decode()), 200
-                            else:
-                                return f"SerialInterface {ident2} not found in Manager {ident1}", 404
-                        else:
-                            return f"SerialInterface {ident2} not found in Manager {ident1}", 404
-                    else:
-                        return "Manager " + ident1 + " not found" , 404
-                else:
-                    return "Manager " + ident1 + " not found" , 404
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.get_value_from_bucket_hierarchy(bucket_hierarchy, INDICES)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -84,24 +68,8 @@ class SerialInterface(Resource):
     def post(self, ident1: str, ident2: int):
         logging.info(self.__class__.__name__ + ' POST called')
         try:
-            with db.update() as tx:
-                b = tx.bucket(MGR_BNAME)
-                if b:
-                    mb = b.bucket(str(ident1).encode())
-                    if mb:
-                        sb = mb.bucket(BNAME)
-                        if not sb:
-                            sb = mb.create_bucket(BNAME)
-                        if sb.bucket(str(ident2).encode()):
-                            return f"SerialInterface {ident2} is already present in Manager {ident1}", 409
-                        else:
-                            sib = sb.create_bucket(str(ident2).encode())
-                            sib.put(INDEX, json.dumps(request.json).encode())
-                    else:
-                        return f"Manager {ident1} does not exist", 404
-                else:
-                    return f"Manager {ident1} does not exist", 404
-            resp = request.json, 201
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.post_value_to_bucket_hierarchy(bucket_hierarchy, INDICES, request.json)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -110,33 +78,14 @@ class SerialInterface(Resource):
     # HTTP PATCH
     def patch(self, ident1, ident2):
         logging.info(self.__class__.__name__ + ' PATCH called')
-        raw_dict = request.get_json(force=True)
-        logging.info(f"payload = {json.dumps(raw_dict)}")
+        patch_data = request.get_json(force=True)
+        logging.info(f"Payload = {patch_data}")
         try:
-            with db.update() as tx:
-                b = tx.bucket(MGR_BNAME)
-                if b:
-                    mb = b.bucket(str(ident1).encode())
-                    if mb:
-                        sb = mb.bucket(BNAME)
-                        if sb:
-                            sib = sb.bucket(str(ident2).encode())
-                            if sib:
-                                config = json.loads(sib.get(INDEX).decode())
-                                update_nested_dict(config, raw_dict)
-                                sib.put(INDEX, json.dumps(config).encode())
-                            else:
-                                return f"SerialInterface {ident2} not found in Manager {ident1}", 404
-                        else:
-                            return f"SerialInterface {ident2} not found in Manager {ident1}", 404
-                    else:
-                        return f"Manager {ident1} does not exist", 404
-                else:
-                    return f"Manager {ident1} does not exist", 404
-            resp = config, 200
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.patch_bucket_value(bucket_hierarchy, INDICES, patch_data)
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP DELETE
@@ -172,22 +121,14 @@ class SerialInterfaces(Resource):
     def get(self, ident):
         logging.info(self.__class__.__name__ +' GET called')
         try:
-            bucket_members = []
-
-            with db.view() as tx:
-                b = tx.bucket(MGR_BNAME)
-                if b:
-                    mb = b.bucket(str(ident).encode())
-                    if mb:
-                        sb = mb.bucket(BNAME)
-                        if sb:
-                            for k, v in sb:
-                                if not v and sb.bucket(k):
-                                    bucket_members.append(json.loads(sb.bucket(k).get(INDEX).decode())['@odata.id'])
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            passed, output = g.get_collection_from_bucket_hierarchy(bucket_hierarchy, INDICES[:-1])
+            if not passed:
+                return output, 404
 
             self.config["@odata.id"] = "/redfish/v1/Managers/{}/SerialInterfaces".format(ident)
-            self.config["Members"] = [{'@odata.id': x} for x in bucket_members]
-            self.config["Members@odata.count"] = len(bucket_members)
+            self.config["Members"] = [{'@odata.id': x} for x in output]
+            self.config["Members@odata.count"] = len(output)
             resp = self.config, 200
         except Exception:
             traceback.print_exc()

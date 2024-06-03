@@ -21,6 +21,7 @@ from api_emulator.utils import update_nested_dict
 from g import db, INDEX, INTERNAL_SERVER_ERROR
 
 BNAME = b"AccountService"
+INDICES = [0]
 
 INTERNAL_ERROR = 500
 
@@ -40,13 +41,8 @@ class AccountServiceAPI(Resource):
     def get(self):
         logging.info(self.__class__.__name__ +' GET called')
         try:
-            # Find the entry with the correct value for Id
-            with db.view() as tx:
-                b = tx.bucket(BNAME)
-                if not b:
-                    return "AccountService not found" , 404
-                else:
-                    resp = json.loads(b.get(INDEX).decode()), 200
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.get_value_from_bucket_hierarchy(bucket_hierarchy, INDICES)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -61,14 +57,8 @@ class AccountServiceAPI(Resource):
     def post(self):
         logging.info(self.__class__.__name__ + ' POST called')
         try:
-            with db.update() as tx:
-                b = tx.bucket(BNAME)
-                if b:
-                    resp = "AccountService already present", 409
-                else:
-                    b = tx.create_bucket(BNAME)
-                    b.put(INDEX, json.dumps(request.json).encode())
-            resp = request.json, 201
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.post_value_to_bucket_hierarchy(bucket_hierarchy, INDICES, request.json)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
@@ -77,18 +67,11 @@ class AccountServiceAPI(Resource):
     # HTTP PATCH    
     def patch(self):
         logging.info(self.__class__.__name__ + ' PATCH called')
-        raw_dict = request.get_json(force=True)
-        logging.info(f"payload = {json.dumps(raw_dict)}")
+        patch_data = request.get_json(force=True)
+        logging.info(f"Payload = {patch_data}")
         try:
-            with db.update() as tx:
-                b = tx.bucket(BNAME)
-                if b:
-                    config = json.loads(b.get(INDEX).decode())
-                    update_nested_dict(config, raw_dict)
-                    b.put(INDEX, json.dumps(config).encode())
-                else:
-                    return f"AccountService not found", 404
-            resp = config, 200
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.patch_bucket_value(bucket_hierarchy, INDICES, patch_data)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_SERVER_ERROR
