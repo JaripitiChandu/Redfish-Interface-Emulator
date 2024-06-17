@@ -72,17 +72,12 @@ class PowerAPI(Resource):
 
     # HTTP PATCH
     def patch(self, ident):
-        logging.info('PowerAPI PATCH called')
-        raw_dict = request.get_json(force=True)
-        logging.info(raw_dict)
+        logging.info(self.__class__.__name__ + ' PATCH called')
+        patch_data = request.get_json(force=True)
+        logging.info(f"Payload = {patch_data}")
         try:
-            # Update specific portions of the identified object
-            logging.info(members[ident])
-            for key, value in raw_dict.items():
-                logging.info('Update ' + key + ' to ' + str(value))
-                members[ident][key] = value
-            logging.info(members[ident])
-            resp = members[ident], 200
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.patch_bucket_value(bucket_hierarchy, INDICES, patch_data)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR

@@ -80,14 +80,13 @@ class Processor(Resource):
         return resp
 
     # HTTP PATCH
-    def patch(self, ident):
+    def patch(self, ident1, ident2):
         logging.info(self.__class__.__name__ + ' PATCH called')
-        raw_dict = request.get_json(force=True)
+        patch_data = request.get_json(force=True)
+        logging.info(f"Payload = {patch_data}")
         try:
-            # Update specific portions of the identified object
-            for key, value in raw_dict.items():
-                members[ident][key] = value
-            resp = members[ident], 200
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            resp = g.patch_bucket_value(bucket_hierarchy, INDICES, patch_data)
         except Exception:
             traceback.print_exc()
             resp = INTERNAL_ERROR
