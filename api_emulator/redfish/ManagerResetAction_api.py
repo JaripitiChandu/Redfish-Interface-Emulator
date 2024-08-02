@@ -14,10 +14,10 @@ import sys, traceback, json, logging
 from flask import Flask, request, make_response, render_template, jsonify
 from flask_restful import reqparse, Api, Resource
 from subprocess import check_output
+from g import db, INDEX, INTERNAL_SERVER_ERROR
 
-members={}
-
-INTERNAL_ERROR = 500
+BNAME = b"Managers"
+INDICES = [1]
 
 class ManagerResetActionAPI(Resource):
     # kwargs is use to pass in the wildcards values to replace when the instance is created.
@@ -29,14 +29,17 @@ class ManagerResetActionAPI(Resource):
     def post(self,ident):
         logging.info('ManagerResetActionAPI POST called')
         try:
-            if ident not in manager_members:
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            manager_ident = bucket_hierarchy[:2]
+            manager_data = g.get_value_from_bucket_hierarchy(manager_ident, INDICES)
+            if not manager_data:
                 logging.info(f"Manager {ident} not found")
                 return f"Manager {ident} not found!", 400
             if not request.data:
                 logging.info(f"No payload provided")
                 json_payload = {}
                 logging.info(f"Payload = {json_payload}")
-                return 'POST Action request completed', 200
+                return {}, 200
             else:
                 try:
                     json_payload = json.loads(request.data.decode("utf-8"))
@@ -49,7 +52,7 @@ class ManagerResetActionAPI(Resource):
                     return f"Invalid or no JSON payload passed", 400
 
             logging.info(f"Payload = {json_payload}")
-            allowableResetTypes = manager_members[ident]["Actions"]["#Manager.Reset"]["ResetType@Redfish.AllowableValues"]
+            allowableResetTypes = manager_data["Actions"]["#Manager.Reset"]["ResetType@Redfish.AllowableValues"]
             if action not in allowableResetTypes:
                 return f"""Invalid reset type!
 ResetType, possible values:
@@ -61,12 +64,10 @@ ResetType, possible values:
             return 'POST Action request completed', 200
         except Exception as e:
             traceback.print_exc()
-            return "Internal Server error", INTERNAL_ERROR
+            return "Internal Server error", INTERNAL_SERVER_ERROR
 
     # HTTP GET
     def get(self,ident):
-        print ('ResetAction')
-        print (members)
         return 'GET is not supported', 405, {'Allow': 'POST'}
 
     # HTTP PATCH

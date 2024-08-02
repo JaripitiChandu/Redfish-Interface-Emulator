@@ -25,9 +25,6 @@ members = {}
 BNAME = b"Accounts"
 INDICES = [0,2]
 
-INTERNAL_ERROR = 500
-
-
 # Chassis Singleton API
 class Account(Resource):
 
@@ -103,7 +100,7 @@ class Account(Resource):
                 resp = 200
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
 
@@ -137,7 +134,7 @@ class Accounts(Resource):
             resp = self.config, 200
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PUT
@@ -157,15 +154,31 @@ class Accounts(Resource):
         logging.info(self.__class__.__name__ + ' POST called')
         try:
             config = request.get_json(force=True)
-            ok, msg = self.verify(config)
-            if ok:
-                members[config['Id']] = config
-                resp = config, 201
+            logging.info(f"Payload = {config}")
+            bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+            if len(INDICES)>1:
+                split1, split2 = bucket_hierarchy[:INDICES[-2]+1], bucket_hierarchy[INDICES[-2]+1:]
+                present, message = g.is_required_bucket_hierarchy_present(bucket_hierarchy[:INDICES[-2]+1], INDICES[:-1])
+            if not present:
+                return message, 404
             else:
-                resp = msg, 400
+                split1, split2 = tuple(), bucket_hierarchy
+
+            with db.update() as bucket:
+                for bucket_name in split1:
+                    bucket = bucket.bucket(str(bucket_name).encode())
+                for bucket_name in split2:
+                    temp = bucket.bucket(str(bucket_name).encode())
+                    if not temp:
+                        temp = bucket.create_bucket(str(bucket_name).encode())
+                    bucket = temp
+            if bucket.get(INDEX):
+                return g.rest_base+'/'.join(map(str, bucket_hierarchy)) + ' already exists', 409
+            bucket.put(INDEX, json.dumps(request.json).encode())
+            return {}, 201
         except Exception:
             traceback.print_exc()
-            resp = INTERNAL_ERROR
+            resp = INTERNAL_SERVER_ERROR
         return resp
 
     # HTTP PATCH
