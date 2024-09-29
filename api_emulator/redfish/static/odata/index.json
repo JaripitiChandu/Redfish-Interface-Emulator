@@ -12,8 +12,18 @@
         },
         {
             "kind": "Singleton",
-            "name": "Registries",
-            "url": "/redfish/v1/Registries"
+            "name": "CertificateService",
+            "url": "/redfish/v1/CertificateService"
+        },
+        {
+            "kind": "Singleton",
+            "name": "Chassis",
+            "url": "/redfish/v1/Chassis"
+        },
+        {
+            "kind": "Singleton",
+            "name": "EventService",
+            "url": "/redfish/v1/EventService"
         },
         {
             "kind": "Singleton",
@@ -27,8 +37,13 @@
         },
         {
             "kind": "Singleton",
-            "name": "Chassis",
-            "url": "/redfish/v1/Chassis"
+            "name": "AccountService",
+            "url": "/redfish/v1/AccountService"
+        },
+        {
+            "kind": "Singleton",
+            "name": "SessionService",
+            "url": "/redfish/v1/SessionService"
         },
         {
             "kind": "Singleton",
@@ -42,28 +57,8 @@
         },
         {
             "kind": "Singleton",
-            "name": "AccountService",
-            "url": "/redfish/v1/AccountService"
-        },
-        {
-            "kind": "Singleton",
-            "name": "CertificateService",
-            "url": "/redfish/v1/CertificateService"
-        },
-        {
-            "kind": "Singleton",
-            "name": "EventService",
-            "url": "/redfish/v1/EventService"
-        },
-        {
-            "kind": "Singleton",
-            "name": "SessionService",
-            "url": "/redfish/v1/SessionService"
-        },
-        {
-            "kind": "Singleton",
-            "name": "Fabrics",
-            "url": "/redfish/v1/Fabrics"
+            "name": "Registries",
+            "url": "/redfish/v1/Registries"
         },
         {
             "kind": "Singleton",

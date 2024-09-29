@@ -1,0 +1,103 @@
+diff --git a/api_emulator/redfish/ComputerSystem_api.py b/api_emulator/redfish/ComputerSystem_api.py
+index 9e5989e..b0f74d7 100644
+--- a/api_emulator/redfish/ComputerSystem_api.py
++++ b/api_emulator/redfish/ComputerSystem_api.py
+@@ -10,6 +10,7 @@ Singleton  API:  GET, POST, PATCH, DELETE
+ """
+ 
+ import g
++from g import db, INDEX
+ 
+ import sys, traceback
+ from pprint import pprint
+@@ -28,6 +29,7 @@ from .simplestorage import members as simplestorage
+ from .ResourceBlock_api import members as resource_blocks
+ 
+ members = {}
++BNAME = b"Systems"
+ 
+ INTERNAL_ERROR = 500
+ 
+@@ -73,13 +75,22 @@ class ComputerSystemAPI(Resource):
+         logging.info('ComputerSystemAPI GET called')
+         try:
+             # Find the entry with the correct value for Id
+-            if ident in members:
+-                conf= members[ident]
+-                # conf['ProcessorSummary']=self.processor_summary(ident)
+-                # conf['MemorySummary']=self.memory_summary(ident)
+-                resp = conf, 200
+-            else:
+-                resp = "System " + ident + " not found" , 404
++            with db.view() as tx:
++                b = tx.bucket(BNAME)
++                if not b:
++                    return "System " + ident + " not found" , 404
++                system = b.bucket(str(ident).encode())
++                if not system:
++                    resp = "System " + ident + " not found" , 404
++                else:
++                    resp = json.loads(system.get(INDEX).decode()), 200
++            # if ident in members:
++            #     conf= members[ident]
++            #     # conf['ProcessorSummary']=self.processor_summary(ident)
++            #     # conf['MemorySummary']=self.memory_summary(ident)
++            #     resp = conf, 200
++            # else:
++            #     resp = "System " + ident + " not found" , 404
+         except Exception:
+             traceback.print_exc()
+             resp = "Internal Server Error", INTERNAL_ERROR
+@@ -98,15 +109,18 @@ class ComputerSystemAPI(Resource):
+     def post(self, ident):
+         logging.info('ComputerSystemAPI POST called')
+         try:
+-            global config
+             # global wildcards
+             # wildcards['id'] = ident
+             # wildcards['linkMgr'] = 'UpdateWithPATCH'
+             # wildcards['linkChassis'] = ['UpdateWithPATCH']
+             # config=get_ComputerSystem_instance(wildcards)
+-            config = request.json
+-            members[ident]=config
+-            resp = config, 200
++            with db.update() as tx:
++                b = tx.bucket(BNAME)
++                if not b:
++                    b = tx.create_bucket(BNAME)
++                system = b.create_bucket(str(ident).encode())
++                system.put(INDEX, json.dumps(request.json).encode())
++            resp = request.json, 200
+         except Exception:
+             traceback.print_exc()
+             resp = INTERNAL_ERROR
+@@ -156,18 +170,24 @@ class ComputerSystemCollectionAPI(Resource):
+     def __init__(self):
+         logging.info('ComputerSystemCollectionAPI init called')
+         self.rb = g.rest_base
++        bucket_members = []
++
++        with db.view() as tx:
++            b = tx.bucket(BNAME)
++            if b:
++                for k, v in b:
++                    if not v:
++                        if b.bucket(k):
++                            bucket_members.append(json.loads(b.bucket(k).get(INDEX).decode())['@odata.id'])
+         self.config = {
+             "@odata.id": "/redfish/v1/Systems",
+             "@odata.type": "#ComputerSystemCollection.ComputerSystemCollection",
+             "@odata.context": "/redfish/v1/$metadata#ComputerSystemCollection.ComputerSystemCollection",
+             "Description": "Collection of Computer Systems",
+             "Name": "Computer System Collection",
+-            "Members": [],
+-            "Members@odata.count": 0
++            "Members":  [{'@odata.id': x} for x in bucket_members],
++            "Members@odata.count": len(bucket_members)
+         }
+-        self.config['Members@odata.count'] = len(members)
+-        self.config['Members'] = [{'@odata.id':x['@odata.id']} for
+-                x in list(members.values())]
+ 
+     # HTTP GET
+     def get(self):

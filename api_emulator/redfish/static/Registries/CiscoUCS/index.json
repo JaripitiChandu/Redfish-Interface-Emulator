@@ -1,0 +1,18 @@
+{
+    "@odata.id": "/redfish/v1/Registries/CiscoUCS",
+    "@odata.type": "#MessageRegistryFile.v1_1_3.MessageRegistryFile",
+    "@odata.context": "/redfish/v1/$metadata#MessageRegistryFile.MessageRegistryFile",
+    "Id": "CiscoUCS",
+    "Name": "Cisco UCS Registry",
+    "Description": "Cisco UCS Message Registry File locations",
+    "Registry": "CiscoUCS.1.7.0",
+    "Location": [
+        {
+            "Language": "en",
+            "Uri": "/redfish/v1/Registries/Oem/Cisco/CiscoUCS.1.7.0.json"
+        }
+    ],
+    "Languages": [
+        "en"
+    ]
+}

@@ -1,0 +1,45 @@
+networks:
+  redfish:
+    driver: bridge
+services:
+  emulator-1:
+    container_name: emulator-1
+    deploy:
+      replicas: 1
+    image: jaguar_dc:latest
+    networks:
+    - redfish
+    ports:
+    - 0:444
+    - 0:8889
+    volumes:
+    - emulator-1:/data
+  emulator-2:
+    container_name: emulator-2
+    deploy:
+      replicas: 1
+    image: jaguar_dc:latest
+    networks:
+    - redfish
+    ports:
+    - 0:444
+    - 0:8889
+    volumes:
+    - emulator-2:/data
+  emulator-3:
+    container_name: emulator-3
+    deploy:
+      replicas: 1
+    image: jaguar_dc:latest
+    networks:
+    - redfish
+    ports:
+    - 0:444
+    - 0:8889
+    volumes:
+    - emulator-3:/data
+version: '3.9'
+volumes:
+  emulator-1: {}
+  emulator-2: {}
+  emulator-3: {}

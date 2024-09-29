@@ -15,20 +15,11 @@
             "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory/Board_Controller"
         },
         {
-            "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory/UCSC-M-V5Q50G-slot-MLOM"
+            "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory/UCSB-MRAID12G-slot-FMEZZ1-SAS"
         },
         {
-            "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory/UCS-M2-HWRAID-slot-MSTOR-RAID"
-        },
-        {
-            "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory/HDD-model-MTFDDAV240TDS-serial-MSY27230682"
-        },
-        {
-            "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory/HDD-model-MTFDDAV240TDS-serial-MSY27230681"
-        },
-        {
-            "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory/UCSC-PT5161L-RETIMER-03-03"
+            "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory/HDD-model-AL15SEB030N-serial-49H0A07AF37G"
         }
     ],
-    "Members@odata.count": 8
+    "Members@odata.count": 5
 }

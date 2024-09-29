@@ -1,0 +1,13 @@
+{
+    "@odata.id": "/redfish/v1/AccountService/Roles/IPMIReadOnly",
+    "@odata.type": "#Role.v1_2_5.Role",
+    "@odata.context": "/redfish/v1/$metadata#Role.Role",
+    "Name": "User Role",
+    "Id": "IPMIReadOnly",
+    "Description": "User Role",
+    "IsPredefined": true,
+    "OemPrivileges": [
+        "IPMIReadonlyAccess",
+        "SNMPAccess"
+    ]
+}

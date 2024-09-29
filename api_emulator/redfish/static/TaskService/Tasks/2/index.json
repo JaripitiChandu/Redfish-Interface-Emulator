@@ -1,0 +1,22 @@
+{
+    "@odata.id": "/redfish/v1/TaskService/Tasks/2",
+    "@odata.type": "#Task.v1_5_0.Task",
+    "@odata.context": "/redfish/v1/$metadata#Task.Task",
+    "Id": "2",
+    "Name": "Computer System Reset - Graceful Shutdown",
+    "StartTime": "2024-07-18T12:19:58+05:30",
+    "EndTime": "2024-07-18T12:20:29+05:30",
+    "PercentComplete": 100,
+    "TaskState": "Completed",
+    "TaskStatus": "OK",
+    "Messages": [
+        {
+            "@odata.type": "#Message.v1_1_1.Message",
+            "MessageId": "Base.1.13.0.Success",
+            "Message": "Successfully Completed Request",
+            "MessageArgs": [],
+            "Severity": "OK"
+        }
+    ],
+    "TaskMonitor": "/redfish/v1/TaskService/Oem/TaskMonitor/2"
+}

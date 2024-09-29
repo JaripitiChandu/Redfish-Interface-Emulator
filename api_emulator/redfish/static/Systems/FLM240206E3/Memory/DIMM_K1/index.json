@@ -1,0 +1,10 @@
+{
+    "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_K1",
+    "@odata.type": "#Memory.v1_12_0.Memory",
+    "@odata.context": "/redfish/v1/$metadata#Memory.Memory",
+    "Name": "DIMM_K1",
+    "Id": "19",
+    "Status": {
+        "State": "Absent"
+    }
+}

@@ -6,26 +6,20 @@
     "Name": "Roles Collection",
     "Members": [
         {
-            "@odata.id": "/redfish/v1/AccountService/Roles/admin"
+            "@odata.id": "/redfish/v1/AccountService/Roles/ReadOnly"
         },
         {
-            "@odata.id": "/redfish/v1/AccountService/Roles/readonly"
+            "@odata.id": "/redfish/v1/AccountService/Roles/Admin"
         },
         {
-            "@odata.id": "/redfish/v1/AccountService/Roles/user"
+            "@odata.id": "/redfish/v1/AccountService/Roles/IPMIAdmin"
+        },
+        {
+            "@odata.id": "/redfish/v1/AccountService/Roles/IPMIReadOnly"
         },
         {
             "@odata.id": "/redfish/v1/AccountService/Roles/SNMPOnly"
-        },
-        {
-            "@odata.id": "/redfish/v1/AccountService/Roles/Administrator"
-        },
-        {
-            "@odata.id": "/redfish/v1/AccountService/Roles/Operator"
-        },
-        {
-            "@odata.id": "/redfish/v1/AccountService/Roles/ReadOnly"
         }
     ],
-    "Members@odata.count": 7
+    "Members@odata.count": 5
 }

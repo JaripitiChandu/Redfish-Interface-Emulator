@@ -1,0 +1,312 @@
+{
+    "@Redfish.Copyright": "Copyright 2018-2023 Cisco Systems Inc. All rights reserved.",
+    "Name": "Cisco UCS Common Message Registry",
+    "@odata.type": "#MessageRegistry.v1_6_0.MessageRegistry",
+    "Language": "en",
+    "Id": "CiscoUCS.1.7.0",
+    "Description": "This registry defines the common messages for Cisco UCS Redfish implementations.",
+    "RegistryPrefix": "CiscoUCS",
+    "RegistryVersion": "1.7.0",
+    "OwningEntity": "Cisco Systems Inc.",
+    "Messages": {
+        "AccountLocked": {
+            "Description": "Indicates that the user account is locked for a specific amount of time",
+            "Message": "Account is locked. Retry after %1 minutes.",
+            "Severity": "Warning",
+            "MessageSeverity": "Warning",
+            "NumberOfArgs": 1,
+            "ParamTypes": [
+                "number"
+            ],
+            "Resolution": "User needs to wait for specified duration of time before next login"
+        },
+        "ArrayLengthExceeded": {
+            "Description": "Indicates that the array size of property value exceeds permissible limits.",
+            "Message": "The array length for %1 exceeds the maximum allowed value of %2.",
+            "Severity": "Warning",
+            "MessageSeverity": "Warning",
+            "NumberOfArgs": 2,
+            "ParamTypes": [
+                "string",
+                "number"
+            ],
+            "Resolution": "Provide a value that is within the specified limits and resubmit the request if the operation failed."
+        },
+        "CardIsHot": {
+            "Description": "Indicates that the card temperature is risen.",
+            "Message": "Card %1 crossed temperature threshold",
+            "Severity": "Critical",
+            "MessageSeverity": "Critical",
+            "NumberOfArgs": 1,
+            "ParamTypes": [
+                "string"
+            ],
+            "Resolution": "If possible, reduce the load on card."
+        },
+        "ConfigurationError": {
+            "Description": "Indicates that the configuration is in an unusable state.",
+            "Message": "%1",
+            "Severity": "Critical",
+            "MessageSeverity": "Critical",
+            "NumberOfArgs": 1,
+            "ParamTypes": [
+                "string"
+            ],
+            "Resolution": "Correct the configuration issues and resubmit the request."
+        },
+        "ConfigurationWarning": {
+            "Description": "Indicates that the configuration contains parameters that could lead to functional degradation.",
+            "Message": "%1",
+            "Severity": "Warning",
+            "MessageSeverity": "Warning",
+            "NumberOfArgs": 1,
+            "ParamTypes": [
+                "string"
+            ],
+            "Resolution": "Correct the configuration issues to avoid functional degradation."
+        },
+        "CreateResourcesPartialSuccess": {
+            "Description": "Indicates that in a bulk request all the requested resources are not created.",
+            "Message": "All requested resources are not created",
+            "Severity": "Warning",
+            "MessageSeverity": "Warning",
+            "VersionAdded": "1.3.0",
+            "NumberOfArgs": 0,
+            "Resolution": "Correct the failed resources configuration and retry the request."
+        },
+        "HttpNotSupported": {
+            "Description": "Indicates that the Redfish service does not support HTTP protocol.",
+            "Message": "HTTP Protocol not Supported.",
+            "Severity": "Critical",
+            "MessageSeverity": "Critical",
+            "NumberOfArgs": 0,
+            "Resolution": "Use HTTPS Protocol."
+        },
+        "InvalidConfigurationSpecified": {
+            "Description": "Indicates that the combination of parameters passed in the request is invalid or not supported. ",
+            "Message": "The combination %1 specified in the request is not valid.",
+            "Severity": "Warning",
+            "MessageSeverity": "Warning",
+            "NumberOfArgs": 1,
+            "ParamTypes": [
+                "string"
+            ],
+            "Resolution": "Correct the combination and retry the operation."
+        },
+        "MethodNotAllowed": {
+            "Description": "Indicates that the method type mentioned in the request body is not allowed on this resource.",
+            "Message": "The resource %1 does not allow %2 method.",
+            "Severity": "Warning",
+            "MessageSeverity": "Warning",
+            "NumberOfArgs": 2,
+            "ParamTypes": [
+                "string",
+                "string"
+            ],
+            "Resolution": "Do not attempt an unsupported method on the resource. Please resubmit the request proper method."
+        },
+        "PropertyWillBeDeprecated": {
+            "Description": "Indicates that the property will be deprecated from next firmware release onwards",
+            "Message": "The property %1 will be deprecated from next release onwards",
+            "Severity": "Warning",
+            "MessageSeverity": "Warning",
+            "NumberOfArgs": 1,
+            "ParamTypes": [
+                "string"
+            ],
+            "Resolution": "Use valid latest property."
+        },
+        "PropertyUpdateForPlatformNotSupported": {
+            "Description": "Indicates that some of the properties in the request body cannot be updated for the particular platform. This could be because the property is either read-only, unknown or unsupported by the implementation. ",
+            "Message": "Some of the properties in the request body cannot be updated because they are either read only, unknown or unsupported for the platform.",
+            "Severity": "Warning",
+            "MessageSeverity": "Warning",
+            "NumberOfArgs": 0,
+            "Resolution": "Remove the unsupported properties for the platform and resubmit the request if the operation failed"
+        },
+        "PropertyUpdateNotSupported": {
+            "Description": "Indicates that some of the properties in the request body cannot be updated. This could be because the property is either read-only, unknown or unsupported by the implementation. ",
+            "Message": "Some of the properties in the request body cannot be updated because they are either read only, unknown or unsupported.",
+            "Severity": "Warning",
+            "MessageSeverity": "Warning",
+            "NumberOfArgs": 0,
+            "Resolution": "Remove the unsupported properties and resubmit the request if the operation failed"
+        },
+        "PropertyValueContainsInvalidCharacters": {
+            "Description": "Indicates that the property value contains some invalid/unsupported characters.",
+            "Message": "The value for %1 contains one of the following invalid characters %2",
+            "Severity": "Warning",
+            "MessageSeverity": "Warning",
+            "NumberOfArgs": 2,
+            "ParamTypes": [
+                "string",
+                "string"
+            ],
+            "Resolution": "Provide a value that does not contain mentioned characters and resubmit the request if the operation failed."
+        },
+        "PropertyValueLengthExceeded": {
+            "Description": "Indicates that the string length of property value exceeds permissible limits.",
+            "Message": "The string length of value for %1 exceeds the maximum allowed value of %2",
+            "Severity": "Warning",
+            "MessageSeverity": "Warning",
+            "NumberOfArgs": 2,
+            "ParamTypes": [
+                "string",
+                "number"
+            ],
+            "Resolution": "Provide a value that is within the specified limits and resubmit the request if the operation failed."
+        },
+        "PropertyValueNotInRange": {
+            "Description": "Indicates that a property was given the correct value type but the value of that property was not supported. These values are not within the range",
+            "Message": "The value %1 for the property %2 is not within the range %3 - %4 of acceptable values.",
+            "Severity": "Warning",
+            "MessageSeverity": "Warning",
+            "NumberOfArgs": 4,
+            "ParamTypes": [
+                "number",
+                "string",
+                "number",
+                "number"
+            ],
+            "Resolution": "Choose a value within the range that the implementation can support and resubmit the request if the operation failed."
+        },
+        "PropertyValueNotValid": {
+            "Description": "Indicates that a property was given the correct value type but the value of that property was not valid. These values are not within the valid set of values.",
+            "Message": "The value %1 for the property %2 is not valid. Valid values could be %3.",
+            "Severity": "Warning",
+            "MessageSeverity": "Warning",
+            "NumberOfArgs": 3,
+            "ParamTypes": [
+                "string",
+                "string",
+                "string"
+            ],
+            "Resolution": "Provide a valid value and resubmit the request if the operation failed."
+        },
+        "ResourceCannotBeCreated": {
+            "Description": "Indicates that a create operation was attempted on a resource that cannot be created.",
+            "Message": "The create request failed because the resource requested does not support create.",
+            "Severity": "Critical",
+            "MessageSeverity": "Critical",
+            "NumberOfArgs": 0,
+            "Resolution": "Do not attempt to create this resource."
+        },
+        "ResourceCannotBeUpdated": {
+            "Description": "Indicates that a update (PATCH) operation was attempted on a resource that cannot be updated.",
+            "Message": "The update request failed because the resource requested does not support update.",
+            "Severity": "Critical",
+            "MessageSeverity": "Critical",
+            "NumberOfArgs": 0,
+            "Resolution": "Do not attempt to update this resource."
+        },
+        "ServiceInitializing": {
+            "Description": "Indicates that the Redfish service is still initializing and users need to retry after the specified interval.",
+            "Message": "Redfish Service is still initializing, please retry after %1 seconds.",
+            "Severity": "Warning",
+            "MessageSeverity": "Warning",
+            "NumberOfArgs": 1,
+            "ParamTypes": [
+                "number"
+            ],
+            "Resolution": "Retry after the specified interval."
+        },
+        "ServiceUnavailable": {
+            "Description": "Indicates that the Redfish Service is currently disabled for this platform.",
+            "Message": "Redfish Service is disabled.",
+            "Severity": "Critical",
+            "MessageSeverity": "Critical",
+            "NumberOfArgs": 0,
+            "Resolution": "Use CIMC WebUI/CLI/XMLAPI to enable Redfish Service."
+        },
+        "UnauthorisedPlatform": {
+            "Description": "Indicates that the underlying platform is not authorised.",
+            "Message": "This platform is unauthorised. Please Call Cisco TAC. ( Error : 0x18008080 ).",
+            "Severity": "Critical",
+            "MessageSeverity": "Critical",
+            "NumberOfArgs": 0,
+            "Resolution": "Call Cisco TAC."
+        },
+        "UnapprovedHardware": {
+            "Description": "Indicates that the underlying hardware is not approved by cisco.",
+            "Message": "This hardware is not approved by Cisco.",
+            "Severity": "Critical",
+            "MessageSeverity": "Critical",
+            "NumberOfArgs": 0,
+            "Resolution": "Please use Cisco approved hardware."
+        },
+        "UnsupportedProduct": {
+            "Description": "Indicates that the product is not supported.",
+            "Message": "Unsupported product detected",
+            "Severity": "Warning",
+            "MessageSeverity": "Warning",
+            "NumberOfArgs": 0,
+            "Resolution": "Remove it or replace with a supported product."
+        },
+        "StatusPendingWarning": {
+            "Description": "Indicates that the task is waiting for an action from the user.",
+            "Message": "Redfish task pending. %1",
+            "Severity": "Warning",
+            "MessageSeverity": "Warning",
+            "NumberOfArgs": 1,
+            "ParamTypes": [
+                "string"
+            ],
+            "Resolution": "Resolve specified condition."
+        },
+        "StatusPendingOK": {
+            "Description": "Indicates that a pending task has resumed.",
+            "Message": "%1 Pending task resumed.",
+            "Severity": "OK",
+            "MessageSeverity": "OK",
+            "NumberOfArgs": 1,
+            "ParamTypes": [
+                "string"
+            ],
+            "Resolution": "None"
+        },
+        "DataSanitizationOK": {
+            "Description": "Indicates that data sanitization is proceeding successfully.",
+            "Message": "%1",
+            "Severity": "OK",
+            "MessageSeverity": "OK",
+            "NumberOfArgs": 1,
+            "ParamTypes": [
+                "string"
+            ],
+            "Resolution": "No resolution is required."
+        },
+        "DataSanitizationWarning": {
+            "Description": "Indicates that a situation was encountered during data sanitization that may be expected, or could potentially be a problem.",
+            "Message": "%1",
+            "Severity": "Warning",
+            "MessageSeverity": "Warning",
+            "NumberOfArgs": 1,
+            "ParamTypes": [
+                "string"
+            ],
+            "Resolution": "Data sanitization status message should be inspected to determine if this condition is expected or is a problem requiring resolution."
+        },
+        "DataSanitizationError": {
+            "Description": "Indicates that a critical error occurred during data sanitization which prevented successful completion of the operation.",
+            "Message": "%1",
+            "Severity": "Critical",
+            "MessageSeverity": "Critical",
+            "NumberOfArgs": 1,
+            "ParamTypes": [
+                "string"
+            ],
+            "Resolution": "This is caused by a software or hardware defect, please contact Cisco TAC for assistance."
+        },
+        "ProcessorUPIUncorrectable": {
+            "Description": "Indicates that the processor a UPI uncorrectable error.",
+            "Message": "CPU %1 encountered Uncorrectable UPI error",
+            "Severity": "Critical",
+            "MessageSeverity": "Critical",
+            "NumberOfArgs": 1,
+            "ParamTypes": [
+                "string"
+            ],
+            "Resolution": "Processor encountered UPI uncorrectable error, please contact Cisco TAC for assistance."
+        }
+    }
+}

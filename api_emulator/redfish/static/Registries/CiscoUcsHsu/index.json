@@ -1,0 +1,18 @@
+{
+    "@odata.id": "/redfish/v1/Registries/CiscoUcsHsu",
+    "@odata.type": "#MessageRegistryFile.v1_1_3.MessageRegistryFile",
+    "@odata.context": "/redfish/v1/$metadata#MessageRegistryFile.MessageRegistryFile",
+    "Id": "CiscoUcsHsu",
+    "Name": "Hsu Faults Registry",
+    "Description": "Hsu Faults Registry file locations",
+    "Registry": "CiscoUcsHsu.1.0.0",
+    "Location": [
+        {
+            "Language": "en",
+            "Uri": "/redfish/v1/Registries/Oem/Cisco/CiscoUcsHsu.1.0.0.json"
+        }
+    ],
+    "Languages": [
+        "en"
+    ]
+}

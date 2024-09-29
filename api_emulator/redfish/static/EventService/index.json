@@ -1,6 +1,6 @@
 {
     "@odata.id": "/redfish/v1/EventService",
-    "@odata.type": "#EventService.v1_5_0.EventService",
+    "@odata.type": "#EventService.v1_7_0.EventService",
     "@odata.context": "/redfish/v1/$metadata#EventService.EventService",
     "Id": "EventService",
     "Name": "Event Service",
@@ -9,24 +9,15 @@
         "@odata.id": "/redfish/v1/EventService/Subscriptions"
     },
     "Status": {
-        "State": "Disabled",
+        "State": "Enabled",
         "Health": "OK"
     },
-    "ServiceEnabled": false,
-    "DeliveryRetryAttempts": 3,
-    "DeliveryRetryIntervalSeconds": 30,
-    "EventTypesForSubscription": [
-        "Alert"
-    ],
     "SMTP": {
-        "FromAddress": "",
-        "ServerAddress": "",
-        "ServiceEnabled": false,
-        "Port": 25
-    },
-    "Actions": {
-        "#EventService.SubmitTestEvent": {
-            "target": "/redfish/v1/EventService/Actions/EventService.SubmitTestEvent"
-        }
+        "ServiceEnabled": null,
+        "Port": null,
+        "ServerAddress": null,
+        "FromAddress": "B200-FLM240206E3@cisco.com",
+        "Authentication": "None",
+        "ConnectionProtocol": "None"
     }
 }

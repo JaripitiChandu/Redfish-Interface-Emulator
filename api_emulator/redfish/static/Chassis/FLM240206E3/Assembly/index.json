@@ -1,0 +1,20 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Assembly",
+    "@odata.type": "#Assembly.v1_5_0.Assembly",
+    "@odata.context": "/redfish/v1/$metadata#Assembly.Assembly",
+    "Id": "Assembly",
+    "Name": "Assembly",
+    "Description": "Assembly",
+    "Assemblies": [
+        {
+            "PhysicalContext": "SystemBoard",
+            "MemberId": "0",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Assembly#/Assemblies/0",
+            "Producer": "Cisco Systems Inc",
+            "Model": "UCSB-B200-M5",
+            "Version": "V07",
+            "PartNumber": "73-17637-12",
+            "SerialNumber": "FLM240206E3"
+        }
+    ]
+}

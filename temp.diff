@@ -1,0 +1,15 @@
+diff --git a/emulator-config.json b/emulator-config.json
+index 4177363..5782436 100644
+--- a/emulator-config.json
++++ b/emulator-config.json
+@@ -2,7 +2,8 @@
+   "MODE": "Local",
+   "HTTPS": "Disable",
+   "TRAYS": [],
+-  "STATIC": "Enable",
++  "STATIC": "Disable",
+   "SPEC": "Redfish",
+-  "MOCKUPFOLDERS": ["Redfish"]
++  "MOCKUPFOLDERS": ["Redfish"],
++  "POPULATE": "Emulator"
+ }

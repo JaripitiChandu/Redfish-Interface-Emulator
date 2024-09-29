@@ -1,0 +1,13 @@
+{
+    "@odata.id": "/redfish/v1/Systems/FLM240206E3/NetworkInterfaces/UCSB-VIC-M84-4P_FCH23527DFM",
+    "@odata.type": "#NetworkInterface.v1_2_0.NetworkInterface",
+    "@odata.context": "/redfish/v1/$metadata#NetworkInterface.NetworkInterface",
+    "Links": {
+        "NetworkAdapter": {
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/NetworkAdapters/UCSB-VIC-M84-4P_FCH23527DFM"
+        }
+    },
+    "Id": "UCSB-VIC-M84-4P",
+    "Name": "Adapter Card UCSB-VIC-M84-4P_FCH23527DFM",
+    "Description": "It represents the properties for Adapter Card UCSB-VIC-M84-4P_FCH23527DFM"
+}

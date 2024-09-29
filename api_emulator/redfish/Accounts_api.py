@@ -31,7 +31,7 @@ class Account(Resource):
     # kwargs is used to pass in the wildcards values to be replaced
     # when an instance is created via get_<resource>_instance().
     #
-    # The call to attach the API establishes the contents of kwargs.
+    # The call to attach the API establishes the contents of kwargs.    
     # All subsequent HTTP calls go through __init__.
     #
     # __init__ stores kwargs in wildcards, which is used to pass

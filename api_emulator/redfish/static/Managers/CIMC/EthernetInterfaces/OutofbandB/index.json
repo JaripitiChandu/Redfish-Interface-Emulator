@@ -1,0 +1,42 @@
+{
+    "@odata.id": "/redfish/v1/Managers/CIMC/EthernetInterfaces/OutofbandB",
+    "@odata.type": "#EthernetInterface.v1_6_2.EthernetInterface",
+    "Id": "EthernetInterface",
+    "Name": "Ethernet Interface OutofbandB",
+    "Description": "CIMC OutofbandB EthernetInterface",
+    "HostName": "CISCO-IBMC",
+    "MACAddress": "4E:E1:75:27:C0:34",
+    "IPv4StaticAddresses": [
+        {
+            "Address": null,
+            "SubnetMask": null,
+            "Gateway": null
+        }
+    ],
+    "IPv4Addresses": [
+        {
+            "Gateway": null
+        }
+    ],
+    "IPv6StaticAddresses": [
+        {
+            "Address": null,
+            "PrefixLength": null
+        }
+    ],
+    "IPv6Addresses": [
+        {
+            "Address": null,
+            "PrefixLength": null
+        }
+    ],
+    "IPv6DefaultGateway": null,
+    "IPv6StaticDefaultGateways": [],
+    "VLAN": {
+        "VLANId": null,
+        "VLANEnable": true
+    },
+    "NameServers": [],
+    "StaticNameServers": [],
+    "InterfaceEnabled": false
+}

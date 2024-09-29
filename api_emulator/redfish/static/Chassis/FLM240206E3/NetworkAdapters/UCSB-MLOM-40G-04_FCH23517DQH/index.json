@@ -1,0 +1,34 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/FLM240206E3/NetworkAdapters/UCSB-MLOM-40G-04_FCH23517DQH",
+    "@odata.type": "#NetworkAdapter.v1_7_0.NetworkAdapter",
+    "@odata.context": "/redfish/v1/$metadata#NetworkAdapter.NetworkAdapter",
+    "Assembly": {
+        "@odata.id": "/redfish/v1/Chassis/FLM240206E3/NetworkAdapters/UCSB-MLOM-40G-04_FCH23517DQH/Assembly"
+    },
+    "Id": "UCSB-MLOM-40G-04_FCH23517DQH",
+    "Name": "Adapter Card MLOM",
+    "Manufacturer": "Cisco Systems Inc",
+    "SerialNumber": "FCH23517DQH",
+    "Model": "UCSB-MLOM-40G-04",
+    "PartNumber": "73-19235-03",
+    "Controllers": [
+        {
+            "Location": {
+                "PartLocation": {
+                    "LocationType": "Slot",
+                    "ServiceLabel": "SlotID:0(MLOM)"
+                }
+            }
+        }
+    ],
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "Oem": {
+        "Cisco": {
+            "@odata.type": "#CiscoUCSExtensions.v1_0_0.CiscoUCSExtensions",
+            "BaseMac": "7C:31:0E:FB:AD:B4"
+        }
+    }
+}

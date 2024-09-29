@@ -1,32 +1,35 @@
 {
     "@odata.id": "/redfish/v1/Managers/CIMC/NetworkProtocol/HTTPS/Certificates/1",
     "@odata.type": "#Certificate.v1_3_0.Certificate",
-    "@odata.context": "/redfish/v1/$metadata#Certificate.Certificate",
-    "Name": "Certificate",
-    "Description": "The Certificate resource describes a certificate used to prove the identify of a component, account, or service.",
+    "Description": "Display add, remove, update certificate.",
     "Id": "1",
-    "SerialNumber": "67:1D:7F:04:11:7A:EC:16:CE:81:5B:B7:C9:8A:6A:29:68:F7:8A:D7",
-    "Subject": {
-        "Country": "US",
-        "City": "San Jose",
-        "State": "California",
-        "Organization": "Cisco Self Signed",
-        "OrganizationalUnit": "PID:UCSC-C220-M7S SERIAL:WZP2733Z1E2",
-        "CommonName": "C-series CIMC"
-    },
+    "Name": "1",
     "Issuer": {
         "Country": "US",
-        "City": "San Jose",
         "State": "California",
-        "Organization": "Cisco Self Signed",
-        "OrganizationalUnit": "PID:UCSC-C220-M7S SERIAL:WZP2733Z1E2",
-        "CommonName": "C-series CIMC"
+        "City": "San Jose",
+        "CommonName": "B-series CIMC",
+        "Organization": "Self-Signed",
+        "OrganizationalUnit": "PID:UCSB-B200-M5 SERIAL:FLM240206E3"
     },
-    "ValidNotBefore": "2026-06-17T09:26:03Z",
-    "ValidNotAfter": "2024-03-14T09:26:03Z",
+    "Subject": {
+        "Country": "US",
+        "State": "California",
+        "City": "San Jose",
+        "CommonName": "B-series CIMC",
+        "Organization": "Self-Signed",
+        "OrganizationalUnit": "PID:UCSB-B200-M5 SERIAL:FLM240206E3"
+    },
+    "ValidNotAfter": "2026-07-04T15:44:58+00:00",
+    "ValidNotBefore": "2024-03-31T15:44:58+00:00",
+    "CertificateString": "-----BEGIN CERTIFICATE-----\nMIIEBTCCAu2gAwIBAgIUF+nxEfQhW5scXkPdVUpPMrx6iT0wDQYJKoZIhvcNAQEN\nBQAwgZExCzAJBgNVBAYTAlVTMRMwEQYDVQQIDApDYWxpZm9ybmlhMREwDwYDVQQH\nDAhTYW4gSm9zZTEWMBQGA1UEAwwNQi1zZXJpZXMgQ0lNQzEUMBIGA1UECgwLU2Vs\nZi1TaWduZWQxLDAqBgNVBAsMI1BJRDpVQ1NCLUIyMDAtTTUgU0VSSUFMOkZMTTI0\nMDIwNkUzMB4XDTI0MDMzMTE1NDQ1OFoXDTI2MDcwNDE1NDQ1OFowgZExCzAJBgNV\nBAYTAlVTMRMwEQYDVQQIDApDYWxpZm9ybmlhMREwDwYDVQQHDAhTYW4gSm9zZTEW\nMBQGA1UEAwwNQi1zZXJpZXMgQ0lNQzEUMBIGA1UECgwLU2VsZi1TaWduZWQxLDAq\nBgNVBAsMI1BJRDpVQ1NCLUIyMDAtTTUgU0VSSUFMOkZMTTI0MDIwNkUzMIIBIjAN\nBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0iShideNznI96R0mPguxzbRGIVja\nwQbOXdaDV7qQPS962grWr9ZoCfHYzUjm7YdxAyR+jUvNBWcTzJ9Rkj9cJvm3aHDk\nmqUp1CZMXLefrpIDuMElYScLVdzDj4F5pZe/iFy8c/qYIaN8EI+llTyrhveUx/dj\nU5f/snFRZqRTkPcPzNlCq3vKLRxFJIN1i19EoiT8gC1il7b1fI8HYbV2E1h+0lp4\noq+tHszaghQI/X0qq6mSXNRCOsr7ANOYEDDar6b+ALiErDJCgguUmC/KEWplRMdq\n3ciDfoGKfO9S28JNhKYavLx2npuJp1LHHJMjmoBLu9GxKLfy3SHylBDkZwIDAQAB\no1MwUTAdBgNVHQ4EFgQUEwJ8c0UqWxoSTfGy5IRjghA/0eYwHwYDVR0jBBgwFoAU\nEwJ8c0UqWxoSTfGy5IRjghA/0eYwDwYDVR0TAQH/BAUwAwEB/zANBgkqhkiG9w0B\nAQ0FAAOCAQEAydv2O3hgPwxLsl3IANeNs+3IsZBTPrWkcCPPC3xzvdX/xrENxJY1\nlOFhNVj7N46thUg0y/yrNqRrSEBYW+jDL6duFAztdjn2F8XIQLzwKu6qRM7sN7Xf\n3tEQU9SEAqYCSAwZg1HCMKgbHE1hNmdlt3wjK/nhL526jRim3As6w5dopRtn1gyK\nYMR2nu1ODuYCuUvumhgm9/fL4FwBIQafmJHbhLv9WsahJWF3PoXRgosqljKleYG8\nt8gtYbnoe6xxk2BJp3lqFX0R1uJQzE1b3kyWF4fp0S4i68q56OxrbJDRf/+yMl6w\nV9bqeZx8yoBJPWqBqT4pyUdNAJ9aU8I4fg==\n-----END CERTIFICATE-----\n",
     "CertificateType": "PEM",
-    "CertificateString": "-----BEGIN CERTIFICATE-----\nMIIEFTCCAv2gAwIBAgIUZx1/BBF67BbOgVu3yYpqKWj3itcwDQYJKoZIhvcNAQEN\nBQAwgZgxCzAJBgNVBAYTAlVTMRMwEQYDVQQIDApDYWxpZm9ybmlhMREwDwYDVQQH\nDAhTYW4gSm9zZTEWMBQGA1UEAwwNQy1zZXJpZXMgQ0lNQzEaMBgGA1UECgwRQ2lz\nY28gU2VsZiBTaWduZWQxLTArBgNVBAsMJFBJRDpVQ1NDLUMyMjAtTTdTIFNFUklB\nTDpXWlAyNzMzWjFFMjAeFw0yNDAzMTQwOTI2MDNaFw0yNjA2MTcwOTI2MDNaMIGY\nMQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5pYTERMA8GA1UEBwwIU2Fu\nIEpvc2UxFjAUBgNVBAMMDUMtc2VyaWVzIENJTUMxGjAYBgNVBAoMEUNpc2NvIFNl\nbGYgU2lnbmVkMS0wKwYDVQQLDCRQSUQ6VUNTQy1DMjIwLU03UyBTRVJJQUw6V1pQ\nMjczM1oxRTIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCxCsRW694I\ncyZswMTPM3NubL+oxhKJqxtYcwLHC7RI+KOYivAeDXQoFWwglfQnX6svD8dqfZMK\n2m0Rh1DSHOOzMk1RX0Fu0RzufTasjAJJkmQeKdmH5PldKBhBTr5FnU7jfwY12gTA\nryjNz7QSgqVBnqzlItFgtKHMMo65jCBb/j5685qwRw2Gtf8F0XVCr2hEwZ5Op2vz\n1bGoN/i62iWiMNPC/0OtHcPMe30fAOQlCnx86wQVtocfIOGU1LXUj3F3dHhbZZOy\nBF7fTt9TiXt5zl37AHJb+Qa/Yy/VFnZ5TqcPzaG8qws1M6LgHo2XPdAvPHa9RF2P\nR+GybQk74nbBAgMBAAGjVTBTMB0GA1UdDgQWBBR6QvdODk7d3Fx3wbJQ/Z4XSzk4\nTDAfBgNVHSMEGDAWgBR6QvdODk7d3Fx3wbJQ/Z4XSzk4TDARBglghkgBhvhCAQEE\nBAMCBkAwDQYJKoZIhvcNAQENBQADggEBAJmZEg0STHWNQXVXsUD/zA1FT0rlWKxL\nrwefi3VXRzxTJ+Tk+QIsFZ4xh7tUlTIedLDaz5v2CwvJ2Dwfm6NVElaXIcV8fm0X\nbKQwdiE66qQ1Z/lL1LspryGElESEm6zWF6VYWYKgA1vNInZ9PKnW7nIsLNIrAytU\n6lf1o4qT7CVe8w0QQIO5MZ2ZEMra5l3Baa9DWrf5wD3Pp7dCPaGxfqWhBUfaONxQ\noLgYCtuPDnMBOKUoxfOECCWnD6gVlBYQEg/quIGZoNBi++lnWIqVC9RAGFG3BP1L\n2GukGK+//sWEF1HK9ELfD08fKP7R/6y6Qj1IVjABseuH8mvkZy8D/6w=\n-----END CERTIFICATE-----\n",
-    "KeyUsage": [
-        "ServerAuthentication"
-    ]
+    "Actions": {
+        "#Certificate.Rekey": {
+            "target": "/redfish/v1/Certificate/Actions/Rekey"
+        },
+        "#Certificate.Renew": {
+            "target": "/redfish/v1/Certificate/Actions/Renew"
+        }
+    }
 }

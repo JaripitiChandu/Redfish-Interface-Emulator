@@ -1,12 +1,17 @@
 {
     "@odata.id": "/redfish/v1/AccountService/LDAP/Certificates/1",
     "@odata.type": "#Certificate.v1_3_0.Certificate",
-    "@odata.context": "/redfish/v1/$metadata#Certificate.Certificate",
-    "Name": "Certificate",
-    "Description": "The Certificate resource describes a certificate used to prove the identify of a component, account, or service.",
+    "Description": "Display add, remove, update certificate.",
     "Id": "1",
-    "CertificateString": "",
-    "KeyUsage": [
-        "ServerAuthentication"
-    ]
+    "Name": "1",
+    "CertificateString": null,
+    "CertificateType": null,
+    "Actions": {
+        "#Certificate.Rekey": {
+            "target": "/redfish/v1/Certificate/Actions/Rekey"
+        },
+        "#Certificate.Renew": {
+            "target": "/redfish/v1/Certificate/Actions/Renew"
+        }
+    }
 }

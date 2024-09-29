@@ -1,0 +1,11 @@
+{
+    "@odata.id": "/redfish/v1/UpdateService/SoftwareInventory/Catalog",
+    "@odata.type": "#SoftwareInventory.v1_3_0.SoftwareInventory",
+    "@odata.context": "/redfish/v1/$metadata#SoftwareInventory.SoftwareInventory",
+    "Description": "Software Inventory",
+    "Id": "Catalog",
+    "Name": "Catalog",
+    "Manufacturer": "Cisco Systems Inc",
+    "Updateable": true,
+    "Version": "5.2(99.240069)"
+}

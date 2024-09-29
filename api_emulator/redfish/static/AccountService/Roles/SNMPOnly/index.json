@@ -1,14 +1,12 @@
 {
     "@odata.id": "/redfish/v1/AccountService/Roles/SNMPOnly",
-    "@odata.type": "#Role.v1_2_2.Role",
+    "@odata.type": "#Role.v1_2_5.Role",
     "@odata.context": "/redfish/v1/$metadata#Role.Role",
     "Name": "User Role",
-    "AssignedPrivileges": [],
+    "Id": "SNMPOnly",
+    "Description": "User Role",
+    "IsPredefined": true,
     "OemPrivileges": [
         "SNMPAccess"
-    ],
-    "Id": "SNMPOnly",
-    "Description": "Only access to SNMP",
-    "RoleId": "SNMPOnly",
-    "IsPredefined": false
+    ]
 }

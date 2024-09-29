@@ -9,10 +9,8 @@
         "@odata.id": "/redfish/v1/SessionService/Sessions"
     },
     "ServiceEnabled": true,
-    "SessionTimeout": 1800,
     "Status": {
         "State": "Enabled",
-        "Health": "OK",
-        "HealthRollup": "OK"
+        "Health": "OK"
     }
 }

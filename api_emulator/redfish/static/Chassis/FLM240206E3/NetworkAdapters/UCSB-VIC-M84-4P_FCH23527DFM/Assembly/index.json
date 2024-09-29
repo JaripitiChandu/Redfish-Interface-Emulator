@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/FLM240206E3/NetworkAdapters/UCSB-VIC-M84-4P_FCH23527DFM/Assembly",
+    "@odata.type": "#Assembly.v1_5_0.Assembly",
+    "@odata.context": "/redfish/v1/$metadata#Assembly.Assembly",
+    "Id": "Assembly",
+    "Name": "Assembly",
+    "Description": "Assembly",
+    "Assemblies": [
+        {
+            "MemberId": "0",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/NetworkAdapters/UCSB-VIC-M84-4P_FCH23527DFM/Assembly#/Assemblies/0",
+            "Producer": "Cisco Systems Inc",
+            "Model": "UCSB-VIC-M84-4P",
+            "Version": "V03",
+            "PartNumber": "73-19234-02",
+            "SerialNumber": "FCH23527DFM"
+        }
+    ]
+}

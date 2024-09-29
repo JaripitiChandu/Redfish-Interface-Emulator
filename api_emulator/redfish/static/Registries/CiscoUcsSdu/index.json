@@ -1,0 +1,18 @@
+{
+    "@odata.id": "/redfish/v1/Registries/CiscoUcsSdu",
+    "@odata.type": "#MessageRegistryFile.v1_1_3.MessageRegistryFile",
+    "@odata.context": "/redfish/v1/$metadata#MessageRegistryFile.MessageRegistryFile",
+    "Id": "CiscoUcsSdu",
+    "Name": "Sdu Faults Registry",
+    "Description": "Sdu Faults Registry file locations",
+    "Registry": "CiscoUcsSdu.1.0.0",
+    "Location": [
+        {
+            "Language": "en",
+            "Uri": "/redfish/v1/Registries/Oem/Cisco/CiscoUcsSdu.1.0.0.json"
+        }
+    ],
+    "Languages": [
+        "en"
+    ]
+}

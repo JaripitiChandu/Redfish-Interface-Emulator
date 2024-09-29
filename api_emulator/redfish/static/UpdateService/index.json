@@ -1,6 +1,6 @@
 {
     "@odata.id": "/redfish/v1/UpdateService",
-    "@odata.type": "#UpdateService.v1_5_0.UpdateService",
+    "@odata.type": "#UpdateService.v1_9_0.UpdateService",
     "@odata.context": "/redfish/v1/$metadata#UpdateService.UpdateService",
     "Id": "UpdateService",
     "Name": "Update Service",
@@ -12,22 +12,26 @@
         "@odata.id": "/redfish/v1/UpdateService/SoftwareInventory"
     },
     "ServiceEnabled": true,
-    "MaxImageSizeBytes": 60000000,
+    "HttpPushUriTargetsBusy": false,
     "Actions": {
         "#UpdateService.SimpleUpdate": {
             "target": "/redfish/v1/UpdateService/Actions/UpdateService.SimpleUpdate",
             "Targets@Redfish.AllowableValues": [
-                "Array of Software/Firmware Inventory URI of either /redfish/v1/UpdateService/FirmwareInventory/CIMC or /redfish/v1/UpdateService/FirmwareInventory/BIOS indicating where the image is to be applied."
+                "/redfish/v1/UpdateService/FirmwareInventory/CIMC",
+                "/redfish/v1/UpdateService/FirmwareInventory/BIOS",
+                "/redfish/v1/UpdateService/SoftwareInventory/Catalog"
             ],
             "TransferProtocol@Redfish.AllowableValues": [
+                "OEM",
                 "TFTP",
                 "SCP",
                 "SFTP",
                 "FTP",
-                "HTTP"
+                "HTTP",
+                "HTTPS"
             ],
             "ImageURI@Redfish.AllowableValues": [
-                "Path to Image File : Format - IP:/PATH - where IP can be IPv4, IPv6 or Hostname and PATH should start with a forward slash and should contain the appropriate file extension."
+                "URI to Image File"
             ],
             "Username@Redfish.AllowableValues": [
                 "Server Username"
@@ -37,6 +41,16 @@
             ]
         },
         "Oem": {
+            "#CiscoUCSExtensions.SetStartImageVersion": {
+                "target": "/redfish/v1/UpdateService/Actions/Oem/CiscoUpdateService.SetStartImageVersion",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.SetStartImageVersion",
+                "Target@Redfish.AllowableValues": [
+                    "/redfish/v1/UpdateService/FirmwareInventory/CIMC"
+                ],
+                "ImageVersion@Redfish.AllowableValues": [
+                    "Image Version"
+                ]
+            },
             "#CiscoUCSExtensions.UCSUpdate": {
                 "target": "/redfish/v1/UpdateService/Actions/Oem/CiscoUCSExtensions.UCSUpdate",
                 "@odata.type": "#CiscoUCSExtensions.v1_0_0.UCSUpdate",
@@ -69,13 +83,9 @@
                     "Array of Redfish Odata Types indicating types of components to be excluded."
                 ],
                 "TransferProtocol@Redfish.AllowableValues": [
-                    "CIFS",
-                    "HTTPS",
-                    "NFS",
                     "VMEDIA-CIFS",
-                    "VMEDIA-HTTPS",
                     "VMEDIA-NFS",
-                    "LOCAL-HOST"
+                    "VMEDIA-HTTPS"
                 ],
                 "Username@Redfish.AllowableValues": [
                     "The username to be used when accessing the URI specified by the ImageRepository parameter."
@@ -102,8 +112,7 @@
                     "TFTP",
                     "HOST-HTTPS",
                     "HOST-PXE",
-                    "HOST-IPXE",
-                    "LOCAL-HOST"
+                    "HOST-IPXE"
                 ],
                 "MountOption@Redfish.AllowableValues": [
                     "Mount option is optional and shall be used for accessing CIFS shared location specified by the ImageRepository parameter."
@@ -121,7 +130,7 @@
                     "This object specifies details required to access OS ISO image. This object shall have properties ImageRepository, TransferProtocol, Username and Password."
                 ],
                 "OSAnswerFileRepoDetails@Redfish.AllowableValues": [
-                    "This object specifies details required to access OS Answer file. This object shall have properties ImageRepository, TransferProtocol [SCP and TFTP], Username and Password."
+                    "This object specifies details required to access OS Answer file. This object shall have properties ImageRepository, TransferProtocol [SCP and TFTP] , Username and Password."
                 ],
                 "ExternalEthernetMACAddressInterface@Redfish.AllowableValues": [
                     "The ExternalEthernetMACAddressInterface is used to specify the MACAddress of the adapter port."

@@ -1,0 +1,70 @@
+diff --git a/emulator.py b/emulator.py
+index a5d2270..5885433 100644
+--- a/emulator.py
++++ b/emulator.py
+@@ -57,20 +57,9 @@ parser.add_argument('Action', type=str, required=True)
+ # If running on Cloud, use dyanaically assigned port
+ with open(CONFIG, 'r') as f:
+     config = json.load(f)
+-    try:
+-        MODE = config['MODE']
+-    except:
+-        pass
+-
+-    try:
+-        POPULATE = config['POPULATE']
+-    except:
+-        pass
+-
+-    try:
+-        STATIC = config['STATIC']
+-    except:
+-        pass
++    MODE = config.get('MODE')
++    POPULATE = config.get('POPULATE')
++    STATIC = config.get('STATIC')
+ 
+ if(MODE=='Cloud'):
+     port = int(os.getenv("PORT"))
+@@ -100,7 +89,9 @@ def init_resource_manager():
+     except:
+         pass
+     else:
++        print(" *** ELSE")
+         if os.path.exists(POPULATE):
++            print(" ****** IF")
+             with open(POPULATE, 'r') as f:
+                 infragen_config = json.load(f)
+             populate(infragen_config.get('POPULATE',10))
+@@ -136,6 +127,8 @@ def output_json(data, code, headers=None):
+     """
+     Overriding how JSON is returned by the server so that it looks nice
+     """
++    # print(data, type(data))
++    # print(code, type(code))
+     resp = make_response(json.dumps(data, indent=4), code)
+     resp.headers.extend(headers or {})
+     return resp
+@@ -458,10 +451,7 @@ def main():
+     HTTPS = config['HTTPS']
+     assert HTTPS.lower() in ['enable', 'disable'], 'Unknown HTTPS setting:' + HTTPS
+ 
+-    try:
+-        TRAYS = config['TRAYS']
+-    except:
+-        pass
++    TRAYS = config.get('TRAYS')
+ 
+     try:
+         MOCKUPFOLDERS = config['MOCKUPFOLDERS']
+@@ -512,8 +502,8 @@ def main():
+             print (' * Use HTTP')
+             kwargs = {'debug': args.debug, 'port': args.port}
+ 
+-        if not args.debug:
+-            kwargs['host'] = '0.0.0.0'
++        # if not args.debug:
++        kwargs['host'] = '0.0.0.0'
+ 
+         print (' * Running in', SPEC, 'mode')
+         g.app.run(**kwargs)

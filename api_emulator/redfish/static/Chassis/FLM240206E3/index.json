@@ -1,0 +1,90 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/FLM240206E3",
+    "@odata.type": "#Chassis.v1_14_0.Chassis",
+    "@odata.context": "/redfish/v1/$metadata#Chassis.Chassis",
+    "Description": "It represents the properties for physical components for any system.  This one object is intended to represent racks, rackmount servers, blades, standalone, modular systems, enclosures, and all other containers.  The non-cpu/device centric parts of the schema are all accessed either directly or indirectly through this resource",
+    "Power": {
+        "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Power"
+    },
+    "Thermal": {
+        "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal"
+    },
+    "NetworkAdapters": {
+        "@odata.id": "/redfish/v1/Chassis/FLM240206E3/NetworkAdapters"
+    },
+    "Assembly": {
+        "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Assembly"
+    },
+    "Links": {
+        "ManagedBy": [
+            {
+                "@odata.id": "/redfish/v1/Managers/CIMC"
+            }
+        ],
+        "ComputerSystems": [
+            {
+                "@odata.id": "/redfish/v1/Systems/FLM240206E3"
+            }
+        ],
+        "Storage": [
+            {
+                "@odata.id": "/redfish/v1/Systems/FLM240206E3/Storage/FMEZZ1-SAS"
+            }
+        ],
+        "Drives": [
+            {
+                "@odata.id": "/redfish/v1/Systems/FLM240206E3/Storage/FMEZZ1-SAS/Drives/1"
+            },
+            {
+                "@odata.id": "/redfish/v1/Systems/FLM240206E3/Storage/FMEZZ1-SAS/Drives/2"
+            }
+        ]
+    },
+    "Id": "FLM240206E3",
+    "Name": "Computer System Blade.",
+    "Manufacturer": "Cisco Systems Inc",
+    "ChassisType": "Blade",
+    "AssetTag": null,
+    "Model": "UCSB-B200-M5",
+    "SerialNumber": "FLM240206E3",
+    "LocationIndicatorActive": false,
+    "Location": {
+        "PartLocation": {
+            "LocationType": "Slot",
+            "LocationOrdinalValue": 3
+        },
+        "Contacts": [],
+        "Placement": {
+            "Row": null,
+            "Rack": null,
+            "RackOffsetUnits": null,
+            "RackOffset": null
+        },
+        "PostalAddress": {
+            "Name": null,
+            "Street": null,
+            "City": null,
+            "District": null,
+            "PostalCode": null,
+            "Territory": null,
+            "Country": null,
+            "Building": null,
+            "Floor": null,
+            "Room": null,
+            "AdditionalInfo": null
+        }
+    },
+    "Status": {
+        "Health": "OK",
+        "Health@Message.ExtendedInfo": []
+    },
+    "Actions": {
+        "#Chassis.Reset": {
+            "target": "/redfish/v1/Chassis/FLM240206E3/Actions/Chassis.Reset",
+            "ResetType@Redfish.AllowableValues": [
+                "On",
+                "ForceOff"
+            ]
+        }
+    }
+}

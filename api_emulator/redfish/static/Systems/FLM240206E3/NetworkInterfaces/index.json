@@ -1,0 +1,16 @@
+{
+    "@odata.id": "/redfish/v1/Systems/FLM240206E3/NetworkInterfaces",
+    "@odata.type": "#NetworkInterfaceCollection.NetworkInterfaceCollection",
+    "@odata.context": "/redfish/v1/$metadata#NetworkInterfaceCollection.NetworkInterfaceCollection",
+    "Description": "Collection of NetworkAdapter resource instances for this system",
+    "Name": "NetworkInterface Collection",
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/NetworkInterfaces/UCSB-MLOM-40G-04_FCH23517DQH"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/NetworkInterfaces/UCSB-VIC-M84-4P_FCH23527DFM"
+        }
+    ],
+    "Members@odata.count": 2
+}

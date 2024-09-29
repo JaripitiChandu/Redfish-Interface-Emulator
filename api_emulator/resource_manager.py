@@ -78,6 +78,25 @@ from .redfish.software_inventory_api import SoftwareInventoryCollectionAPI, Soft
 # AccountService imports
 from .redfish.AccountService_api import AccountServiceAPI
 from .redfish.Accounts_api import Accounts, Account
+from .redfish.Simple_Storage_api import SimpleStorag,SimpleStorages
+from .redfish.Privilege_map_api import Privilege
+from .redfish.LDAP_api import LDAP
+# from .redfish.Roles_api import Role,Roles
+# from .redfish.Admin_api import Admin
+from .redfish.Certificate_Service_api import CertificateServiceAPI
+from .redfish.Certificate_Locations_api import CertificateLocation,CertificateLocations
+from .redfish.SessionService_api import SessionServiceAPI,SessionCollectionAPI,CreateSessionService
+from .redfish.sessions_api import SessionAPI,SessionCollectionAPI,CreateSession
+from .redfish.jsonschemas_api import JsonSchemasAPI,JsonSchemasCollectionAPI
+from .redfish.assembly_api import AssemblyAPI
+from .redfish.Network_Interfaces_api import NetworkInterfacesAPI,NetworkInterfacesCollectionAPI
+from .redfish.Roles_api import Role,Roles
+from .redfish.https_api import HTTPSAPI
+# from .redfish.oem_api import OemAPI,OemCollectionAPI
+from .redfish.TaskService_api import TaskServiceAPI
+from .redfish.Tasks_api import Task,Tasks
+from .redfish.certifcates_api import Certficate,Certficates
+from .redfish.Registries_api import RegistriesAPI,RegistriesCollectionAPI
 
 mockupfolders = []
 
@@ -175,18 +194,24 @@ class ResourceManager(object):
 
         # Chassis Resources
         g.api.add_resource(ChassisCollectionAPI, '/redfish/v1/Chassis')
-        g.api.add_resource(ChassisAPI, '/redfish/v1/Chassis/<string:ident>',
+        g.api.add_resource(ChassisAPI, '/redfish/v1/Chassis/<string:ident>','/redfish/v1/Chassis/<int:ident>',
                 resource_class_kwargs={'rb': g.rest_base})
+        g.api.add_resource(AssemblyAPI,'/redfish/v1/Chassis/<int:ident>/Assembly','/redfish/v1/Chassis/<string:ident>/Assembly',resource_class_kwargs={'rb':g.rest_base})
+        # g.api.add_resource(ChassisAPI, '/redfish/v1/Chassis/1/<string:ident>',
+        #         resource_class_kwargs={'rb': g.rest_base})
         # Chassis SubResources
         g.api.add_resource(ThermalAPI, '/redfish/v1/Chassis/<string:ident>/Thermal',
                 resource_class_kwargs={'rb': g.rest_base})
         # Chassis SubResources
         g.api.add_resource(PowerAPI, '/redfish/v1/Chassis/<string:ident>/Power',
                 resource_class_kwargs={'rb': g.rest_base})
+        # g.api.add_resource(ThermalAPI, '/redfish/v1/Chassis/<int:ident>/Assembly',
+        #         resource_class_kwargs={'rb': g.rest_base})
         # Chassis SubResources
         g.api.add_resource(NetworkAdaptersCollectionAPI, '/redfish/v1/Chassis/<string:ident>/NetworkAdapters')
-        g.api.add_resource(NetworkAdaptersAPI, '/redfish/v1/Chassis/<string:ident>/NetworkAdapters/<string:ident1>',
-                resource_class_kwargs={'rb': g.rest_base})
+        g.api.add_resource(NetworkAdaptersAPI,'/redfish/v1/Chassis/<string:ident>/NetworkAdapters/<string:ident1>',
+                           '/redfish/v1/Chassis/<string:ident>/NetworkAdapters/<string:ident1>/<string:ident2>')
+                # resource_class_kwargs={'rb': g.rest_base})
         # Chassis SubResources
         g.api.add_resource(NetworkPortsCollectionAPI, '/redfish/v1/Chassis/<string:ident>/NetworkAdapters/<string:ident1>/NetworkPorts')
         g.api.add_resource(NetworkPortsAPI, '/redfish/v1/Chassis/<string:ident>/NetworkAdapters/<string:ident1>/NetworkPorts/<string:ident2>',
@@ -206,7 +231,8 @@ class ResourceManager(object):
         g.api.add_resource(EthernetInterfaceCollectionAPI, '/redfish/v1/Managers/<string:ident>/EthernetInterfaces')
         g.api.add_resource(EthernetInterfaceAPI, '/redfish/v1/Managers/<string:ident>/EthernetInterfaces/<string:ident1>', resource_class_kwargs={'rb': g.rest_base})
         #Manager SubResources
-        g.api.add_resource(NetworkProtocolAPI, '/redfish/v1/Managers/<string:ident>/NetworkProtocol')
+        g.api.add_resource(NetworkProtocolAPI, '/redfish/v1/Managers/<string:ident>/NetworkProtocol','/redfish/v1/Managers/<string:ident>/NetworkProtocol/HTTPS/<string:ident2>')
+        g.api.add_resource(HTTPSAPI,'/redfish/v1/Managers/CIMC/NetworkProtocol/HTTPS/Certificates/<int:ident>')
         #Manager SubResources
         g.api.add_resource(CiscoInternalStorageCollectionAPI, '/redfish/v1/Managers/<string:ident>/Oem/CiscoInternalStorage')
         g.api.add_resource(CiscoInternalStorageAPI, '/redfish/v1/Managers/<string:ident>/Oem/CiscoInternalStorage/FlexMMC', resource_class_kwargs={'rb': g.rest_base})
@@ -215,6 +241,8 @@ class ResourceManager(object):
         #Manager SubResources
         g.api.add_resource(CiscoFileCollectionAPI, '/redfish/v1/Managers/<string:ident>/Oem/CiscoInternalStorage/FlexMMC/CiscoPartition/<string:ident1>/CiscoFile')
         g.api.add_resource(CiscoFileAPI, '/redfish/v1/Managers/<string:ident>/Oem/CiscoInternalStorage/FlexMMC/CiscoPartition/<string:ident1>/CiscoFile/<string:ident2>', resource_class_kwargs={'rb': g.rest_base})
+        #Manager SubResources
+        # g.api.add_resource(OemCollectionAPI,'/redfish/v1/Managers/<string:ident>/Oem/Cisco/CiscoKMIPClient/Certificates/KMIPClient','/redfish/v1/Managers/<string:ident>/Oem/Cisco/CiscoKMIPClient/Certificates/KMIPServer')
         #Manager SubResources
         g.api.add_resource(VirtualMediaCollectionAPI, '/redfish/v1/Managers/<string:ident>/VirtualMedia')
         g.api.add_resource(VirtualMediaAPI, '/redfish/v1/Managers/<string:ident1>/VirtualMedia/<int:ident2>')
@@ -260,10 +288,16 @@ class ResourceManager(object):
         g.api.add_resource(Processors, '/redfish/v1/Systems/<string:ident>/Processors')
         g.api.add_resource(Processor, '/redfish/v1/Systems/<string:ident1>/Processors/<string:ident2>',
                 '/redfish/v1/CompositionService/ResourceBlocks/<string:ident1>/Processors/<string:ident2>')
+        #System Subresources
+        g.api.add_resource(SimpleStorages,'/redfish/v1/Systems/<string:ident>/SimpleStorage')
+        g.api.add_resource(SimpleStorag,'/redfish/v1/Systems/<string:ident1>/SimpleStorage/<string:ident2>')
         # System SubResources
         g.api.add_resource(MemoryCollectionAPI, '/redfish/v1/Systems/<string:ident>/Memory')
         g.api.add_resource(MemoryAPI, '/redfish/v1/Systems/<string:ident1>/Memory/<string:ident2>',
                 '/redfish/v1/CompositionService/ResourceBlocks/<string:ident1>/Memory/<string:ident2>')
+        #System Subresources
+        g.api.add_resource(NetworkInterfacesCollectionAPI, '/redfish/v1/Systems/<string:ident>/NetworkInterfaces')
+        g.api.add_resource(NetworkInterfacesAPI, '/redfish/v1/Systems/<string:ident1>/NetworkInterfaces/<string:ident2>')
         # System SubResources
         g.api.add_resource(SimpleStorageCollection, '/redfish/v1/Systems/<string:ident>/SimpleStorage',
                 resource_class_kwargs={'rb': g.rest_base,'suffix':'Systems'})
@@ -286,7 +320,7 @@ class ResourceManager(object):
         g.api.add_resource(DriveAPI, '/redfish/v1/Systems/<string:ident1>/Storage/<string:ident2>/Drives/<int:ident3>')
         # System SubResources
         g.api.add_resource(Volumes, '/redfish/v1/Systems/<string:ident1>/Storage/<string:ident2>/Volumes')
-        g.api.add_resource(Volume, '/redfish/v1/Systems/<string:ident1>/Storage/<string:ident2>/Volumes/<int:ident3>')
+        g.api.add_resource(Volume, '/redfish/v1/Systems/<string:ident1>/Storage/<string:ident2>/Volumes')
         # System SubResources
         g.api.add_resource(PCIeDeviceAPI, '/redfish/v1/Systems/<string:ident1>/PCIeDevices/<string:ident2>')
         # System SubResources
@@ -320,12 +354,51 @@ class ResourceManager(object):
         g.api.add_resource(SoftwareInventoryCollectionAPI, '/redfish/v1/UpdateService/SoftwareInventory')
         g.api.add_resource(SoftwareInventoryAPI, '/redfish/v1/UpdateService/SoftwareInventory/<string:ident>',
                 resource_class_kwargs={'rb': g.rest_base})
-
+        #JsonSchemas Resources 
+        g.api.add_resource(JsonSchemasCollectionAPI, '/redfish/v1/JsonSchemas')
+        g.api.add_resource(JsonSchemasAPI, '/redfish/v1/JsonSchemas/<string:ident>',
+                resource_class_kwargs={'rb': g.rest_base})
         #AccountService Resource
         g.api.add_resource(AccountServiceAPI, "/redfish/v1/AccountService")
         #AccountService Subresources
         g.api.add_resource(Accounts, "/redfish/v1/AccountService/Accounts")
         g.api.add_resource(Account, "/redfish/v1/AccountService/Accounts/<int:ident>")
+        #Account SubResources
+        g.api.add_resource(Roles,'/redfish/v1/AccountService/Roles')
+        g.api.add_resource(Role,'/redfish/v1/AccountService/Roles/<string:ident>')
+        #AcoountSerivce SubResources
+        g.api.add_resource(LDAP,'/redfish/v1/AccountService/LDAP/Certificates/<int:ident>')
+        g.api.add_resource(Privilege,'/redfish/v1/AccountService/<string:ident>')
+
+        # g.api.add_resource(Roles,'/redfish/v1/AccountSerivce/Roles')
+        # g.api.add_resource(Role,'/redfish/v1/AcocuntService/<string:ident>/<string:ident2>')
+
+        # g.api.add_resource(Admin,'/redfish/v1/AccountSerivce/Roles/<string:ident>')
+
+        #Certificate Resources
+        g.api.add_resource(CertificateServiceAPI, "/redfish/v1/CertificateService")
+        #AccountService Subresources
+        g.api.add_resource(CertificateLocations, "/redfish/v1/CertificateService/CertificateLocations")
+        g.api.add_resource(CertificateLocation, "/redfish/v1/CertificateService/CertificateLocations/<int:ident>")
+
+        #SessionService Resources
+        g.api.add_resource(SessionCollectionAPI,'/redfish/v1/SessionService')
+        g.api.add_resource(SessionAPI,"/redfish/v1/SessionService/Session/<string:ident>")
+
+        #TaskServices Resources
+        g.api.add_resource(TaskServiceAPI,'/redfish/v1/TaskService')
+
+        g.api.add_resource(Tasks,'/redfish/v1/TaskService/Tasks')
+        g.api.add_resource(Task,'/redfish/v1/TaskService/Tasks/<int:ident>')
+
+        # Manager SubResources
+        g.api.add_resource(Certficates,'/redfish/v1/Managers/CIMC/Oem/Cisco/CiscoKMIPClient/Certificates')
+        g.api.add_resource(Certficate,'/redfish/v1/Managers/CIMC/Oem/Cisco/CiscoKMIPClient/Certificates/<string:ident>')
+
+        #Registries Resources
+        g.api.add_resource(RegistriesCollectionAPI,'/redfish/v1/Registries')
+        g.api.add_resource(RegistriesAPI,'/redfish/v1/Registries/<string:ident>','/redfish/v1/Registries/Oem/Cisco/<string:ident>')
+
 
     @property
     def configuration(self):

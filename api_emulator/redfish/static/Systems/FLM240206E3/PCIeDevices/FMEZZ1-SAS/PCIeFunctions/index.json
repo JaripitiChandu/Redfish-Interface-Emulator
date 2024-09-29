@@ -1,0 +1,13 @@
+{
+    "@odata.id": "/redfish/v1/Systems/FLM240206E3/PCIeDevices/FMEZZ1-SAS/PCIeFunctions",
+    "@odata.type": "#PCIeFunctionCollection.PCIeFunctionCollection",
+    "@odata.context": "/redfish/v1/$metadata#PCIeFunctionCollection.PCIeFunctionCollection",
+    "Description": "Collection of PCIe Functions",
+    "Name": "PCIe Function Collection",
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/PCIeDevices/FMEZZ1-SAS/PCIeFunctions/0"
+        }
+    ],
+    "Members@odata.count": 1
+}

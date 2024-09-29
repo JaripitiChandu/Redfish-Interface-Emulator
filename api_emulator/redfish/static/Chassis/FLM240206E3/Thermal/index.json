@@ -1,0 +1,401 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal",
+    "@odata.type": "#Thermal.v1_6_2.Thermal",
+    "@odata.context": "/redfish/v1/$metadata#Thermal.Thermal",
+    "Id": "Thermal",
+    "Name": "Thermal",
+    "Description": "Represents the properties for Temperature",
+    "Temperatures": [
+        {
+            "MemberId": "0",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/0",
+            "Name": "TEMP_SENS_FRONT",
+            "ReadingCelsius": 21,
+            "UpperThresholdCritical": 75,
+            "UpperThresholdFatal": 85,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "Front"
+        },
+        {
+            "MemberId": "1",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/1",
+            "Name": "TEMP_SENS_REAR",
+            "ReadingCelsius": 24,
+            "UpperThresholdCritical": 75,
+            "UpperThresholdFatal": 85,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "Back"
+        },
+        {
+            "MemberId": "2",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/2",
+            "Name": "P1_TEMP_SENS",
+            "ReadingCelsius": 25,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "CPU"
+        },
+        {
+            "MemberId": "3",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/3",
+            "Name": "P2_TEMP_SENS",
+            "ReadingCelsius": 26,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "CPU"
+        },
+        {
+            "MemberId": "4",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/4",
+            "Name": "DDR4_P1_A1_TMP",
+            "ReadingCelsius": 24,
+            "UpperThresholdCritical": 85,
+            "UpperThresholdFatal": 94,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "5",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/5",
+            "Name": "DDR4_P1_A2_TMP",
+            "ReadingCelsius": 0,
+            "UpperThresholdCritical": 85,
+            "UpperThresholdFatal": 94,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "6",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/6",
+            "Name": "DDR4_P1_B1_TMP",
+            "ReadingCelsius": 0,
+            "UpperThresholdCritical": 85,
+            "UpperThresholdFatal": 94,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "7",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/7",
+            "Name": "DDR4_P1_B2_TMP",
+            "ReadingCelsius": 0,
+            "UpperThresholdCritical": 85,
+            "UpperThresholdFatal": 94,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "8",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/8",
+            "Name": "DDR4_P1_C1_TMP",
+            "ReadingCelsius": 0,
+            "UpperThresholdCritical": 85,
+            "UpperThresholdFatal": 94,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "9",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/9",
+            "Name": "DDR4_P1_C2_TMP",
+            "ReadingCelsius": 0,
+            "UpperThresholdCritical": 85,
+            "UpperThresholdFatal": 94,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "10",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/10",
+            "Name": "DDR4_P1_D1_TMP",
+            "ReadingCelsius": 0,
+            "UpperThresholdCritical": 85,
+            "UpperThresholdFatal": 94,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "11",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/11",
+            "Name": "DDR4_P1_D2_TMP",
+            "ReadingCelsius": 0,
+            "UpperThresholdCritical": 85,
+            "UpperThresholdFatal": 94,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "12",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/12",
+            "Name": "DDR4_P1_E1_TMP",
+            "ReadingCelsius": 0,
+            "UpperThresholdCritical": 85,
+            "UpperThresholdFatal": 94,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "13",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/13",
+            "Name": "DDR4_P1_E2_TMP",
+            "ReadingCelsius": 0,
+            "UpperThresholdCritical": 85,
+            "UpperThresholdFatal": 94,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "14",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/14",
+            "Name": "DDR4_P1_F1_TMP",
+            "ReadingCelsius": 0,
+            "UpperThresholdCritical": 85,
+            "UpperThresholdFatal": 94,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "15",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/15",
+            "Name": "DDR4_P1_F2_TMP",
+            "ReadingCelsius": 0,
+            "UpperThresholdCritical": 85,
+            "UpperThresholdFatal": 94,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "16",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/16",
+            "Name": "DDR4_P2_G1_TMP",
+            "ReadingCelsius": 24,
+            "UpperThresholdCritical": 85,
+            "UpperThresholdFatal": 94,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "17",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/17",
+            "Name": "DDR4_P2_G2_TMP",
+            "ReadingCelsius": 0,
+            "UpperThresholdCritical": 85,
+            "UpperThresholdFatal": 94,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "18",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/18",
+            "Name": "DDR4_P2_H1_TMP",
+            "ReadingCelsius": 0,
+            "UpperThresholdCritical": 85,
+            "UpperThresholdFatal": 94,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "19",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/19",
+            "Name": "DDR4_P2_H2_TMP",
+            "ReadingCelsius": 0,
+            "UpperThresholdCritical": 85,
+            "UpperThresholdFatal": 94,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "20",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/20",
+            "Name": "DDR4_P2_J1_TMP",
+            "ReadingCelsius": 0,
+            "UpperThresholdCritical": 85,
+            "UpperThresholdFatal": 94,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "21",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/21",
+            "Name": "DDR4_P2_J2_TMP",
+            "ReadingCelsius": 0,
+            "UpperThresholdCritical": 85,
+            "UpperThresholdFatal": 94,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "22",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/22",
+            "Name": "DDR4_P2_K1_TMP",
+            "ReadingCelsius": 0,
+            "UpperThresholdCritical": 85,
+            "UpperThresholdFatal": 94,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "23",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/23",
+            "Name": "DDR4_P2_K2_TMP",
+            "ReadingCelsius": 0,
+            "UpperThresholdCritical": 85,
+            "UpperThresholdFatal": 94,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "24",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/24",
+            "Name": "DDR4_P2_L1_TMP",
+            "ReadingCelsius": 0,
+            "UpperThresholdCritical": 85,
+            "UpperThresholdFatal": 94,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "25",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/25",
+            "Name": "DDR4_P2_L2_TMP",
+            "ReadingCelsius": 0,
+            "UpperThresholdCritical": 85,
+            "UpperThresholdFatal": 94,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "26",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/26",
+            "Name": "DDR4_P2_M1_TMP",
+            "ReadingCelsius": 0,
+            "UpperThresholdCritical": 85,
+            "UpperThresholdFatal": 94,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "27",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/27",
+            "Name": "DDR4_P2_M2_TMP",
+            "ReadingCelsius": 0,
+            "UpperThresholdCritical": 85,
+            "UpperThresholdFatal": 94,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "28",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/28",
+            "Name": "HDD1_TEMP",
+            "ReadingCelsius": 20,
+            "UpperThresholdCritical": 65,
+            "UpperThresholdFatal": 70,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        },
+        {
+            "MemberId": "29",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Thermal#/Temperatures/29",
+            "Name": "HDD2_TEMP",
+            "ReadingCelsius": 0,
+            "UpperThresholdCritical": 65,
+            "UpperThresholdFatal": 70,
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            },
+            "PhysicalContext": "SystemBoard"
+        }
+    ],
+    "Temperatures@odata.count": 30,
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    }
+}

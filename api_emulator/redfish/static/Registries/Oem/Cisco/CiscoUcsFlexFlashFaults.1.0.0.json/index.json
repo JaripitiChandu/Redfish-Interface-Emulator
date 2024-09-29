@@ -1,0 +1,73 @@
+{
+    "@Redfish.Copyright": "Copyright 2018-2021 Cisco Systems Inc. All rights reserved.",
+    "Name": "Cisco UCS Sensor Fault Codes Message Registry",
+    "@odata.type": "#MessageRegistry.v1_3_1.MessageRegistry",
+    "Language": "en",
+    "Id": "CiscoUcsFlexFlashFaults.1.0.0",
+    "Description": "This registry defines the Fault messages for Cisco UCS Redfish implementations.",
+    "RegistryPrefix": "CiscoUcsFlexFlashFaults",
+    "RegistryVersion": "1.0.0",
+    "OwningEntity": "Cisco Systems Inc.",
+    "Messages": {
+        "WriteProtectedSDCards": {
+            "Message": "Write Protected SD cards discovered. The host can't write to SD cards if both SD cards are write protected.",
+            "NumberOfArgs": 0,
+            "Severity": "Critical",
+            "Resolution": "Please unlock SD card(s).",
+            "Description": "SD card(s) are write protected."
+        },
+        "UnsupportedSDcardSize": {
+            "Message": "The currently populated SD cards size is less then 32GB.",
+            "NumberOfArgs": 0,
+            "Severity": "Critical",
+            "Resolution": "Please insert SD cards of size greter than or equal to 32GB.",
+            "Description": "SD card(s) size is less than minimum supported SD card size"
+        },
+        "SDcardsSizeMismatch": {
+            "Message": "The currently populated SD cards size doesn't match.",
+            "NumberOfArgs": 0,
+            "Severity": "Critical",
+            "Resolution": "Please insert SD cards of equal size.",
+            "Description": "SD cards should match in size but populated SD cards size is not matching"
+        },
+        "SDcardsUnhealthy": {
+            "Message": "The currently populated SD card(s) are unhealthy.",
+            "NumberOfArgs": 0,
+            "Severity": "Critical",
+            "Resolution": "Please reconfigure SD cards. If erase option is chosen wille configuring SD cards then data in SDcards will be erased. If erase option is not chosen then data in chosen primary SD will be synced to other SD card if present",
+            "Description": "The currently populated SD card(s) are unhealthy so please reconfigure"
+        },
+        "SDCardsAccessError": {
+            "Message": "SD cards access failed.",
+            "NumberOfArgs": 0,
+            "Severity": "Critical",
+            "Resolution": "Please reset the FlexFlash controller.",
+            "Description": "SD cards access failed."
+        },
+        "SDCardsMetaDataAccessError": {
+            "Message": "SD cards meta data access failed.",
+            "NumberOfArgs": 0,
+            "Severity": "Critical",
+            "Resolution": "Please reinsert SD cards. And if the problem is persistent then replace SD cards",
+            "Description": "SD cards meta data access failed."
+        },
+        "SDCardsNotRAID1Paired": {
+            "Message": "The currently populated SD card(s) are not configured in RAID1.",
+            "NumberOfArgs": 0,
+            "Severity": "Critical",
+            "Resolution": "Please re-configure SD cards. If erase option is chosen wille configuring SD cards then data in SDcards will be erased. If erase option is not chosen then data in chosen primary SD will be synced to other SD card if present",
+            "Description": "The currently populated SD card(s) are not configured in RAID1."
+        },
+        "FirmwareVersionMismatch": {
+            "Message": "The currently running flex flash controller firmware version %s didn't match with bmc packaged flex flash controller firmware version %s.",
+            "NumberOfArgs": 2,
+            "ParamTypes": [
+                "string",
+                "string"
+            ],
+            "Severity": "Warning",
+            "Resolution": "If virtual drives from flex flash storage controller are connected to host then please disconnect and perform flex flash storage controller reset.",
+            "Description": "The currently running flex flash controller firmware version didn't match with bmc packaged flex flash controller firmware version."
+        }
+    }
+}

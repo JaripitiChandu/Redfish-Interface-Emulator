@@ -1,0 +1,18 @@
+{
+    "@odata.id": "/redfish/v1/Registries/CiscoUcsOverallHealthStatus",
+    "@odata.type": "#MessageRegistryFile.v1_1_3.MessageRegistryFile",
+    "@odata.context": "/redfish/v1/$metadata#MessageRegistryFile.MessageRegistryFile",
+    "Id": "CiscoUcsOverallHealthStatus",
+    "Name": "Overall Health Registry",
+    "Description": "Overall Health Registry file locations",
+    "Registry": "CiscoUcsOverallHealthStatus.1.0.0",
+    "Location": [
+        {
+            "Language": "en",
+            "Uri": "/redfish/v1/Registries/Oem/Cisco/CiscoUcsOverallHealthStatus.1.0.0.json"
+        }
+    ],
+    "Languages": [
+        "en"
+    ]
+}

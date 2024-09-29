@@ -1,0 +1,12 @@
+{
+    "@odata.id": "/redfish/v1/Systems/FLM240206E3/PCIeDevices/FMEZZ1-SAS",
+    "@odata.type": "#PCIeDevice.v1_7_0.PCIeDevice",
+    "@odata.context": "/redfish/v1/$metadata#PCIeDevice.PCIeDevice",
+    "Description": "This gives information of PCIeDevices on the system",
+    "PCIeFunctions": {
+        "@odata.id": "/redfish/v1/Systems/FLM240206E3/PCIeDevices/FMEZZ1-SAS/PCIeFunctions"
+    },
+    "Id": "FMEZZ1-SAS",
+    "Name": "12G SAS/SATA RAID Controller",
+    "FirmwareVersion": "24.21.0-0156"
+}

@@ -1,0 +1,42 @@
+{
+    "@odata.id": "/redfish/v1/Managers/CIMC/EthernetInterfaces/Inband1",
+    "@odata.type": "#EthernetInterface.v1_6_2.EthernetInterface",
+    "Id": "EthernetInterface",
+    "Name": "Ethernet Interface Inband1",
+    "Description": "CIMC Inband1 EthernetInterface",
+    "HostName": "CISCO-IBMC",
+    "MACAddress": "5A:B3:98:91:5F:8E",
+    "IPv4StaticAddresses": [
+        {
+            "Address": null,
+            "SubnetMask": null,
+            "Gateway": null
+        }
+    ],
+    "IPv4Addresses": [
+        {
+            "Gateway": null
+        }
+    ],
+    "IPv6StaticAddresses": [
+        {
+            "Address": null,
+            "PrefixLength": null
+        }
+    ],
+    "IPv6Addresses": [
+        {
+            "Address": null,
+            "PrefixLength": null
+        }
+    ],
+    "IPv6DefaultGateway": null,
+    "IPv6StaticDefaultGateways": [],
+    "VLAN": {
+        "VLANId": null,
+        "VLANEnable": true
+    },
+    "NameServers": [],
+    "StaticNameServers": [],
+    "InterfaceEnabled": false
+}

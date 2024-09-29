@@ -1,0 +1,90 @@
+{
+    "@Redfish.Copyright": "Copyright 2018-2023 Cisco Systems Inc. All rights reserved.",
+    "Name": "Cisco UCS Adapter Fault Codes Message Registry",
+    "@odata.type": "#MessageRegistry.v1_3_1.MessageRegistry",
+    "Language": "en",
+    "Id": "CiscoUcsAdapterFaults.1.1.0",
+    "Description": "This registry defines the adapter fault messages for Cisco UCS Redfish implementations.",
+    "RegistryPrefix": "CiscoUcsAdapterFaults",
+    "RegistryVersion": "1.1.0",
+    "OwningEntity": "Cisco Systems Inc.",
+    "Messages": {
+        "AdapterSecureBootFail": {
+            "Message": "Adapter secure boot failed. Service location: %1",
+            "NumberOfArgs": 1,
+            "Severity": "Critical",
+            "Resolution": "Please contact Cisco TAC for additional support.",
+            "Description": "Adapter is unable to securely boot. Adapter functionality may be impacted."
+        },
+        "AdapterCounterfeit": {
+            "Message": "Adapter secure validation failed. Service location: %1",
+            "NumberOfArgs": 1,
+            "Severity": "Critical",
+            "Resolution": "Please contact Cisco TAC for additional support.",
+            "Description": "Unable to validate adapter. Adapter may be counterfeit."
+        },
+        "AdapterBackupImage": {
+            "Message": "Adapter is operating backup firmware. Service location: %1",
+            "NumberOfArgs": 1,
+            "Severity": "Critical",
+            "Resolution": "Please contact Cisco TAC for additional support.",
+            "Description": "Adapter is operating backup firmware. Updated firmware is not active."
+        },
+        "AdapterFWValidationFailed": {
+            "Message": "Adapter firmware validation failed. Service location: %1",
+            "NumberOfArgs": 1,
+            "Severity": "Critical",
+            "Resolution": "Please contact Cisco TAC for additional support.",
+            "Description": "Adapter firmware is not valid."
+        },
+        "AdapterCommunicationErrors": {
+            "Severity": "Critical",
+            "Message": "Unable to validate adapter due to communication errors. Service location: %1",
+            "NumberOfArgs": 1,
+            "Resolution": "Please contact Cisco TAC for additional support.",
+            "Description": "Adapter is experiencing communication errors."
+        },
+        "AdapterIOMLinkDegraded": {
+            "Severity": "Critical",
+            "Message": "The link between adapter and IOM is degraded and can cause CRC errors on the packets sent from IOM to the adapter.",
+            "NumberOfArgs": 0,
+            "Resolution": "Please power cycle the server. If the problem persists, create a tech-support file and contact Cisco TAC for additional support.",
+            "Description": "The link between adapter and IOM is degraded."
+        },
+        "AdapterAltImage": {
+            "Severity": "Warning",
+            "Message": "Adapter is operating alternate firmware. Service location: %1",
+            "NumberOfArgs": 1,
+            "Resolution": "Please update the adapter's firmware. If the problem persists, contact Cisco TAC for additional support.",
+            "Description": "Adapter is operating with alternate firmware. Updated firmware is not active."
+        },
+        "AdapterDiagImage": {
+            "Severity": "Warning",
+            "Message": "Adapter is operating diagnostic firmware. Service location: %1",
+            "NumberOfArgs": 1,
+            "Resolution": "Please update the adapter's firmware. If the problem persists, contact Cisco TAC for additional support.",
+            "Description": "Adapter is operating diagnostic firmware. Updated firmware is not active."
+        },
+        "AdapterNotRelKeySigned": {
+            "Severity": "Warning",
+            "Message": "Adapter's active firmware is not signed with release key. Service location: %1",
+            "NumberOfArgs": 1,
+            "Resolution": "Please update the adapter's firmware. If the problem persists, contact Cisco TAC for additional support.",
+            "Description": "Adapter's active firmware is not signed with release key."
+        },
+        "AdapterCounterfeitForMgmt": {
+            "Message": "Cisco IMC refusing connections due to presence of counterfeit VIC at slot id %1 with serial number %2.",
+            "NumberOfArgs": 2,
+            "Severity": "Critical",
+            "Resolution": "Please contact Cisco TAC for additional support.",
+            "Description": "Unable to validate adapter. Adapter may be counterfeit."
+        },
+        "AdapterPostCode": {
+            "Severity": "Warning",
+            "Message": "Adapter asserted post code %1.",
+            "NumberOfArgs": 1,
+            "Resolution": "Please contact Cisco TAC for additional support.",
+            "Description": "Adapter asserted post code."
+        }
+    }
+}

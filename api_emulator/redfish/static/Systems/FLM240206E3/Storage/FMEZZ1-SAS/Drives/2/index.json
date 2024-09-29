@@ -1,0 +1,17 @@
+{
+    "@odata.id": "/redfish/v1/Systems/FLM240206E3/Storage/FMEZZ1-SAS/Drives/2",
+    "@odata.type": "#Drive.v1_9_0.Drive",
+    "@odata.context": "/redfish/v1/$metadata#Drive.Drive",
+    "Id": "2",
+    "Name": "2",
+    "Status": {
+        "Health": "OK",
+        "State": "Absent"
+    },
+    "PhysicalLocation": {
+        "PartLocation": {
+            "LocationType": "Slot",
+            "ServiceLabel": "2"
+        }
+    }
+}

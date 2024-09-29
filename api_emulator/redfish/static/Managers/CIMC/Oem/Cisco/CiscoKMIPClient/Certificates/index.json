@@ -2,8 +2,15 @@
     "@odata.id": "/redfish/v1/Managers/CIMC/Oem/Cisco/CiscoKMIPClient/Certificates",
     "@odata.type": "#CertificateCollection.CertificateCollection",
     "@odata.context": "/redfish/v1/$metadata#CertificateCollection.CertificateCollection",
-    "Description": "A Collection of Certificate resource instances.",
-    "Name": "Certificate Collection",
-    "Members": [],
-    "Members@odata.count": 0
+    "Description": "Collection of Certificates",
+    "Name": "Certificate",
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Managers/CIMC/Oem/Cisco/CiscoKMIPClient/Certificates/KMIPClient"
+        },
+        {
+            "@odata.id": "/redfish/v1/Managers/CIMC/Oem/Cisco/CiscoKMIPClient/Certificates/KMIPServer"
+        }
+    ],
+    "Members@odata.count": 2
 }

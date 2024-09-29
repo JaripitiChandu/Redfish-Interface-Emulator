@@ -1,0 +1,67 @@
+{
+    "@Redfish.Copyright": "Copyright 2018-2021 Cisco Systems Inc. All rights reserved.",
+    "Name": "Cisco UCS HSU Message Registry",
+    "@odata.type": "#MessageRegistry.v1_3_1.MessageRegistry",
+    "Language": "en",
+    "Id": "CiscoUcsHsu.1.0.0",
+    "Description": "This registry defines the HSU messages for Cisco UCS servers implementations.",
+    "RegistryPrefix": "CiscoUcsHsu",
+    "RegistryVersion": "1.0.0",
+    "OwningEntity": "Cisco Systems Inc.",
+    "Messages": {
+        "HsuHostBootFailed": {
+            "Description": "Indicates that HSU OS has failed to boot.",
+            "Message": "Failed to boot HSU OS.",
+            "Severity": "Critical",
+            "NumberOfArgs": 0,
+            "Resolution": "Please cross verify the remote image repository content with Cisco CCO. If the content does not match, download HSU image and re-submit the action."
+        },
+        "InvalidImageRepo": {
+            "Description": "Indicates that the given image repository is invalid.",
+            "Message": "%1 is an invalid image repository.",
+            "Severity": "Critical",
+            "NumberOfArgs": 1,
+            "ParamTypes": [
+                "string"
+            ],
+            "Resolution": "Change image repository path as per the schema and re-submit the action again."
+        },
+        "MicroSDWriteFailed": {
+            "Description": "Indicates that the write failure in Micro SD.",
+            "Message": "Failed to write iso image into Micro SD.",
+            "Severity": "Critical",
+            "NumberOfArgs": 0,
+            "Resolution": "Check the health of the Micro SD. If health is not OK, try using the vMedia feature."
+        },
+        "UpdateFailed": {
+            "Description": "Indicates that the targetted software inventory failed to update.",
+            "Message": "Failed to update the software inventory at %1.",
+            "Severity": "Critical",
+            "NumberOfArgs": 1,
+            "ParamTypes": [
+                "string"
+            ],
+            "Resolution": "Resubmit the request for the failed software inventory. If the problem persists, please consider resetting the software inventory target."
+        },
+        "UpdateSuccess": {
+            "Description": "Indicates that the target firmware is successfully updated.",
+            "Message": "Successfully updated the software inventory at %1.",
+            "Severity": "OK",
+            "NumberOfArgs": 1,
+            "ParamTypes": [
+                "string"
+            ],
+            "Resolution": "None"
+        },
+        "UpdateSkipped": {
+            "Description": "Indicates that the target firmware update has skipped.",
+            "Message": "Update is skipped for software inventory at %1.",
+            "Severity": "OK",
+            "NumberOfArgs": 1,
+            "ParamTypes": [
+                "string"
+            ],
+            "Resolution": "None"
+        }
+    }
+}

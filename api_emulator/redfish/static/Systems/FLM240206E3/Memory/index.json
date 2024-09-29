@@ -1,0 +1,82 @@
+{
+    "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory",
+    "@odata.type": "#MemoryCollection.MemoryCollection",
+    "@odata.context": "/redfish/v1/$metadata#MemoryCollection.MemoryCollection",
+    "Description": "Collection of Memory resource instances for this system",
+    "Name": "Memory Collection",
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_A1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_A2"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_B1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_B2"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_C1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_C2"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_D1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_D2"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_E1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_E2"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_F1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_F2"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_G1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_G2"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_H1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_H2"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_J1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_J2"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_K1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_K2"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_L1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_L2"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_M1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_M2"
+        }
+    ],
+    "Members@odata.count": 24
+}

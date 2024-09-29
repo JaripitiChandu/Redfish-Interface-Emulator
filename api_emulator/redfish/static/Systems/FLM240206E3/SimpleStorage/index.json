@@ -1,0 +1,13 @@
+{
+    "@odata.id": "/redfish/v1/Systems/FLM240206E3/SimpleStorage",
+    "@odata.type": "#SimpleStorageCollection.SimpleStorageCollection",
+    "@odata.context": "/redfish/v1/$metadata#SimpleStorageCollection.SimpleStorageCollection",
+    "Description": "Collection of storage controllers for this system",
+    "Name": "Simple Storage Collection",
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/SimpleStorage/FMEZZ1-SAS"
+        }
+    ],
+    "Members@odata.count": 1
+}

@@ -1,0 +1,33 @@
+{
+    "@Redfish.Copyright": "Copyright 2018-2021 Cisco Systems Inc. All rights reserved.",
+    "Name": "Cisco UCS SDU Message Registry",
+    "@odata.type": "#MessageRegistry.v1_3_1.MessageRegistry",
+    "Language": "en",
+    "Id": "CiscoUcsSdu.1.0.0",
+    "Description": "This registry defines the SDU messages for Cisco UCS servers implementations.",
+    "RegistryPrefix": "CiscoUcsSdu",
+    "RegistryVersion": "1.0.0",
+    "OwningEntity": "Cisco Systems Inc.",
+    "Messages": {
+        "InternalError": {
+            "Description": "Indicates that the request failed for an unknown internal error.",
+            "Message": "The request failed due to an internal service error.",
+            "Severity": "Critical",
+            "NumberOfArgs": 1,
+            "ParamTypes": [
+                "string"
+            ],
+            "Resolution": "Reboot the BMC and retrigger the diagnostics. If the problem persists, contact Cisco TAC for additional support."
+        },
+        "HostNotReachable": {
+            "Description": "Indicates that the request failed because unable to communicate with the host.",
+            "Message": "The request failed due to communication issue with the host.",
+            "Severity": "Critical",
+            "NumberOfArgs": 1,
+            "ParamTypes": [
+                "string"
+            ],
+            "Resolution": "Make sure diagnostic ISO is booted. Else try again after booting diagnostic ISO."
+        }
+    }
+}

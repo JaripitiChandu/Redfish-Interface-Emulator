@@ -6,11 +6,20 @@
     "Name": "Virtual Media Services",
     "Members": [
         {
+            "@odata.id": "/redfish/v1/Managers/CIMC/VirtualMedia/0"
+        },
+        {
             "@odata.id": "/redfish/v1/Managers/CIMC/VirtualMedia/1"
         },
         {
-            "@odata.id": "/redfish/v1/Managers/CIMC/VirtualMedia/0"
+            "@odata.id": "/redfish/v1/Managers/CIMC/VirtualMedia/2"
+        },
+        {
+            "@odata.id": "/redfish/v1/Managers/CIMC/VirtualMedia/3"
+        },
+        {
+            "@odata.id": "/redfish/v1/Managers/CIMC/VirtualMedia/4"
         }
     ],
-    "Members@odata.count": 2
+    "Members@odata.count": 5
 }

@@ -1,0 +1,20 @@
+{
+    "@odata.id": "/redfish/v1/AccountService/Roles/Admin",
+    "@odata.type": "#Role.v1_2_5.Role",
+    "@odata.context": "/redfish/v1/$metadata#Role.Role",
+    "Name": "User Role",
+    "Id": "Admin",
+    "Description": "User Role",
+    "IsPredefined": true,
+    "AssignedPrivileges": [
+        "Login",
+        "ConfigureManager",
+        "ConfigureUsers",
+        "ConfigureSelf",
+        "ConfigureComponents"
+    ],
+    "OemPrivileges": [
+        "IPMIAdministratorAccess",
+        "SNMPAccess"
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "@odata.id": "/redfish/v1/Registries/CiscoUcsAdapterFaults",
+    "@odata.type": "#MessageRegistryFile.v1_1_3.MessageRegistryFile",
+    "@odata.context": "/redfish/v1/$metadata#MessageRegistryFile.MessageRegistryFile",
+    "Id": "CiscoUcsAdapterFaults",
+    "Name": "Adapter Faults Registry",
+    "Description": "Adapter Faults Registry file locations",
+    "Registry": "CiscoUcsAdapterFaults.1.1.0",
+    "Location": [
+        {
+            "Language": "en",
+            "Uri": "/redfish/v1/Registries/Oem/Cisco/CiscoUcsAdapterFaults.1.1.0.json"
+        }
+    ],
+    "Languages": [
+        "en"
+    ]
+}

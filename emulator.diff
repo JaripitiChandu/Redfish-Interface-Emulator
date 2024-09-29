@@ -1,0 +1,42 @@
+diff --git a/emulator.py b/emulator.py
+index b37c140..1048ac9 100644
+--- a/emulator.py
++++ b/emulator.py
+@@ -125,12 +125,12 @@ INTERNAL_ERROR = error_response('Internal Server Error', 500)
+ class PathError(Exception):
+     pass
+ 
+-@g.api.representation('application/xml')
+-def output_xml(data, code, headers=None):
+-    resp = make_response(data, code)
+-    resp.headers.extend(headers or {})
+-    resp.headers['Content-Type'] = 'text/xml; charset=ISO-8859-1'
+-    return resp
++# @g.api.representation('application/xml')
++# def output_xml(data, code, headers=None):
++#     resp = make_response(data, code)
++#     resp.headers.extend(headers or {})
++#     resp.headers['Content-Type'] = 'text/xml; charset=ISO-8859-1'
++#     return resp
+ 
+ @g.api.representation('application/json')
+ def output_json(data, code, headers=None):
+@@ -182,6 +182,8 @@ class RedfishAPI(Resource):
+             resource_manager.configuration = request.json
+             resp = resource_manager.configuration, 201
+         elif path.startswith("cisco"):
++            print(request.is_json)
++            print(request.data.decode())
+             cisco_endpoints[path] = json.loads(request.data.decode())
+             return path, 201
+         elif path.find(self.system_path) != -1 or path.find(self.chassis_path) != -1:
+@@ -525,7 +527,8 @@ def main():
+             kwargs = {'debug': args.debug, 'port': args.port, 'ssl_context' : context}
+         else:
+             print (' * Use HTTP')
+-            kwargs = {'debug': args.debug, 'port': args.port}
++            print(args.debug)
++            kwargs = {'debug': True, 'port': args.port}
+ 
+         # if not args.debug:
+         kwargs['host'] = '0.0.0.0'

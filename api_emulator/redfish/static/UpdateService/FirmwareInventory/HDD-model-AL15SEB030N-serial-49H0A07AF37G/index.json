@@ -1,0 +1,15 @@
+{
+    "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory/HDD-model-AL15SEB030N-serial-49H0A07AF37G",
+    "@odata.type": "#SoftwareInventory.v1_3_0.SoftwareInventory",
+    "@odata.context": "/redfish/v1/$metadata#SoftwareInventory.SoftwareInventory",
+    "Description": "Firmware Inventory",
+    "Id": "HDD-model-AL15SEB030N-serial-49H0A07AF37G",
+    "Name": "HDD-model-AL15SEB030N-serial-49H0A07AF37G",
+    "Version": "5704",
+    "Updateable": true,
+    "RelatedItem": [
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/Storage/FMEZZ1-SAS/Drives/1"
+        }
+    ]
+}

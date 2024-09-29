@@ -1,0 +1,35 @@
+{
+    "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory/DIMM_G1",
+    "@odata.type": "#Memory.v1_12_0.Memory",
+    "@odata.context": "/redfish/v1/$metadata#Memory.Memory",
+    "Name": "DIMM_G1",
+    "Id": "13",
+    "MemoryMedia": [
+        "DRAM"
+    ],
+    "Manufacturer": "0x2C00",
+    "SerialNumber": "802C251925F06ADBB7",
+    "PartNumber": "18ASF2G72PZ-2G6D1",
+    "OperatingSpeedMhz": 2666,
+    "MemoryLocation": {
+        "Slot": 0,
+        "Channel": 0,
+        "Socket": 1
+    },
+    "DataWidthBits": 64,
+    "CapacityMiB": 16384,
+    "BaseModuleType": "RDIMM",
+    "MemoryDeviceType": "DDR4",
+    "MemoryType": "DRAM",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK",
+        "Health@Message.ExtendedInfo": []
+    },
+    "Oem": {
+        "Cisco": {
+            "PID": "UCS-MR-X16G1RS-H",
+            "MemoryTypeDetail": "Synchronous,Registered (Buffered)"
+        }
+    }
+}

@@ -1,0 +1,34 @@
+{
+    "@odata.id": "/redfish/v1/Systems/FLM240206E3/Processors/CPU1",
+    "@odata.type": "#Processor.v1_12_0.Processor",
+    "@odata.context": "/redfish/v1/$metadata#Processor.Processor",
+    "Id": "1",
+    "Name": "CPU1",
+    "Socket": "CPU1",
+    "ProcessorType": "CPU",
+    "ProcessorArchitecture": "x86",
+    "InstructionSet": "x86-64",
+    "Model": "Intel(R) Xeon(R) Bronze 3106 CPU @ 1.70GHz",
+    "Manufacturer": "Intel(R) Corporation",
+    "MaxSpeedMHz": 4000,
+    "OperatingSpeedMHz": 1700,
+    "TotalCores": 8,
+    "TotalThreads": 8,
+    "TotalEnabledCores": 8,
+    "ProcessorId": {
+        "EffectiveFamily": "6",
+        "EffectiveModel": "85",
+        "Step": "4",
+        "VendorId": "Intel(R) Corporation"
+    },
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK",
+        "Health@Message.ExtendedInfo": []
+    },
+    "Oem": {
+        "Cisco": {
+            "PID": "CPU NOT FOUND"
+        }
+    }
+}

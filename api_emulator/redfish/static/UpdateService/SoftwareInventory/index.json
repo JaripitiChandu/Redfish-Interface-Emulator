@@ -9,8 +9,11 @@
             "@odata.id": "/redfish/v1/UpdateService/SoftwareInventory/DeviceConnector"
         },
         {
+            "@odata.id": "/redfish/v1/UpdateService/SoftwareInventory/Catalog"
+        },
+        {
             "@odata.id": "/redfish/v1/UpdateService/SoftwareInventory/HSU"
         }
     ],
-    "Members@odata.count": 2
+    "Members@odata.count": 3
 }

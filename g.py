@@ -200,7 +200,7 @@ db = DataBase(DB_FILEPATH)
 INDEX = b"index"
 INTERNAL_SERVER_ERROR = "Internal Server Error", 500
 
-# db.print_db()
+db.print_db()
 
 # Create Flask server
 app = Flask(__name__)

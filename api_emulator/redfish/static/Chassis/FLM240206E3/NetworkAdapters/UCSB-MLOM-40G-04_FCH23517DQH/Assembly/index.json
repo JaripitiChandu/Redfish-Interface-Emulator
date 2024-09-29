@@ -1,0 +1,19 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/FLM240206E3/NetworkAdapters/UCSB-MLOM-40G-04_FCH23517DQH/Assembly",
+    "@odata.type": "#Assembly.v1_5_0.Assembly",
+    "@odata.context": "/redfish/v1/$metadata#Assembly.Assembly",
+    "Id": "Assembly",
+    "Name": "Assembly",
+    "Description": "Assembly",
+    "Assemblies": [
+        {
+            "MemberId": "0",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/NetworkAdapters/UCSB-MLOM-40G-04_FCH23517DQH/Assembly#/Assemblies/0",
+            "Producer": "Cisco Systems Inc",
+            "Model": "UCSB-MLOM-40G-04",
+            "Version": "V04",
+            "PartNumber": "73-19235-03",
+            "SerialNumber": "FCH23517DQH"
+        }
+    ]
+}

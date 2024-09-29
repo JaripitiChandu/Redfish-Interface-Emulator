@@ -6,7 +6,7 @@ import json
 import requests
 
 ROOT_FOLDER = 'api_emulator/redfish/static/'
-PORT = 444
+PORT = 5000
 REFERENCE_FILE = 'out_index.txt'
 ENDPOINTS_TO_SKIP = []
 REDFISH_URL = f'http://127.0.0.1:{PORT}/redfish/v1/'
@@ -15,7 +15,7 @@ REDFISH_URL = f'http://127.0.0.1:{PORT}/redfish/v1/'
 def post_call(url, data):
     # Convert the data to JSON format
     json_data = json.dumps(data)
-
+    print(f"url : {url} json {json_data}")
     # Set the headers to specify that you're sending JSON data
     headers = {'Content-Type': 'application/json'}
 
@@ -50,6 +50,7 @@ def find_index_json_files(root_folder):
 # print(len(index_json_files))
 
 def main():
+    #print(f"Ref file {REFERENCE_FILE}")
     with open(REFERENCE_FILE) as f:
         for path in f.read().split('\n'):
             # skip commented line
@@ -57,8 +58,12 @@ def main():
                 continue
             # form url from json path
             url = path.replace(ROOT_FOLDER, REDFISH_URL).replace('/index.json', '')
+            print(f" url : {url}")
+            print(f"next Logger : {os.path.join(os.path.dirname(__file__), path)}")
             with open(os.path.join(os.path.dirname(__file__), path)) as payload:
+                print(f"payload {payload}")
                 data = json.load(payload)
+                print(f"data :{data}")
             if not post_call(url, data):
                 print(f"PAYLOAD PATH: {path}")
                 break

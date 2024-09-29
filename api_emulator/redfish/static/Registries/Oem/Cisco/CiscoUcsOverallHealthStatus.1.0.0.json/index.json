@@ -1,0 +1,34 @@
+{
+    "@Redfish.Copyright": "Copyright 2018-2021 Cisco Systems Inc. All rights reserved.",
+    "Name": "Cisco UCS Overall Health Status Message Registry",
+    "@odata.type": "#MessageRegistry.v1_3_1.MessageRegistry",
+    "Language": "en",
+    "Id": "CiscoUcsOverallHealthStatus.1.0.0",
+    "Description": "This registry defines the Overall Health messages for Cisco UCS Redfish implementations.",
+    "RegistryPrefix": "CiscoUcsOverallHealthStatus",
+    "RegistryVersion": "1.0.0",
+    "OwningEntity": "Cisco Systems Inc.",
+    "Messages": {
+        "Inoperable": {
+            "Message": "%1",
+            "NumberOfArgs": 1,
+            "Severity": "Critical",
+            "Resolution": "Please contact CISCO technical support.",
+            "Description": "Sensor crossed non recoverable threshold."
+        },
+        "Degraded": {
+            "Message": "%1",
+            "NumberOfArgs": 1,
+            "Severity": "Warning",
+            "Resolution": "Please contact CISCO technical support.",
+            "Description": "Sensor crossed critical threshold."
+        },
+        "Ok": {
+            "Message": "%1",
+            "NumberOfArgs": 1,
+            "Severity": "Ok",
+            "Resolution": "Please verify the unexpected behaviour on the server.",
+            "Description": "Unexpected event occurred on the server but there is no functionality impact on the server now."
+        }
+    }
+}

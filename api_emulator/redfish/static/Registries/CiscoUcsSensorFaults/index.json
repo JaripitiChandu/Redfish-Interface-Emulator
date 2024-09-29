@@ -1,0 +1,18 @@
+{
+    "@odata.id": "/redfish/v1/Registries/CiscoUcsSensorFaults",
+    "@odata.type": "#MessageRegistryFile.v1_1_3.MessageRegistryFile",
+    "@odata.context": "/redfish/v1/$metadata#MessageRegistryFile.MessageRegistryFile",
+    "Id": "CiscoUcsSensorFaults",
+    "Name": "Sensor Faults Registry",
+    "Description": "Sensor Faults Registry file locations",
+    "Registry": "CiscoUcsSensorFaults.1.1.0",
+    "Location": [
+        {
+            "Language": "en",
+            "Uri": "/redfish/v1/Registries/Oem/Cisco/CiscoUcsSensorFaults.1.1.0.json"
+        }
+    ],
+    "Languages": [
+        "en"
+    ]
+}

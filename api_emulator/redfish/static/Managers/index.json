@@ -7,10 +7,7 @@
     "Members": [
         {
             "@odata.id": "/redfish/v1/Managers/CIMC"
-        },
-        {
-            "@odata.id": "/redfish/v1/Managers/UCSC-M-V5Q50G_FCH272671H7"
         }
     ],
-    "Members@odata.count": 2
+    "Members@odata.count": 1
 }

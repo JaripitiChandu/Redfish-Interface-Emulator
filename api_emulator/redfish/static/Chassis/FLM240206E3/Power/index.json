@@ -1,0 +1,35 @@
+{
+    "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Power",
+    "@odata.type": "#Power.v1_6_1.Power",
+    "@odata.context": "/redfish/v1/$metadata#Power.Power",
+    "Id": "Power",
+    "Name": "Power",
+    "Description": "Host Power Information",
+    "PowerControl": [
+        {
+            "MemberId": "0",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Power#/PowerControl/0",
+            "Name": "POWER_USAGE",
+            "PowerConsumedWatts": 117
+        }
+    ],
+    "PowerControl@odata.count": 1,
+    "Voltages": [
+        {
+            "MemberId": "0",
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3/Power#/Voltages/0",
+            "Name": "P12V",
+            "ReadingVolts": 12.03600025177002,
+            "UpperThresholdCritical": 12.6850004196167,
+            "UpperThresholdFatal": 13.156999588012695,
+            "LowerThresholdCritical": 11.269000053405762,
+            "LowerThresholdFatal": 10.79699993133545,
+            "PhysicalContext": "PowerSupply",
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            }
+        }
+    ],
+    "Voltages@odata.count": 1
+}

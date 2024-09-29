@@ -1,0 +1,148 @@
+{
+    "@odata.id": "/redfish/v1/Systems/FLM240206E3",
+    "@odata.type": "#ComputerSystem.v1_15_0.ComputerSystem",
+    "@odata.context": "/redfish/v1/$metadata#ComputerSystem.ComputerSystem",
+    "Description": "Represents general resources for the overall system",
+    "PCIeDevices": [
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/PCIeDevices/FMEZZ1-SAS"
+        }
+    ],
+    "PCIeDevices@odata.count": 1,
+    "PCIeFunctions": [
+        {
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3/PCIeDevices/FMEZZ1-SAS/PCIeFunctions/0"
+        }
+    ],
+    "PCIeFunctions@odata.count": 1,
+    "Processors": {
+        "@odata.id": "/redfish/v1/Systems/FLM240206E3/Processors"
+    },
+    "SimpleStorage": {
+        "@odata.id": "/redfish/v1/Systems/FLM240206E3/SimpleStorage"
+    },
+    "Storage": {
+        "@odata.id": "/redfish/v1/Systems/FLM240206E3/Storage"
+    },
+    "Memory": {
+        "@odata.id": "/redfish/v1/Systems/FLM240206E3/Memory"
+    },
+    "NetworkInterfaces": {
+        "@odata.id": "/redfish/v1/Systems/FLM240206E3/NetworkInterfaces"
+    },
+    "Links": {
+        "ManagedBy": [
+            {
+                "@odata.id": "/redfish/v1/Managers/CIMC"
+            }
+        ]
+    },
+    "Id": "FLM240206E3",
+    "SerialNumber": "FLM240206E3",
+    "Name": "UCSB-B200-M5",
+    "Model": "UCSB-B200-M5",
+    "SystemType": "Physical",
+    "Manufacturer": "Cisco Systems Inc",
+    "AssetTag": null,
+    "LocationIndicatorActive": false,
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK",
+        "Health@Message.ExtendedInfo": [],
+        "HealthRollup": "OK",
+        "HealthRollup@Message.ExtendedInfo": []
+    },
+    "PowerState": "On",
+    "Oem": {
+        "Cisco": {
+            "@odata.type": "#CiscoUCSExtensions.v1_0_0.CiscoUCSExtensions",
+            "PowerOnAllowed": true,
+            "PowerProfilingComplete": true,
+            "PostCompletionStatus": true,
+            "SystemEffectiveMemory": 32,
+            "SystemEffectiveSpeed": 2133,
+            "DimmBlacklistingEnabled": false,
+            "DimmBlacklistingEnabled@Message.ExtendedInfo": [
+                {
+                    "@odata.type": "#Message.v1_1_1.Message",
+                    "MessageId": "CiscoUCS.1.7.0.PropertyWillBeDeprecated",
+                    "Message": "The property 'DimmBlacklistingEnabled' will be deprecated from next release onwards",
+                    "MessageArgs": [
+                        "DimmBlacklistingEnabled"
+                    ],
+                    "Severity": "Warning",
+                    "MessageSeverity": "Warning"
+                }
+            ],
+            "DimmBlocklistingEnabled": false,
+            "FrontPanelButtonsLocked": true,
+            "DriveDiagnosticsFrequency": "Weekly",
+            "PowerProfilingEnabled": true
+        }
+    },
+    "UUID": "CA6EF54C-879F-448A-A837-D5A0CDAE586A",
+    "BiosVersion": "Unknown",
+    "Boot": {
+        "BootSourceOverrideEnabled": "Disabled",
+        "BootSourceOverrideTarget": "None",
+        "BootSourceOverrideTarget@Redfish.AllowableValues": [
+            "None",
+            "Pxe",
+            "Floppy",
+            "Cd",
+            "Hdd",
+            "BiosSetup",
+            "Diags"
+        ],
+        "BootSourceOverrideEnabled@Redfish.AllowableValues": [
+            "Once",
+            "Continuous",
+            "Disabled"
+        ]
+    },
+    "PowerRestorePolicy": "AlwaysOff",
+    "MemorySummary": {
+        "TotalSystemMemoryGiB": 32
+    },
+    "ProcessorSummary": {
+        "Count": 2,
+        "Model": "Intel(R) Xeon(R) Bronze 3106 CPU @ 1.70GHz",
+        "CoreCount": 16
+    },
+    "TrustedModules": [
+        {
+            "FirmwareVersion": null,
+            "Status": {
+                "State": "Absent"
+            },
+            "Oem": {
+                "Cisco": {
+                    "TPM": null
+                }
+            }
+        }
+    ],
+    "Actions": {
+        "#ComputerSystem.Reset": {
+            "target": "/redfish/v1/Systems/FLM240206E3/Actions/ComputerSystem.Reset",
+            "ResetType@Redfish.AllowableValues": [
+                "On",
+                "ForceOff",
+                "ForceRestart",
+                "GracefulShutdown",
+                "GracefulRestart",
+                "PowerCycle"
+            ]
+        },
+        "Oem": {
+            "#CiscoUCSExtensions.ResetBIOSCMOS": {
+                "target": "/redfish/v1/Systems/FLM240206E3/Actions/Oem/ComputerSystem.ResetBIOSCMOS",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.ResetBIOSCMOS"
+            },
+            "#CiscoUCSExtensions.TPMClear": {
+                "target": "/redfish/v1/Systems/FLM240206E3/Actions/Oem/ComputerSystem.TPMClear",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.TPMClear"
+            }
+        }
+    }
+}

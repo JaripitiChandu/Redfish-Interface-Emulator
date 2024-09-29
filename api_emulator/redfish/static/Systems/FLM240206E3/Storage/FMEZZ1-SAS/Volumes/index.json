@@ -1,0 +1,9 @@
+{
+    "@odata.id": "/redfish/v1/Systems/FLM240206E3/Storage/FMEZZ1-SAS/Volumes",
+    "@odata.type": "#VolumeCollection.VolumeCollection",
+    "@odata.context": "/redfish/v1/$metadata#VolumeCollection.VolumeCollection",
+    "Description": "Collection of Volumes for this system",
+    "Name": "Volume Collection",
+    "Members@odata.count": 0,
+    "Members": []
+}

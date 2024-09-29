@@ -1,0 +1,72 @@
+{
+    "@Redfish.Copyright": "Copyright 2018-2022 Cisco Systems Inc. All rights reserved.",
+    "Name": "Cisco UCS Storage Message Registry",
+    "@odata.type": "#MessageRegistry.v1_3_1.MessageRegistry",
+    "Language": "en",
+    "Id": "CiscoUCSStorage.1.1.0",
+    "Description": "This registry defines the Storage messages for Cisco UCS servers implementations.",
+    "RegistryPrefix": "CiscoUCSStorage",
+    "RegistryVersion": "1.1.0",
+    "OwningEntity": "Cisco Systems Inc.",
+    "Messages": {
+        "StorageSubsystemNotReady": {
+            "Description": "Indicates that  storage subsystem is not ready yet and cannot accept any commands.",
+            "Message": "Storage subsystem not ready yet.",
+            "Severity": "Critical",
+            "NumberOfArgs": 0,
+            "Resolution": "Please wait for storage subsystem to become ready, or check if host is powered ON."
+        },
+        "StorageVolumeCreateFailed": {
+            "Description": "Indicates that Volume creation failed.",
+            "Message": "Failed to create Volume.",
+            "Severity": "Critical",
+            "NumberOfArgs": 0,
+            "Resolution": "Please cross verify the arguments and re-submit the action."
+        },
+        "StorageVolumeCreateSuccess": {
+            "Description": "Indicates that Volume creation is successful.",
+            "Message": "Successfully created %1 Volume.",
+            "Severity": "OK",
+            "NumberOfArgs": 1,
+            "ParamTypes": [
+                "string"
+            ],
+            "Resolution": "None."
+        },
+        "StorageSPDMAuthenticationFailure": {
+            "Description": "Indicates SPDM authentication failure for adapter, adapter must be replaced.",
+            "Message": "SPDM Authentication Failure: Unauthorized card detected.",
+            "Severity": "Critical",
+            "NumberOfArgs": 0,
+            "Resolution": "Please replace the adapter."
+        },
+        "StorageBBUDegraded": {
+            "Description": "Indicates adapter battery backup unit needs to be reseated or replaced.",
+            "Message": "Adapter Battery Backup Unit Degraded: Please reseat or replace.",
+            "Severity": "Warning",
+            "NumberOfArgs": 0,
+            "Resolution": "Please reseat or replace the battery backup unit on the storage controller."
+        },
+        "StorageBBUInoperable": {
+            "Description": "Indicates adapter battery backup unit must be replaced.",
+            "Message": "Adapter Battery Backup Unit Failure: Please replace.",
+            "Severity": "Critical",
+            "NumberOfArgs": 0,
+            "Resolution": "Please replace the battery backup unit on the storage controller."
+        },
+        "StorageDriveNonOptimalState": {
+            "Description": "Storage drive operating in non-optimal state. Drive is not functioning correctly or unresponsive.",
+            "Message": "Storage drive operating in non-optimal state. Drive is not functioning correctly or unresponsive.",
+            "Severity": "Critical",
+            "NumberOfArgs": 0,
+            "Resolution": "Please reseat or replace the drive. Contact CISCO technical support for more assistance."
+        },
+        "StorageResetToFactoryDefaults": {
+            "Description": "Storage Controller settings were reset to factory defaults. Host power cycle required for changes to take affect",
+            "Message": "Storage Controller reset to factory defaults.",
+            "Severity": "OK",
+            "NumberOfArgs": 0,
+            "Resolution": "Host power cycle required for changes to take affect."
+        }
+    }
+}

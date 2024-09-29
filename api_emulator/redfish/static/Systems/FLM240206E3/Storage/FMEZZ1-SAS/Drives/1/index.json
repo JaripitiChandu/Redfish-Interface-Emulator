@@ -1,0 +1,84 @@
+{
+    "@odata.id": "/redfish/v1/Systems/FLM240206E3/Storage/FMEZZ1-SAS/Drives/1",
+    "@odata.type": "#Drive.v1_9_0.Drive",
+    "@odata.context": "/redfish/v1/$metadata#Drive.Drive",
+    "Id": "1",
+    "Name": "AL15SEB030N - 300GB 12G SAS 10K RPM SFF HDD",
+    "Model": "UCS-HD300G10K12G",
+    "Revision": "5704",
+    "Protocol": "SAS",
+    "MediaType": "HDD",
+    "Manufacturer": "TOSHIBA",
+    "SerialNumber": "49H0A07AF37G",
+    "BlockSizeBytes": 512,
+    "CapableSpeedGbs": 12,
+    "NegotiatedSpeedGbs": 12,
+    "HotspareType": "None",
+    "IndicatorLED": "Off",
+    "CapacityBytes": 299999690752,
+    "FailurePredicted": false,
+    "EncryptionAbility": "None",
+    "Oem": {
+        "Cisco": {
+            "DriveState": "UnConfiguredGood",
+            "DrivePowerState": "Active",
+            "ReadyForRemoval": false,
+            "Bootable": false,
+            "PredictiveFailureCount": 0,
+            "StorageInstanceId": 1,
+            "CoercedSizeBytes": 298999349248,
+            "NonCoercedSizeBytes": 299462819840,
+            "MediaErrorCount": 0,
+            "NegotiatedLaneWidth": 1,
+            "MaxLaneWidth": 1,
+            "SmartData": {
+                "ThresholdOperatingTemperatureInCel": 65,
+                "OperatingTemperatureInCel": 20,
+                "MaximumOperatingTemperatureInCel": 55
+            }
+        }
+    },
+    "Status": {
+        "Health": "OK",
+        "State": "Enabled"
+    },
+    "StatusIndicator": "OK",
+    "PhysicalLocation": {
+        "PartLocation": {
+            "LocationType": "Slot",
+            "ServiceLabel": "1"
+        }
+    },
+    "Actions": {
+        "Oem": {
+            "#Cisco.AddHotspare": {
+                "target": "/redfish/v1/Systems/FLM240206E3/Storage/FMEZZ1-SAS/Drives/1/Actions/Oem/Cisco.AddHotspare",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.AddHotSpare",
+                "HotSpareType@Redfish.AllowableValues": [
+                    "Global",
+                    "Dedicated"
+                ]
+            },
+            "#Cisco.RemoveHotspare": {
+                "target": "/redfish/v1/Systems/FLM240206E3/Storage/FMEZZ1-SAS/Drives/1/Actions/Oem/Cisco.RemoveHotspare",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.RemoveHotSpare"
+            },
+            "#Cisco.PrepareForRemoval": {
+                "target": "/redfish/v1/Systems/FLM240206E3/Storage/FMEZZ1-SAS/Drives/1/Actions/Oem/Cisco.PrepareForRemoval",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.PrepareForRemoval"
+            },
+            "#Cisco.UndoPrepareForRemoval": {
+                "target": "/redfish/v1/Systems/FLM240206E3/Storage/FMEZZ1-SAS/Drives/1/Actions/Oem/Cisco.UndoPrepareForRemoval",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.UndoPrepareForRemoval"
+            },
+            "#Cisco.StartDiagnostics": {
+                "target": "/redfish/v1/Systems/FLM240206E3/Storage/FMEZZ1-SAS/Drives/1/Actions/Oem/Cisco.StartDiagnostics",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.StartDiagnostics"
+            },
+            "#Cisco.CancelDiag": {
+                "target": "/redfish/v1/Systems/FLM240206E3/Storage/FMEZZ1-SAS/Drives/1/Actions/Oem/Cisco.CancelDiag",
+                "@odata.type": "#CiscoUCSExtensions.v1_0_0.CancelDiag"
+            }
+        }
+    }
+}

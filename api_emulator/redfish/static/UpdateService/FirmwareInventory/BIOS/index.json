@@ -1,14 +1,15 @@
 {
     "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory/BIOS",
-    "@odata.type": "#SoftwareInventory.v1_2_1.SoftwareInventory",
+    "@odata.type": "#SoftwareInventory.v1_3_0.SoftwareInventory",
     "@odata.context": "/redfish/v1/$metadata#SoftwareInventory.SoftwareInventory",
+    "Description": "Firmware Inventory",
     "Id": "BIOS",
     "Name": "BIOS",
-    "Version": "C220M7.4.3.200.27.0811230352",
+    "Version": "Unknown",
     "Updateable": true,
     "RelatedItem": [
         {
-            "@odata.id": "/redfish/v1/Systems/WZP27430FB7"
+            "@odata.id": "/redfish/v1/Systems/FLM240206E3"
         }
     ]
 }

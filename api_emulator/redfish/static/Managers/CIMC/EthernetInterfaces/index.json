@@ -2,12 +2,21 @@
     "@odata.id": "/redfish/v1/Managers/CIMC/EthernetInterfaces",
     "@odata.type": "#EthernetInterfaceCollection.EthernetInterfaceCollection",
     "@odata.context": "/redfish/v1/$metadata#EthernetInterfaceCollection.EthernetInterfaceCollection",
-    "Name": "Ethernet Interfaces Collection",
+    "Description": "Collection of EthernetInterfaces",
+    "Name": "EthernetInterface",
     "Members": [
         {
-            "@odata.id": "/redfish/v1/Managers/CIMC/EthernetInterfaces/NICs"
+            "@odata.id": "/redfish/v1/Managers/CIMC/EthernetInterfaces/Inband1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Managers/CIMC/EthernetInterfaces/Inband2"
+        },
+        {
+            "@odata.id": "/redfish/v1/Managers/CIMC/EthernetInterfaces/OutofbandA"
+        },
+        {
+            "@odata.id": "/redfish/v1/Managers/CIMC/EthernetInterfaces/OutofbandB"
         }
     ],
-    "Members@odata.count": 1,
-    "Description": "Collection of EthernetInterfaces for this Manager"
+    "Members@odata.count": 4
 }

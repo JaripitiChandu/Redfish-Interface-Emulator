@@ -1,34 +1,29 @@
 {
+    "@odata.id": "/redfish/v1/AccountService/Accounts/1",
     "@odata.type": "#ManagerAccount.v1_7_0.ManagerAccount",
     "@odata.context": "/redfish/v1/$metadata#ManagerAccount.ManagerAccount",
     "Name": "User Account",
     "Description": "User Account",
-    "Links": {
-        "Role": {
-            "@odata.id": "/redfish/v1/AccountService/Roles/admin"
-        }
-    },
+    "Id": "1",
+    "UserName": "admin",
+    "RoleId": "Admin",
+    "Enabled": true,
+    "Locked": false,
     "AccountTypes": [
         "Redfish",
         null,
-        null
+        "OEM"
     ],
-    "Id": "1",
-    "UserName": "admin",
-    "Enabled": true,
-    "RoleId": "admin",
-    "RedfishRoleId": "Admin",
-    "AccountLockoutAttempt": 0,
-    "AccountLockoutStartSec": 0,
-    "UIAccountTypes": "CIMC",
-    "@odata.id": "/redfish/v1/AccountService/Accounts/1",
+    "Password": null,
     "PasswordChangeRequired": false,
+    "SNMP": null,
     "Oem": {
         "Cisco": {
             "@odata.type": "#CiscoUCSExtensions.v1_0_0.CiscoUCSExtensions",
-            "IPMI": null
+            "IPMI": {
+                "Password": null,
+                "UID": 1
+            }
         }
-    },
-    "Password": null,
-    "SNMP": null
+    }
 }

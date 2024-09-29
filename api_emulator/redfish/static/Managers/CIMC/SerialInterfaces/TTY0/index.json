@@ -1,23 +1,22 @@
 {
     "@odata.id": "/redfish/v1/Managers/CIMC/SerialInterfaces/TTY0",
-    "@odata.type": "#SerialInterface.v1_1_3.SerialInterface",
+    "@odata.type": "#SerialInterface.v1_1_7.SerialInterface",
     "@odata.context": "/redfish/v1/$metadata#SerialInterface.SerialInterface",
-    "PinOut": "Cisco",
     "Description": "Management for Serial Interface",
-    "Oem": {
-        "Cisco": {
-            "SerialOverLanSSHPort": 2024,
-            "SerialOverLanComPort": "com1"
-        }
-    },
-    "InterfaceEnabled": true,
-    "BitRate": "9600",
-    "SignalType": "Rs232",
-    "Parity": "None",
     "Id": "TTY0",
     "Name": "Manager Serial Interface 1",
+    "SignalType": "Rs232",
+    "Parity": "None",
+    "DataBits": "8",
     "StopBits": "1",
     "FlowControl": "None",
     "ConnectorType": "DB9 Female",
-    "DataBits": "8"
+    "PinOut": "Cisco",
+    "Oem": {
+        "Cisco": {
+            "SerialOverLanSSHPort": 22
+        }
+    },
+    "InterfaceEnabled": false,
+    "BitRate": "115200"
 }

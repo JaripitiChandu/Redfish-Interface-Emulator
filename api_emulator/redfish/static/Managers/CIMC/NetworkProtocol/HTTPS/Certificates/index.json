@@ -2,8 +2,8 @@
     "@odata.id": "/redfish/v1/Managers/CIMC/NetworkProtocol/HTTPS/Certificates",
     "@odata.type": "#CertificateCollection.CertificateCollection",
     "@odata.context": "/redfish/v1/$metadata#CertificateCollection.CertificateCollection",
-    "Description": "A Collection of Certificate resource instances.",
-    "Name": "Certificate Collection",
+    "Description": "Collection of Certificates",
+    "Name": "Certificate",
     "Members": [
         {
             "@odata.id": "/redfish/v1/Managers/CIMC/NetworkProtocol/HTTPS/Certificates/1"

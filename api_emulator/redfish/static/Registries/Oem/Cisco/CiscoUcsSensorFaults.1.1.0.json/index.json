@@ -1,0 +1,34 @@
+{
+    "@Redfish.Copyright": "Copyright 2018-2021 Cisco Systems Inc. All rights reserved.",
+    "Name": "Cisco UCS Sensor Fault Codes Message Registry",
+    "@odata.type": "#MessageRegistry.v1_3_1.MessageRegistry",
+    "Language": "en",
+    "Id": "CiscoUcsSensorFaults.1.1.0",
+    "Description": "This registry defines the Fault messages for Cisco UCS Redfish implementations.",
+    "RegistryPrefix": "CiscoUcsSensorFaults",
+    "RegistryVersion": "1.1.0",
+    "OwningEntity": "Cisco Systems Inc.",
+    "Messages": {
+        "CriticalFailure": {
+            "Message": "%1 Sensor:%2 crossed non recoverable threshold. Sensor Name: %3",
+            "NumberOfArgs": 3,
+            "Severity": "Critical",
+            "Resolution": "Please contact CISCO technical support.",
+            "Description": "Sensor crossed non recoverable threshold."
+        },
+        "WarningFailure": {
+            "Message": "%1 Sensor:%2 crossed critical threshold. Sensor Name: %3",
+            "NumberOfArgs": 3,
+            "Severity": "Warning",
+            "Resolution": "Please contact CISCO technical support.",
+            "Description": "Sensor crossed critical threshold."
+        },
+        "DiscreteFailure": {
+            "Message": "%1 Sensor:%2 failure asserted. Sensor Name: %3",
+            "NumberOfArgs": 3,
+            "Severity": "Critical",
+            "Resolution": "Please contact CISCO technical support.",
+            "Description": "Detected discrete sensor failure asserted"
+        }
+    }
+}

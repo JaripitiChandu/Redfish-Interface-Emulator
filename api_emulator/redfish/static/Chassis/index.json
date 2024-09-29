@@ -6,8 +6,11 @@
     "Name": "Chassis Collection",
     "Members": [
         {
+            "@odata.id": "/redfish/v1/Chassis/FLM240206E3"
+        },
+        {
             "@odata.id": "/redfish/v1/Chassis/1"
         }
     ],
-    "Members@odata.count": 1
+    "Members@odata.count": 2
 }
