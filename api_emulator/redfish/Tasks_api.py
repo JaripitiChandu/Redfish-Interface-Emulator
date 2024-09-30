@@ -110,21 +110,17 @@ class Tasks(Resource):
     def __init__(self):
         logging.info(f'{self.__class__.__name__} init called')
         self.rb = g.rest_base
+        bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
+        passed, output = g.get_collection_from_bucket_hierarchy(bucket_hierarchy, INDICES[:-1])
         self.config = {
             "@odata.id": "/redfish/v1/TaskService/Tasks",
             "@odata.type": "#TaskCollection.TaskCollection",
             "@odata.context": "/redfish/v1/$metadata#TaskCollection.TaskCollection",
             "Description": "Tasks",
             "Name": "Task Collection",
-            "Members": [
-                {
-                    "@odata.id": "/redfish/v1/TaskService/Tasks/1"
-                },
-                {
-                    "@odata.id": "/redfish/v1/TaskService/Tasks/2"
-                }
+            "Members": [{'odata.id':x} for x in output 
             ],
-            "Members@odata.count": 2
+            "Members@odata.count": 0
         }
         
 

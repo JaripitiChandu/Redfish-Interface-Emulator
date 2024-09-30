@@ -84,7 +84,7 @@ from .redfish.LDAP_api import LDAP
 # from .redfish.Roles_api import Role,Roles
 # from .redfish.Admin_api import Admin
 from .redfish.Certificate_Service_api import CertificateServiceAPI
-from .redfish.Certificate_Locations_api import CertificateLocation,CertificateLocations
+from .redfish.Certificate_Locations_api import CertificateLocationsAPI
 from .redfish.SessionService_api import SessionServiceAPI,SessionCollectionAPI,CreateSessionService
 from .redfish.sessions_api import SessionAPI,SessionCollectionAPI,CreateSession
 from .redfish.jsonschemas_api import JsonSchemasAPI,JsonSchemasCollectionAPI
@@ -97,6 +97,7 @@ from .redfish.TaskService_api import TaskServiceAPI
 from .redfish.Tasks_api import Task,Tasks
 from .redfish.certifcates_api import Certficate,Certficates
 from .redfish.Registries_api import RegistriesAPI,RegistriesCollectionAPI
+from .redfish.oemcisco_api import OemCiscoCollectionAPI,OemCiscoAPI
 
 mockupfolders = []
 
@@ -174,9 +175,9 @@ class ResourceManager(object):
         if "Redfish" in mockupfolders:
             logging.info('Loading Redfish static resources')
             # self.AccountService =   load_static('AccountService', 'redfish', mode, rest_base, self.resource_dictionary)
-            self.Registries =       load_static('Registries', 'redfish', mode, rest_base, self.resource_dictionary)
-            self.SessionService =   load_static('SessionService', 'redfish', mode, rest_base, self.resource_dictionary)
-            self.TaskService =      load_static('TaskService', 'redfish', mode, rest_base, self.resource_dictionary)
+            # self.Registries =       load_static('Registries', 'redfish', mode, rest_base, self.resource_dictionary)
+            # self.SessionService =   load_static('SessionService', 'redfish', mode, rest_base, self.resource_dictionary)
+            # self.TaskService =      load_static('TaskService', 'redfish', mode, rest_base, self.resource_dictionary)
 
 #        if "Swordfish" in mockupfolders:
 #            self.StorageServices = load_static('StorageServices', 'redfish', mode, rest_base, self.resource_dictionary)
@@ -355,9 +356,9 @@ class ResourceManager(object):
         g.api.add_resource(SoftwareInventoryAPI, '/redfish/v1/UpdateService/SoftwareInventory/<string:ident>',
                 resource_class_kwargs={'rb': g.rest_base})
         #JsonSchemas Resources 
-        g.api.add_resource(JsonSchemasCollectionAPI, '/redfish/v1/JsonSchemas')
-        g.api.add_resource(JsonSchemasAPI, '/redfish/v1/JsonSchemas/<string:ident>',
-                resource_class_kwargs={'rb': g.rest_base})
+        # g.api.add_resource(JsonSchemasCollectionAPI, '/redfish/v1/JsonSchemas')
+        # g.api.add_resource(JsonSchemasAPI, '/redfish/v1/JsonSchemas/<string:ident>',
+                # resource_class_kwargs={'rb': g.rest_base})
         #AccountService Resource
         g.api.add_resource(AccountServiceAPI, "/redfish/v1/AccountService")
         #AccountService Subresources
@@ -378,8 +379,8 @@ class ResourceManager(object):
         #Certificate Resources
         g.api.add_resource(CertificateServiceAPI, "/redfish/v1/CertificateService")
         #AccountService Subresources
-        g.api.add_resource(CertificateLocations, "/redfish/v1/CertificateService/CertificateLocations")
-        g.api.add_resource(CertificateLocation, "/redfish/v1/CertificateService/CertificateLocations/<int:ident>")
+        # g.api.add_resource(CertificateLocations, "/redfish/v1/CertificateService/CertificateLocations")
+        g.api.add_resource(CertificateLocationsAPI, "/redfish/v1/CertificateService/CertificateLocations")
 
         #SessionService Resources
         g.api.add_resource(SessionCollectionAPI,'/redfish/v1/SessionService')
@@ -399,6 +400,9 @@ class ResourceManager(object):
         g.api.add_resource(RegistriesCollectionAPI,'/redfish/v1/Registries')
         g.api.add_resource(RegistriesAPI,'/redfish/v1/Registries/<string:ident>','/redfish/v1/Registries/Oem/Cisco/<string:ident>')
 
+        #Registries SubResources
+        g.api.add_resource(OemCiscoCollectionAPI,'/redfish/v1/Registries/Oem/Cisco')
+        g.api.add_resource(OemCiscoAPI,'/redfish/v1/Registries/Oem/Cisco/<string:ident>')
 
     @property
     def configuration(self):

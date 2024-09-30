@@ -2,7 +2,7 @@
 # Copyright 2017-2019 DMTF. All rights reserved.
 # License: BSD 3-Clause License. For full text see link: https://github.com/DMTF/Redfish-Interface-Emulator/blob/main/LICENSE.md
 
-# JsonSchemas API File
+# OemCisco API File
 
 """
 Collection API:  GET
@@ -19,10 +19,10 @@ from flask_restful import reqparse, Api, Resource
 
 from g import INTERNAL_SERVER_ERROR
 
-INDICES = [1]
+INDICES = [1,3]
 
-# JsonSchemas Singleton API
-class JsonSchemasAPI(Resource):
+# OemCisco Singleton API
+class OemCiscoAPI(Resource):
 
     # kwargs is used to pass in the wildcards values to be replaced
     # when an instance is created via get_<resource>_instance().
@@ -35,7 +35,7 @@ class JsonSchemasAPI(Resource):
 
 
     def __init__(self, **kwargs):
-        logging.info('JsonSchemasAPI init called')
+        logging.info('OemCiscoAPI init called')
         try:
             global wildcards
             wildcards = kwargs
@@ -44,7 +44,7 @@ class JsonSchemasAPI(Resource):
 
     # HTTP GET
     def get(self, ident):
-        logging.info('JsonSchemasAPI GET called')
+        logging.info('OemCiscoAPI GET called')
         try:
             bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
             resp = g.get_value_from_bucket_hierarchy(bucket_hierarchy, INDICES)
@@ -55,12 +55,12 @@ class JsonSchemasAPI(Resource):
 
     # HTTP PUT
     def put(self, ident):
-        logging.info('JsonSchemasAPI PUT called')
-        return 'PUT is not a supported command for JsonSchemasAPI', 405
+        logging.info('OemCiscoAPI PUT called')
+        return 'PUT is not a supported command for OemCiscoAPI', 405
 
     # HTTP POST
     def post(self, ident):
-        logging.info('JsonSchemasAPI POST called')
+        logging.info('OemCiscoAPI POST called')
         try:
             bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
             resp = g.post_value_to_bucket_hierarchy(bucket_hierarchy, INDICES, request.json)
@@ -72,39 +72,39 @@ class JsonSchemasAPI(Resource):
 
     # HTTP PATCH
     def patch(self, ident):
-        logging.info('JsonSchemasAPI PATCH called')
-        return 'PATCH is not a supported command for JsonSchemasAPI', 405
+        logging.info('OemCiscoAPI PATCH called')
+        return 'PATCH is not a supported command for OemCiscoAPI', 405
 
     # HTTP DELETE
     def delete(self, ident):
-        logging.info('JsonSchemasAPI DELETE called')
-        return 'DELETE is not a supported command for JsonSchemasAPI', 405
+        logging.info('OemCiscoAPI DELETE called')
+        return 'DELETE is not a supported command for OemCiscoAPI', 405
 
 
 
-# JsonSchemas Collection API
-class JsonSchemasCollectionAPI(Resource):
+# OemCisco Collection API
+class OemCiscoCollectionAPI(Resource):
 
     def __init__(self):
-        logging.info('JsonSchemasCollectionAPI init called')
+        logging.info('OemCiscoCollectionAPI init called')
         self.rb = g.rest_base
         bucket_hierarchy = request.path.lstrip(g.rest_base).split('/')
         passed, output = g.get_collection_from_bucket_hierarchy(bucket_hierarchy, INDICES[:-1])
         if not passed:
             return output, 404
         self.config = {
-            "@odata.id": "/redfish/v1/JsonSchemas",
-            "@odata.type": "#JsonSchemaFileCollection.JsonSchemaFileCollection",
-            "@odata.context": "/redfish/v1/$metadata#JsonSchemaFileCollection.JsonSchemaFileCollection",
-            "Description": "Schema Repository",
-            "Name": "JSON Schema Collection",
+            "@odata.id": "/redfish/v1/OemCisco",
+            "@odata.type": "#MessageRegistryFileCollection.MessageRegistryFileCollection",
+            "@odata.context": "/redfish/v1/$metadata#MessageRegistryFileCollection.MessageRegistryFileCollection",
+            "Description": "Registry Repository",
+            "Name": "Registry File Collection",
             "Members": [ {'odata.id':x} for x in output],
-            "Members@odata.count": 122
+            "Members@odata.count": 9
         }
 
     # HTTP GET
     def get(self):
-        logging.info('JsonSchemasCollectionAPI GET called')
+        logging.info('OemCiscoCollectionAPI GET called')
         try:
             resp = self.config, 200
         except Exception:
@@ -114,8 +114,8 @@ class JsonSchemasCollectionAPI(Resource):
 
     # HTTP PUT
     def put(self):
-        logging.info('JsonSchemasCollectionAPI PUT called')
-        return 'PUT is not a supported command for JsonSchemasCollectionAPI', 405
+        logging.info('OemCiscoCollectionAPI PUT called')
+        return 'PUT is not a supported command for OemCiscoCollectionAPI', 405
 
     def verify(self, config):
         #TODO: Implement a method to verify that the POST body is valid
@@ -123,16 +123,16 @@ class JsonSchemasCollectionAPI(Resource):
 
     # HTTP POST
     def post(self):
-        logging.info('JsonSchemasCollectionAPI POST called')
-        return 'POST is not a supported command for JsonSchemasCollectionAPI', 405
+        logging.info('OemCiscoCollectionAPI POST called')
+        return 'POST is not a supported command for OemCiscoCollectionAPI', 405
  
     # HTTP PATCH
     def patch(self):
-        logging.info('JsonSchemasCollectionAPI PATCH called')
-        return 'PATCH is not a supported command for JsonSchemasCollectionAPI', 405
+        logging.info('OemCiscoCollectionAPI PATCH called')
+        return 'PATCH is not a supported command for OemCiscoCollectionAPI', 405
 
     # HTTP DELETE
     def delete(self):
-        logging.info('JsonSchemasCollectionAPI DELETE called')
-        return 'DELETE is not a supported command for JsonSchemasCollectionAPI', 405
+        logging.info('OemCiscoCollectionAPI DELETE called')
+        return 'DELETE is not a supported command for OemCiscoCollectionAPI', 405
 

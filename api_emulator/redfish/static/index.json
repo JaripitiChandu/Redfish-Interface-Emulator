@@ -5,9 +5,6 @@
     "Id": "RootService",
     "Name": "Cisco RESTful Root Service",
     "Description": "Root Service",
-    "JsonSchemas": {
-        "@odata.id": "/redfish/v1/JsonSchemas"
-    },
     "CertificateService": {
         "@odata.id": "/redfish/v1/CertificateService"
     },
